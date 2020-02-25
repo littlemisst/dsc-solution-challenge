@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:me_daily/pages/addPhoto.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -34,8 +36,14 @@ class _HomePageState extends State<HomePage> {
           ),
           SpeedDialChild(
             child: Icon(Icons.add_photo_alternate),
-            label: 'Add Photo',
+            label: 'Add Image',
             backgroundColor: Colors.pink[100],
+            onTap: () {
+              Navigator.push(context,
+              MaterialPageRoute(
+                builder: (context) => AddPhoto())
+              );
+            }
           ),
           SpeedDialChild(
             child: Icon(Icons.playlist_add_check),
