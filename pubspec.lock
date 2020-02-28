@@ -78,7 +78,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.2.1"
-<<<<<<< HEAD
   firebase_auth:
     dependency: "direct main"
     description:
@@ -100,19 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
-=======
->>>>>>> f38fb789176871b2db21e248ff2ab541f2b9267b
   firebase_core:
     dependency: transitive
     description:
       name: firebase_core
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "0.4.3+3"
-=======
-    version: "0.4.4"
->>>>>>> f38fb789176871b2db21e248ff2ab541f2b9267b
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -127,8 +120,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.1+2"
-<<<<<<< HEAD
-=======
   firebase_storage:
     dependency: "direct main"
     description:
@@ -136,7 +127,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.1"
->>>>>>> f38fb789176871b2db21e248ff2ab541f2b9267b
   flutter:
     dependency: "direct main"
     description: flutter
@@ -187,8 +177,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
-<<<<<<< HEAD
-=======
   image_picker:
     dependency: "direct main"
     description:
@@ -196,7 +184,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3+4"
->>>>>>> f38fb789176871b2db21e248ff2ab541f2b9267b
   js:
     dependency: transitive
     description:

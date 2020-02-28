@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
           builder: (context, notifier, child) {
             return notifier.user != null ? HomePage() : LogIn();
           },
-        ));
+        )
+      );
   }
 }
