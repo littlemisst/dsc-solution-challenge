@@ -4,6 +4,8 @@ import 'package:me_daily/pages/homePage.dart';
 import 'package:me_daily/pages/logInPage.dart';
 import 'package:provider/provider.dart';
 
+import 'pages/homePage.dart';
+
 void main() => runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -26,7 +28,6 @@ class MyApp extends StatelessWidget {
           builder: (context, notifier, child) {
             return notifier.user != null ? HomePage() : LogIn();
           },
-        )
-      );
+        ));
   }
 }

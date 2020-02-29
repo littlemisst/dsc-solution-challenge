@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:me_daily/model/task.dart';
 import 'package:me_daily/pages/addPhoto.dart';
 import 'package:me_daily/pages/addTask.dart';
 
@@ -18,6 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final newTask = new Task(null, DateTime.now(), null);
     return Scaffold(
       appBar: AppBar(
         title: Text('Me Daily', style: TextStyle(color: Colors.pink[100])),
@@ -37,7 +39,7 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               Navigator.push(context,
               MaterialPageRoute(
-                builder: (context) =>TaskInput())
+                builder: (context) =>AddTask(task: newTask))
               );
             }
           ),
