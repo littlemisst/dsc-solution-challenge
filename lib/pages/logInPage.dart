@@ -1,5 +1,8 @@
 import 'package:me_daily/model/user.dart';
 import 'package:flutter/material.dart';
+import 'package:me_daily/notifier/authentication_notifier.dart';
+import 'package:provider/provider.dart';
+import 'package:me_daily/api/home_page_api.dart';
 
 enum AuthMode { SignUp, LogIn }
 
@@ -15,6 +18,14 @@ class _LogInState extends State<LogIn> {
 
   User _user = User();
 
+  @override
+  void initState() {
+    AuthNotifier authNotifier =
+        Provider.of<AuthNotifier>(context, listen: false);
+    initializeCurrentUser(authNotifier);
+    super.initState();
+  }
+
   void _submitForm() {
     if (!_formKey.currentState.validate()) {
       return;
@@ -22,9 +33,13 @@ class _LogInState extends State<LogIn> {
 
     _formKey.currentState.save();
 
-    if (_authMode == AuthMode.LogIn) {
-    } else {
+    AuthNotifier authNotifier =
+        Provider.of<AuthNotifier>(context, listen: false);
 
+    if (_authMode == AuthMode.LogIn) {
+      login(_user, authNotifier);
+    } else {
+      signup(_user, authNotifier);
     }
   }
 
@@ -86,10 +101,13 @@ class _LogInState extends State<LogIn> {
         }
         return null;
       },
+      onSaved: (String value){
+        _user.password = value;
+      },
     );
   }
 
-    Widget _buildConfirmPasswordField() {
+  Widget _buildConfirmPasswordField() {
     return TextFormField(
       decoration: InputDecoration(labelText: " Confirm Password"),
       style: TextStyle(fontSize: 26),
