@@ -3,6 +3,8 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/pages/addPhoto.dart';
 import 'package:me_daily/pages/addTask.dart';
+import 'package:me_daily/pages/filesPage.dart';
+import 'package:me_daily/pages/mainHomePage.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -13,9 +15,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
-  // final bodies = [
-      //
-  // ];
+  final bodies = [
+      MainHomePage(),
+      Files(),
+      Files(),
+      Files(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,7 @@ class _HomePageState extends State<HomePage> {
         title: Text('Me Daily', style: TextStyle(color: Colors.pink[100])),
         backgroundColor: Colors.white,
       ),
-      // body: bodies[_currentIndex],
+      body: bodies[_currentIndex],
       floatingActionButton: SpeedDial(
         backgroundColor: Colors.pink[100],
         child: Icon(Icons.add),
