@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/pages/taskViewItems.dart';
@@ -6,8 +5,7 @@ import 'package:me_daily/pages/taskViewItems.dart';
 class AddTask extends StatelessWidget {
   final Task task;
   AddTask({Key key, @required this.task}) : super(key: key);
-  final db = Firestore.instance;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,9 +45,7 @@ class AddTask extends StatelessWidget {
   }
 
   Widget _gridItem(BuildContext context, icon, text) {
-    return Column(
-      children: <Widget>[
-        FlatButton(
+    var flatButton = FlatButton(
           padding: EdgeInsets.all(10),
           child: ImageIcon(icon, size: 50, color: Colors.white),
           color: Colors.pink[100],
@@ -61,7 +57,10 @@ class AddTask extends StatelessWidget {
                 builder: (context) => TaskViewItems(task: task)),
             );
           }
-        ),
+        );
+    return Column(
+      children: <Widget>[
+        flatButton,
         SizedBox(height: 10),
         Text(
           text, style: TextStyle(fontSize: 11),)
