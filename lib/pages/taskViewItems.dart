@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:me_daily/api/add_task_api.dart';
 import 'package:me_daily/model/task.dart';
 
 class TaskViewItems extends StatefulWidget {
@@ -74,11 +73,10 @@ class _TaskViewItemsState extends State<TaskViewItems> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          addTask(widget.task);
-          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pop();
         },
         child: Icon(Icons.add)
-        ),
+      ),
     );
   }
 }
