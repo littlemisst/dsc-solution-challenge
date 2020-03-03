@@ -6,7 +6,7 @@ import 'package:me_daily/pages/addPhoto.dart';
 import 'package:me_daily/pages/addTask.dart';
 import 'package:me_daily/pages/filesPage.dart';
 import 'package:me_daily/pages/mainHomePage.dart';
-import 'package:me_daily/pages/profile.dart';
+import 'package:me_daily/pages/profilePage.dart';
 
 class HomePage extends StatefulWidget {
   @override

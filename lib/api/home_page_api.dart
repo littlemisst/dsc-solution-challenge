@@ -45,10 +45,10 @@ signOut(AuthNotifier authNotifier) async {
   authNotifier.setUser(null);
 }
 
-initializeCurrentUser(AuthNotifier authNotifier) async{
+initializeCurrentUser(AuthNotifier authNotifier) async {
   FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
 
-  if(currentUser!= null){
+  if (currentUser != null) {
     authNotifier.setUser(currentUser);
   }
 }

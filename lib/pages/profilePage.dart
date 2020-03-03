@@ -6,8 +6,7 @@ import 'package:provider/provider.dart';
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-      AuthNotifier authNotifier = Provider.of<AuthNotifier>(context, listen: false);
-
+    AuthNotifier authNotifier = Provider.of<AuthNotifier>(context, listen: false);
     return Scaffold(
         body: RaisedButton(
       child: Text('Sign Out'),
