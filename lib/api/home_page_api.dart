@@ -11,7 +11,6 @@ login(User user, AuthNotifier authNotifier) async {
     FirebaseUser firebaseUser = authResult.user;
 
     if (firebaseUser != null) {
-      print(firebaseUser);
       authNotifier.setUser(firebaseUser);
     }
   }

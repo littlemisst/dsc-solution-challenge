@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:me_daily/model/task.dart';
+import 'package:me_daily/pages/addDailyLog.dart';
 import 'package:me_daily/pages/addPhoto.dart';
 import 'package:me_daily/pages/addTask.dart';
 import 'package:me_daily/pages/filesPage.dart';
 import 'package:me_daily/pages/mainHomePage.dart';
-
+import 'package:me_daily/pages/profile.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,10 +17,10 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   final bodies = [
-      MainHomePage(),
-      Files(),
-      Files(),
-      Files(),
+    MainHomePage(),
+    Files(),
+    Files(),
+    Profile(),
   ];
 
   @override
@@ -32,71 +33,68 @@ class _HomePageState extends State<HomePage> {
       ),
       body: bodies[_currentIndex],
       floatingActionButton: SpeedDial(
-        backgroundColor: Colors.pink[100],
-        child: Icon(Icons.add),
-        overlayColor: Colors.black,
-        overlayOpacity: 0.6,
-        children: [
-          SpeedDialChild(
-            child: Icon(Icons.add_box),
-            label: 'Add Task',
-            backgroundColor: Colors.pink[100],
-            onTap: () {
-              Navigator.push(context,
-              MaterialPageRoute(
-                builder: (context) =>AddTask(task: newTask))
-              );
-            }
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.add_photo_alternate),
-            label: 'Add Image',
-            backgroundColor: Colors.pink[100],
-            onTap: () {
-              Navigator.push(context,
-              MaterialPageRoute(
-                builder: (context) => AddPhoto())
-              );
-            }
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.playlist_add_check),
-            label: 'Add Daily Log',
-            backgroundColor: Colors.pink[100],
-          ),
-        ]
-      ),
+          backgroundColor: Colors.pink[100],
+          child: Icon(Icons.add),
+          overlayColor: Colors.black,
+          overlayOpacity: 0.6,
+          children: [
+            SpeedDialChild(
+                child: Icon(Icons.add_box),
+                label: 'Add Task',
+                backgroundColor: Colors.pink[100],
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddTask(task: newTask)));
+                }),
+            SpeedDialChild(
+                child: Icon(Icons.add_photo_alternate),
+                label: 'Add Image',
+                backgroundColor: Colors.pink[100],
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddPhoto()));
+                }),
+            SpeedDialChild(
+                child: Icon(Icons.playlist_add_check),
+                label: 'Add Daily Log',
+                backgroundColor: Colors.pink[100],
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddDailyLogs()));
+                }),
+          ]),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        selectedFontSize: 10.0,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-            backgroundColor: Colors.pink[100],
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.insert_drive_file),
-            title: Text('Files'),
-            backgroundColor: Colors.pink[100],
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            title: Text('Calendar'),
-            backgroundColor: Colors.pink[100],
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.perm_identity),
-            title: Text('Profile'),
-            backgroundColor: Colors.pink[100],
-          )
-        ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;   
-          });
-        }
-      ),
+          currentIndex: _currentIndex,
+          selectedFontSize: 10.0,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text('Home'),
+              backgroundColor: Colors.pink[100],
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.insert_drive_file),
+              title: Text('Files'),
+              backgroundColor: Colors.pink[100],
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today),
+              title: Text('Calendar'),
+              backgroundColor: Colors.pink[100],
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.perm_identity),
+              title: Text('Profile'),
+              backgroundColor: Colors.pink[100],
+            )
+          ],
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          }),
     );
   }
 }
