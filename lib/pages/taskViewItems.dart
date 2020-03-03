@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/api/add_task_api.dart';
 import 'package:me_daily/model/task.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 
 class TaskViewItems extends StatefulWidget {
   final Task task;
@@ -11,22 +11,13 @@ class TaskViewItems extends StatefulWidget {
 }
 
 class _TaskViewItemsState extends State<TaskViewItems> {
-   final db = Firestore.instance;
-    
-  
+  String _specificTask = "";
   var _eatItems = ["bread", "cereal", "rice", "pasta", "noodles", "vegetables", "legumes", "fruits", "dairy", "lean meat", "fish", "poultry", "eggs", "nuts", "others"];
   var _drinkItems = ["water", "coffee", "milk", "tea", "soda", "juice", "no soda", "no coffee"];
   var _medicineItems = ["fever", "cold", "maintenance", "aches", "diarrhea", "sore throat", "allergies", "vitamins"];
   var _exerciseItems = ["walking", "jogging", "weights", "cycling", "yoga"];
   var _appointmentItems = ["routine check-up", "laboratory", "counseling", "vaccination", "sick visit", "eye care", "dental"];
 
-  void getCurrentID() async {
-    final FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    final uid = user.uid;
-    await db.collection('userData').document(uid).collection('tasks').add(widget.task.toJson());
-  }
-
-  String _specificTask = "";
   @override
   Widget build(BuildContext context) {
     var items = [];
@@ -69,7 +60,6 @@ class _TaskViewItemsState extends State<TaskViewItems> {
         itemCount: items.length,
         itemBuilder: (context, index) {
           final item = items[index];
-      
           return ListTile(title: Text(item),
           leading: Radio(
             value: item,
@@ -85,7 +75,7 @@ class _TaskViewItemsState extends State<TaskViewItems> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          getCurrentID();
+          getCurrentID(widget.task);
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
         child: Icon(Icons.add)
