@@ -33,7 +33,6 @@ dependencies:
   firebase_storage: ^3.1.1
   date_range_picker: ^1.0.3
 
-
   
 
 dev_dependencies:

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:me_daily/pages/addDailyLog.dart';
 import 'package:me_daily/pages/addPhoto.dart';
-import 'package:me_daily/pages/addTask.dart';
 import 'package:me_daily/pages/filesPage.dart';
 import 'package:me_daily/pages/mainHomePage.dart';
 import 'package:me_daily/pages/profilePage.dart';
+import 'package:me_daily/pages/viewTasksPage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AddTask()));
+                          builder: (context) => ViewTasks()));
                 }),
             SpeedDialChild(
                 child: Icon(Icons.add_photo_alternate),
