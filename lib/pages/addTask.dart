@@ -3,9 +3,7 @@ import 'package:me_daily/model/task.dart';
 import 'package:me_daily/pages/taskViewItems.dart';
 
 class AddTask extends StatelessWidget {
-  final Task task;
-  AddTask({Key key, @required this.task}) : super(key: key);
-
+  final task = new Task(null, DateTime.now(), null);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
