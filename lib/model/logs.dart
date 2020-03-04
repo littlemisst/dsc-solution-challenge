@@ -1,8 +1,11 @@
 class Logs {
   String emotion;
-  String medicine;
+  String note;
 
   Logs();
 
-  Map<String, dynamic> toJson() => {"emotion": emotion, "medicine": medicine};
+  Map<String, dynamic> toJson()=>{
+    "emotion": emotion,
+    "note":note
+  };
 }

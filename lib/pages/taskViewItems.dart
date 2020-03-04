@@ -120,10 +120,11 @@ class _TaskViewItemsState extends State<TaskViewItems> {
                     }));
           }),
       floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            Navigator.of(context).pop();
-          },
-          child: Icon(Icons.add)),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: Icon(Icons.add)
+      ),
     );
   }
 }

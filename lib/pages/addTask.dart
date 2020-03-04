@@ -48,12 +48,13 @@ class _AddTaskState extends State<AddTask> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.pink[100],
-          onPressed: () async {
-            addTask(task);
-            Navigator.of(context).popUntil((route) => route.isFirst);
-          },
-          child: Icon(Icons.add)),
+        backgroundColor: Colors.pink[100],
+        onPressed: () {
+          addTask(task);
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        },
+        child: Icon(Icons.add)
+      ),
     );
   }
 
@@ -102,10 +103,12 @@ class _AddTaskState extends State<AddTask> {
 
   Widget _selectDatePicker(BuildContext context) {
     return Container(
-        child: RaisedButton(
-            child: Text('Select Date'),
-            onPressed: () async {
-              await displayDatePicker(context);
-            }));
+      child: RaisedButton(
+        child: Text('Select Date'),
+        onPressed: () {
+         displayDatePicker(context);
+        }
+      )
+    );
   }
 }
