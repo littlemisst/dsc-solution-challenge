@@ -48,7 +48,7 @@ class _AddTaskState extends State<AddTask> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.pink[100],
-        onPressed: () async {
+        onPressed: () {
           addTask(task);
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
@@ -105,8 +105,8 @@ class _AddTaskState extends State<AddTask> {
     return Container(
       child: RaisedButton(
         child: Text('Select Date'),
-        onPressed: () async {
-          await displayDatePicker(context);
+        onPressed: () {
+         displayDatePicker(context);
         }
       )
     );
