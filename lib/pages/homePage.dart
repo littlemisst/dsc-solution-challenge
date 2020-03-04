@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:me_daily/pages/addDailyLog.dart';
 import 'package:me_daily/pages/addPhoto.dart';
+import 'package:me_daily/pages/calendarPage.dart';
 import 'package:me_daily/pages/filesPage.dart';
 import 'package:me_daily/pages/mainHomePage.dart';
 import 'package:me_daily/pages/profilePage.dart';
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   final bodies = [
     MainHomePage(),
     Files(),
-    Files(),
+    CalendarPage(),
     Profile(),
   ];
 
