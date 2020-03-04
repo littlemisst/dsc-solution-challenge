@@ -15,21 +15,22 @@ class _AddTaskState extends State<AddTask> {
   final task = new Task(null, DateTime.now(), null, null, null);
 
   Future displayDatePicker(BuildContext context) async {
-    final List<DateTime> dateSelected = await DateRagePicker.showDatePicker(context: context,
-      initialFirstDate: _startDate,
-      initialLastDate: _endDate,
-      firstDate: new DateTime(DateTime.now().year - 50),
-      lastDate: new DateTime(DateTime.now().year + 50)
-    );
+    final List<DateTime> dateSelected = await DateRagePicker.showDatePicker(
+        context: context,
+        initialFirstDate: _startDate,
+        initialLastDate: _endDate,
+        firstDate: new DateTime(DateTime.now().year - 50),
+        lastDate: new DateTime(DateTime.now().year + 50));
     if (dateSelected != null && dateSelected.length == 2) {
       setState(() {
         _startDate = dateSelected[0];
         task.taskStarted = _startDate;
         _endDate = dateSelected[1];
-        task.taskEnded = _endDate;  
+        task.taskEnded = _endDate;
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,9 +69,10 @@ class _AddTaskState extends State<AddTask> {
           _gridItem(context, new AssetImage("images/dish.png"), 'Eat'),
           _gridItem(context, new AssetImage("images/wine_bottle.png"), 'Drink'),
           _gridItem(context, new AssetImage("images/barbell.png"), 'Exercise'),
-          _gridItem(context, new AssetImage("images/medical_tablet.png"), 'Medicine'),
-          _gridItem(context,
-              new AssetImage("images/medical_history.png"), 'Appointment'),
+          _gridItem(
+              context, new AssetImage("images/medical_tablet.png"), 'Medicine'),
+          _gridItem(context, new AssetImage("images/medical_history.png"),
+              'Appointment'),
           _gridItem(context, new AssetImage("images/add.png"), 'More'),
         ],
       ),
@@ -79,24 +81,22 @@ class _AddTaskState extends State<AddTask> {
 
   Widget _gridItem(BuildContext context, icon, text) {
     var flatButton = FlatButton(
-          padding: EdgeInsets.all(10),
-          child: ImageIcon(icon, size: 50, color: Colors.white),
-          color: Colors.pink[100],
-          shape: CircleBorder(side: BorderSide.none),
-          onPressed: () {
-            task.taskType = text;
-            Navigator.push(context,
-              MaterialPageRoute(
-                builder: (context) => TaskViewItems(task: task)),
-            );
-          }
-        );
+        padding: EdgeInsets.all(10),
+        child: ImageIcon(icon, size: 50, color: Colors.white),
+        color: Colors.pink[100],
+        shape: CircleBorder(side: BorderSide.none),
+        onPressed: () {
+          task.taskType = text;
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TaskViewItems(task: task)),
+          );
+        });
     return Column(
       children: <Widget>[
         flatButton,
         SizedBox(height: 10),
-        Text(
-          text, style: TextStyle(fontSize: 11)),
+        Text(text, style: TextStyle(fontSize: 11)),
       ],
     );
   }

@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
     MainHomePage(),
     Files(),
     CalendarPage(),
-    Profile(),
+    ProfilePage(),
   ];
 
   @override
@@ -42,10 +42,8 @@ class _HomePageState extends State<HomePage> {
                 label: 'Add Task',
                 backgroundColor: Colors.pink[100],
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ViewTasks()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ViewTasks()));
                 }),
             SpeedDialChild(
                 child: Icon(Icons.add_photo_alternate),

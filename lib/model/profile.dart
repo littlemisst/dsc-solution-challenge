@@ -1,10 +1,17 @@
-class Profile{
+class Profile {
   String name;
-  int age;
   String address;
   String civilStatus;
   DateTime birthDate;
   int numberOfHospitalizations;
 
-  Profile(); 
+  Profile();
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "address": address,
+        "civilStatus": civilStatus,
+        "birthDate": birthDate,
+        "numberOfHospitalizations": numberOfHospitalizations
+      };
 }

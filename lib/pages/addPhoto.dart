@@ -27,14 +27,13 @@ class _AddPhotoState extends State<AddPhoto> {
     });
   }
 
-   Future uploadImage() async{
+  Future uploadImage() async {
     StorageUploadTask uploadTask = _reference.putFile(_image);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;  
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     setState(() {
       _uploaded = true;
     });
   }
-
 
   Future downloadImage() async {
     String downloadAddress = await _reference.getDownloadURL();
