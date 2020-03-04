@@ -101,7 +101,7 @@ class _LogInState extends State<LogIn> {
         }
         return null;
       },
-      onSaved: (String value){
+      onSaved: (String value) {
         _user.password = value;
       },
     );

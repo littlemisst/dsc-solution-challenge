@@ -48,7 +48,7 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
             ),
             RaisedButton(
               child: Text('submit'),
-              onPressed: ()=> submit(_logs),
+              onPressed: () => submit(_logs),
             )
           ],
         ),

@@ -9,7 +9,7 @@ class _FilesState extends State<Files> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: GridView.count(
+      body: GridView.count(
         crossAxisCount: 2,
         children: List.generate(100, (index) {
           return Center(
