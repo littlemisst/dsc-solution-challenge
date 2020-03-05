@@ -1,14 +1,12 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/api/home_page_api.dart';
-import 'package:me_daily/api/profile_page_api.dart';
+
 import 'package:me_daily/notifier/authentication_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:me_daily/model/profile.dart';
-import 'dart:io';
+import 'package:me_daily/api/profile_page_api.dart';
 
 class ProfileForm extends StatefulWidget {
   @override
@@ -68,28 +66,21 @@ class _ProfileState extends State<ProfileForm> {
 
   Widget _buildCivilStatus() {
     String _value;
-    return Center (
-      child: DropdownButtonFormField<String> (
-        items: [
-          DropdownMenuItem<String> (
-            child: Text('Single'),
-            value: 'Single'
-          ),
-          DropdownMenuItem<String> (
-            child: Text('Married'),
-            value: 'Married'
-          ),
-        ],
-        onChanged: (String value) => {
-            setState((){
-              _value = value;
-              _profile.civilStatus = value;
-            })
-        },
-        hint: Text('Civil Status'),
-        value: _value,
-      ) 
-    );
+    return Center(
+        child: DropdownButtonFormField<String>(
+      items: [
+        DropdownMenuItem<String>(child: Text('Single'), value: 'Single'),
+        DropdownMenuItem<String>(child: Text('Married'), value: 'Married'),
+      ],
+      onChanged: (String value) => {
+        setState(() {
+          _value = value;
+          _profile.civilStatus = value;
+        })
+      },
+      hint: Text('Civil Status'),
+      value: _value,
+    ));
   }
 
   @override

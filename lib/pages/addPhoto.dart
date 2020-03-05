@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
+import 'package:me_daily/model/photos.dart';
+import 'package:me_daily/api/add_photo_api.dart';
 
 class AddPhoto extends StatefulWidget {
   @override
@@ -9,11 +11,11 @@ class AddPhoto extends StatefulWidget {
 }
 
 class _AddPhotoState extends State<AddPhoto> {
+  Photos _photos = Photos();
+
   bool _uploaded = false;
   File _image;
   String _downloadUrl;
-  StorageReference _reference =
-      FirebaseStorage.instance.ref().child(DateTime.now().millisecondsSinceEpoch.toString() + '.jpg' );
 
   Future getImage(bool isCamera) async {
     File image;
@@ -27,20 +29,28 @@ class _AddPhotoState extends State<AddPhoto> {
     });
   }
 
-  Future uploadImage() async {
+  Future uploadImage(data) async {
+    String fileUploadName =
+        DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+    _photos.fileName = fileUploadName;
+
+    StorageReference _reference =
+        FirebaseStorage.instance.ref().child(_photos.fileName);
+
     StorageUploadTask uploadTask = _reference.putFile(_image);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    uploadPhoto(_photos);
     setState(() {
       _uploaded = true;
     });
   }
 
-  Future downloadImage() async {
-    String downloadAddress = await _reference.getDownloadURL();
-    setState(() {
-      _downloadUrl = downloadAddress;
-    });
-  }
+  // Future downloadImage() async {
+  //   String downloadAddress = await _reference.getDownloadURL();
+  //   setState(() {
+  //     _downloadUrl = downloadAddress;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +91,7 @@ class _AddPhotoState extends State<AddPhoto> {
                   label: Text('Save', style: TextStyle(color: Colors.white)),
                   color: Colors.pink[100],
                   onPressed: () {
-                    uploadImage();
+                    uploadImage(_photos);
                   },
                 ),
           _uploaded == false
@@ -92,7 +102,7 @@ class _AddPhotoState extends State<AddPhoto> {
                       style: TextStyle(color: Colors.white)),
                   color: Colors.pink[100],
                   onPressed: () {
-                    downloadImage();
+                    //downloadImage();
                   },
                 ),
           _downloadUrl == null ? Container() : Image.network(_downloadUrl),
