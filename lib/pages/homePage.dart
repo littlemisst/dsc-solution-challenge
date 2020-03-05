@@ -4,7 +4,7 @@ import 'package:me_daily/pages/addDailyLog.dart';
 import 'package:me_daily/pages/addPhoto.dart';
 import 'package:me_daily/pages/calendarPage.dart';
 import 'package:me_daily/pages/filesPage.dart';
-import 'package:me_daily/pages/mainHomePage.dart';
+import 'package:me_daily/pages/mapPage.dart';
 import 'package:me_daily/pages/profilePage.dart';
 import 'package:me_daily/pages/viewTasksPage.dart';
 
@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   final bodies = [
-    MainHomePage(),
+    MapPage(),
     Files(),
     CalendarPage(),
     ProfilePage(),

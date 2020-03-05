@@ -96,15 +96,7 @@ class _AddPhotoState extends State<AddPhoto> {
                 ),
           _uploaded == false
               ? Container()
-              : RaisedButton.icon(
-                  icon: Icon(Icons.save_alt, color: Colors.white),
-                  label: Text('Download Image',
-                      style: TextStyle(color: Colors.white)),
-                  color: Colors.pink[100],
-                  onPressed: () {
-                    //downloadImage();
-                  },
-                ),
+              : Text('File Successfully Uploaded'),
           _downloadUrl == null ? Container() : Image.network(_downloadUrl),
         ]),
       )),
