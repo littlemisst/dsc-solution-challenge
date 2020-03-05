@@ -13,7 +13,7 @@ class _AddPhotoState extends State<AddPhoto> {
   File _image;
   String _downloadUrl;
   StorageReference _reference =
-      FirebaseStorage.instance.ref().child('myimage.jpg');
+      FirebaseStorage.instance.ref().child(DateTime.now().millisecondsSinceEpoch.toString() + '.jpg' );
 
   Future getImage(bool isCamera) async {
     File image;
