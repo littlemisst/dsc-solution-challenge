@@ -79,6 +79,12 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
     );
   }
 
+  Widget _buildDrinkWater(){
+    return Container(
+      
+    );
+  }
+
   Widget _buildAddNotes() {
     return TextFormField(
       decoration: InputDecoration(labelText: "Add notes"),
