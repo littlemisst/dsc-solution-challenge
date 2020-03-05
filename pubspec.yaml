@@ -34,8 +34,9 @@ dependencies:
   date_range_picker: ^1.0.3
   datetime_picker_formfield: ^1.0.0
   intl: ^0.16.1
-  flutter_calendar_carousel: ^1.4.11
+  flutter_calendar_carousel: ^1.4.11 
   table_calendar: ^2.2.2
+  google_maps_flutter: ^0.5.11
 
 
   
