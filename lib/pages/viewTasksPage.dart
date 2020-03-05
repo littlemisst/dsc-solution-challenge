@@ -26,24 +26,28 @@ class _ViewTasksState extends State<ViewTasks> {
           ],
         ),
         body: Center(
-            child: StreamBuilder(
+          child: StreamBuilder(
           stream: fetchTasks(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) return Text("Something went wrong");
-            return new ListView.builder(
-                itemCount: snapshot.data.documents.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    buildTaskCard(context, snapshot.data.documents[index]));
+            return ListView.builder(
+              itemCount: snapshot.data.documents.length,
+              itemBuilder: (BuildContext context, int index) =>
+                buildTaskCard(context, snapshot.data.documents[index])
+            );
           },
-        )));
+        )
+      )
+    );
   }
 
+  
+
   Widget buildTaskCard(BuildContext context, DocumentSnapshot task) {
-    return new Container(
+    return Container(
         child: Card(
             child: Padding(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       child: Column(
         children: <Widget>[
           Padding(
@@ -51,12 +55,12 @@ class _ViewTasksState extends State<ViewTasks> {
             child: Row(children: <Widget>[
               Text(
                 task['specificTask'],
-                style: new TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: 30),
               )
             ]),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 4, bottom: 4),
+            padding: EdgeInsets.only(top: 4, bottom: 4),
             child: Row(children: <Widget>[
               // Text("${task['taskStarted'].toString()} - ${task['taskEnded'].toString()}"),
               Text(task['taskType']),

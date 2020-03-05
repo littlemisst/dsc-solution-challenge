@@ -12,3 +12,4 @@ Stream<QuerySnapshot> fetchTasks() async* {
       .collection('tasks')
       .snapshots();
 }
+
