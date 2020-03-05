@@ -1,5 +1,5 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapPage extends StatefulWidget {
@@ -7,76 +7,44 @@ class MapPage extends StatefulWidget {
   _MapPageState createState() => _MapPageState();
 }
 
-class _MapPageState extends State<MapPage> {
-  Completer<GoogleMapController> _controller = Completer();
-  static const LatLng _center = const LatLng(	10.720321, 	122.562019);
-  final Set<Marker> _markers = {};
-  LatLng _lastMapPosition = _center;
-  MapType _currentMapType = MapType.normal;
+final Map<String, Marker> _markers = {};
 
-  _onMapCreated(GoogleMapController controller) {
-    _controller.complete(controller);
-  }
-  _onCameraMove(CameraPosition position) {
-    _lastMapPosition = position.target;
-  }
-  _onMapTypeButtonPressed() {
+class _MapPageState extends State<MapPage> {
+
+    void _getLocation() async {
+    var currentLocation = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+
     setState(() {
-      _currentMapType = _currentMapType == MapType.normal 
-      ? MapType.satellite 
-      : MapType.normal; 
+      _markers.clear();
+      final marker = Marker(
+          markerId: MarkerId("curr_loc"),
+          position: LatLng(currentLocation.latitude, currentLocation.longitude),
+          infoWindow: InfoWindow(title: 'Your Location'),
+      );
+      _markers["Current Location"] = marker;
     });
-  }
-  _onAddMarkerButtonPressed() {
-    setState(() {
-      _markers.add(Marker(
-        markerId: MarkerId(_lastMapPosition.toString()),
-        position: _lastMapPosition,
-        infoWindow: InfoWindow(
-          title: 'You are here',
-          // snippet: 'Sinppet'
-        ),
-        icon: BitmapDescriptor.defaultMarker,
-      ));
-    });
-  }
-  Widget button(Function function, IconData icon) {
-    return FloatingActionButton(
-      onPressed: function,
-      materialTapTargetSize: MaterialTapTargetSize.padded,
-      backgroundColor: Colors.pink[100],
-      child: Icon(
-        icon, 
-        size: 36.0
-      )
-    );
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(children: <Widget>[
-        GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 11.0,
-            ),
-            mapType: _currentMapType,
-            markers: _markers,
-            onCameraMove: _onCameraMove,
-          ),
-        Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Align(
-            alignment: Alignment.topRight,
-            child: Column (children: <Widget>[
-              button(_onMapTypeButtonPressed, Icons.map),
-              SizedBox(height: 16.0),
-              button(_onAddMarkerButtonPressed, Icons.add_location)
-            ],)
-          )
-        )
-      ]),
+    return  Scaffold(
+      body: GoogleMap(
+        mapType: MapType.hybrid,
+        initialCameraPosition: CameraPosition(
+          target: LatLng(40.688841, -74.044015),
+          zoom: 11.0,
+        ),
+        markers: _markers.values.toSet(),
+      ),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(right: 275.0),
+        child: FloatingActionButton(
+          onPressed: _getLocation,
+          tooltip: 'Get Location',
+          child: Icon(Icons.flag),
+          backgroundColor: Colors.pink[100],
+        ),
+      ),
     );
   }
 }
