@@ -31,7 +31,7 @@ class _MapPageState extends State<MapPage> {
       body: GoogleMap(
         mapType: MapType.hybrid,
         initialCameraPosition: CameraPosition(
-          target: LatLng(40.688841, -74.044015),
+          target: LatLng(10.720321, 	122.562019),
           zoom: 11.0,
         ),
         markers: _markers.values.toSet(),
