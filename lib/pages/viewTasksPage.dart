@@ -30,18 +30,20 @@ class _ViewTasksState extends State<ViewTasks> {
           stream: fetchTasks(),
           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) return Text("Something went wrong");
-            return ListView.builder(
-              itemCount: snapshot.data.documents.length,
-              itemBuilder: (BuildContext context, int index) =>
-                buildTaskCard(context, snapshot.data.documents[index])
-            );
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting: return new Text('Loading...');
+              default: 
+                return ListView.builder(
+                  itemCount: snapshot.data.documents.length,
+                  itemBuilder: (BuildContext context, int index) =>
+                    buildTaskCard(context, snapshot.data.documents[index])
+                );
+            }
           },
         )
       )
     );
   }
-
-  
 
   Widget buildTaskCard(BuildContext context, DocumentSnapshot task) {
     return Container(

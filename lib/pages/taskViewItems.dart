@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
+import 'package:me_daily/api/add_task_api.dart';
 import 'package:me_daily/model/task.dart';
+
 
 class TaskViewItems extends StatefulWidget {
   final Task task;
@@ -9,7 +12,35 @@ class TaskViewItems extends StatefulWidget {
 }
 
 class _TaskViewItemsState extends State<TaskViewItems> {
+  DateTime _startDate = DateTime.now();
+  DateTime _endDate = DateTime.now().add(Duration(days: 7));
   String _specificTask = "";
+
+  Future _displayDatePicker(BuildContext context) async {
+    final List<DateTime> dateSelected = await DateRagePicker.showDatePicker(
+        context: context,
+        initialFirstDate: _startDate,
+        initialLastDate: _endDate,
+        firstDate: new DateTime(DateTime.now().year - 50),
+        lastDate: new DateTime(DateTime.now().year + 50));
+    if (dateSelected != null && dateSelected.length == 2) {
+      setState(() {
+        _startDate = dateSelected[0];
+        widget.task.taskStarted = _startDate;
+        _endDate = dateSelected[1];
+        widget.task.taskEnded = _endDate;
+      });
+    }
+    
+    if (widget.task.taskType == null || widget.task.specificTask == null || widget.task.taskEnded == null || widget.task.taskStarted == null) {
+      print('may null');
+    } else {
+      addTask(widget.task);
+    }
+
+    Navigator.of(context).pop();
+  }
+
   var _eatItems = [
     "bread",
     "cereal",
@@ -120,10 +151,10 @@ class _TaskViewItemsState extends State<TaskViewItems> {
                     }));
           }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pop();
+        onPressed: () async {
+          _displayDatePicker(context);
         },
-        child: Icon(Icons.add)
+        child: Icon(Icons.alarm)
       ),
     );
   }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:me_daily/api/add_task_api.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/pages/taskViewItems.dart';
-import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
+
 
 class AddTask extends StatefulWidget {
   @override
@@ -10,26 +9,9 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
-  DateTime _startDate = DateTime.now();
-  DateTime _endDate = DateTime.now().add(Duration(days: 7));
+  
   final task = new Task(null, DateTime.now(), null, null, null);
 
-  Future displayDatePicker(BuildContext context) async {
-    final List<DateTime> dateSelected = await DateRagePicker.showDatePicker(
-        context: context,
-        initialFirstDate: _startDate,
-        initialLastDate: _endDate,
-        firstDate: new DateTime(DateTime.now().year - 50),
-        lastDate: new DateTime(DateTime.now().year + 50));
-    if (dateSelected != null && dateSelected.length == 2) {
-      setState(() {
-        _startDate = dateSelected[0];
-        task.taskStarted = _startDate;
-        _endDate = dateSelected[1];
-        task.taskEnded = _endDate;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,17 +25,8 @@ class _AddTaskState extends State<AddTask> {
         child: Column(
           children: <Widget>[
             _tasksGrid(context),
-            _selectDatePicker(context),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.pink[100],
-        onPressed: () {
-          addTask(task);
-          Navigator.of(context).popUntil((route) => route.isFirst);
-        },
-        child: Icon(Icons.add)
       ),
     );
   }
@@ -98,17 +71,6 @@ class _AddTaskState extends State<AddTask> {
         SizedBox(height: 10),
         Text(text, style: TextStyle(fontSize: 11)),
       ],
-    );
-  }
-
-  Widget _selectDatePicker(BuildContext context) {
-    return Container(
-      child: RaisedButton(
-        child: Text('Select Date'),
-        onPressed: () {
-         displayDatePicker(context);
-        }
-      )
     );
   }
 }
