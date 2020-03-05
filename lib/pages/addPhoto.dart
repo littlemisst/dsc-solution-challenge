@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'package:me_daily/model/photos.dart';
 import 'package:me_daily/api/add_photo_api.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AddPhoto extends StatefulWidget {
   @override
@@ -15,7 +16,6 @@ class _AddPhotoState extends State<AddPhoto> {
 
   bool _uploaded = false;
   File _image;
-  String _downloadUrl;
 
   Future getImage(bool isCamera) async {
     File image;
@@ -29,16 +29,21 @@ class _AddPhotoState extends State<AddPhoto> {
     });
   }
 
-  Future uploadImage(data) async {
+  Future uploadImage() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    final uid = user.uid;
+
     String fileUploadName =
         DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
     _photos.fileName = fileUploadName;
 
     StorageReference _reference =
-        FirebaseStorage.instance.ref().child(_photos.fileName);
+        FirebaseStorage.instance.ref().child('users/$uid/${_photos.fileName}');
 
     StorageUploadTask uploadTask = _reference.putFile(_image);
+
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    _photos.downloadURL = await _reference.getDownloadURL();
     uploadPhoto(_photos);
     setState(() {
       _uploaded = true;
@@ -91,21 +96,21 @@ class _AddPhotoState extends State<AddPhoto> {
                   label: Text('Save', style: TextStyle(color: Colors.white)),
                   color: Colors.pink[100],
                   onPressed: () {
-                    uploadImage(_photos);
+                    uploadImage();
                   },
                 ),
-          _uploaded == false
-              ? Container()
-              : RaisedButton.icon(
-                  icon: Icon(Icons.save_alt, color: Colors.white),
-                  label: Text('Download Image',
-                      style: TextStyle(color: Colors.white)),
-                  color: Colors.pink[100],
-                  onPressed: () {
-                    //downloadImage();
-                  },
-                ),
-          _downloadUrl == null ? Container() : Image.network(_downloadUrl),
+          // _uploaded == false
+          //     ? Container()
+          //     : RaisedButton.icon(
+          //         icon: Icon(Icons.save_alt, color: Colors.white),
+          //         label: Text('Download Image',
+          //             style: TextStyle(color: Colors.white)),
+          //         color: Colors.pink[100],
+          //         onPressed: () {
+          //           //downloadImage();
+          //         },
+          //       ),
+          // _downloadUrl == null ? Container() : Image.network(_downloadUrl),
         ]),
       )),
     );
