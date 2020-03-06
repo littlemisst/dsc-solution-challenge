@@ -29,6 +29,7 @@ class _AddTaskState extends State<AddTask> {
         child: Column(
           children: <Widget>[
             Text('CHOOSE A TASK TO DO', style: TextStyle(fontSize: 18.0)),
+            SizedBox(height: 15),
             _tasksGrid(context),
             SizedBox(height: 24),
             _showDatePicker('start'),
@@ -57,11 +58,11 @@ class _AddTaskState extends State<AddTask> {
 
   Widget _tasksGrid(BuildContext context) {
     return Container(
-      height: 200,
+      height: MediaQuery.of(context).size.height / 3,
       padding: EdgeInsets.all(14),
       child: GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, childAspectRatio: 3 / 2),
+            crossAxisCount: 3, childAspectRatio: 1),
         children: <Widget>[
           _gridItem(context, new AssetImage("images/dish.png"), 'Eat'),
           _gridItem(context, new AssetImage("images/wine_bottle.png"), 'Drink'),
@@ -105,7 +106,7 @@ class _AddTaskState extends State<AddTask> {
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey)),
-            labelText: indicator),
+            labelText: indicator + ' date'),
         format: format,
         onShowPicker: (context, currentValue) async {
           return showDatePicker(
