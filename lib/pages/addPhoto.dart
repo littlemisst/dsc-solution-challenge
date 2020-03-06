@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
-import 'package:me_daily/model/photos.dart';
+import 'package:me_daily/model/photo.dart';
 import 'package:me_daily/api/add_photo_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -12,7 +12,7 @@ class AddPhoto extends StatefulWidget {
 }
 
 class _AddPhotoState extends State<AddPhoto> {
-  Photos _photos = Photos();
+  Photo _photo = Photo();
 
   bool _uploaded = false;
   File _image;
@@ -35,16 +35,16 @@ class _AddPhotoState extends State<AddPhoto> {
 
     String fileUploadName =
         DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
-    _photos.fileName = fileUploadName;
+    _photo.fileName = fileUploadName;
 
     StorageReference _reference =
-        FirebaseStorage.instance.ref().child('users/$uid/${_photos.fileName}');
+        FirebaseStorage.instance.ref().child('users/$uid/${_photo.fileName}');
 
     StorageUploadTask uploadTask = _reference.putFile(_image);
 
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    _photos.downloadURL = await _reference.getDownloadURL();
-    uploadPhoto(_photos);
+    _photo.downloadURL = await _reference.getDownloadURL();
+    uploadPhoto(_photo);
     setState(() {
       _uploaded = true;
     });
