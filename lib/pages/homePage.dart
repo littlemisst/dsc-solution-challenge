@@ -67,8 +67,8 @@ class _HomePageState extends State<HomePage> {
           selectedFontSize: 10.0,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Home'),
+              icon: Icon(Icons.map),
+              title: Text('Map'),
               backgroundColor: Colors.pink[100],
             ),
             BottomNavigationBarItem(
