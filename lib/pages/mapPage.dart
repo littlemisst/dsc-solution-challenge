@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:here_maps_webservice/here_maps_webservice.dart';
+import 'package:location/location.dart' as l;
+import 'package:flutter/services.dart';
 
 class MapPage extends StatefulWidget {
   @override
@@ -10,12 +13,29 @@ class MapPage extends StatefulWidget {
 final Map<String, Marker> _markers = {};
 
 class _MapPageState extends State<MapPage> {
+  var currentNearestLocation;
+  var location = new l.Location();
+  List<dynamic> _nearbyPlaces = [];
   MapType _currentMapType = MapType.normal;
+
+  void _getNearbyPlaces() async {
+    var currentNearestLocation = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+    HereMaps(apiKey: "AIzaSyDB45n30I-A2OXGDbYhTDh1xLsrmNTCxkk")
+        .exploreNearbyPlaces(
+            lat: currentNearestLocation.latitude,
+            lon: currentNearestLocation.longitude,
+            offset: 1000)
+        .then((response) {
+      setState(() {
+        _nearbyPlaces.addAll(response['results']['items']);
+      });
+    });
+  }
 
   void _getLocation() async {
     var currentLocation = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-
     setState(() {
       _markers.clear();
       final marker = Marker(
@@ -24,6 +44,7 @@ class _MapPageState extends State<MapPage> {
         infoWindow: InfoWindow(title: 'Your Location'),
       );
       _markers["Current Location"] = marker;
+      print(_nearbyPlaces);
     });
   }
 
