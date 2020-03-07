@@ -2,6 +2,7 @@ class Profile {
   String name;
   String address;
   String civilStatus;
+  String gender;
   DateTime birthDate;
   int numberOfHospitalizations;
 
@@ -11,6 +12,7 @@ class Profile {
         "name": name,
         "address": address,
         "civilStatus": civilStatus,
+        "gender": gender,
         "birthDate": birthDate,
         "numberOfHospitalizations": numberOfHospitalizations
       };
