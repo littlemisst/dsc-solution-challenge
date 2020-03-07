@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/api/retrieve_photos.dart';
-import 'package:me_daily/model/photo.dart';
 
 class Files extends StatefulWidget {
   @override
@@ -36,22 +35,3 @@ class _FilesState extends State<Files> {
         });
   }
 }
-
-// class _FilesState extends State<Files> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: GridView.count(
-//         crossAxisCount: 2,
-//         children: List.generate(100, (index) {
-//           return Center(
-//             child: Text(
-//               'Item $index',
-//               style: Theme.of(context).textTheme.headline,
-//             ),
-//           );
-//         }),
-//       ),
-//     );
-//   }
-// }
