@@ -12,7 +12,7 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
-  final task = new Task(null, DateTime.now(), null, null, null, null);
+  Task _task = Task();
   DateTime _startTask =DateTime.now();
   DateTime _endTask = DateTime.now();
   DateTime _time = DateTime.now();
@@ -43,10 +43,10 @@ class _AddTaskState extends State<AddTask> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.pink[100],
         onPressed: ()  {
-          if (task.taskType == null || task.specificTask == null || task.taskEnded == null || task.taskStarted == null || task.time == null) {
+          if (_task.taskType == null || _task.specificTask == null || _task.taskEnded == null || _task.taskStarted == null || _task.time == null) {
           print('may null');
         } else {
-          addTask(task);
+          addTask(_task);
         }
 
         Navigator.of(context).popUntil((route) => route.isFirst);
@@ -84,10 +84,10 @@ class _AddTaskState extends State<AddTask> {
         color: Colors.pink[100],
         shape: CircleBorder(side: BorderSide.none),
         onPressed: () {
-          task.taskType = text;
+          _task.taskType = text;
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TaskViewItems(task: task)),
+            MaterialPageRoute(builder: (context) => TaskViewItems(task: _task)),
           );
         });
     return Column(
@@ -119,10 +119,10 @@ class _AddTaskState extends State<AddTask> {
           setState(() {
             if (indicator == 'start') {
               _startTask = value;
-              task.taskStarted = _startTask;
+              _task.taskStarted = _startTask;
             } else if (indicator == 'end') {
               _endTask = value;
-              task.taskEnded = _endTask;
+              _task.taskEnded = _endTask;
             }
           });
         }  
@@ -149,7 +149,7 @@ class _AddTaskState extends State<AddTask> {
         onChanged: (value) => {
          setState(() {
           _time = value;
-          task.time= _time;
+          _task.time= _time;
           })
         }
       ),

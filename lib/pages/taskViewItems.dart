@@ -10,26 +10,7 @@ class TaskViewItems extends StatefulWidget {
 }
 
 class _TaskViewItemsState extends State<TaskViewItems> {
-  // DateTime _startDate = DateTime.now();
-  // DateTime _endDate = DateTime.now().add(Duration(days: 7));
-  String _specificTask = "";
-
-  // Future _displayDatePicker(BuildContext context) async {
-  //   final List<DateTime> dateSelected = await DateRagePicker.showDatePicker(
-  //       context: context,
-  //       initialFirstDate: _startDate,
-  //       initialLastDate: _endDate,
-  //       firstDate: new DateTime(DateTime.now().year - 50),
-  //       lastDate: new DateTime(DateTime.now().year + 50));
-  //   if (dateSelected != null && dateSelected.length == 2) {
-  //     setState(() {
-  //       _startDate = dateSelected[0];
-  //       widget.task.taskStarted = _startDate;
-  //       _endDate = dateSelected[1];
-  //       widget.task.taskEnded = _endDate;
-  //     });
-  //   }
-  // }
+  String _specificTask;
 
   var _eatItems = [
     "bread",
@@ -131,14 +112,14 @@ class _TaskViewItemsState extends State<TaskViewItems> {
             return ListTile(
                 title: Text(item),
                 leading: Radio(
-                    value: item,
-                    groupValue: _specificTask,
-                    onChanged: (value) {
-                      setState(() {
-                        _specificTask = value;
-                        widget.task.specificTask = _specificTask;
-                      });
-                    }));
+                  value: item,
+                  groupValue: _specificTask,
+                  onChanged: (value) {
+                    setState(() {
+                      _specificTask = value;
+                      widget.task.specificTask = _specificTask;
+                    });
+                  }));
           }),
     );
   }

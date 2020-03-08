@@ -1,20 +1,23 @@
 class Task {
   String taskType;
-  DateTime dateCreated;
+  DateTime dateCreated = DateTime.now();
   String specificTask;
   DateTime taskStarted;
   DateTime taskEnded;
   DateTime time;
+  bool completed = false;
 
-  Task(this.taskType, this.dateCreated, this.specificTask, this.taskStarted,
-      this.taskEnded, this.time);
+  Task();
 
   Map<String, dynamic> toJson() => {
-        "taskType": taskType,
-        "dateCreated": dateCreated,
-        "specificTask": specificTask,
-        "taskStarted": taskStarted,
-        "taskEnded": taskEnded,
-        "time": time
-      };
+    "task" : {
+      "taskType": taskType,
+      "specificTask": specificTask
+    },
+    "dateCreated": dateCreated,
+    "taskStarted": taskStarted,
+    "taskEnded": taskEnded,
+    "time": time,
+    "completed": completed
+  };
 }
