@@ -7,6 +7,7 @@ import 'package:me_daily/pages/calendarPage.dart';
 import 'package:me_daily/pages/filesPage.dart';
 import 'package:me_daily/pages/mapPage.dart';
 import 'package:me_daily/pages/profilePage.dart';
+import 'package:me_daily/pages/summaryPage.dart';
 // import 'package:me_daily/pages/viewTasksPage.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   final bodies = [
+    SummaryPage(),
     MapPage(),
     Files(),
     CalendarPage(),
@@ -67,6 +69,11 @@ class _HomePageState extends State<HomePage> {
           currentIndex: _currentIndex,
           selectedFontSize: 10.0,
           items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text('Home'),
+              backgroundColor: Colors.pink[100],
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.map),
               title: Text('Map'),
