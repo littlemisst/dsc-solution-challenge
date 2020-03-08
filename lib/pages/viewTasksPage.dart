@@ -36,7 +36,7 @@ class _ViewTasksState extends State<ViewTasks> {
                 return ListView.builder(
                   itemCount: snapshot.data.documents.length,
                   itemBuilder: (BuildContext context, int index) =>
-                    buildTaskCard(context, snapshot.data.documents[index])
+                    _buildTaskCard(context, snapshot.data.documents[index])
                 );
             }
           },
@@ -45,7 +45,7 @@ class _ViewTasksState extends State<ViewTasks> {
     );
   }
 
-  Widget buildTaskCard(BuildContext context, DocumentSnapshot task) {
+  Widget _buildTaskCard(BuildContext context, DocumentSnapshot task) {
     return Container(
         child: Card(
             child: Padding(
