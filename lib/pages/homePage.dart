@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:me_daily/main.dart';
 import 'package:me_daily/pages/addDailyLog.dart';
 import 'package:me_daily/pages/addPhoto.dart';
 import 'package:me_daily/pages/addTask.dart';

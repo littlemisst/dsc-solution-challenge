@@ -1,7 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 
 class MapPage extends StatefulWidget {
   @override
@@ -11,14 +11,23 @@ class MapPage extends StatefulWidget {
 final Map<String, Marker> _markers = {};
 
 class _MapPageState extends State<MapPage> {
-
   MapType _currentMapType = MapType.normal;
 
+  // static const String _API_KEY = 'AIzaSyDB45n30I-A2OXGDbYhTDh1xLsrmNTCxkk';
+  List<Marker> markers = <Marker>[];
 
+  // void getNearbyPlaces(double latitude, double longitude) async {
+  //   String baseUrl = 'http://maps.googleapis.com';
+  //   String keyword = 'hospital';
+  //   String url =
+  //       '${baseUrl}/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&keyword=${keyword}&key=${_API_KEY}';
+  //   final response = await http.get(url);
+  // }
 
   void _getLocation() async {
     var currentLocation = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+    // getNearbyPlaces(currentLocation.latitude, currentLocation.longitude);
     setState(() {
       _markers.clear();
       final marker = Marker(
@@ -71,6 +80,14 @@ class _MapPageState extends State<MapPage> {
               height: 15.0,
             ),
             button(_onMapTypeButtonPressed, Icons.map),
+            SizedBox(
+              height: 15.0,
+            ),
+            FloatingActionButton(
+                child: Icon(Icons.local_hospital),
+                backgroundColor: Colors.pink[100],
+                onPressed: () {
+                }),
           ],
         ),
       ),

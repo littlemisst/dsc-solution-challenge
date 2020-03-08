@@ -5,6 +5,7 @@ class Profile {
   String gender;
   DateTime birthDate;
   int numberOfHospitalizations;
+  String bloodType;
 
   Profile();
 
@@ -14,6 +15,7 @@ class Profile {
         "civilStatus": civilStatus,
         "gender": gender,
         "birthDate": birthDate,
-        "numberOfHospitalizations": numberOfHospitalizations
+        "numberOfHospitalizations": numberOfHospitalizations,
+        "bloodType": bloodType,
       };
 }
