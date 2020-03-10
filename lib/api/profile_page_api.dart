@@ -7,6 +7,11 @@ submitProfile(data) async {
   Firestore.instance
       .collection('userData')
       .document(_userId)
-      .collection('profile')
-      .add(data.toJson());
+      .setData(data.toJson());
+}
+
+Stream<QuerySnapshot> getProfile() async* {
+  FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
+  final _userId = currentUser.uid;
+  Firestore.instance.collection('userData').document(_userId).get().asStream();
 }
