@@ -10,10 +10,8 @@ class Task {
   Task();
 
   Map<String, dynamic> toJson() => {
-    "task" : {
-      "taskType": taskType,
-      "specificTask": specificTask
-    },
+    "taskType": taskType,
+    "specificTask": specificTask,
     "dateCreated": dateCreated,
     "taskStarted": taskStarted,
     "taskEnded": taskEnded,
