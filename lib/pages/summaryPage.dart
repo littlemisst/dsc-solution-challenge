@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:me_daily/pages/healthChart.dart';
+import 'package:me_daily/api/share_details_api.dart';
+import 'package:me_daily/model/mockMessage.dart';
 
 class SummaryPage extends StatefulWidget {
   @override
@@ -8,6 +10,8 @@ class SummaryPage extends StatefulWidget {
 }
 
 class _SummaryPageState extends State<SummaryPage> {
+  Message _message = Message();
+
   Widget _buildTiles(context, child) {
     return Material(
       elevation: 5,
@@ -16,6 +20,14 @@ class _SummaryPageState extends State<SummaryPage> {
       child: Center(
         child: child,
       ),
+    );
+  }
+
+  Widget _buildShareButton() {
+    return RaisedButton(
+      color: Colors.pink[100],
+      child: Text('Share your details'),
+      onPressed: ()=>submitDetails(_message)
     );
   }
 
@@ -31,13 +43,15 @@ class _SummaryPageState extends State<SummaryPage> {
           StaggeredTile.count(4, 3),
           StaggeredTile.count(2, 2),
           StaggeredTile.count(2, 2),
+          StaggeredTile.count(4, 1),
           StaggeredTile.count(4, 1)
         ],
         children: <Widget>[
           _buildTiles(context, HealthChart()),
           _buildTiles(context, Text('Streak')),
           _buildTiles(context, Text('Uncompleted Tasks')),
-          _buildTiles(context, Text('Achievements'))
+          _buildTiles(context, Text('Achievements')),
+          _buildShareButton()
         ],
       ),
     );
