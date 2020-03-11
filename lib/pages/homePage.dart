@@ -7,7 +7,7 @@ import 'package:me_daily/pages/addTask.dart';
 import 'package:me_daily/pages/calendarPage.dart';
 import 'package:me_daily/pages/filesPage.dart';
 import 'package:me_daily/pages/mapPage.dart';
-import 'package:me_daily/pages/profilePage.dart';
+import 'package:me_daily/pages/profile_page.dart';
 import 'package:me_daily/pages/summaryPage.dart';
 // import 'package:me_daily/pages/viewTasksPage.dart';
 
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     MapPage(),
     Files(),
     CalendarPage(),
-    ProfilePage(),
+    UserProfile(),
   ];
 
   @override
@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
       ),
       body: bodies[_currentIndex],
-      floatingActionButton: SpeedDial(
+       floatingActionButton: _currentIndex != 4 ? SpeedDial(
           backgroundColor: Colors.pink[100],
           child: Icon(Icons.add),
           overlayColor: Colors.black,
@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => AddDailyLogs()));
                 }),
-          ]),
+          ]) : null,
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
           selectedFontSize: 10.0,

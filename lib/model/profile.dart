@@ -4,8 +4,10 @@ class Profile {
   String civilStatus;
   String gender;
   DateTime birthDate;
-  int numberOfHospitalizations;
+  // int numberOfHospitalizations;
   String bloodType;
+  String height;
+  String weight;
 
   Profile();
 
@@ -15,7 +17,9 @@ class Profile {
         "civilStatus": civilStatus,
         "gender": gender,
         "birthDate": birthDate,
-        "numberOfHospitalizations": numberOfHospitalizations,
+        // "numberOfHospitalizations": numberOfHospitalizations,
         "bloodType": bloodType,
+        "height": double.parse(height),
+        "weight": double.parse(weight),
       };
 }
