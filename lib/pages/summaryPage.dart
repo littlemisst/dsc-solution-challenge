@@ -24,7 +24,7 @@ class _SummaryPageState extends State<SummaryPage> {
   Widget _buildShareButton() {
     return RaisedButton(
         color: Colors.pink[100],
-        child: Text('Share your details'),
+        child: Text('Share your details', style: TextStyle(color: Colors.white)),
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => SendDetailsPage()));

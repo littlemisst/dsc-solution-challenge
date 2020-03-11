@@ -184,7 +184,8 @@ class SendDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Submit Details'),
+          title: Text('Submit Details', style: TextStyle(color: Colors.pink[100])),
+          backgroundColor: Colors.white,
         ),
         body: SingleChildScrollView(
             padding: EdgeInsets.all(10), child: SendDetailsForm()));
