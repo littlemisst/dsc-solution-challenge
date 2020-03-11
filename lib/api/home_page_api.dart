@@ -23,13 +23,13 @@ signup(User user, AuthNotifier authNotifier) async {
       .catchError((error) => print(error.hashCode));
 
   if (authResult != null) {
-    UserUpdateInfo updateInfo = UserUpdateInfo();
-    updateInfo.displayName = user.name;
+    // UserUpdateInfo updateInfo = UserUpdateInfo();
+    // updateInfo.displayName = user.name;
 
     FirebaseUser firebaseUser = authResult.user;
 
     if (firebaseUser != null) {
-      await firebaseUser.updateProfile(updateInfo);
+      // await firebaseUser.updateProfile(updateInfo);
 
       await firebaseUser.reload();
 

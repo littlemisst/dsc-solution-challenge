@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:me_daily/notifier/authentication_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:me_daily/api/home_page_api.dart';
+import 'package:me_daily/updated-pages/authentication/authentication_widgets.dart';
 
 enum AuthMode { SignUp, LogIn }
 
@@ -43,85 +44,6 @@ class _LogInState extends State<LogIn> {
     }
   }
 
-  Widget _buildDisplayNameField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: "Display Name"),
-      keyboardType: TextInputType.text,
-      style: TextStyle(fontSize: 26),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'is empty';
-        }
-
-        if (value.length < 5) {
-          return 'should be higher than five characters';
-        }
-        return null;
-      },
-      onSaved: (String value) {
-        _user.name = value;
-      },
-    );
-  }
-
-  Widget _buildEmailField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: "Email"),
-      keyboardType: TextInputType.emailAddress,
-      style: TextStyle(fontSize: 26),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'is empty';
-        }
-
-        if (value.length < 5) {
-          return 'should be higher than five characters';
-        }
-        return null;
-      },
-      onSaved: (String value) {
-        _user.email = value;
-      },
-    );
-  }
-
-  Widget _buildPasswordField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: "Password"),
-      style: TextStyle(fontSize: 26),
-      obscureText: true,
-      controller: _passwordController,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'required';
-        }
-
-        if (value.length < 5) {
-          return 'should be higher than five characters';
-        }
-        return null;
-      },
-      onSaved: (String value) {
-        _user.password = value;
-      },
-    );
-  }
-
-  Widget _buildConfirmPasswordField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: " Confirm Password"),
-      style: TextStyle(fontSize: 26),
-      obscureText: true,
-      validator: (String value) {
-        if (_passwordController.text != value) {
-          return 'does not match';
-        }
-
-        return null;
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,13 +63,10 @@ class _LogInState extends State<LogIn> {
                 SizedBox(
                   height: 32,
                 ),
+                buildEmailField(context, _user),
+                buildPasswordField(context, _user, _passwordController),
                 _authMode == AuthMode.SignUp
-                    ? _buildDisplayNameField()
-                    : Container(),
-                _buildEmailField(),
-                _buildPasswordField(),
-                _authMode == AuthMode.SignUp
-                    ? _buildConfirmPasswordField()
+                    ? buildConfirmPasswordField(context, _passwordController)
                     : Container(),
                 SizedBox(
                   height: 32,
