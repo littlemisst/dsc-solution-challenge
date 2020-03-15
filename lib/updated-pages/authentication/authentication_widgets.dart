@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget buildEmailField(context, user) {
+Widget buildEmailField(context, email) {
   return TextFormField(
       decoration: InputDecoration(labelText: 'Email'),
       keyboardType: TextInputType.emailAddress,
@@ -11,14 +11,15 @@ Widget buildEmailField(context, user) {
         return null;
       },
       onChanged: (String value) {
-        user.email = value;
+        email = value;
       });
 }
 
-Widget buildPasswordField(context, user, passwordController) {
+Widget buildPasswordField(context, password) {
   return TextFormField(
       decoration: InputDecoration(labelText: 'Password'),
-      controller: passwordController,
+      //controller: passwordController,
+      obscureText: true,
       validator: (String value) {
         if (value.isEmpty) {
           return 'is empty';
@@ -26,7 +27,7 @@ Widget buildPasswordField(context, user, passwordController) {
         return null;
       },
       onChanged: (String value) {
-        user.password = value;
+        password = value;
       });
 }
 
@@ -40,5 +41,15 @@ Widget buildConfirmPasswordField(context, passwordController) {
       }
       return null;
     },
+  );
+}
+
+Widget buildButton(context, child, onPressed) {
+  return RaisedButton(
+    textColor: Colors.white,
+    color: Colors.pink[100],
+    child: Text(child),
+    padding: EdgeInsets.all(10),
+    onPressed: onPressed,
   );
 }
