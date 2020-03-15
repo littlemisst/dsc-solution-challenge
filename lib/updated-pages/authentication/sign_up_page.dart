@@ -88,7 +88,13 @@ class _SignUpState extends State<SignUp> {
                         _firebaseAuth.signUpWithEmailAndPassword(
                             email, password);
                       }
-                    })
+                    }),
+                InkWell(
+                  child: Text('Already have an account? Sign In'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                )
               ],
             ),
           )),

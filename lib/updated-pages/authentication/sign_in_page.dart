@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
+import 'package:me_daily/updated-pages/authentication/sign_up_page.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -74,7 +75,16 @@ class _SignInState extends State<SignIn> {
                         _firebaseAuth.signInWithEmailAndPassword(
                             email, password);
                       }
-                    })
+                    }),
+                InkWell(
+                  child: Text('Create an Account'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUp()),
+                    );
+                  },
+                )
               ],
             ),
           )),
