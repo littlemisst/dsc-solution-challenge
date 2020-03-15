@@ -334,7 +334,7 @@ class _UserProfileState extends State<UserProfile> {
         child: Column(children: <Widget>[
       RaisedButton(
         child: Text('Sign Out'),
-        onPressed: () => signOut(authNotifier),
+        // onPressed: () => signOut(authNotifier),
       ),
     ]));
   }
