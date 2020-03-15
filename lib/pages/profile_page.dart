@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:me_daily/api/home_page_api.dart';
 import 'package:me_daily/api/profile_page_api.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:multi_page_form/multi_page_form.dart';
@@ -278,7 +277,7 @@ class _UserProfileState extends State<UserProfile> {
                         SizedBox(
                           height: 15,
                         ),
-                            _buildHeightField(),
+                        _buildHeightField(),
                         SizedBox(
                           height: 20,
                         ),
@@ -327,16 +326,7 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   Widget personalInformation3() {
-    AuthNotifier authNotifier =
-        Provider.of<AuthNotifier>(context, listen: false);
-
-    return Container(
-        child: Column(children: <Widget>[
-      RaisedButton(
-        child: Text('Sign Out'),
-        // onPressed: () => signOut(authNotifier),
-      ),
-    ]));
+    return Container();
   }
 
   @override
