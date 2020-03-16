@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class AddPhoto extends StatefulWidget {
   @override
@@ -43,8 +43,12 @@ class _AddPhotoState extends State<AddPhoto> {
         backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
+        padding: EdgeInsets.fromLTRB(0, 80,0, 0),
           child: Center(
-        child: Column(children: <Widget>[
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+          SizedBox(height: 20.0),
           _image == null ? Container() : Image.file(_image, height: 300.0),
           RaisedButton.icon(
             icon: Icon(Icons.camera_alt, color: Colors.white),
@@ -58,7 +62,7 @@ class _AddPhotoState extends State<AddPhoto> {
               getImage(true);
             },
           ),
-          SizedBox(height: 10.0),
+          SizedBox(width: 20.0),
           RaisedButton.icon(
             icon: Icon(Icons.photo_album, color: Colors.white),
             label: Text('Gallery', style: TextStyle(color: Colors.white)),
