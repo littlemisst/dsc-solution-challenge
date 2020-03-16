@@ -5,8 +5,10 @@ import 'package:multi_page_form/multi_page_form.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter_scale/flutter_scale.dart';
 import 'package:intl/intl.dart';
-import 'package:me_daily/notifier/authentication_notifier.dart';
-import 'package:provider/provider.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class UserProfile extends StatefulWidget {
   @override
@@ -238,6 +240,76 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 
+  File _image;
+  Future getImage(bool isCamera) async {
+    File image;
+    if (isCamera) {
+      image = await ImagePicker.pickImage(source: ImageSource.camera);
+    } else {
+      image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    }
+    setState(() {
+      _image = image;
+    });
+  }
+
+  bool _uploaded = false;
+  Future uploadImage() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    final uid = user.uid;
+
+    String fileUploadName =
+        DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+    _profile.profilePhotoFileName = fileUploadName;
+
+    StorageReference _reference = FirebaseStorage.instance
+        .ref()
+        .child('users/$uid/${_profile.profilePhotoFileName}');
+
+    StorageUploadTask uploadTask = _reference.putFile(_image);
+
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    _profile.downloadUrl = await _reference.getDownloadURL();
+    submitProfile(_profile);
+    setState(() {
+      _uploaded = true;
+    });
+  }
+
+  Widget _buildAddProfilePhoto() {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+      child: SingleChildScrollView(
+        child: Column(children: <Widget>[
+          Text('Select Profile Photo'),
+          SizedBox(height: 20.0),
+          _image == null
+              ? CircleAvatar(backgroundColor: Colors.grey, radius: 80.0)
+              : CircleAvatar(
+                  backgroundImage: new FileImage(_image), radius: 80.0),
+          SizedBox(height: 20.0),
+          RaisedButton.icon(
+            icon: Icon(Icons.camera_alt, color: Colors.white),
+            label: Text('Camera', style: TextStyle(color: Colors.white)),
+            color: Colors.pink[100],
+            onPressed: () {
+              getImage(true);
+            },
+          ),
+          SizedBox(width: 20.0),
+          RaisedButton.icon(
+            icon: Icon(Icons.photo_album, color: Colors.white),
+            label: Text('Gallery', style: TextStyle(color: Colors.white)),
+            color: Colors.pink[100],
+            onPressed: () {
+              getImage(false);
+            },
+          ),
+        ]),
+      ),
+    );
+  }
+
   Widget personalInformation2() {
     return Scaffold(
       body: Container(
@@ -326,7 +398,7 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   Widget personalInformation3() {
-    return Container();
+    return _buildAddProfilePhoto();
   }
 
   @override
@@ -342,6 +414,7 @@ class _UserProfileState extends State<UserProfile> {
           ],
           onFormSubmitted: () {
             submitProfile(_profile);
+            uploadImage();
           },
         ));
   }

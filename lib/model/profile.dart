@@ -8,6 +8,8 @@ class Profile {
   String bloodType;
   String height;
   String weight;
+  String profilePhotoFileName;
+  String downloadUrl;
 
   Profile();
 
@@ -21,5 +23,7 @@ class Profile {
         "bloodType": bloodType,
         "height": double.parse(height),
         "weight": double.parse(weight),
+        "profilePhotoFileName": profilePhotoFileName,
+        "downloadUrl" : downloadUrl,
       };
 }
