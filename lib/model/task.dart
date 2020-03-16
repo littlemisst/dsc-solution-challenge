@@ -1,21 +1,18 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'task.g.dart';
+@JsonSerializable(nullable: false)
 class Task {
+  DateTime taskCreated = DateTime.now();
   String taskType;
-  DateTime dateCreated = DateTime.now();
   String specificTask;
   DateTime taskStarted;
   DateTime taskEnded;
-  DateTime time;
-  bool completed = false;
+  DateTime taskTime;
+  final bool completed = false;
 
-  Task();
+  Task({this.taskType, this.specificTask, this.taskStarted, this.taskEnded, this.taskTime});
 
-  Map<String, dynamic> toJson() => {
-    "taskType": taskType,
-    "specificTask": specificTask,
-    "dateCreated": dateCreated,
-    "taskStarted": taskStarted,
-    "taskEnded": taskEnded,
-    "time": time,
-    "completed": completed
-  };
+  factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
+  Map<String, dynamic> toJson() =>  _$TaskToJson(this);
 }

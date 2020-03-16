@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:me_daily/model/photo.dart';
+import 'package:me_daily/model/task.dart';
 
 class FirestoreService {
   final String uid;
@@ -29,5 +30,12 @@ class FirestoreService {
         .document(uid)
         .collection('photos')
         .add({'downloadURL': downloadURL, 'fileName': fileName});
+  }
+
+  Future addTask(Task task) async {
+    return await userData
+      .document(uid)
+      .collection('tasks')
+      .add(task.toJson());
   }
 }
