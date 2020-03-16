@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
-import 'package:me_daily/constants/strings.dart';
+import 'package:provider/provider.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
-import 'package:provider/provider.dart';
-
+import 'package:me_daily/pages/addTaskViewItems.dart';
 
 class AddTask extends StatefulWidget {
-  
   @override
   _AddTaskState createState() => _AddTaskState();
 }
 
 class _AddTaskState extends State<AddTask> {
   String _taskType;
-  String _specificTask;
   DateTime _startTask;
   DateTime _endTask;
   DateTime _time;
-  List<dynamic> _items;
   Task task;
 
   @override
@@ -32,21 +28,20 @@ class _AddTaskState extends State<AddTask> {
         DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
     _time = DateTime.now();
     _taskType = '';
-    _specificTask = '';
-    _items = [];
+    task = Task(
+      taskType: _taskType
+    );
   }
-
+  
   Task _taskFromState() {
     return Task(
       taskType: _taskType,
-      specificTask: _specificTask,
+      specificTask: task.specificTask,
       taskStarted: _startTask,
       taskEnded: _endTask,
       taskTime: _time
     );
   }
-  
-
 
   @override
   Widget build(BuildContext context) {
@@ -75,24 +70,25 @@ class _AddTaskState extends State<AddTask> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.pink[100],
-          onPressed: () async {
-            await _firestoreService.addTask(_taskFromState());
-          },
-          child: Icon(
-            Icons.alarm,
-            color: Colors.white,
-          )),
+        backgroundColor: Colors.pink[100],
+        onPressed: () async {
+          await _firestoreService.addTask(_taskFromState());
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        },
+        child: Icon(
+          Icons.alarm,
+          color: Colors.white,
+        )),
     );
   }
 
   Widget _buildTasksGrid(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height / 3,
-      padding: EdgeInsets.all(14),
+      height: MediaQuery.of(context).size.height / 4,
+      padding: EdgeInsets.all(5),
       child: GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, childAspectRatio: 1),
+            crossAxisCount: 3, childAspectRatio: 1.5),
         children: <Widget>[
           _buildGridItem(context, new AssetImage("images/food.png"), 'Eat'),
           _buildGridItem(
@@ -111,96 +107,33 @@ class _AddTaskState extends State<AddTask> {
 
   Widget _buildGridItem(BuildContext context, icon, text) {
     var flatButton = FlatButton(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.all(10),
         child: ImageIcon(
           icon,
-          size: 40,
-          color: Colors.pink[100],
+          size: 25,
+          color: Colors.white
         ),
-        color: Colors.white,
-        shape: CircleBorder(side: BorderSide(color: Colors.grey)),
+        color: Colors.pink[200],
+        shape: CircleBorder(side: BorderSide.none),
         onPressed: () async {
           setState(() {
             _taskType = text;
-            _buildTaskViewList(context);
+            task.taskType = _taskType;
+            Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TaskViewItems(task: task)),
+          );
           });
         }
       );
     return Column(
       children: <Widget>[
         flatButton,
-        SizedBox(height: 8),
+        SizedBox(height: 3),
         Text(text, style: TextStyle(fontSize: 11)),
       ],
     );
   }
-
-  void _buildTaskViewList(BuildContext context) {
-    _items = [];
-    switch (_taskType) {
-      case "Eat":
-        {
-          _items = Strings.eatItems;
-        }
-        break;
-      case "Drink":
-        {
-          _items = Strings.drinkItems;
-        }
-        break;
-      case "Exercise":
-        {
-          _items = Strings.exerciseItems;
-        }
-        break;
-      case "Medicine":
-        {
-          _items = Strings.medicineItems;
-        }
-        break;
-      case "Appointment":
-        {
-          _items = Strings.appointmentItems;
-        }
-        break;
-      case "More":
-        {}
-        break;
-      default:
-        {
-          print("should not be!");
-        }
-    }
-    showModalBottomSheet(
-      context: context,
-      builder: (context) { 
-        return Container(
-        child: ListView.builder(
-          itemCount: _items.length, 
-          itemBuilder: (context, index) {
-             return _taskListView(_items, index);
-          }),
-        );
-      }
-    );
-  }
-
-  Widget _taskListView(items, index) {
-    print(_specificTask);
-    return ListTile(
-      title: Text(items[index]),
-      leading: Radio(
-        value: items[index],
-        groupValue: _specificTask,
-        onChanged: (value) {
-          setState(() {
-            _specificTask = value;
-          }
-        );
-      })
-    );
-  }
-
 
   Widget _buildDatePicker(indicator) {
     final format = DateFormat("yMMMMd");
