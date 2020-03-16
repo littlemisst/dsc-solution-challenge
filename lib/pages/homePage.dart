@@ -10,6 +10,7 @@ import 'package:me_daily/pages/mapPage.dart';
 import 'package:me_daily/pages/profile_page.dart';
 import 'package:me_daily/pages/summaryPage.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
+import 'package:me_daily/updated-pages/photos/gallery_page.dart';
 // import 'package:me_daily/pages/viewTasksPage.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   final bodies = [
     SummaryPage(),
     MapPage(),
-    Files(),
+    GalleryPage(),
     CalendarPage(),
     UserProfile(),
   ];
@@ -61,16 +62,16 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => AddTask()));
                       }),
-                  SpeedDialChild(
-                      child: Icon(Icons.add_photo_alternate),
-                      label: 'Add Image',
-                      backgroundColor: Colors.pink[100],
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AddPhoto()));
-                      }),
+                  // SpeedDialChild(
+                  //     child: Icon(Icons.add_photo_alternate),
+                  //     label: 'Add Image',
+                  //     backgroundColor: Colors.pink[100],
+                  //     onTap: () {
+                  //       Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(
+                  //               builder: (context) => AddPhoto()));
+                  //     }),
                   SpeedDialChild(
                       child: Icon(Icons.playlist_add_check),
                       label: 'Add Daily Log',

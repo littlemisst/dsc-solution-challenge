@@ -1,11 +1,9 @@
 class Photo {
-  String fileName;
-  String downloadURL;
+  final String fileName;
+  final String downloadURL;
 
-  Photo();
+  Photo({this.fileName, this.downloadURL});
 
-  Map<String, dynamic> toJson() => {
-    "fileName" : fileName,
-    "downloadURL": downloadURL
-  };
+  // Map<String, dynamic> toJson() =>
+  //     {"fileName": fileName, "downloadURL": downloadURL};
 }
