@@ -17,6 +17,17 @@ class FirestoreService {
   }
 
   Stream<List<Photo>> get photos {
-    return userData.document(uid).collection('photos').snapshots().map(_photoFromFirebase);
+    return userData
+        .document(uid)
+        .collection('photos')
+        .snapshots()
+        .map(_photoFromFirebase);
+  }
+
+  Future uploadPhoto(String downloadURL, String fileName) async {
+    return await userData
+        .document(uid)
+        .collection('photos')
+        .add({'downloadURL': downloadURL, 'fileName': fileName});
   }
 }

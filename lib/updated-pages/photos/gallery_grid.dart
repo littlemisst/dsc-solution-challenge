@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:me_daily/model/photo.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +10,10 @@ class GalleryGrid extends StatefulWidget {
 class _GalleryGridState extends State<GalleryGrid> {
   @override
   Widget build(BuildContext context) {
-    final photos = Provider.of<List<Photo>>(context);
-
+    List<Photo> photos = Provider.of<List<Photo>>(context);
+    if(photos == null){
+      photos = [];
+    }
     return Container(
         child: GridView.builder(
       itemCount: photos.length,
@@ -26,9 +27,12 @@ class _GalleryGridState extends State<GalleryGrid> {
 
 Widget _buildPhotoListItem(context, document) {
   return Container(
-    child: Image.network(
-      document.downloadURL.toString(),
-      fit: BoxFit.cover,
+    child: GridTile(
+      footer: Text(document.fileName),
+      child: Image.network(
+        document.downloadURL.toString(),
+        fit: BoxFit.cover,
+      ),
     ),
   );
 }

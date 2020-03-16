@@ -62,16 +62,16 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => AddTask()));
                       }),
-                  // SpeedDialChild(
-                  //     child: Icon(Icons.add_photo_alternate),
-                  //     label: 'Add Image',
-                  //     backgroundColor: Colors.pink[100],
-                  //     onTap: () {
-                  //       Navigator.push(
-                  //           context,
-                  //           MaterialPageRoute(
-                  //               builder: (context) => AddPhoto()));
-                  //     }),
+                  SpeedDialChild(
+                      child: Icon(Icons.add_photo_alternate),
+                      label: 'Add Image',
+                      backgroundColor: Colors.pink[100],
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddPhoto()));
+                      }),
                   SpeedDialChild(
                       child: Icon(Icons.playlist_add_check),
                       label: 'Add Daily Log',
