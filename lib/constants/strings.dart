@@ -1,43 +1,32 @@
 class Strings {
-  static var eatItems = [
-    "bread",
-    "cereal",
-    "rice",
-    "pasta",
-    "noodles",
-    "vegetables",
-    "legumes",
-    "fruits",
-    "dairy",
-    "lean meat",
-    "fish",
-    "poultry",
-    "eggs",
-    "nuts",
-    "others"
+  static var food = [
+    'vegetables',
+    'fruits',
+    'grains',
+    'dairy',
+    'no meat',
+    'no sweets',
   ];
-  static var drinkItems = [
+  static var drink = [
     "water",
     "coffee",
     "milk",
     "tea",
     "soda",
-    "juice",
     "no soda",
     "no coffee"
   ];
-  static var medicineItems = [
-    "fever",
-    "cold",
+  static var medicine = [
+    "for fever",
+    "for common cold",
     "maintenance",
-    "aches",
-    "diarrhea",
-    "sore throat",
-    "allergies",
+    "for diarrhea",
+    "for sore throat",
+    "for allergies",
     "vitamins"
   ];
-  static var exerciseItems = ["walking", "jogging", "weights", "cycling", "yoga"];
-  static var appointmentItems = [
+  static var exercise = ["walk", "jog", "weights", "cycle", "yoga"];
+  static var appointment = [
     "routine check-up",
     "laboratory",
     "counseling",

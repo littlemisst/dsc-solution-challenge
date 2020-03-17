@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:me_daily/api/view_task_api.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/api/daily_logs_api.dart';
-import 'package:me_daily/pages/viewLogsPage.dart';
 
 class AddDailyLogs extends StatefulWidget {
   @override
@@ -103,49 +102,6 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
     );
   }
 
-   Widget _buildTasksGrid(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height / 3,
-      padding: EdgeInsets.all(14),
-      child: GridView(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, childAspectRatio: 1.5),
-        children: <Widget>[
-          _gridItem(context, new AssetImage("images/dish.png"), 'Eat'),
-          _gridItem(context, new AssetImage("images/wine_bottle.png"), 'Drink'),
-          _gridItem(context, new AssetImage("images/barbell.png"), 'Exercise'),
-          _gridItem(
-              context, new AssetImage("images/medical_tablet.png"), 'Medicine'),
-          _gridItem(context, new AssetImage("images/medical_history.png"),
-              'Appointment'),
-          _gridItem(context, new AssetImage("images/add.png"), 'More'),
-        ],
-      ),
-    );
-  }
-
-  Widget _gridItem(BuildContext context, icon, text) {
-    var flatButton = FlatButton(
-        padding: EdgeInsets.all(8),
-        child: ImageIcon(icon, size:40, color: Colors.white,),
-        color: Colors.pink[100],
-        shape: CircleBorder(side: BorderSide.none),
-        onPressed: () {
-          _logs.taskType = text;
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => LogViewItems(log: _logs)),
-          );
-        });
-    return Column(
-      children: <Widget>[
-        flatButton,
-        SizedBox(height: 8),
-        Text(text, style: TextStyle(fontSize: 11)),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     updateTask();
@@ -160,7 +116,6 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
         child: Column(
           children: <Widget>[
             _buildChooseEmotions(),
-            _buildTasksGrid(context),
             _buildAddNotes(),
             RaisedButton(
               child: Text('submit'),
