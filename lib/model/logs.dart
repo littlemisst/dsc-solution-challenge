@@ -1,18 +1,31 @@
-class Logs {
-  
-  String emotion;
-  String note;
-  String taskType;
-  String specificTask;
-  DateTime taskDone = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+import 'package:json_annotation/json_annotation.dart';
 
-  Logs();
+part 'logs.g.dart';
+@JsonSerializable(nullable: false)
+class DailyLog {
+  @JsonKey(name: 'logCreated')
+  DateTime logCreated = DateTime.now();
 
-  Map<String, dynamic> toJson() => {
-    "emotion": emotion,
-    "note": note,
-    "taskType": taskType,
-    "specificTask": specificTask,
-    "taskDone" : taskDone
-  };
+  @JsonKey(name: 'feeling')
+  String feeling;
+
+  @JsonKey(name: 'food')
+  String food;
+
+  @JsonKey(name: 'drink')
+  String drink;
+
+  @JsonKey(name: 'exercise')
+  String exercise;
+
+  @JsonKey(name: 'hoursSlept')
+  int hoursSlept;
+
+
+
+
+  DailyLog({this.feeling, this.food, this.drink, this.exercise, this.hoursSlept});
+
+  factory DailyLog.fromJson(Map<String, dynamic> json) => _$DailyLogFromJson(json);
+  Map<String, dynamic> toJson() =>  _$DailyLogToJson(this);
 }

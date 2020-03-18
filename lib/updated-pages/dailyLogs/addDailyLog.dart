@@ -11,15 +11,16 @@ class AddDailyLogs extends StatefulWidget {
 
 class _AddDailyLogsState extends State<AddDailyLogs> {
   String _emotion;
+  DailyLog entry;
 
   void _chooseEmotion(String emotion) {
     setState(() {
       _emotion = emotion;
-      // _logs.emotion = emotion;
+      entry.feeling = _emotion;
     });
-    print(_emotion);
+    print(entry.feeling);
     if (_emotion == 'good' || _emotion == 'neutral') {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => BasicQuestionsPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => BasicQuestionsPage(entry: entry)));
     } else {
       Navigator.push(context, MaterialPageRoute(builder: (context) => SickQuestionPage()));
     }
@@ -34,6 +35,15 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
         Expanded(child:IconItem(AssetImage("images/sick.png"), 'sick', 60, Colors.grey, () => _chooseEmotion('sick'))),
       ],
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    entry = DailyLog(
+      feeling: _emotion
+    );
+    _emotion = '';
   }
 
   @override

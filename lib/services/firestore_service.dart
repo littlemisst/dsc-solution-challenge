@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:me_daily/model/feeling.dart';
+import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/photo.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/task.dart';
@@ -11,6 +12,7 @@ class FirestoreService {
   final CollectionReference userData =
       Firestore.instance.collection('userData');
 
+  //add and retrieve photos
   List<Photo> _photoFromFirebase(QuerySnapshot querySnapshot) {
     return querySnapshot.documents.map((document) {
       return Photo(
@@ -34,10 +36,7 @@ class FirestoreService {
         .add({'downloadURL': downloadURL, 'fileName': fileName});
   }
 
-  Future addTask(Task task) async {
-    return await userData.document(uid).collection('tasks').add(task.toJson());
-  }
-
+  // retrieve to health chart
   List<Health> _healthFromFirebase(QuerySnapshot querySnapshot) {
     return querySnapshot.documents.map((document) {
       return Health(
@@ -52,6 +51,7 @@ class FirestoreService {
         .map(_healthFromFirebase);
   }
 
+//add and retrieve for profile
   Profile _profileFromFirebase(DocumentSnapshot documentSnapshot) {
     return Profile(
         name: documentSnapshot.data['name'],
@@ -67,6 +67,11 @@ class FirestoreService {
   Stream<Profile> get profile {
     return userData.document(uid).snapshots().map(_profileFromFirebase);
   }
+  
+//add and retrieve for task
+  Future addTask(Task task) async {
+    return await userData.document(uid).collection('tasks').add(task.toJson());
+  }
 
   List<Task> _taskFromFirebase(QuerySnapshot querySnapshot) {
     return querySnapshot.documents.map((document) => Task.fromJson(document.data))
@@ -79,5 +84,10 @@ class FirestoreService {
       .collection('tasks')
       .snapshots()
       .map(_taskFromFirebase);
+  }
+
+  //add and retrieve for daily logs
+  Future addDailyLog(DailyLog entry) async {
+    return await userData.document(uid).collection('dailyLogs').add(entry.toJson());
   }
 }

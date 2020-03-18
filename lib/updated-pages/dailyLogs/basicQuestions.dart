@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/constants/strings.dart';
+import 'package:me_daily/model/logs.dart';
+import 'package:me_daily/model/user.dart';
+import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/updated-pages/dailyLogs/expandableWidget.dart';
+import 'package:provider/provider.dart';
 
 class BasicQuestionsPage extends StatefulWidget {
+  final DailyLog entry;
+  BasicQuestionsPage({Key key, @required this.entry}) : super(key: key);
   @override
   _BasicQuestionsPageState createState() => _BasicQuestionsPageState();
 }
@@ -16,40 +22,41 @@ class _BasicQuestionsPageState extends State<BasicQuestionsPage> {
   void _setFood(value) {
     setState(() {
      _food = value;
-      //insert pag butang sa db;
+     widget.entry.food = _food;
     });
   }
 
   void _setDrink(value) {
     setState(() {
      _drink = value;
-      //insert pag butang sa db;
+     widget.entry.drink = _drink;
     });
   }
 
   void _setExercise(value) {
     setState(() {
      _exercise= value;
-      //insert pag butang sa db;
+    widget.entry.exercise = _exercise;
     });
   }
 
    void _incrementSleepHours() {
     setState(() {
      _hoursOfSleep++;
-      //insert pag butang sa db;
+     widget.entry.hoursSlept = _hoursOfSleep;
     });
   }
 
   void _decrementSleepHours() {
     setState(() {
      _hoursOfSleep--;
-      //insert pag butang sa db;
+    widget.entry.hoursSlept = _hoursOfSleep;
     });
     if (_hoursOfSleep < 0) {
       _hoursOfSleep = 0;
     }
   }
+
 
   @override
   void initState() {
@@ -61,6 +68,8 @@ class _BasicQuestionsPageState extends State<BasicQuestionsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+    final _firestoreService = FirestoreService(uid: user.uid);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -94,7 +103,15 @@ class _BasicQuestionsPageState extends State<BasicQuestionsPage> {
               )
           ],
         ),
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.pink[100],
+        onPressed: () async {
+          print(widget.entry);
+          await _firestoreService.addDailyLog(widget.entry);
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        },
+        child: Icon(Icons.check, color: Colors.white)),
     );
   }
 }
