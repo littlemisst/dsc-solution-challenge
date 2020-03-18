@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/api/view_task_api.dart';
+import 'package:me_daily/common-widgets/iconItem.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/api/daily_logs_api.dart';
 
@@ -13,71 +14,21 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
 
   Logs _logs = Logs();
 
-  void _chooseEmotion(String emotion) {
+  Future<void> _chooseEmotion(String emotion) {
     setState(() {
       _logs.emotion = emotion;
     });
   }
 
   Widget _buildChooseEmotions() {
-    return Container(
-      padding: EdgeInsets.fromLTRB(32, 96, 32, 0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      return Row(
         children: <Widget>[
-          Expanded(
-            child: FlatButton(
-              onPressed:()=> _chooseEmotion("rad"),
-              child: Icon(
-                Icons.sentiment_very_satisfied,
-                size: 50,
-                color: Colors.pink[100],
-              ),
-            ),
-          ),
-          Expanded(
-            child: FlatButton(
-              onPressed: ()=> _chooseEmotion("good"),
-              child: Icon(
-                Icons.sentiment_satisfied,
-                size: 50,
-                color: Colors.pink[100],
-              ),
-            ),
-          ),
-          Expanded(
-            child: FlatButton(
-              onPressed: ()=> _chooseEmotion("meh"),
-              child: Icon(
-                Icons.sentiment_neutral,
-                size: 50,
-                color: Colors.pink[100],
-              ),
-            ),
-          ),
-          Expanded(
-            child: FlatButton(
-              onPressed: ()=> _chooseEmotion("bad"),
-              child: Icon(
-                Icons.sentiment_dissatisfied,
-                size: 50,
-                color: Colors.pink[100],
-              ),
-            ),
-          ),
-          Expanded(
-            child: FlatButton(
-              onPressed: ()=> _chooseEmotion("Sad"),
-              child: Icon(
-                Icons.sentiment_very_dissatisfied,
-                size: 50,
-                color: Colors.pink[100],
-              ),
-            ),
-          ),
+          Expanded(child: IconItem(AssetImage("images/well.png"), 'well', 60, Colors.lightGreen[200], () => _chooseEmotion('well'))),
+          Expanded(child:IconItem(AssetImage("images/neutral.png"), 'neutral', 60, Colors.orange[200], () => _chooseEmotion('fine'))),
+          Expanded(child:IconItem(AssetImage("images/unwell.png"), 'unwell', 60, Colors.blue[200], () => _chooseEmotion('unwell'))),
+          Expanded(child:IconItem(AssetImage("images/sick.png"), 'sick', 60, Colors.grey[200], () => _chooseEmotion('unwell'))),
         ],
-      ),
-    );
+      );
   }
 
   Widget _buildDrinkWater(){
@@ -104,29 +55,19 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
 
   @override
   Widget build(BuildContext context) {
-    updateTask();
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title:
-            Text('Add Daily Logs', style: TextStyle(color: Colors.pink[100])),
         backgroundColor: Colors.white,
+        elevation: 0,
       ),
-      body: Form(
-        key: _formKey,
+      body: SingleChildScrollView(
+        padding: EdgeInsets.fromLTRB(32, 32, 32, 0),
         child: Column(
           children: <Widget>[
+            Text('How are you doing?', style: TextStyle(fontSize: 18.0)),
+            SizedBox(height: 24),
             _buildChooseEmotions(),
-            _buildAddNotes(),
-            RaisedButton(
-              child: Text('submit'),
-              onPressed: () {
-                if(!_formKey.currentState.validate()){
-                  return;
-                }
-
-                submit(_logs);
-              },
-            )
           ],
         ),
       ),

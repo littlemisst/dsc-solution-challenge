@@ -154,7 +154,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
           _profile.address = value;
         }),
         SizedBox(height: 30.0),
-        buildDatePicker(context, _profile.birthDate, 'Birthdate',
+        DatePicker('Birthdate',
             (DateTime value) {
           _profile.birthDate = value;
         }),
