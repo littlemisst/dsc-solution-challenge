@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:me_daily/model/feeling.dart';
 import 'package:me_daily/model/photo.dart';
+import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/task.dart';
 
 class FirestoreService {
@@ -49,5 +50,18 @@ class FirestoreService {
         .collection('mockdata')
         .snapshots()
         .map(_healthFromFirebase);
+  }
+
+  Profile _profileFromFirebase(DocumentSnapshot documentSnapshot) {
+    return Profile(
+        name: documentSnapshot.data['name'],
+        address: documentSnapshot.data['address'],
+        gender: documentSnapshot.data['gender'],
+        civilStatus: documentSnapshot.data['civilStatus'],
+        bloodType: documentSnapshot.data['bloodType'],);
+  }
+
+  Stream<Profile> get profile {
+    return userData.document(uid).snapshots().map(_profileFromFirebase);
   }
 }

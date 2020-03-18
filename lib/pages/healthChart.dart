@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/model/feeling.dart';
-import 'package:me_daily/model/photo.dart';
-import 'package:me_daily/model/user.dart';
 import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -17,10 +15,6 @@ class _HealthChartState extends State<HealthChart> {
     if (feelingsList == null) {
       feelingsList = [];
     }
-    // List<Health> feelingsList = [
-    //   Health(count: 10, feeling: 'bad'),
-    //   Health(feeling: 'good', count: 5)
-    // ];
 
     List<charts.Series<Health, dynamic>> _createData() {
       return [

@@ -1,10 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/api/share_details_api.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/api/profile_page_api.dart';
+import 'package:me_daily/model/user.dart';
+import 'package:me_daily/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 
 class SendDetailsForm extends StatefulWidget {
@@ -20,8 +21,9 @@ class _SendDetailsState extends State<SendDetailsForm> {
   String _ageValue;
   String _civilStatusValue;
   String _bloodTypeValue;
+  String _gender;
 
-  Widget _buildNameField() {
+  Widget _buildNameField(context, initialValue) {
     return TextFormField(
         validator: (value) {
           if (value.isEmpty) {
@@ -29,6 +31,7 @@ class _SendDetailsState extends State<SendDetailsForm> {
           }
           return null;
         },
+        initialValue: initialValue,
         decoration: const InputDecoration(
           labelText: 'Name',
           enabledBorder:
@@ -37,7 +40,7 @@ class _SendDetailsState extends State<SendDetailsForm> {
         onChanged: (String value) => {_profile.name = value});
   }
 
-  Widget _buildGender() {
+  Widget _buildGender(context, initialValue) {
     return Center(
         child: DropdownButtonFormField<String>(
       decoration: InputDecoration(
@@ -50,16 +53,16 @@ class _SendDetailsState extends State<SendDetailsForm> {
       ],
       onChanged: (String value) => {
         setState(() {
-          _ageValue = value;
+          _gender = value;
           _profile.gender = value;
         })
       },
       hint: Text('Gender'),
-      value: _ageValue,
+      value: initialValue,
     ));
   }
 
-  Widget _buildAddressField() {
+  Widget _buildAddressField(context, initialValue) {
     return TextFormField(
       validator: (value) {
         if (value.isEmpty) {
@@ -67,6 +70,7 @@ class _SendDetailsState extends State<SendDetailsForm> {
         }
         return null;
       },
+      initialValue: initialValue,
       decoration: const InputDecoration(
         labelText: 'Address',
         enabledBorder:
@@ -98,7 +102,7 @@ class _SendDetailsState extends State<SendDetailsForm> {
     ]);
   }
 
-  Widget _buildCivilStatus() {
+  Widget _buildCivilStatus(context, inititalValue) {
     return Center(
         child: DropdownButtonFormField<String>(
       decoration: InputDecoration(
@@ -120,7 +124,7 @@ class _SendDetailsState extends State<SendDetailsForm> {
     ));
   }
 
-  Widget _buildBloodType() {
+  Widget _buildBloodType(context, initialValue) {
     return Container(
         width: 120.0,
         child: DropdownButtonFormField<String>(
@@ -145,37 +149,50 @@ class _SendDetailsState extends State<SendDetailsForm> {
             })
           },
           hint: Text('Blood Type'),
-          value: _bloodTypeValue,
+          value: _bloodTypeValue ?? initialValue,
         ));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: _formKey,
-        child: Padding(
-            padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
-            child: Column(children: <Widget>[
-              SizedBox(height: 15),
-              _buildNameField(),
-              SizedBox(height: 5),
-              _buildGender(),
-              SizedBox(height: 5),
-              _buildAddressField(),
-              SizedBox(height: 5),
-              _buildDatePicker(),
-              SizedBox(height: 5),
-              _buildCivilStatus(),
-              SizedBox(height: 5),
-              _buildBloodType(),
-              Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: RaisedButton(
-                      color: Colors.pink[100],
-                      onPressed: () => submitDetails(_profile),
-                      child: Text('Submit Details',
-                          style: TextStyle(color: Colors.white)))),
-            ])));
+    final user = Provider.of<User>(context);
+    return StreamBuilder<Profile>(
+      stream: FirestoreService(uid: user.uid).profile,
+      builder: (context, snapshots) {
+        if (snapshots.hasData) {
+          Profile _currentProfile = snapshots.data;
+
+          return Form(
+            key: _formKey,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
+              child: Column(children: <Widget>[
+                SizedBox(height: 15),
+                _buildNameField(context, _currentProfile.name),
+                SizedBox(height: 5),
+                _buildGender(context, _currentProfile.gender),
+                SizedBox(height: 5),
+                _buildAddressField(context, _currentProfile.address),
+                SizedBox(height: 5),
+                _buildDatePicker(),
+                SizedBox(height: 5),
+                _buildCivilStatus(context, _currentProfile.civilStatus),
+                SizedBox(height: 5),
+                _buildBloodType(context, _currentProfile.bloodType),
+                Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: RaisedButton(
+                        color: Colors.pink[100],
+                        onPressed: () => submitDetails(_profile),
+                        child: Text('Submit Details',
+                            style: TextStyle(color: Colors.white)))),
+              ]),
+            ),
+          );
+        }
+        return Container();
+      },
+    );
   }
 }
 
@@ -184,7 +201,8 @@ class SendDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Submit Details', style: TextStyle(color: Colors.pink[100])),
+          title:
+              Text('Submit Details', style: TextStyle(color: Colors.pink[100])),
           backgroundColor: Colors.white,
         ),
         body: SingleChildScrollView(
