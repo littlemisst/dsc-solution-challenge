@@ -14,42 +14,20 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
 
   Logs _logs = Logs();
 
-  Future<void> _chooseEmotion(String emotion) {
+  void _chooseEmotion(String emotion) {
     setState(() {
       _logs.emotion = emotion;
     });
   }
 
   Widget _buildChooseEmotions() {
-      return Row(
-        children: <Widget>[
-          Expanded(child: IconItem(AssetImage("images/well.png"), 'well', 60, Colors.lightGreen[200], () => _chooseEmotion('well'))),
-          Expanded(child:IconItem(AssetImage("images/neutral.png"), 'neutral', 60, Colors.orange[200], () => _chooseEmotion('fine'))),
-          Expanded(child:IconItem(AssetImage("images/unwell.png"), 'unwell', 60, Colors.blue[200], () => _chooseEmotion('unwell'))),
-          Expanded(child:IconItem(AssetImage("images/sick.png"), 'sick', 60, Colors.grey[200], () => _chooseEmotion('unwell'))),
-        ],
-      );
-  }
-
-  Widget _buildDrinkWater(){
-    return Container(
-      
-    );
-  }
-
-  Widget _buildAddNotes() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: "Add notes"),
-      keyboardType: TextInputType.text,
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'Please enter some text';
-        }
-        return null;
-      },
-      onChanged: (String value) {
-        _logs.note = value;
-      },
+    return Row(
+      children: <Widget>[
+        Expanded(child: IconItem(AssetImage("images/well.png"), 'good', 60, Colors.lightGreen[200], () => _chooseEmotion('good'))),
+        Expanded(child:IconItem(AssetImage("images/neutral.png"), 'neutral', 60, Colors.orange[200], () => _chooseEmotion('neutral'))),
+        Expanded(child:IconItem(AssetImage("images/unwell.png"), 'unwell', 60, Colors.blue[200], () => _chooseEmotion('unwell'))),
+        Expanded(child:IconItem(AssetImage("images/sick.png"), 'sick', 60, Colors.grey, () => _chooseEmotion('sick'))),
+      ],
     );
   }
 
@@ -61,16 +39,15 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(32, 32, 32, 0),
-        child: Column(
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text('How are you doing?', style: TextStyle(fontSize: 18.0)),
-            SizedBox(height: 24),
+            Text('How are you doing?', style: TextStyle(fontSize: 20)),
+            SizedBox(height: 30),
             _buildChooseEmotions(),
           ],
         ),
-      ),
-    );
+      );
   }
 }

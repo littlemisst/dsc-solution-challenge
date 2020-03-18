@@ -3,6 +3,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/common-widgets/datePicker.dart';
 import 'package:me_daily/common-widgets/iconItem.dart';
+import 'package:me_daily/common-widgets/timePicker.dart';
 import 'package:provider/provider.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/model/user.dart';
@@ -63,7 +64,7 @@ class _AddTaskState extends State<AddTask> {
             SizedBox(height: 24),
             DatePicker('end date', (DateTime value) => task.taskEnded = value),
             SizedBox(height: 24),
-            _buildTimePicker()
+            TimePicker((DateTime value) => task.taskTime = value)
           ],
         ),
       ),
@@ -121,31 +122,6 @@ class _AddTaskState extends State<AddTask> {
         borderRadius: BorderRadius.circular(5)
       )
     );
-  }
-
-  Widget _buildTimePicker() {
-    final format = DateFormat("HH:mm");
-    return Column(children: <Widget>[
-      DateTimeField(
-          decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey)),
-              labelText: 'time'),
-          format: format,
-          onShowPicker: (context, currentValue) async {
-            final time = await showTimePicker(
-              context: context,
-              initialTime:
-                  TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-            );
-            return DateTimeField.convert(time);
-          },
-          onChanged: (value) => {
-                setState(() {
-                  task.taskTime = value;
-                })
-              }),
-    ]);
   }
 
   Future<void> _buildMoreDialog(BuildContext context) {
