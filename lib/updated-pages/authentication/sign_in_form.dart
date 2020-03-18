@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
 
-class SignUp extends StatefulWidget {
+class SignIn extends StatefulWidget {
+  final toggleBetweenForms;
+
+  SignIn({this.toggleBetweenForms});
+
   @override
-  _SignUpState createState() => _SignUpState();
+  _SignInState createState() => _SignInState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
   final _firebaseAuth = FirebaseAuthentication();
   final _passwordController = TextEditingController();
@@ -49,19 +53,6 @@ class _SignUpState extends State<SignUp> {
         });
   }
 
-  Widget _buildConfirmPasswordField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Password'),
-      obscureText: true,
-      validator: (String value) {
-        if (_passwordController.text != value) {
-          return 'Password did not match';
-        }
-        return null;
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,27 +63,26 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               children: <Widget>[
                 Text(
-                  'Sign Up',
+                  'Sign In',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 30),
                 ),
                 _buildEmailField(),
                 _buildPasswordField(),
-                _buildConfirmPasswordField(),
                 RaisedButton(
                     textColor: Colors.white,
                     color: Colors.pink[100],
-                    child: Text('Sign Up'),
+                    child: Text('Sign In'),
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
-                        _firebaseAuth.signUpWithEmailAndPassword(
+                        _firebaseAuth.signInWithEmailAndPassword(
                             email, password);
                       }
                     }),
                 InkWell(
-                  child: Text('Already have an account? Sign In'),
+                  child: Text('Create an Account'),
                   onTap: () {
-                    Navigator.pop(context);
+                    widget.toggleBetweenForms();
                   },
                 )
               ],

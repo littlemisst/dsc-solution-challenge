@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:me_daily/common-widgets/loader.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
-import 'package:me_daily/updated-pages/authentication/sign_up_page.dart';
 
-class SignIn extends StatefulWidget {
+class SignUp extends StatefulWidget {
+  final toggleBetweenForms;
+
+  SignUp({this.toggleBetweenForms});
+
   @override
-  _SignInState createState() => _SignInState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   final _firebaseAuth = FirebaseAuthentication();
   final _passwordController = TextEditingController();
@@ -51,6 +53,19 @@ class _SignInState extends State<SignIn> {
         });
   }
 
+  Widget _buildConfirmPasswordField() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Password'),
+      obscureText: true,
+      validator: (String value) {
+        if (_passwordController.text != value) {
+          return 'Password did not match';
+        }
+        return null;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,29 +76,27 @@ class _SignInState extends State<SignIn> {
             child: Column(
               children: <Widget>[
                 Text(
-                  'Sign In',
+                  'Sign Up',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 30),
                 ),
                 _buildEmailField(),
                 _buildPasswordField(),
+                _buildConfirmPasswordField(),
                 RaisedButton(
                     textColor: Colors.white,
                     color: Colors.pink[100],
-                    child: Text('Sign In'),
+                    child: Text('Sign Up'),
                     onPressed: () async {
                       if (_formKey.currentState.validate()) {
-                        _firebaseAuth.signInWithEmailAndPassword(
+                        _firebaseAuth.signUpWithEmailAndPassword(
                             email, password);
                       }
                     }),
                 InkWell(
-                  child: Text('Create an Account'),
+                  child: Text('Already have an account? Sign In'),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignUp()),
-                    );
+                    widget.toggleBetweenForms();
                   },
                 )
               ],
