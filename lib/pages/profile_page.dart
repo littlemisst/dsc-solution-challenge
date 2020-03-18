@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:me_daily/api/profile_page_api.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:multi_page_form/multi_page_form.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:flutter_scale/flutter_scale.dart';
-import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:me_daily/widgets/profile_widgets.dart';
+import 'package:me_daily/widgets/height_weight_bloodType_widgets.dart';
 
 class UserProfile extends StatefulWidget {
   @override
@@ -20,13 +19,11 @@ class _UserProfileState extends State<UserProfile> {
   Profile _profile = Profile();
   String _ageValue;
   String _civilStatusValue;
-
   ScrollController _weightController;
   ScrollController _heightController;
   String _bloodTypeValue;
 
   final metersController = TextEditingController();
-  final decimalsController = TextEditingController();
   final kilogramController = TextEditingController();
 
   @override
@@ -41,138 +38,18 @@ class _UserProfileState extends State<UserProfile> {
       _profile.height = metersController.text;
     });
   }
-
+  
   @override
   void dispose() {
     metersController.dispose();
-    decimalsController.dispose();
     kilogramController.dispose();
     super.dispose();
-  }
-
-  Widget _buildNameField() {
-    return TextFormField(
-        validator: (value) {
-          if (value.isEmpty) {
-            return 'Please enter some text';
-          }
-          return null;
-        },
-        decoration: const InputDecoration(
-          labelText: 'Name',
-          enabledBorder:
-              OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-        ),
-        onChanged: (String value) => {_profile.name = value});
-  }
-
-  Widget _buildGender() {
-    return Center(
-        child: DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-        enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-      ),
-      items: [
-        DropdownMenuItem<String>(child: Text('Male'), value: 'Male'),
-        DropdownMenuItem<String>(child: Text('Female'), value: 'Female'),
-      ],
-      onChanged: (String value) => {
-        setState(() {
-          _ageValue = value;
-          _profile.gender = value;
-        })
-      },
-      hint: Text('Gender'),
-      value: _ageValue,
-    ));
-  }
-
-  Widget _buildAddressField() {
-    return TextFormField(
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'Please enter some text';
-        }
-        return null;
-      },
-      decoration: const InputDecoration(
-        labelText: 'Address',
-        enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-      ),
-      onChanged: (String value) => {_profile.address = value},
-    );
-  }
-
-  Widget _buildDatePicker() {
-    final format = DateFormat("yyyy-MM-dd");
-    return Column(children: <Widget>[
-      DateTimeField(
-        decoration: InputDecoration(
-          labelText: 'Birthdate',
-          enabledBorder:
-              OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-        ),
-        format: format,
-        onShowPicker: (context, currentValue) {
-          return showDatePicker(
-              context: context,
-              firstDate: DateTime(1900),
-              initialDate: currentValue ?? DateTime.now(),
-              lastDate: DateTime(2100));
-        },
-        onChanged: (DateTime value) => {_profile.birthDate = value},
-      ),
-    ]);
-  }
-
-  Widget _buildCivilStatus() {
-    return Container(
-        child: DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-        enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-      ),
-      items: [
-        DropdownMenuItem<String>(child: Text('Single'), value: 'Single'),
-        DropdownMenuItem<String>(child: Text('Married'), value: 'Married'),
-      ],
-      onChanged: (String value) => {
-        setState(() {
-          _civilStatusValue = value;
-          _profile.civilStatus = value;
-        })
-      },
-      hint: Text('Civil Status'),
-      value: _civilStatusValue,
-    ));
-  }
-
-  Widget personalInformationPage() {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(40, 30, 40, 0),
-      child: Column(children: <Widget>[
-        Text('Personal Information', style: TextStyle(fontSize: 20.0)),
-        SizedBox(height: 30.0),
-        _buildNameField(),
-        SizedBox(height: 30.0),
-        _buildGender(),
-        SizedBox(height: 30.0),
-        _buildAddressField(),
-        SizedBox(height: 30.0),
-        _buildDatePicker(),
-        SizedBox(height: 30.0),
-        _buildCivilStatus(),
-      ]),
-    );
   }
 
   void _handleHeightScaleChanged(int scalePoints) {
     int inchOffest = scalePoints ~/ 20;
     double meters = inchOffest / 12;
     double roundOffMeters = double.parse((meters).toStringAsFixed(2));
-
     metersController.text = roundOffMeters.toString();
   }
 
@@ -182,65 +59,8 @@ class _UserProfileState extends State<UserProfile> {
     kilogramController.text = kg.toString();
   }
 
-  Widget _buildBloodType() {
-    return Container(
-      width: 150.0,
-      child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(
-          enabledBorder:
-              OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-        ),
-        items: [
-          DropdownMenuItem<String>(child: Text('A+'), value: 'A+'),
-          DropdownMenuItem<String>(child: Text('A-'), value: 'A-'),
-          DropdownMenuItem<String>(child: Text('B+'), value: 'B+'),
-          DropdownMenuItem<String>(child: Text('B-'), value: 'B-'),
-          DropdownMenuItem<String>(child: Text('O+'), value: 'O+'),
-          DropdownMenuItem<String>(child: Text('O-'), value: 'O-'),
-          DropdownMenuItem<String>(child: Text('AB+'), value: 'AB+'),
-          DropdownMenuItem<String>(child: Text('AB-'), value: 'AB-'),
-        ],
-        onChanged: (String value) => {
-          setState(() {
-            _bloodTypeValue = value;
-            _profile.bloodType = value;
-          })
-        },
-        hint: Text('Blood Type'),
-        value: _bloodTypeValue,
-      ),
-    );
-  }
-
-  Widget _buildWeightField() {
-    return Container(
-      width: 120,
-      height: 50.0,
-      child: TextField(
-        controller: kilogramController,
-        style: TextStyle(fontSize: 22),
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-            hintText: '0', suffixText: 'kg', border: OutlineInputBorder()),
-      ),
-    );
-  }
-
-  Widget _buildHeightField() {
-    return Container(
-      height: 60.0,
-      width: 120,
-      child: TextField(
-        controller: metersController,
-        style: TextStyle(fontSize: 22),
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-            hintText: '0', suffixText: 'm', border: OutlineInputBorder()),
-      ),
-    );
-  }
-
   File _image;
+  bool _uploaded = false;
   Future getImage(bool isCamera) async {
     File image;
     if (isCamera) {
@@ -252,22 +72,16 @@ class _UserProfileState extends State<UserProfile> {
       _image = image;
     });
   }
-
-  bool _uploaded = false;
   Future uploadImage() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     final uid = user.uid;
-
     String fileUploadName =
         DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
     _profile.profilePhotoFileName = fileUploadName;
-
     StorageReference _reference = FirebaseStorage.instance
         .ref()
-        .child('users/$uid/${_profile.profilePhotoFileName}');
-
+        .child('users/$uid/profilePhoto/${_profile.profilePhotoFileName}');
     StorageUploadTask uploadTask = _reference.putFile(_image);
-
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     _profile.downloadUrl = await _reference.getDownloadURL();
     submitProfile(_profile);
@@ -310,94 +124,94 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 
-  Widget personalInformation2() {
+  Widget personalInformationForm1() {
+    return SingleChildScrollView(
+        child: Padding(
+      padding: EdgeInsets.fromLTRB(40, 30, 40, 0),
+      child: Column(children: <Widget>[
+        Text('Personal Information', style: TextStyle(fontSize: 20.0)),
+        SizedBox(height: 30.0),
+        buildNameField(context, _profile.name, (String value) {
+          _profile.name = value;
+        }),
+        SizedBox(height: 30.0),
+        buildGender(context, _profile.gender, _ageValue, (String value) => {
+            setState(() {
+              _ageValue = value;
+              _profile.gender = value;
+            })
+          },
+        ),
+        SizedBox(height: 30.0),
+        buildAddressField(context, _profile.address, (String value) {
+          _profile.address = value;
+        }),
+        SizedBox(height: 30.0),
+        buildDatePicker(context, _profile.birthDate, (DateTime value) {
+          _profile.birthDate = value;
+        }),
+        SizedBox(height: 30.0),
+        buildCivilStatus(context,_profile.civilStatus, _civilStatusValue, (String value) => {
+            setState(() {
+              _civilStatusValue = value;
+              _profile.civilStatus = value;
+            })
+          },
+        ),
+      ]),
+    ));
+  }
+
+  Widget personalInformationForm2() {
     return Scaffold(
       body: Container(
-        child: Row(
+          child: SingleChildScrollView(
+        child: Column(
           children: <Widget>[
-            Expanded(
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                      child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          'Height',
-                          style:
-                              TextStyle(fontSize: 17, color: Colors.grey[600]),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        HorizontalScale(
-                          maxValue: 5,
-                          scaleController: _heightController,
-                          scaleColor: Colors.white10,
-                          lineColor: Colors.pink[100],
-                          linesBetweenTwoPoints: 11,
-                          middleLineAt: 6,
-                          textStyle: TextStyle(
-                              fontSize: 22,
-                              color: Colors.pink[100],
-                              fontWeight: FontWeight.bold),
-                          onChanged: _handleHeightScaleChanged,
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        _buildHeightField(),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          'Weight',
-                          style:
-                              TextStyle(fontSize: 17, color: Colors.grey[600]),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            HorizontalScale(
-                              maxValue: 200,
-                              scaleController: _weightController,
-                              onChanged: _handleWeightScaleChanged,
-                              textStyle: TextStyle(
-                                  fontSize: 22,
-                                  color: Colors.pink[100],
-                                  fontWeight: FontWeight.bold),
-                              scaleColor: Colors.white10,
-                              lineColor: Colors.pink[100],
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            _buildWeightField(),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            _buildBloodType(),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )),
-                ],
-              ),
+            SizedBox(height: 20),
+            Text(
+              'Height',
+              style: TextStyle(fontSize: 17, color: Colors.grey[600]),
+            ),
+            SizedBox(height: 15),
+            buildHeightScale(
+                context, _heightController, _handleHeightScaleChanged),
+            SizedBox(height: 15),
+            buildHeightField(context, metersController),
+            SizedBox(height: 20),
+            Text(
+              'Weight',
+              style: TextStyle(fontSize: 17, color: Colors.grey[600]),
+            ),
+            SizedBox(height: 20),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                buildWeightScale(
+                    context, _weightController, _handleWeightScaleChanged),
+                SizedBox(height: 15),
+                buildWeightField(context, kilogramController),
+                SizedBox(height: 15),
+                buildBloodType(
+                  context,
+                  _profile.bloodType,
+                  _bloodTypeValue,
+                  (String value) => {
+                    setState(() {
+                      _bloodTypeValue = value;
+                      _profile.bloodType = value;
+                    })
+                  },
+                ),
+              ],
             ),
           ],
         ),
-      ),
+      )),
     );
   }
 
-  Widget personalInformation3() {
+  Widget personalInformationForm3() {
     return _buildAddProfilePhoto();
   }
 
@@ -408,9 +222,9 @@ class _UserProfileState extends State<UserProfile> {
         child: MultiPageForm(
           totalPage: 3,
           pageList: <Widget>[
-            personalInformationPage(),
-            personalInformation2(),
-            personalInformation3()
+            personalInformationForm1(),
+            personalInformationForm2(),
+            personalInformationForm3()
           ],
           onFormSubmitted: () {
             submitProfile(_profile);
@@ -419,3 +233,4 @@ class _UserProfileState extends State<UserProfile> {
         ));
   }
 }
+
