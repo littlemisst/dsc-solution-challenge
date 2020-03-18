@@ -14,24 +14,19 @@ class UserProfileSummary extends StatefulWidget {
 class _UserProfileSummaryState extends State<UserProfileSummary> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    return StreamBuilder<Profile>(
-        stream: FirestoreService(uid: user.uid).profile,
-        builder: (context, snapshots) {
-          if (snapshots.hasData) {
-            Profile _currentProfile = snapshots.data;
+    final _currentProfile = Provider.of<Profile>(context);
 
-            return Column(children: <Widget>[
-              Text(_currentProfile.name),
-              Text(_currentProfile.address),
-              Text(_currentProfile.gender),
-              Text(_currentProfile.civilStatus),
-              Text(_currentProfile.bloodType),
-              Text(_currentProfile.height),
-              Text(_currentProfile.weight),
-            ]);
-          }
-          return Container();
-        });
+    return Column(children: <Widget>[
+      Text(_currentProfile.toString()),
+      // Text(_currentProfile.name),
+      // Text(_currentProfile.address),
+      // Text(_currentProfile.gender),
+      // Text(_currentProfile.civilStatus),
+      // Text(_currentProfile.bloodType),
+      // Text(_currentProfile.height),
+      // Text(_currentProfile.weight),
+      Text('Hello'),
+      
+    ]);
   }
 }
