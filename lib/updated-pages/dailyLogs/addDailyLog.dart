@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:me_daily/api/view_task_api.dart';
 import 'package:me_daily/common-widgets/iconItem.dart';
 import 'package:me_daily/model/logs.dart';
-import 'package:me_daily/api/daily_logs_api.dart';
+import 'package:me_daily/updated-pages/dailyLogs/basicQuestions.dart';
+import 'package:me_daily/updated-pages/dailyLogs/forTheSickQuestions.dart';
 
 class AddDailyLogs extends StatefulWidget {
   @override
@@ -10,14 +10,19 @@ class AddDailyLogs extends StatefulWidget {
 }
 
 class _AddDailyLogsState extends State<AddDailyLogs> {
-  final _formKey = GlobalKey<FormState>();
-
-  Logs _logs = Logs();
+  String _emotion;
 
   void _chooseEmotion(String emotion) {
     setState(() {
-      _logs.emotion = emotion;
+      _emotion = emotion;
+      // _logs.emotion = emotion;
     });
+    print(_emotion);
+    if (_emotion == 'good' || _emotion == 'neutral') {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => BasicQuestionsPage()));
+    } else {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => SickQuestionPage()));
+    }
   }
 
   Widget _buildChooseEmotions() {
@@ -39,15 +44,17 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+      body: Container(
+        padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width/10, MediaQuery.of(context).size.height/5, MediaQuery.of(context).size.width/10, 0),
+        child: Column(
+           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text('How are you doing?', style: TextStyle(fontSize: 20)),
             SizedBox(height: 30),
             _buildChooseEmotions(),
           ],
         ),
-      );
+      )
+    );
   }
 }

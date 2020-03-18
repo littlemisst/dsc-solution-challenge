@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:intl/intl.dart';
 import 'package:me_daily/common-widgets/datePicker.dart';
 import 'package:me_daily/common-widgets/iconItem.dart';
 import 'package:me_daily/common-widgets/timePicker.dart';
@@ -27,7 +25,7 @@ class _AddTaskState extends State<AddTask> {
     );
   }
 
-  Future<void> _chooseTask(String taskType) {
+  void _chooseTask(String taskType) {
     setState(() {
       _taskType = taskType;
       task.taskType = taskType;
@@ -89,7 +87,7 @@ class _AddTaskState extends State<AddTask> {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3, childAspectRatio: 1.5),
         children: <Widget>[
-          IconItem(AssetImage("images/food.png", ), 'eat', 40, Colors.pink[200], () => _chooseTask('eat')),
+          IconItem(AssetImage("images/food.png"), 'eat', 40, Colors.pink[200], () => _chooseTask('eat')),
           IconItem(AssetImage("images/drink.png"), 'drink', 40, Colors.pink[200], () => _chooseTask('drink')),
           IconItem(AssetImage("images/exercise.png"), 'exercise', 40, Colors.pink[200], () => _chooseTask('exercise')),
           IconItem(AssetImage("images/medicine.png"), 'take medicine', 40, Colors.pink[200], () =>_chooseTask('take medicine')),

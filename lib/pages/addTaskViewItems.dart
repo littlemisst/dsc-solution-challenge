@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/radioListViewBuilderWidget.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/task.dart';
 
@@ -20,6 +21,13 @@ class _TaskViewItemsState extends State<TaskViewItems> {
     super.initState();
     _specificTask = '';
     _items = [];
+  }
+
+  void _setSpecificTask(value) {
+    setState(() {
+      _specificTask = value;
+      widget.task.specificTask = _specificTask;
+    });
   }
 
   @override
@@ -57,26 +65,12 @@ class _TaskViewItemsState extends State<TaskViewItems> {
     }
     
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        title: Text(widget.task.taskType, style: TextStyle(color: Colors.pink[100])),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: ListView.builder(
-        itemCount: _items.length,
-        itemBuilder: (context, index) {
-          final item = _items[index];
-          return ListTile(
-            title: Text(item),
-            leading: Radio(
-              value: item,
-              groupValue: _specificTask,
-              onChanged: (value) {
-                setState(() {
-                  _specificTask = value;
-                  widget.task.specificTask = _specificTask;
-                });
-              }));
-        }),
-    );
+      body: BuildRadioListView(_items, _specificTask, (value) => _setSpecificTask(value)));
   }
 }
