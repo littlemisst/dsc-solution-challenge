@@ -11,7 +11,7 @@ class Profile {
   String profilePhotoFileName;
   String downloadUrl;
 
-  Profile({this.name, this.address, this.gender, this.civilStatus, this.bloodType});
+  Profile({this.name, this.address, this.gender, this.civilStatus, this.bloodType, this.height, this.weight});
 
   Map<String, dynamic> toJson() => {
         "name": name,

@@ -5,6 +5,7 @@ import 'package:me_daily/updated-pages/authentication/sign_in_page.dart';
 import 'package:me_daily/updated-pages/authentication/sign_up_page.dart';
 import 'package:provider/provider.dart';
 
+
 class AuthenticationWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

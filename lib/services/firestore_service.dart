@@ -58,7 +58,10 @@ class FirestoreService {
         address: documentSnapshot.data['address'],
         gender: documentSnapshot.data['gender'],
         civilStatus: documentSnapshot.data['civilStatus'],
-        bloodType: documentSnapshot.data['bloodType'],);
+        bloodType: documentSnapshot.data['bloodType'],
+        height: documentSnapshot.data['height'],
+        weight: documentSnapshot.data['weight'],
+        );
   }
 
   Stream<Profile> get profile {
