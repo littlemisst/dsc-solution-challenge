@@ -12,7 +12,6 @@ class _CalendarPageState extends State<CalendarPage> {
   Map<DateTime,List<dynamic>> _tasks;
   List<dynamic> _selectedTasks;
 
-
   @override
   void initState() {
     super.initState();

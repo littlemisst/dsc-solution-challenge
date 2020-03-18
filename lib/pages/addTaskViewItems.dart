@@ -23,37 +23,32 @@ class _TaskViewItemsState extends State<TaskViewItems> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    widget.task.specificTask = _specificTask;
-    print(widget.task.specificTask);
+  Widget build(BuildContext context) {  
     switch (widget.task.taskType) {
-      case "Eat":
+      case "eat":
         {
-          _items = Strings.eatItems;
+          _items = Strings.food;
         }
         break;
-      case "Drink":
+      case "drink":
         {
-          _items = Strings.drinkItems;
+          _items = Strings.drink;
         }
         break;
-      case "Exercise":
+      case "exercise":
         {
-          _items = Strings.exerciseItems;
+          _items = Strings.exercise;
         }
         break;
-      case "Medicine":
+      case "take medicine":
         {
-          _items = Strings.medicineItems;
+          _items = Strings.medicine;
         }
         break;
-      case "Appointment":
+      case "book an appointment":
         {
-          _items = Strings.appointmentItems;
+          _items = Strings.appointment;
         }
-        break;
-      case "More":
-        {}
         break;
       default:
         {
@@ -78,6 +73,7 @@ class _TaskViewItemsState extends State<TaskViewItems> {
               onChanged: (value) {
                 setState(() {
                   _specificTask = value;
+                  widget.task.specificTask = _specificTask;
                 });
               }));
         }),

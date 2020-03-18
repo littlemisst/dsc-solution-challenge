@@ -14,34 +14,34 @@ class AddTask extends StatefulWidget {
 
 class _AddTaskState extends State<AddTask> {
   String _taskType;
-  DateTime _startTask;
-  DateTime _endTask;
-  DateTime _time;
+  // DateTime _startTask;
+  // DateTime _endTask;
+  // DateTime _time;
   Task task;
 
   @override
   void initState() {
     super.initState();
-    _startTask =
-        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-    _endTask =
-        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-    _time = DateTime.now();
-    _taskType = '';
+    // _startTask =
+    //     DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    // _endTask =
+    //     DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    // _time = DateTime.now();
+    // _taskType = '';
     task = Task(
       taskType: _taskType
     );
   }
   
-  Task _taskFromState() {
-    return Task(
-      taskType: _taskType,
-      specificTask: task.specificTask,
-      taskStarted: _startTask,
-      taskEnded: _endTask,
-      taskTime: _time
-    );
-  }
+  // Task _taskFromState() {
+  //   return Task(
+  //     taskType: _taskType,
+  //     specificTask: task.specificTask,
+  //     taskStarted: _startTask,
+  //     taskEnded: _endTask,
+  //     taskTime: _time
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +57,11 @@ class _AddTaskState extends State<AddTask> {
         padding: EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
-            Text('CHOOSE A TASK TO DO', style: TextStyle(fontSize: 18.0)),
+            Text('What do you want to do?', style: TextStyle(fontSize: 15.0)),
             SizedBox(height: 15),
             _buildTasksGrid(context),
+            SizedBox(height: 24),
+            _buildSpecificTaskBox(),
             SizedBox(height: 24),
             _buildDatePicker('start'),
             SizedBox(height: 24),
@@ -72,7 +74,7 @@ class _AddTaskState extends State<AddTask> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.pink[100],
         onPressed: () async {
-          await _firestoreService.addTask(_taskFromState());
+          await _firestoreService.addTask(task);
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
         child: Icon(
@@ -90,16 +92,16 @@ class _AddTaskState extends State<AddTask> {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3, childAspectRatio: 1.5),
         children: <Widget>[
-          _buildGridItem(context, new AssetImage("images/food.png"), 'Eat'),
+          _buildGridItem(context, new AssetImage("images/food.png"), 'eat'),
           _buildGridItem(
-              context, new AssetImage("images/drink.png"), 'Drink'),
+              context, new AssetImage("images/drink.png"), 'drink'),
           _buildGridItem(
-              context, new AssetImage("images/exercise.png"), 'Exercise'),
+              context, new AssetImage("images/exercise.png"), 'exercise'),
           _buildGridItem(
-              context, new AssetImage("images/medicine.png"), 'Medicine'),
+              context, new AssetImage("images/medicine.png"), 'take medicine'),
           _buildGridItem(context, new AssetImage("images/appointments.png"),
-              'Appointment'),
-          _buildGridItem(context, new AssetImage("images/more.png"), 'More'),
+              'book an appointment'),
+          _buildGridItem(context, new AssetImage("images/more.png"), 'more')
         ],
       ),
     );
@@ -118,12 +120,13 @@ class _AddTaskState extends State<AddTask> {
         onPressed: () async {
           setState(() {
             _taskType = text;
-            task.taskType = _taskType;
-            Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => TaskViewItems(task: task)),
-          );
+            task.taskType = text;
           });
+          if (_taskType == 'more') {
+            _buildMoreDialog(context);
+          } else {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => TaskViewItems(task: task)));
+          }
         }
       );
     return Column(
@@ -135,6 +138,29 @@ class _AddTaskState extends State<AddTask> {
     );
   }
 
+  Widget _buildSpecificTaskBox() {
+    return Container(
+      height: MediaQuery.of(context).size.height / 12,
+      width:  MediaQuery.of(context).size.width,
+      padding: EdgeInsets.all(16),
+      child: RichText(
+        text: TextSpan(
+          text: task.taskType ?? '',
+          style: TextStyle(
+              color: Colors.black),
+          children: <TextSpan>[
+            TextSpan(text: ' - '),
+            TextSpan(text: task.specificTask ?? 'Enter a Task')]
+          ),
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.grey
+        ),
+        borderRadius: BorderRadius.circular(5)
+      )
+    );
+  }
   Widget _buildDatePicker(indicator) {
     final format = DateFormat("yMMMMd");
     return Column(children: <Widget>[
@@ -154,9 +180,9 @@ class _AddTaskState extends State<AddTask> {
           onChanged: (value) {
             setState(() {
               if (indicator == 'start') {
-                _startTask = value;
+                task.taskStarted = value;
               } else if (indicator == 'end') {
-                _endTask = value;
+                task.taskEnded = value;
               }
             });
           }),
@@ -182,10 +208,37 @@ class _AddTaskState extends State<AddTask> {
           },
           onChanged: (value) => {
                 setState(() {
-                  _time = value;
+                  task.taskTime = value;
                 })
               }),
     ]);
+  }
+
+  Future<void> _buildMoreDialog(BuildContext context) {
+    String moreTask = '';
+    return showDialog(context: context, builder: (context) => 
+      AlertDialog(
+        content: TextFormField(
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Please enter some text';
+            } return null;
+          },
+          decoration: InputDecoration(
+            labelText: 'Add Task'
+          ),
+          onChanged: (value) => moreTask = value,
+        ),
+        
+        actions: <Widget>[MaterialButton(
+          onPressed: () {
+            task.specificTask = moreTask;
+            Navigator.of(context).pop();
+            },
+          child: Text('ADD TASK'),
+          )],
+      )
+    );
   }
 
   
