@@ -43,7 +43,7 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
         Text(_currentProfile.address, style: TextStyle(fontSize: 18.0)),
         Divider(),
         Text('Birthdate:', style: TextStyle(color: Colors.grey[400])),
-        Text(_currentProfile.birthDate.to, style: TextStyle(fontSize: 18.0)),
+        Text(_currentProfile.birthDate.toString(), style: TextStyle(fontSize: 18.0)),
          Divider(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
