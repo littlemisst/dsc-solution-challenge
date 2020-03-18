@@ -11,9 +11,11 @@ class _GalleryGridState extends State<GalleryGrid> {
   @override
   Widget build(BuildContext context) {
     List<Photo> photos = Provider.of<List<Photo>>(context);
+    
     if(photos == null){
       photos = [];
     }
+
     return Container(
         child: GridView.builder(
       itemCount: photos.length,

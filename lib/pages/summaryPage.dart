@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:me_daily/model/feeling.dart';
 import 'package:me_daily/pages/healthChart.dart';
 import 'package:me_daily/pages/sendDetailsPage.dart';
+import 'package:me_daily/services/firestore_service.dart';
+import 'package:provider/provider.dart';
 
 class SummaryPage extends StatefulWidget {
   @override
@@ -33,7 +36,9 @@ class _SummaryPageState extends State<SummaryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return StreamProvider<List<Health>>.value(
+      value: FirestoreService().feelings,
+      child :Container(
       padding: EdgeInsets.all(10),
       child: StaggeredGridView.count(
         crossAxisCount: 4,
@@ -53,6 +58,7 @@ class _SummaryPageState extends State<SummaryPage> {
           _buildTiles(context, Text('Achievements')),
           _buildShareButton()
         ],
+      ),
       ),
     );
   }
