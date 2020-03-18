@@ -21,14 +21,14 @@ class _CalendarPageState extends State<CalendarPage> {
     _selectedTasks = _tasks[_selectedDay] ?? [];
   }
 
-  Future<Map<DateTime, List>> tasksMap() async {
-    _tasks = await getTasksListOnSpecificDate();
+  Future<Map<DateTime, List>> tasksMap(context) async {
+    _tasks = await getTasksListOnSpecificDate(context);
     return _tasks;
   }
 
   @override
   Widget build(BuildContext context) {
-    tasksMap();
+    tasksMap(context);
     return Scaffold(
         body: Column(
           mainAxisSize: MainAxisSize.max,

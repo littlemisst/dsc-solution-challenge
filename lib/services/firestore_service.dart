@@ -38,4 +38,24 @@ class FirestoreService {
       .collection('tasks')
       .add(task.toJson());
   }
+
+  List<Task> _taskFromFirebase(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents.map((document) {
+      return Task(
+        taskType: document.data['taskType'],
+        specificTask: document.data['specificTask'],
+        taskStarted: document.data['taskStarted'],
+        taskEnded: document.data['taskEnded'],
+        taskTime: document.data['taskTime']
+      );
+    }).toList();
+  }
+
+  Stream<List<Task>> get tasks {
+    return userData
+      .document(uid)
+      .collection('tasks')
+      .snapshots()
+      .map(_taskFromFirebase);
+  }
 }
