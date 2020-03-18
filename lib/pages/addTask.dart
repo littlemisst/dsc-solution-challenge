@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
+import 'package:me_daily/common-widgets/datePicker.dart';
 import 'package:provider/provider.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/model/user.dart';
@@ -63,9 +64,9 @@ class _AddTaskState extends State<AddTask> {
             SizedBox(height: 24),
             _buildSpecificTaskBox(),
             SizedBox(height: 24),
-            _buildDatePicker('start'),
+            buildDatePicker(context, task.taskStarted, 'start date', (DateTime value) => task.taskStarted = value),
             SizedBox(height: 24),
-            _buildDatePicker('end'),
+            buildDatePicker(context, task.taskEnded, 'end date', (DateTime value) => task.taskEnded = value),
             SizedBox(height: 24),
             _buildTimePicker()
           ],
@@ -160,33 +161,6 @@ class _AddTaskState extends State<AddTask> {
         borderRadius: BorderRadius.circular(5)
       )
     );
-  }
-  Widget _buildDatePicker(indicator) {
-    final format = DateFormat("yMMMMd");
-    return Column(children: <Widget>[
-      DateTimeField(
-          decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey)),
-              labelText: indicator + ' date'),
-          format: format,
-          onShowPicker: (context, currentValue) async {
-            return showDatePicker(
-                context: context,
-                firstDate: DateTime(1900),
-                initialDate: currentValue ?? DateTime.now(),
-                lastDate: DateTime(2100));
-          },
-          onChanged: (value) {
-            setState(() {
-              if (indicator == 'start') {
-                task.taskStarted = value;
-              } else if (indicator == 'end') {
-                task.taskEnded = value;
-              }
-            });
-          }),
-    ]);
   }
 
   Widget _buildTimePicker() {

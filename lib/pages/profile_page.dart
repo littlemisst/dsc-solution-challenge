@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/api/profile_page_api.dart';
+import 'package:me_daily/common-widgets/datePicker.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:multi_page_form/multi_page_form.dart';
 import 'dart:io';
@@ -147,7 +148,7 @@ class _UserProfileState extends State<UserProfile> {
           _profile.address = value;
         }),
         SizedBox(height: 30.0),
-        buildDatePicker(context, _profile.birthDate, (DateTime value) {
+        buildDatePicker(context, _profile.birthDate, 'Birthdate', (DateTime value) {
           _profile.birthDate = value;
         }),
         SizedBox(height: 30.0),
