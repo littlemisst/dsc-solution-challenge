@@ -10,17 +10,20 @@ Task _$TaskFromJson(Map<String, dynamic> json) {
   return Task(
     taskType: json['taskType'] as String,
     specificTask: json['specificTask'] as String,
-    taskStarted: DateTime.parse(json['taskStarted'] as String),
-    taskEnded: DateTime.parse(json['taskEnded'] as String),
-    taskTime: DateTime.parse(json['taskTime'] as String),
-  )..taskCreated = DateTime.parse(json['taskCreated'] as String);
+    taskStarted: json['taskStarted'] as DateTime,
+    taskEnded: json['taskEnded'] as DateTime,
+    taskTime: json['taskTime'] as DateTime,
+  )
+    ..taskCreated = json['taskCreated'] as DateTime
+    ..completed = json['completed'] as bool;
 }
 
 Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
-      'taskCreated': instance.taskCreated.toIso8601String(),
+      'taskCreated': instance.taskCreated,
       'taskType': instance.taskType,
       'specificTask': instance.specificTask,
-      'taskStarted': instance.taskStarted.toIso8601String(),
-      'taskEnded': instance.taskEnded.toIso8601String(),
-      'taskTime': instance.taskTime.toIso8601String(),
+      'taskStarted': instance.taskStarted,
+      'taskEnded': instance.taskEnded,
+      'taskTime': instance.taskTime,
+      'completed': instance.completed,
     };

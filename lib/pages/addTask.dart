@@ -15,34 +15,15 @@ class AddTask extends StatefulWidget {
 
 class _AddTaskState extends State<AddTask> {
   String _taskType;
-  // DateTime _startTask;
-  // DateTime _endTask;
-  // DateTime _time;
   Task task;
 
   @override
   void initState() {
     super.initState();
-    // _startTask =
-    //     DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-    // _endTask =
-    //     DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-    // _time = DateTime.now();
-    // _taskType = '';
     task = Task(
       taskType: _taskType
     );
   }
-  
-  // Task _taskFromState() {
-  //   return Task(
-  //     taskType: _taskType,
-  //     specificTask: task.specificTask,
-  //     taskStarted: _startTask,
-  //     taskEnded: _endTask,
-  //     taskTime: _time
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
