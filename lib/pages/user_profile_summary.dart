@@ -27,8 +27,8 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
               Text(_currentProfile.gender),
               Text(_currentProfile.civilStatus),
               Text(_currentProfile.bloodType),
-              Text(_currentProfile.height),
-              Text(_currentProfile.weight),
+              Text(_currentProfile.height.toString()),
+              Text(_currentProfile.weight.toString()),
             ]);
           }
           return Container();

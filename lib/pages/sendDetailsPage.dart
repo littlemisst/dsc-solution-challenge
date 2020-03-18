@@ -120,7 +120,7 @@ class _SendDetailsState extends State<SendDetailsForm> {
         })
       },
       hint: Text('Civil Status'),
-      value: _civilStatusValue,
+      value: _civilStatusValue ?? inititalValue,
     ));
   }
 
