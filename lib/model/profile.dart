@@ -6,24 +6,33 @@ class Profile {
   DateTime birthDate;
   // int numberOfHospitalizations;
   String bloodType;
-  String height;
-  String weight;
+  double height;
+  double weight;
   String profilePhotoFileName;
   String downloadUrl;
 
-  Profile({this.name, this.address, this.gender, this.civilStatus, this.bloodType, this.height, this.weight});
+  Profile(
+      {this.name,
+      this.address,
+      this.gender,
+      this.civilStatus,
+      this.bloodType,
+      this.height,
+      this.weight,
+      this.downloadUrl});
 
   Map<String, dynamic> toJson() => {
         "name": name,
         "address": address,
         "civilStatus": civilStatus,
         "gender": gender,
-        "birthDate": birthDate,
+        "birthDate": birthDate ,
         // "numberOfHospitalizations": numberOfHospitalizations,
         "bloodType": bloodType,
-        "height": double.parse(height),
-        "weight": double.parse(weight),
+        "height": (height),
+        "weight": (weight),
         "profilePhotoFileName": profilePhotoFileName,
-        "downloadUrl" : downloadUrl,
+        "downloadUrl": downloadUrl,
+        
       };
 }

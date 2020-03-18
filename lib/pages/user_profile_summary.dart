@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:me_daily/model/profile.dart';
-import 'package:me_daily/api/profile_page_api.dart';
-import 'package:me_daily/model/user.dart';
-import 'package:me_daily/pages/update_profile.dart';
-import 'package:me_daily/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 
 class UserProfileSummary extends StatefulWidget {
@@ -14,19 +11,74 @@ class UserProfileSummary extends StatefulWidget {
 class _UserProfileSummaryState extends State<UserProfileSummary> {
   @override
   Widget build(BuildContext context) {
-    final _currentProfile = Provider.of<Profile>(context);
-
-    return Column(children: <Widget>[
-      Text(_currentProfile.toString()),
-      // Text(_currentProfile.name),
-      // Text(_currentProfile.address),
-      // Text(_currentProfile.gender),
-      // Text(_currentProfile.civilStatus),
-      // Text(_currentProfile.bloodType),
-      // Text(_currentProfile.height),
-      // Text(_currentProfile.weight),
-      Text('Hello'),
-      
-    ]);
+    Profile _currentProfile = Provider.of<Profile>(context);
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(20.0),
+      child: Column(children: <Widget>[
+        Container(
+            width: 1000,
+            height: 175,
+            color: Colors.pink[100],
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 20.0),
+                _currentProfile.downloadUrl == null
+                    ? CircleAvatar(
+                        radius: 50.0, backgroundColor: Colors.grey[350])
+                    : CircleAvatar(
+                        radius: 50.0,
+                        backgroundImage: NetworkImage(
+                            _currentProfile.downloadUrl,
+                            scale: 50)),
+                SizedBox(height: 12.0),
+                Text(_currentProfile.name,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold)),
+              ],
+            )),
+        SizedBox(height: 20.0),
+        Text('Address:', style: TextStyle(color: Colors.grey[400])),
+        Text(_currentProfile.address, style: TextStyle(fontSize: 18.0)),
+        Divider(),
+        Text('Birthdate:', style: TextStyle(color: Colors.grey[400])),
+        Text(_currentProfile.birthDate.to, style: TextStyle(fontSize: 18.0)),
+         Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Gender:', style: TextStyle(color: Colors.grey[400])),
+            SizedBox(width: 5.0),
+            Text(_currentProfile.gender, style: TextStyle(fontSize: 18.0)),
+            SizedBox(width: 20.0),
+            Text('Civil Status:', style: TextStyle(color: Colors.grey[400])),
+            SizedBox(width: 5.0),
+            Text(_currentProfile.civilStatus, style: TextStyle(fontSize: 18.0)),
+          ],
+        ),
+        Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+          Text('Blood Type:', style: TextStyle(color: Colors.grey[400])),
+          SizedBox(width: 5.0),
+          Text(_currentProfile.bloodType, style: TextStyle(fontSize: 18.0)),
+        ]),
+        Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+          Text('Height:', style: TextStyle(color: Colors.grey[400])),
+          SizedBox(width: 5.0),
+          Text(_currentProfile.height.toString() + ' cm', style: TextStyle(fontSize: 18.0)),
+           SizedBox(width: 20.0),
+          Text('Weight:', style: TextStyle(color: Colors.grey[400])),
+          SizedBox(width: 5.0),
+          Text(_currentProfile.height.toString() + ' kg',style: TextStyle(fontSize: 18.0)),
+        ]),
+        Divider()
+      ]),
+    );
   }
 }
