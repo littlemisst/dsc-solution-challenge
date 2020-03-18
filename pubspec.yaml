@@ -79,6 +79,9 @@ flutter:
     - images/unwell.png
     - images/neutral.png
     - images/sick.png
+    - images/sleep.png
+    - images/add.png
+    - images/minus.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
