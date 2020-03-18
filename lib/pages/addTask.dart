@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/common-widgets/datePicker.dart';
+import 'package:me_daily/common-widgets/iconItem.dart';
 import 'package:provider/provider.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/model/user.dart';
@@ -15,34 +16,27 @@ class AddTask extends StatefulWidget {
 
 class _AddTaskState extends State<AddTask> {
   String _taskType;
-  // DateTime _startTask;
-  // DateTime _endTask;
-  // DateTime _time;
   Task task;
 
   @override
   void initState() {
     super.initState();
-    // _startTask =
-    //     DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-    // _endTask =
-    //     DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-    // _time = DateTime.now();
-    // _taskType = '';
     task = Task(
       taskType: _taskType
     );
   }
-  
-  // Task _taskFromState() {
-  //   return Task(
-  //     taskType: _taskType,
-  //     specificTask: task.specificTask,
-  //     taskStarted: _startTask,
-  //     taskEnded: _endTask,
-  //     taskTime: _time
-  //   );
-  // }
+
+  Future<void> _chooseTask(String taskType) {
+    setState(() {
+      _taskType = taskType;
+      task.taskType = taskType;
+    });
+    if (_taskType == 'more') {
+      _buildMoreDialog(context);
+    } else {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => TaskViewItems(task: task)));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +44,7 @@ class _AddTaskState extends State<AddTask> {
     final _firestoreService = FirestoreService(uid: user.uid);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -64,9 +59,9 @@ class _AddTaskState extends State<AddTask> {
             SizedBox(height: 24),
             _buildSpecificTaskBox(),
             SizedBox(height: 24),
-            buildDatePicker(context, task.taskStarted, 'start date', (DateTime value) => task.taskStarted = value),
+            DatePicker('start date', (DateTime value) => task.taskStarted = value),
             SizedBox(height: 24),
-            buildDatePicker(context, task.taskEnded, 'end date', (DateTime value) => task.taskEnded = value),
+            DatePicker('end date', (DateTime value) => task.taskEnded = value),
             SizedBox(height: 24),
             _buildTimePicker()
           ],
@@ -93,49 +88,14 @@ class _AddTaskState extends State<AddTask> {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3, childAspectRatio: 1.5),
         children: <Widget>[
-          _buildGridItem(context, new AssetImage("images/food.png"), 'eat'),
-          _buildGridItem(
-              context, new AssetImage("images/drink.png"), 'drink'),
-          _buildGridItem(
-              context, new AssetImage("images/exercise.png"), 'exercise'),
-          _buildGridItem(
-              context, new AssetImage("images/medicine.png"), 'take medicine'),
-          _buildGridItem(context, new AssetImage("images/appointments.png"),
-              'book an appointment'),
-          _buildGridItem(context, new AssetImage("images/more.png"), 'more')
+          IconItem(AssetImage("images/food.png", ), 'eat', 40, Colors.pink[200], () => _chooseTask('eat')),
+          IconItem(AssetImage("images/drink.png"), 'drink', 40, Colors.pink[200], () => _chooseTask('drink')),
+          IconItem(AssetImage("images/exercise.png"), 'exercise', 40, Colors.pink[200], () => _chooseTask('exercise')),
+          IconItem(AssetImage("images/medicine.png"), 'take medicine', 40, Colors.pink[200], () =>_chooseTask('take medicine')),
+          IconItem(AssetImage("images/appointments.png"), 'book an appointment', 40, Colors.pink[200], () => _chooseTask('book an appointment')),
+          IconItem(AssetImage("images/more.png"), 'more', 40, Colors.pink[200], () =>_chooseTask('more')),
         ],
       ),
-    );
-  }
-
-  Widget _buildGridItem(BuildContext context, icon, text) {
-    var flatButton = FlatButton(
-        padding: EdgeInsets.all(10),
-        child: ImageIcon(
-          icon,
-          size: 25,
-          color: Colors.white
-        ),
-        color: Colors.pink[200],
-        shape: CircleBorder(side: BorderSide.none),
-        onPressed: () async {
-          setState(() {
-            _taskType = text;
-            task.taskType = text;
-          });
-          if (_taskType == 'more') {
-            _buildMoreDialog(context);
-          } else {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => TaskViewItems(task: task)));
-          }
-        }
-      );
-    return Column(
-      children: <Widget>[
-        flatButton,
-        SizedBox(height: 3),
-        Text(text, style: TextStyle(fontSize: 11)),
-      ],
     );
   }
 

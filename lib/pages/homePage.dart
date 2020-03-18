@@ -3,12 +3,13 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:me_daily/pages/addDailyLog.dart';
 import 'package:me_daily/pages/addPhoto.dart';
 import 'package:me_daily/pages/addTask.dart';
-import 'package:me_daily/pages/calendarPage.dart';
+
 import 'package:me_daily/pages/mapPage.dart';
 import 'package:me_daily/pages/profile_page.dart';
 import 'package:me_daily/pages/summaryPage.dart';
 import 'package:me_daily/pages/user_profile_summary.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
+import 'package:me_daily/updated-pages/calendarPage.dart/calendarPage.dart';
 import 'package:me_daily/updated-pages/photos/gallery_page.dart';
 // import 'package:me_daily/pages/viewTasksPage.dart';
 

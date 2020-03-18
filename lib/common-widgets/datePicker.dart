@@ -2,8 +2,17 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-Widget buildDatePicker(context, model, text, onChanged) {
-  final format = DateFormat("yMMMMd");
+class DatePicker extends StatelessWidget {
+  const DatePicker(
+    this.text,
+    this.onChanged
+  );
+  final String text;
+  final ValueChanged<DateTime> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final format = DateFormat("yMMMMd");
   return Column(children: <Widget>[
     DateTimeField(
       decoration: InputDecoration(
@@ -22,4 +31,5 @@ Widget buildDatePicker(context, model, text, onChanged) {
       onChanged: onChanged,
     ),
   ]);
+  }
 }

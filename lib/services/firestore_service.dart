@@ -69,15 +69,8 @@ class FirestoreService {
   }
 
   List<Task> _taskFromFirebase(QuerySnapshot querySnapshot) {
-    return querySnapshot.documents.map((document) {
-      return Task(
-        taskType: document.data['taskType'],
-        specificTask: document.data['specificTask'],
-        taskStarted: document.data['taskStarted'],
-        taskEnded: document.data['taskEnded'],
-        taskTime: document.data['taskTime']
-      );
-    }).toList();
+    return querySnapshot.documents.map((document) => Task.fromJson(document.data))
+    .toList();
   }
 
   Stream<List<Task>> get tasks {
