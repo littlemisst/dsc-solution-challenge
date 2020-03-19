@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/floatingAction.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
+import 'package:me_daily/updated-pages/dailyLogs/expandableIncrementWidget.dart';
 import 'package:me_daily/updated-pages/dailyLogs/expandableWidget.dart';
 import 'package:provider/provider.dart';
 
@@ -43,18 +45,22 @@ class _BasicQuestionsPageState extends State<BasicQuestionsPage> {
    void _incrementSleepHours() {
     setState(() {
      _hoursOfSleep++;
-     widget.entry.hoursSlept = _hoursOfSleep;
     });
   }
 
   void _decrementSleepHours() {
     setState(() {
      _hoursOfSleep--;
-    widget.entry.hoursSlept = _hoursOfSleep;
     });
     if (_hoursOfSleep < 0) {
       _hoursOfSleep = 0;
     }
+  }
+
+  void _setSleepHours() {
+    setState(() {
+     widget.entry.hoursSlept = _hoursOfSleep;
+    });
   }
 
 
@@ -88,30 +94,15 @@ class _BasicQuestionsPageState extends State<BasicQuestionsPage> {
             ExpandableCard(ImageIcon(AssetImage("images/drink.png"), color: Colors.pink[100]),'DRINK', Strings.drink, _drink, (value) => _setDrink(value)),
             SizedBox(height: 15),
             ExpandableCard(ImageIcon(AssetImage("images/exercise.png"), color: Colors.pink[100]),'EXERCISE', Strings.exercise, _exercise, (value) => _setExercise(value)),
-             SizedBox(height: 15),
-            ExpansionTile(leading: ImageIcon(AssetImage("images/sleep.png"), color: Colors.pink[100]),
-                title: Text('SLEEP'),
-                children: <Widget>[
-                  Row(children: <Widget>[
-                    Text('Number of hours: ', style: TextStyle(fontSize: 15)),
-                    SizedBox(width: 10),
-                    Text('$_hoursOfSleep', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                    FlatButton(child: ImageIcon(AssetImage("images/add.png"), color: Colors.pink[100],), color: Colors.white, shape: CircleBorder(side: BorderSide.none),onPressed: _incrementSleepHours),
-                    FlatButton(child: ImageIcon(AssetImage("images/minus.png"), color: Colors.pink[100],), color: Colors.white, shape: CircleBorder(side: BorderSide.none),onPressed: _decrementSleepHours)
-                  ],)
-                ],
-              )
+            SizedBox(height: 15),
+            ExpandableIncrementCard(AssetImage("images/sleep.png"), 'SLEEP', 'Number of hours: ', _hoursOfSleep, _incrementSleepHours, _decrementSleepHours, _setSleepHours)
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.pink[100],
-        onPressed: () async {
-          print(widget.entry);
-          await _firestoreService.addDailyLog(widget.entry);
-          Navigator.of(context).popUntil((route) => route.isFirst);
-        },
-        child: Icon(Icons.check, color: Colors.white)),
+      floatingActionButton: FloatingActionToSave(() async {
+        await _firestoreService.addDailyLog(widget.entry);
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      }, Icons.check)
     );
   }
 }

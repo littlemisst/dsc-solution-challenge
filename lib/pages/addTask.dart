@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/datePicker.dart';
+import 'package:me_daily/common-widgets/floatingAction.dart';
 import 'package:me_daily/common-widgets/iconItem.dart';
 import 'package:me_daily/common-widgets/timePicker.dart';
 import 'package:provider/provider.dart';
@@ -66,16 +67,10 @@ class _AddTaskState extends State<AddTask> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.pink[100],
-        onPressed: () async {
-          await _firestoreService.addTask(task);
-          Navigator.of(context).popUntil((route) => route.isFirst);
-        },
-        child: Icon(
-          Icons.alarm,
-          color: Colors.white,
-        )),
+      floatingActionButton: FloatingActionToSave(() async {
+        await _firestoreService.addTask(task);
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      }, Icons.alarm)
     );
   }
 

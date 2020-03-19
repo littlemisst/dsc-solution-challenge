@@ -23,7 +23,6 @@ class _ExpandableCardState extends State<ExpandableCard> {
         Container(
           child: BuildRadioListView(widget.content, widget.groupValue, widget.onChanged),
         )
-        
       ],
     );
   }
