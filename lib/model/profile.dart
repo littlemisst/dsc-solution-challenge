@@ -14,12 +14,14 @@ class Profile {
   Profile(
       {this.name,
       this.address,
+      this.birthDate,
       this.gender,
       this.civilStatus,
       this.bloodType,
       this.height,
       this.weight,
-      this.downloadUrl});
+      this.downloadUrl,
+});
 
   Map<String, dynamic> toJson() => {
         "name": name,
@@ -29,8 +31,8 @@ class Profile {
         "birthDate": birthDate ,
         // "numberOfHospitalizations": numberOfHospitalizations,
         "bloodType": bloodType,
-        "height": (height),
-        "weight": (weight),
+        "height": height,
+        "weight": weight,
         "profilePhotoFileName": profilePhotoFileName,
         "downloadUrl": downloadUrl,
         
