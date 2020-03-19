@@ -35,6 +35,10 @@ class OnBoardingScreen extends StatelessWidget {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => AuthenticationWrapper()));
         },
+        onSkipButtonPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AuthenticationWrapper()));
+        },
         pageList: pageList,
       ),
     );

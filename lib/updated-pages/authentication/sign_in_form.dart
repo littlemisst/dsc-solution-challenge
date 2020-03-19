@@ -99,6 +99,15 @@ class _SignInState extends State<SignIn> {
                         onTap: () {
                           widget.toggleBetweenForms();
                         },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        child: Text('Forget Password'),
+                        onTap: () async {
+                          await _firebaseAuth.resetPassword(email);
+                        },
                       )
                     ],
                   ),

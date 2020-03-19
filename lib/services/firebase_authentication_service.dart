@@ -27,9 +27,10 @@ class FirebaseAuthentication {
 
   Future<User> signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult authResult = await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
-      return _userFromFirebase(authResult.user);
+      FirebaseUser authResult = (await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password)) as FirebaseUser;
+      await authResult.sendEmailVerification();
+      return _userFromFirebase(authResult);
     } catch (error) {
       return null;
     }
@@ -41,5 +42,9 @@ class FirebaseAuthentication {
     } catch (error) {
       return null;
     }
+  }
+
+  Future<void> resetPassword(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 }
