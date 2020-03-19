@@ -56,11 +56,13 @@ class FirestoreService {
     return Profile(
         name: documentSnapshot.data['name'],
         address: documentSnapshot.data['address'],
+        birthDate: documentSnapshot.data['birthDate'].toDate(),
         gender: documentSnapshot.data['gender'],
         civilStatus: documentSnapshot.data['civilStatus'],
         bloodType: documentSnapshot.data['bloodType'],
         height: documentSnapshot.data['height'],
         weight: documentSnapshot.data['weight'],
+        downloadUrl: documentSnapshot.data['downloadUrl'],
         );
   }
 

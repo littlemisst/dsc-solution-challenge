@@ -34,10 +34,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
     _weightController = ScrollController(initialScrollOffset: 0);
     _heightController = ScrollController(initialScrollOffset: 0);
     kilogramController.addListener(() {
-      _profile.weight = kilogramController as double;
+      _profile.weight = double.parse(kilogramController.text);
     });
     metersController.addListener(() {
-      _profile.height = metersController.text as double;
+      _profile.height = double.parse(metersController.text);
     });
   }
 
