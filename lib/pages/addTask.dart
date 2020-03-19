@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/buildGrid.dart';
 import 'package:me_daily/common-widgets/datePicker.dart';
 import 'package:me_daily/common-widgets/floatingAction.dart';
 import 'package:me_daily/common-widgets/iconItem.dart';
@@ -78,18 +79,14 @@ class _AddTaskState extends State<AddTask> {
     return Container(
       height: MediaQuery.of(context).size.height / 4,
       padding: EdgeInsets.all(5),
-      child: GridView(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, childAspectRatio: 1.5),
-        children: <Widget>[
-          IconItem(AssetImage("images/food.png"), 'eat', 40, Colors.pink[200], () => _chooseTask('eat')),
-          IconItem(AssetImage("images/drink.png"), 'drink', 40, Colors.pink[200], () => _chooseTask('drink')),
-          IconItem(AssetImage("images/exercise.png"), 'exercise', 40, Colors.pink[200], () => _chooseTask('exercise')),
-          IconItem(AssetImage("images/medicine.png"), 'take medicine', 40, Colors.pink[200], () =>_chooseTask('take medicine')),
-          IconItem(AssetImage("images/appointments.png"), 'book an appointment', 40, Colors.pink[200], () => _chooseTask('book an appointment')),
-          IconItem(AssetImage("images/more.png"), 'more', 40, Colors.pink[200], () =>_chooseTask('more')),
-        ],
-      ),
+      child: BuildGridItems([
+        IconItem(AssetImage("images/food.png"), 'eat', 40, Colors.pink[200], () => _chooseTask('eat')),
+        IconItem(AssetImage("images/drink.png"), 'drink', 40, Colors.pink[200], () => _chooseTask('drink')),
+        IconItem(AssetImage("images/exercise.png"), 'exercise', 40, Colors.pink[200], () => _chooseTask('exercise')),
+        IconItem(AssetImage("images/medicine.png"), 'take medicine', 40, Colors.pink[200], () =>_chooseTask('take medicine')),
+        IconItem(AssetImage("images/appointments.png"), 'book an appointment', 40, Colors.pink[200], () => _chooseTask('book an appointment')),
+        IconItem(AssetImage("images/more.png"), 'more', 40, Colors.pink[200], () =>_chooseTask('more')),
+      ], 3, 1.5)
     );
   }
 

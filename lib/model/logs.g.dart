@@ -13,14 +13,16 @@ DailyLog _$DailyLogFromJson(Map<String, dynamic> json) {
     drink: json['drink'] as String,
     exercise: json['exercise'] as String,
     hoursSlept: json['hoursSlept'] as int,
+    waterDrank: json['waterDrank'] as int,
   )..logCreated = DateTime.parse(json['logCreated'] as String);
 }
 
 Map<String, dynamic> _$DailyLogToJson(DailyLog instance) => <String, dynamic>{
-      'logCreated': instance.logCreated.toIso8601String(),
+      'logCreated': instance.logCreated,
       'feeling': instance.feeling,
       'food': instance.food,
       'drink': instance.drink,
       'exercise': instance.exercise,
       'hoursSlept': instance.hoursSlept,
+      'waterDrank': instance.waterDrank,
     };

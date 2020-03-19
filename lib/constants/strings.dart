@@ -35,4 +35,15 @@ class Strings {
     "eye care",
     "dental"
   ];
+
+  static List symptoms =[
+    'headache',
+    'dizziness', 
+    'fever', 
+    'runny nose', 
+    'cough',  
+    'diarrhea', 
+    'vomiting', 
+    'muscle pain', 
+  ];
 }

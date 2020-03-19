@@ -21,10 +21,13 @@ class DailyLog {
   @JsonKey(name: 'hoursSlept')
   int hoursSlept;
 
+  @JsonKey(name: 'waterDrank')
+  int waterDrank;
 
 
 
-  DailyLog({this.feeling, this.food, this.drink, this.exercise, this.hoursSlept});
+
+  DailyLog({this.feeling, this.food, this.drink, this.exercise, this.hoursSlept, this.waterDrank});
 
   factory DailyLog.fromJson(Map<String, dynamic> json) => _$DailyLogFromJson(json);
   Map<String, dynamic> toJson() =>  _$DailyLogToJson(this);

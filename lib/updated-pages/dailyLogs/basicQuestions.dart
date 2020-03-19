@@ -5,7 +5,7 @@ import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/updated-pages/dailyLogs/expandableIncrementWidget.dart';
-import 'package:me_daily/updated-pages/dailyLogs/expandableWidget.dart';
+import 'package:me_daily/updated-pages/dailyLogs/expandableRadioWidget.dart';
 import 'package:provider/provider.dart';
 
 class BasicQuestionsPage extends StatefulWidget {
@@ -20,6 +20,7 @@ class _BasicQuestionsPageState extends State<BasicQuestionsPage> {
   String _drink;
   String _exercise;
   int _hoursOfSleep = 0;
+  int _glassOfWater = 0;
 
   void _setFood(value) {
     setState(() {
@@ -63,6 +64,27 @@ class _BasicQuestionsPageState extends State<BasicQuestionsPage> {
     });
   }
 
+  void _incrementGlassCount() {
+    setState(() {
+     _glassOfWater++;
+    });
+  }
+
+  void _decrementGlassCount() {
+    setState(() {
+     _glassOfWater--;
+    });
+    if (_glassOfWater < 0) {
+      _glassOfWater = 0;
+    }
+  }
+
+  void _setWaterCount() {
+    setState(() {
+     widget.entry.waterDrank = _glassOfWater;
+    });
+  }
+
 
   @override
   void initState() {
@@ -87,15 +109,17 @@ class _BasicQuestionsPageState extends State<BasicQuestionsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text('What have you been up to?', style: TextStyle(fontSize: 20)),
+            Text('WHAT HAVE YOU BEEN UP TO?', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            SizedBox(height: 24),
+            ExpandableRadioCard(ImageIcon(AssetImage("images/food.png"), color: Colors.pink[100],),'FOOD', Strings.food, _food, (value) => _setFood(value)),
             SizedBox(height: 15),
-            ExpandableCard(ImageIcon(AssetImage("images/food.png"), color: Colors.pink[100],),'FOOD', Strings.food, _food, (value) => _setFood(value)),
+            ExpandableRadioCard(ImageIcon(AssetImage("images/drink.png"), color: Colors.pink[100]),'DRINK', Strings.drink, _drink, (value) => _setDrink(value)),
             SizedBox(height: 15),
-            ExpandableCard(ImageIcon(AssetImage("images/drink.png"), color: Colors.pink[100]),'DRINK', Strings.drink, _drink, (value) => _setDrink(value)),
+            ExpandableRadioCard(ImageIcon(AssetImage("images/exercise.png"), color: Colors.pink[100]),'EXERCISE', Strings.exercise, _exercise, (value) => _setExercise(value)),
             SizedBox(height: 15),
-            ExpandableCard(ImageIcon(AssetImage("images/exercise.png"), color: Colors.pink[100]),'EXERCISE', Strings.exercise, _exercise, (value) => _setExercise(value)),
+            ExpandableIncrementCard(AssetImage("images/sleep.png"), 'SLEEP', 'Number of hours: ', _hoursOfSleep, _incrementSleepHours, _decrementSleepHours, _setSleepHours),
             SizedBox(height: 15),
-            ExpandableIncrementCard(AssetImage("images/sleep.png"), 'SLEEP', 'Number of hours: ', _hoursOfSleep, _incrementSleepHours, _decrementSleepHours, _setSleepHours)
+            ExpandableIncrementCard(AssetImage("images/water.png"), 'WATER', 'Glasses: ', _glassOfWater, _incrementGlassCount, _decrementGlassCount, _setWaterCount)
           ],
         ),
       ),

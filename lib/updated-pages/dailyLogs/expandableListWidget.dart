@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/radioListViewBuilderWidget.dart';
 
 
-class ExpandableCard extends StatefulWidget {
-  const ExpandableCard(this.titleIcon, this.title, this.content, this.groupValue, this.onChanged);
+class ExpandableRadioCard extends StatefulWidget {
+  const ExpandableRadioCard(this.titleIcon, this.title, this.content, this.groupValue, this.onChanged);
   final String title;
   final List content;
   final String groupValue;
   final ImageIcon titleIcon;
   final ValueChanged<dynamic> onChanged;
   @override
-  _ExpandableCardState createState() => _ExpandableCardState();
+  _ExpandableRadioCardState createState() => _ExpandableRadioCardState();
 }
 
-class _ExpandableCardState extends State<ExpandableCard> {
+class _ExpandableRadioCardState extends State<ExpandableRadioCard> {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
