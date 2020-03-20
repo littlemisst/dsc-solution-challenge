@@ -22,7 +22,7 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
     if (_emotion == 'good' || _emotion == 'neutral') {
       Navigator.push(context, MaterialPageRoute(builder: (context) => BasicQuestionsPage(entry: entry)));
     } else {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => SickQuestionPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => SickQuestionPage(entry: entry)));
     }
   }
 
