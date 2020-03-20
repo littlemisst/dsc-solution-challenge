@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/loader.dart';
-import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
-import 'package:me_daily/updated-pages/authentication/email_verification_page.dart';
+import 'package:me_daily/updated-pages/authentication/verification_page.dart';
 
 class SignUp extends StatefulWidget {
   final toggleBetweenForms;
@@ -113,7 +112,7 @@ class _SignUpState extends State<SignUp> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          EmailVerificationPage()));
+                                          VerificationPage()));
                             }
                           }),
                       InkWell(

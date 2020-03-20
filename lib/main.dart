@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/model/user.dart';
-import 'package:me_daily/routes/authentication_wrapper.dart';
+import 'package:me_daily/routes/first_installation_wrapper.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
-import 'package:me_daily/updated-pages/onBoarding/on_boarding_screens.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
@@ -10,7 +9,7 @@ void main() => runApp(
     );
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
@@ -20,6 +19,6 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primaryColor: Colors.pink[100],
             ),
-            home: OnBoardingScreen()));
+            home: FirstInstallationWrapper()));
   }
 }

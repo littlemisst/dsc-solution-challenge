@@ -1,8 +1,10 @@
 import 'package:fancy_on_boarding/fancy_on_boarding.dart';
 import 'package:flutter/material.dart';
 import 'package:me_daily/routes/authentication_wrapper.dart';
+import 'package:me_daily/services/shared_preferences_service.dart';
 
 class OnBoardingScreen extends StatelessWidget {
+  
   final pageList = [
     PageModel(
         color: Colors.pink[100],
