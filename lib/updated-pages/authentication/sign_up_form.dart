@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/loader.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
+import 'package:me_daily/updated-pages/authentication/email_verification_page.dart';
 
 class SignUp extends StatefulWidget {
   final toggleBetweenForms;
@@ -98,13 +99,21 @@ class _SignUpState extends State<SignUp> {
                               setState(() {
                                 isLoading = true;
                               });
-                              User user = await _firebaseAuth
-                                  .signUpWithEmailAndPassword(email, password);
-                              if (user == null) {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              }
+                              //   User user = await _firebaseAuth
+                              //       .signUpWithEmailAndPassword(email, password);
+                              //   if (user == null) {
+                              //     setState(() {
+                              //       isLoading = false;
+                              //     });
+                              //   }
+                              // }
+                              await _firebaseAuth.signUpWithEmailAndPassword(
+                                  email, password);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          EmailVerificationPage()));
                             }
                           }),
                       InkWell(
