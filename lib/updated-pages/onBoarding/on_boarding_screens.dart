@@ -4,7 +4,6 @@ import 'package:me_daily/routes/authentication_wrapper.dart';
 import 'package:me_daily/services/shared_preferences_service.dart';
 
 class OnBoardingScreen extends StatelessWidget {
-  
   final pageList = [
     PageModel(
         color: Colors.pink[100],
@@ -34,11 +33,13 @@ class OnBoardingScreen extends StatelessWidget {
     return Scaffold(
       body: FancyOnBoarding(
         onDoneButtonPressed: () {
-          Navigator.push(context,
+          SharedPreferencesService.setIsNewlyInstalled(false);
+          Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => AuthenticationWrapper()));
         },
         onSkipButtonPressed: () {
-          Navigator.push(context,
+          SharedPreferencesService.setIsNewlyInstalled(false);
+          Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => AuthenticationWrapper()));
         },
         pageList: pageList,
