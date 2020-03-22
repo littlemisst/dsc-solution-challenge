@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 class VerificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
     return Scaffold(
       body: Center(
         child: Padding(

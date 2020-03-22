@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:me_daily/api/profile_page_api.dart';
 import 'package:me_daily/common-widgets/datePicker.dart';
 import 'package:me_daily/model/profile.dart';
+import 'package:me_daily/model/user.dart';
+import 'package:me_daily/services/firestore_service.dart';
 import 'package:multi_page_form/multi_page_form.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -9,7 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:me_daily/widgets/profile_widgets.dart';
 import 'package:me_daily/widgets/height_weight_bloodType_widgets.dart';
-import 'package:me_daily/pages/user_profile_summary.dart';
+import 'package:provider/provider.dart';
 
 class UpdateProfile extends StatefulWidget {
   @override
@@ -18,7 +20,9 @@ class UpdateProfile extends StatefulWidget {
 
 class _UpdateProfileState extends State<UpdateProfile> {
   final _formKey = GlobalKey<FormState>();
+
   Profile _profile = Profile();
+
   String _ageValue;
   String _civilStatusValue;
   ScrollController _weightController;
@@ -87,7 +91,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     StorageUploadTask uploadTask = _reference.putFile(_image);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     _profile.downloadUrl = await _reference.getDownloadURL();
-    submitProfile(_profile);
+
     setState(() {
       _uploaded = true;
     });
@@ -154,8 +158,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
           _profile.address = value;
         }),
         SizedBox(height: 30.0),
-        DatePicker('Birthdate',
-            (DateTime value) {
+        DatePicker('Birthdate', (DateTime value) {
           _profile.birthDate = value;
         }),
         SizedBox(height: 30.0),
@@ -229,6 +232,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+    final _firestoreService = FirestoreService(uid: user.uid);
     return Form(
         key: _formKey,
         child: MultiPageForm(
@@ -238,9 +243,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
             personalInformationForm2(),
             personalInformationForm3()
           ],
-          onFormSubmitted: () {
-            submitProfile(_profile);
-            uploadImage();
+          onFormSubmitted: () async {
+            await uploadImage();
+            await _firestoreService.submitProfile(_profile);
           },
         ));
   }

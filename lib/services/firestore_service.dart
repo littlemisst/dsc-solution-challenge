@@ -54,42 +54,50 @@ class FirestoreService {
 //add and retrieve for profile
   Profile _profileFromFirebase(DocumentSnapshot documentSnapshot) {
     return Profile(
-        name: documentSnapshot.data['name'],
-        address: documentSnapshot.data['address'],
-        birthDate: documentSnapshot.data['birthDate'].toDate(),
-        gender: documentSnapshot.data['gender'],
-        civilStatus: documentSnapshot.data['civilStatus'],
-        bloodType: documentSnapshot.data['bloodType'],
-        height: documentSnapshot.data['height'],
-        weight: documentSnapshot.data['weight'],
-        downloadUrl: documentSnapshot.data['downloadUrl'],
-        );
+      name: documentSnapshot.data['name'],
+      address: documentSnapshot.data['address'],
+      birthDate: documentSnapshot.data['birthDate'].toDate(),
+      gender: documentSnapshot.data['gender'],
+      civilStatus: documentSnapshot.data['civilStatus'],
+      bloodType: documentSnapshot.data['bloodType'],
+      height: documentSnapshot.data['height'],
+      weight: documentSnapshot.data['weight'],
+      downloadUrl: documentSnapshot.data['downloadUrl'],
+    );
   }
 
   Stream<Profile> get profile {
     return userData.document(uid).snapshots().map(_profileFromFirebase);
   }
-  
+
+  Future submitProfile(Profile profile) async {
+    return await userData.document(uid).setData(profile.toJson());
+  }
+
 //add and retrieve for task
   Future addTask(Task task) async {
     return await userData.document(uid).collection('tasks').add(task.toJson());
   }
 
   List<Task> _taskFromFirebase(QuerySnapshot querySnapshot) {
-    return querySnapshot.documents.map((document) => Task.fromJson(document.data))
-    .toList();
+    return querySnapshot.documents
+        .map((document) => Task.fromJson(document.data))
+        .toList();
   }
 
   Stream<List<Task>> get tasks {
     return userData
-      .document(uid)
-      .collection('tasks')
-      .snapshots()
-      .map(_taskFromFirebase);
+        .document(uid)
+        .collection('tasks')
+        .snapshots()
+        .map(_taskFromFirebase);
   }
 
   //add and retrieve for daily logs
   Future addDailyLog(DailyLog entry) async {
-    return await userData.document(uid).collection('dailyLogs').add(entry.toJson());
+    return await userData
+        .document(uid)
+        .collection('dailyLogs')
+        .add(entry.toJson());
   }
 }

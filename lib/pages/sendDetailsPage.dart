@@ -80,7 +80,7 @@ class _SendDetailsState extends State<SendDetailsForm> {
     );
   }
 
-  Widget _buildDatePicker() {
+  Widget _buildDatePicker(context, initialValue) {
     final format = DateFormat("yyyy-MM-dd");
     return Column(children: <Widget>[
       DateTimeField(
@@ -90,6 +90,7 @@ class _SendDetailsState extends State<SendDetailsForm> {
               OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
         ),
         format: format,
+        initialValue: initialValue,
         onShowPicker: (context, currentValue) {
           return showDatePicker(
               context: context,
@@ -174,7 +175,7 @@ class _SendDetailsState extends State<SendDetailsForm> {
                 SizedBox(height: 5),
                 _buildAddressField(context, _currentProfile.address),
                 SizedBox(height: 5),
-                _buildDatePicker(),
+                _buildDatePicker(context, _currentProfile.birthDate),
                 SizedBox(height: 5),
                 _buildCivilStatus(context, _currentProfile.civilStatus),
                 SizedBox(height: 5),
