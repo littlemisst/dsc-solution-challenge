@@ -31,5 +31,6 @@ class _HealthChartState extends State<HealthChart> {
         animate: true,
         defaultRenderer: charts.ArcRendererConfig(
             arcWidth: 60, arcRendererDecorators: [charts.ArcLabelDecorator()]));
+    //return Text(feelingsList[0].feeling.toString());
   }
 }

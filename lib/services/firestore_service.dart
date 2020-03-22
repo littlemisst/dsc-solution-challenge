@@ -37,16 +37,33 @@ class FirestoreService {
   }
 
   // retrieve to health chart
+  // List<Health> _healthFromFirebase(QuerySnapshot querySnapshot) {
+  //   var _healthMap = Map();
+  //   List<Health> _healthList = [];
+  //   querySnapshot.documents.map((document) {
+  //     if (!_healthMap.containsValue(document.data['feeling'])) {
+  //       _healthMap[document.data['feeling']] = 1;
+  //     } else {
+  //       _healthMap[document.data['feeling']] += 1;
+  //     }
+  //   });
+
+  //   _healthMap.forEach((key, value) {
+  //     _healthList.add(Health(feeling: key, count: value));
+  //   });
+  //   return _healthList;
+  // }
+
   List<Health> _healthFromFirebase(QuerySnapshot querySnapshot) {
-    return querySnapshot.documents.map((document) {
-      return Health(
-          feeling: document.data['feeling'], count: document.data['count']);
-    }).toList();
+    return querySnapshot.documents
+        .map((document) => Health(feeling: document.data['feeling'], count: 1))//count must change
+        .toList();
   }
 
   Stream<List<Health>> get feelings {
-    return Firestore.instance
-        .collection('mockdata')
+    return userData
+        .document(uid)
+        .collection('dailyLogs')
         .snapshots()
         .map(_healthFromFirebase);
   }
@@ -99,5 +116,19 @@ class FirestoreService {
         .document(uid)
         .collection('dailyLogs')
         .add(entry.toJson());
+  }
+
+  List<DailyLog> _logsFromFirebase(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents
+        .map((document) => DailyLog.fromJson(document.data))
+        .toList();
+  }
+
+  Stream<List<DailyLog>> get logs {
+    return userData
+        .document(uid)
+        .collection('dailyLogs')
+        .snapshots()
+        .map(_logsFromFirebase);
   }
 }
