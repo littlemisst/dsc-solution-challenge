@@ -108,7 +108,7 @@ class _SignUpState extends State<SignUp> {
                               // }
                               await _firebaseAuth.signUpWithEmailAndPassword(
                                   email, password);
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
