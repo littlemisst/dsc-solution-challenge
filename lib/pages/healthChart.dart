@@ -16,6 +16,7 @@ class _HealthChartState extends State<HealthChart> {
       feelingsList = [];
     }
 
+
     List<charts.Series<Health, dynamic>> _createData() {
       return [
         new charts.Series<Health, dynamic>(
@@ -31,6 +32,8 @@ class _HealthChartState extends State<HealthChart> {
         animate: true,
         defaultRenderer: charts.ArcRendererConfig(
             arcWidth: 60, arcRendererDecorators: [charts.ArcLabelDecorator()]));
-    //return Text(feelingsList[0].feeling.toString());
-  }
+  //   return Text(feelingsList[1].count.toString() +
+  //       feelingsList[1].feeling.toString() +
+  //       feelingsList.length.toString());
+   }
 }

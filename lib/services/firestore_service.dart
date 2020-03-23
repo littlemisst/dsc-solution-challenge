@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:me_daily/model/feeling.dart';
 import 'package:me_daily/model/logs.dart';
@@ -36,28 +38,23 @@ class FirestoreService {
         .add({'downloadURL': downloadURL, 'fileName': fileName});
   }
 
-  // retrieve to health chart
-  // List<Health> _healthFromFirebase(QuerySnapshot querySnapshot) {
-  //   var _healthMap = Map();
-  //   List<Health> _healthList = [];
-  //   querySnapshot.documents.map((document) {
-  //     if (!_healthMap.containsValue(document.data['feeling'])) {
-  //       _healthMap[document.data['feeling']] = 1;
-  //     } else {
-  //       _healthMap[document.data['feeling']] += 1;
-  //     }
-  //   });
-
-  //   _healthMap.forEach((key, value) {
-  //     _healthList.add(Health(feeling: key, count: value));
-  //   });
-  //   return _healthList;
-  // }
-
+  //retrieve to health chart
   List<Health> _healthFromFirebase(QuerySnapshot querySnapshot) {
-    return querySnapshot.documents
-        .map((document) => Health(feeling: document.data['feeling'], count: 1))//count must change
-        .toList();
+    Map<String, int> _healthMap = Map();
+    List<Health> _healthList = [];
+    querySnapshot.documents.forEach((document) {
+      if (!_healthMap.containsKey(document.data['feeling'])) {
+        _healthMap[document.data['feeling']] = 1;
+      } else {
+        _healthMap[document.data['feeling']] += 1;
+      }
+    });
+
+    _healthMap.forEach((key, value) {
+      _healthList.add(Health(feeling: key, count: value));
+    });
+
+    return _healthList;
   }
 
   Stream<List<Health>> get feelings {
