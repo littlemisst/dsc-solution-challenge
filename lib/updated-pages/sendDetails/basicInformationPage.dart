@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/api/share_details_api.dart';
 import 'package:me_daily/model/profile.dart';
-import 'package:me_daily/api/profile_page_api.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 
-class SendDetailsForm extends StatefulWidget {
+class BasicInformationPage extends StatefulWidget {
   @override
-  _SendDetailsState createState() => _SendDetailsState();
+  _BasicInformationPageState createState() => _BasicInformationPageState();
 }
 
-class _SendDetailsState extends State<SendDetailsForm> {
+class _BasicInformationPageState extends State<BasicInformationPage> {
   final _formKey = GlobalKey<FormState>();
 
   Profile _profile = Profile();
@@ -127,7 +126,8 @@ class _SendDetailsState extends State<SendDetailsForm> {
 
   Widget _buildBloodType(context, initialValue) {
     return Container(
-        width: 120.0,
+        height: 70,
+        width: 150.0,
         child: DropdownButtonFormField<String>(
           decoration: InputDecoration(
             enabledBorder:
@@ -163,50 +163,32 @@ class _SendDetailsState extends State<SendDetailsForm> {
         if (snapshots.hasData) {
           Profile _currentProfile = snapshots.data;
 
-          return Form(
-            key: _formKey,
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
-              child: Column(children: <Widget>[
-                SizedBox(height: 15),
-                _buildNameField(context, _currentProfile.name),
-                SizedBox(height: 5),
-                _buildGender(context, _currentProfile.gender),
-                SizedBox(height: 5),
-                _buildAddressField(context, _currentProfile.address),
-                SizedBox(height: 5),
-                _buildDatePicker(context, _currentProfile.birthDate),
-                SizedBox(height: 5),
-                _buildCivilStatus(context, _currentProfile.civilStatus),
-                SizedBox(height: 5),
-                _buildBloodType(context, _currentProfile.bloodType),
-                Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: RaisedButton(
-                        color: Colors.pink[100],
-                        onPressed: () => submitDetails(_profile),
-                        child: Text('Submit Details',
-                            style: TextStyle(color: Colors.white)))),
-              ]),
+          return SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
+                child: Column(children: <Widget>[
+                  Text('Basic Information'),
+                  SizedBox(height: 15),
+                  _buildNameField(context, _currentProfile.name),
+                  SizedBox(height: 5),
+                  _buildGender(context, _currentProfile.gender),
+                  SizedBox(height: 5),
+                  _buildAddressField(context, _currentProfile.address),
+                  SizedBox(height: 5),
+                  _buildDatePicker(context, _currentProfile.birthDate),
+                  SizedBox(height: 5),
+                  _buildCivilStatus(context, _currentProfile.civilStatus),
+                  SizedBox(height: 5),
+                  _buildBloodType(context, _currentProfile.bloodType),
+                ]),
+              ),
             ),
           );
         }
         return Container();
       },
     );
-  }
-}
-
-class SendDetailsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title:
-              Text('Submit Details', style: TextStyle(color: Colors.pink[100])),
-          backgroundColor: Colors.white,
-        ),
-        body: SingleChildScrollView(
-            padding: EdgeInsets.all(10), child: SendDetailsForm()));
   }
 }

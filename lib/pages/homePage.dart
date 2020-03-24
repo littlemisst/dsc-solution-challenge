@@ -9,6 +9,7 @@ import 'package:me_daily/updated-pages/calendarPage.dart/calendarPage.dart';
 import 'package:me_daily/updated-pages/dailyLogs/addDailyLog.dart';
 import 'package:me_daily/updated-pages/photos/gallery_page.dart';
 import 'package:me_daily/updated-pages/profile/profile_page.dart';
+import 'package:me_daily/updated-pages/sendDetails/sendDetailsPage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -36,10 +37,23 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         actions: <Widget>[
           FlatButton(
-            child: Text('Sign Out'),
+            child: Text(
+              'Sign Out',
+              style: TextStyle(color: Colors.pink[100]),
+            ),
             onPressed: () async {
               _firebaseAuth.signOut();
             },
+          ),
+          FlatButton(
+            child: Icon(
+              Icons.share,
+              color: Colors.pink[100],
+            ),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SendDetailsPage()),
+            ),
           )
         ],
       ),
