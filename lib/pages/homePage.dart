@@ -5,7 +5,7 @@ import 'package:me_daily/pages/addTask.dart';
 import 'package:me_daily/pages/mapPage.dart';
 import 'package:me_daily/pages/summaryPage.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
-import 'package:me_daily/updated-pages/calendarPage.dart/calendarPage.dart';
+import 'package:me_daily/updated-pages/calendarPage/calendarPage.dart';
 import 'package:me_daily/updated-pages/dailyLogs/addDailyLog.dart';
 import 'package:me_daily/updated-pages/photos/gallery_page.dart';
 import 'package:me_daily/updated-pages/profile/profile_page.dart';

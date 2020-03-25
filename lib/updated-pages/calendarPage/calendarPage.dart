@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:me_daily/updated-pages/calendarPage.dart/dailyTasks.dart';
+import 'package:me_daily/updated-pages/calendarPage/dailyTasks.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPage extends StatefulWidget {
