@@ -17,13 +17,14 @@ class _BuildRadioListViewState extends State<BuildRadioListView> {
       itemBuilder: (context, index) {
         final item = widget.itemsList[index];
         return ListTile(
-          title: Text(item),
-          leading: Radio(
-            activeColor: Colors.pink[100],
-            value: item,
-            groupValue: widget.groupValue,
-            onChanged: widget.onChanged
-          ));
+            title: Text(item),
+            leading: Radio(
+              activeColor: Colors.pink[100],
+              value: item,
+              groupValue: widget.groupValue,
+              onChanged: widget.onChanged
+            )
+        );
       });
   }
 }

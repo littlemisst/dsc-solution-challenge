@@ -99,19 +99,19 @@ class _BasicQuestionsPageState extends State<BasicQuestionsPage> {
     final user = Provider.of<User>(context);
     final _firestoreService = FirestoreService(uid: user.uid);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 0,
+        elevation: 1,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width/10, 10, MediaQuery.of(context).size.width/10, 0),
+        padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text('WHAT HAVE YOU BEEN UP TO?', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Text('What have you been up to?', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             SizedBox(height: 24),
-            ExpandableRadioCard(ImageIcon(AssetImage("images/food.png"), color: Colors.pink[100],),'FOOD', Strings.food, _food, (value) => _setFood(value)),
+            ExpandableRadioCard(ImageIcon(AssetImage("images/eat.png"), color: Colors.pink[100],),'FOOD', Strings.food, _food, (value) => _setFood(value)),
             SizedBox(height: 15),
             ExpandableRadioCard(ImageIcon(AssetImage("images/drink.png"), color: Colors.pink[100]),'DRINK', Strings.drink, _drink, (value) => _setDrink(value)),
             SizedBox(height: 15),

@@ -19,7 +19,7 @@ class Task {
   DateTime taskEnded;
 
   @JsonKey(name: 'taskTime')
-  DateTime taskTime;
+  String taskTime;
 
   @JsonKey(name: 'completed')
   bool completed = false;

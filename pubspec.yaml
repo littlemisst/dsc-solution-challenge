@@ -44,6 +44,8 @@ dependencies:
   charts_flutter: ^0.9.0
   multi_page_form: ^1.0.4
   flutter_scale: ^0.1.2
+  date_range_picker: ^1.0.6
+  
 
 
 
@@ -73,9 +75,9 @@ flutter:
   assets:
     - images/more.png
     - images/medicine.png
-    - images/food.png
+    - images/eat.png
     - images/drink.png
-    - images/appointments.png
+    - images/appointment.png
     - images/exercise.png
     - images/well.png
     - images/unwell.png

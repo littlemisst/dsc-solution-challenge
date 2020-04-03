@@ -87,22 +87,19 @@ class _SickQuestionPageState extends State<SickQuestionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width/10, 10, MediaQuery.of(context).size.width/10, 0),
+        padding: EdgeInsets.all(15),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text('HOW DO YOU FEEL?', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             SizedBox(height: 24),
-            Text('Check the symptoms you have experienced', style: TextStyle(fontSize: 15)),
-            SizedBox(height: 15),
-            _buildSymptomsGrid(),
-            SizedBox(height: 15),
+            _buildSymptoms(),
             _buildSymptomsStarted()
           ],
         )
@@ -115,6 +112,23 @@ class _SickQuestionPageState extends State<SickQuestionPage> {
           });
           Navigator.push(context, MaterialPageRoute(builder: (context) => BasicQuestionsPage(entry: widget.entry)));
         }
+      )
+    );
+  }
+  Widget _buildSymptoms() {
+    return Container(
+      child: Align (
+        child: Material(
+          color: Colors.white,
+          elevation: 1,
+          borderRadius: BorderRadius.circular(10),
+          child: Column(children: <Widget>[
+            Text('Check the symptoms you have experienced', style: TextStyle(fontSize: 15)),
+            SizedBox(height: 15),
+            _buildSymptomsGrid(),
+            SizedBox(height: 15)
+          ])
+        )
       )
     );
   }
@@ -145,7 +159,7 @@ class _SickQuestionPageState extends State<SickQuestionPage> {
         SymptomsCheckBox('headache', headache, (value) => _setHeadache(value)),
         SymptomsCheckBox('muscle pain', musclePain, (value) => _setMusclePain(value)),
         SymptomsCheckBox('vomiting', vomiting, (value) => _setVomiting(value)),
-      ], 2, 3)
+      ], 2, 1)
     );
   }
 }
