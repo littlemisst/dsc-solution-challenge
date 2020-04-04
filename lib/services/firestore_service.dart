@@ -19,7 +19,10 @@ class FirestoreService {
     return querySnapshot.documents.map((document) {
       return Photo(
           fileName: document.data['fileName'],
-          downloadURL: document.data['downloadURL']);
+          downloadURL: document.data['downloadURL'],
+          description: document.data['description']
+          );
+          
     }).toList();
   }
 
@@ -31,11 +34,11 @@ class FirestoreService {
         .map(_photoFromFirebase);
   }
 
-  Future uploadPhoto(String downloadURL, String fileName) async {
+  Future uploadPhoto(String downloadURL, String fileName, String description) async {
     return await userData
         .document(uid)
         .collection('photos')
-        .add({'downloadURL': downloadURL, 'fileName': fileName});
+        .add({'downloadURL': downloadURL, 'fileName': fileName, 'description': description});
   }
 
   //retrieve to health chart

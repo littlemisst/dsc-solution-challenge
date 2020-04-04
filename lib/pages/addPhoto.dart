@@ -14,6 +14,8 @@ class AddPhoto extends StatefulWidget {
 class _AddPhotoState extends State<AddPhoto> {
   String fileName;
   String downloadURL;
+  String description;
+  String _typeValue;
 
   File _image;
 
@@ -48,52 +50,94 @@ class _AddPhotoState extends State<AddPhoto> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-          SizedBox(height: 20.0),
-          _image == null ? Container() : Image.file(_image, height: 300.0),
-          RaisedButton.icon(
-            icon: Icon(Icons.camera_alt, color: Colors.white),
-            label: Text('Camera', style: TextStyle(color: Colors.white)),
-            color: Colors.pink[100],
-            onPressed: () {
-              setState(() {
-                fileName =
-                    DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
-              });
-              getImage(true);
-            },
-          ),
-          SizedBox(width: 20.0),
-          RaisedButton.icon(
-            icon: Icon(Icons.photo_album, color: Colors.white),
-            label: Text('Gallery', style: TextStyle(color: Colors.white)),
-            color: Colors.pink[100],
-            onPressed: () {
-              setState(() {
-                fileName =
-                    DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
-              });
-              getImage(false);
-            },
-          ),
-          SizedBox(height: 50.0),
-          _image == null
-              ? Container()
-              : RaisedButton.icon(
-                  icon: Icon(Icons.save_alt, color: Colors.white),
-                  label: Text('Save', style: TextStyle(color: Colors.white)),
+          _image == null ? Container(
+            child: Column(
+              children: <Widget>[
+                CircleAvatar(
+                  backgroundColor: Colors.grey[200],
+                  maxRadius: 60,
+                  child: Icon(Icons.add_a_photo, size: 60, color: Colors.white),
+                ),
+              SizedBox(height: 50.0),
+                 RaisedButton.icon(
+                  icon: Icon(Icons.camera_alt, color: Colors.white),
+                  label: Text('Camera', style: TextStyle(color: Colors.white)),
                   color: Colors.pink[100],
-                  onPressed: () async {
-                    StorageReference _reference = FirebaseStorage.instance
-                        .ref()
-                        .child('users/${user.uid}/$fileName');
-
-                    StorageUploadTask uploadTask = _reference.putFile(_image);
-                    StorageTaskSnapshot taskSnapshot =
-                        await uploadTask.onComplete;
-                    downloadURL = await _reference.getDownloadURL();
-                    await _firestoreService.uploadPhoto(downloadURL, fileName);
+                  onPressed: () {
+                    setState(() {
+                      fileName =
+                          DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+                    });
+                    getImage(true);
                   },
                 ),
+                SizedBox(width: 20.0),
+                RaisedButton.icon(
+                  icon: Icon(Icons.photo_album, color: Colors.white),
+                  label: Text('Gallery', style: TextStyle(color: Colors.white)),
+                  color: Colors.pink[100],
+                  onPressed: () {
+                    setState(() {
+                      fileName =
+                          DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+                    });
+                    getImage(false);
+                  },
+                ),
+              ],
+            ),
+            
+          ) : Image.file(_image, height: 300.0),
+          SizedBox(height: 30.0),
+         
+          _image == null
+              ? Container()
+              : Column(
+                children: <Widget>[
+                   Padding(
+                     padding: EdgeInsets.only(left: 50.0, right: 50.0),
+                     child: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        enabledBorder:
+                            OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+                      ),
+                      items: [
+                        DropdownMenuItem<String>(child: Text('Prescription'), value: 'Prescription'),
+                        DropdownMenuItem<String>(child: Text('Receipt'), value: 'Receipt'),
+                        DropdownMenuItem<String>(child: Text('Maintenance'), value: 'Maintenance'),
+                        DropdownMenuItem<String>(child: Text('Laboratory Result'), value: 'Laboratory Result'),
+                        DropdownMenuItem<String>(child: Text('Medical Certificate'), value: 'Medical Certificate'),
+                        DropdownMenuItem<String>(child: Text('Others'), value: 'Others'),
+                      ],
+                      onChanged: (String value) => {
+                        setState(() {
+                          _typeValue = value;
+                          description = value;
+                        }) 
+                      },
+                      hint: Text('Add Description'),
+                      value: _typeValue,
+                ),
+                   ),
+                   SizedBox(height: 20),
+                  RaisedButton.icon(
+                      icon: Icon(Icons.save_alt, color: Colors.white),
+                      label: Text('Save', style: TextStyle(color: Colors.white)),
+                      color: Colors.pink[100],
+                      onPressed: () async {
+                        StorageReference _reference = FirebaseStorage.instance
+                            .ref()
+                            .child('users/${user.uid}/$fileName');
+
+                        StorageUploadTask uploadTask = _reference.putFile(_image);
+                        StorageTaskSnapshot taskSnapshot =
+                            await uploadTask.onComplete;
+                        downloadURL = await _reference.getDownloadURL();
+                        await _firestoreService.uploadPhoto(downloadURL, fileName, description);
+                      },
+                    ),
+                ],
+              ),
         ]),
       )),
     );
