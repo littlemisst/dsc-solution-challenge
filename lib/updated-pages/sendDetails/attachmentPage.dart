@@ -14,6 +14,7 @@ class AttachementPage extends StatefulWidget {
 class _AttachementPageState extends State<AttachementPage> {
   String fileName;
   String downloadURL;
+  String description;
 
   File _image;
 
@@ -84,7 +85,7 @@ class _AttachementPageState extends State<AttachementPage> {
                     StorageTaskSnapshot taskSnapshot =
                         await uploadTask.onComplete;
                     downloadURL = await _reference.getDownloadURL();
-                    await _firestoreService.uploadPhoto(downloadURL, fileName);
+                    await _firestoreService.uploadPhoto(downloadURL, fileName, description);
                   },
                 ),
         ]),

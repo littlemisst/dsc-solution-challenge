@@ -4,7 +4,7 @@ Widget buildNameField(context, name, onChanged) {
   return TextFormField(
       validator: (value) {
         if (value.isEmpty) {
-          return 'Please enter some text';
+          return 'Please enter your name';
         }
         return null;
       },
@@ -19,6 +19,12 @@ Widget buildNameField(context, name, onChanged) {
 Widget buildGender(context, model, initialValue, state) {
   return Center(
       child: DropdownButtonFormField<String>(
+    validator: (value) {
+      if (value.isEmpty) {
+        return 'Please enter your gender';
+      }
+      return null;
+    },
     decoration: InputDecoration(
       enabledBorder:
           OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
@@ -37,7 +43,7 @@ Widget buildAddressField(context, address, onChanged) {
   return TextFormField(
     validator: (value) {
       if (value.isEmpty) {
-        return 'Please enter some text';
+        return 'Please enter your address';
       }
       return null;
     },
@@ -53,6 +59,12 @@ Widget buildAddressField(context, address, onChanged) {
 Widget buildCivilStatus(context, model, initialValue, state) {
   return Container(
       child: DropdownButtonFormField<String>(
+    validator: (value) {
+      if (value.isEmpty) {
+        return 'Please enter your civil status';
+      }
+      return null;
+    },
     decoration: InputDecoration(
       enabledBorder:
           OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),

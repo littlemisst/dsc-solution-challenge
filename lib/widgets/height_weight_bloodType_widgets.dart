@@ -5,6 +5,12 @@ Widget buildBloodType(context, model, initialValue, onChanged) {
   return Container(
     width: 150.0,
     child: DropdownButtonFormField<String>(
+      validator: (value) {
+        if (value.isEmpty) {
+          return 'Please enter your bloodtype';
+        }
+        return null;
+      },
       decoration: InputDecoration(
         enabledBorder:
             OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
