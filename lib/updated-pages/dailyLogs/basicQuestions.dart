@@ -93,33 +93,32 @@ class _BasicQuestionsPageState extends State<BasicQuestionsPage> {
     _drink = '';
     _exercise = '';
   }
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final _firestoreService = FirestoreService(uid: user.uid);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
+        title: Text('What have you been up to?'),
         backgroundColor: Colors.white,
-        elevation: 0,
+        elevation: 1,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width/10, 10, MediaQuery.of(context).size.width/10, 0),
+        padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text('WHAT HAVE YOU BEEN UP TO?', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 24),
-            ExpandableRadioCard(ImageIcon(AssetImage("images/food.png"), color: Colors.pink[100],),'FOOD', Strings.food, _food, (value) => _setFood(value)),
-            SizedBox(height: 15),
-            ExpandableRadioCard(ImageIcon(AssetImage("images/drink.png"), color: Colors.pink[100]),'DRINK', Strings.drink, _drink, (value) => _setDrink(value)),
-            SizedBox(height: 15),
-            ExpandableRadioCard(ImageIcon(AssetImage("images/exercise.png"), color: Colors.pink[100]),'EXERCISE', Strings.exercise, _exercise, (value) => _setExercise(value)),
-            SizedBox(height: 15),
-            ExpandableIncrementCard(AssetImage("images/sleep.png"), 'SLEEP', 'Number of hours: ', _hoursOfSleep, _incrementSleepHours, _decrementSleepHours, _setSleepHours),
-            SizedBox(height: 15),
-            ExpandableIncrementCard(AssetImage("images/water.png"), 'WATER', 'Glasses: ', _glassOfWater, _incrementGlassCount, _decrementGlassCount, _setWaterCount)
+            SizedBox(height: 5),
+            ExpandableRadioCard(ImageIcon(AssetImage("images/eat.png"), color: Colors.green[300],),'Eating', Strings.food, _food, (value) => _setFood(value)),
+            SizedBox(height: 10),
+            ExpandableRadioCard(ImageIcon(AssetImage("images/drink.png"), color: Colors.amber[300]),'Drinking', Strings.drink, _drink, (value) => _setDrink(value)),
+            SizedBox(height: 10),
+            ExpandableRadioCard(ImageIcon(AssetImage("images/exercise.png"), color: Colors.red[400]),'Exercising', Strings.exercise, _exercise, (value) => _setExercise(value)),
+            SizedBox(height: 10),
+            ExpandableIncrementCard(AssetImage("images/sleep.png"), Colors.purple[200], 'Hours of Sleep', 'Hours', _hoursOfSleep, _incrementSleepHours, _decrementSleepHours, _setSleepHours),
+            SizedBox(height: 10),
+            ExpandableIncrementCard(AssetImage("images/water.png"), Colors.cyan[300], 'Glasses of Water', 'Glasses ', _glassOfWater, _incrementGlassCount, _decrementGlassCount, _setWaterCount)
           ],
         ),
       ),

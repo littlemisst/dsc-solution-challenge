@@ -9,7 +9,6 @@ class FloatingActionToSave extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: Colors.pink[100],
       onPressed: onPressed,
       child: Icon(buttonIcon, color: Colors.white));
   }

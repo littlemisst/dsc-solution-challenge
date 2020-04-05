@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:me_daily/pages/addPhoto.dart';
-import 'package:me_daily/pages/addTask.dart';
 import 'package:me_daily/pages/mapPage.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
+import 'package:me_daily/updated-pages/addTasks/addTask.dart';
 import 'package:me_daily/updated-pages/calendarPage/calendarPage.dart';
 import 'package:me_daily/updated-pages/dailyLogs/addDailyLog.dart';
 import 'package:me_daily/updated-pages/photos/gallery_page.dart';
@@ -60,23 +60,20 @@ class _HomePageState extends State<HomePage> {
       body: bodies[_currentIndex],
       floatingActionButton: _currentIndex != 4
           ? SpeedDial(
-              backgroundColor: Colors.pink[100],
-              child: Icon(Icons.add),
+              child: Icon(Icons.add, color: Colors.white),
               overlayColor: Colors.black,
               overlayOpacity: 0.6,
               children: [
                   SpeedDialChild(
-                      child: Icon(Icons.add_box),
+                      child: Icon(Icons.add_box, color: Colors.white),
                       label: 'Add Task',
-                      backgroundColor: Colors.pink[100],
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => AddTask()));
                       }),
                   SpeedDialChild(
-                      child: Icon(Icons.add_photo_alternate),
+                      child: Icon(Icons.add_photo_alternate, color: Colors.white),
                       label: 'Add Image',
-                      backgroundColor: Colors.pink[100],
                       onTap: () {
                         Navigator.push(
                             context,
@@ -84,9 +81,8 @@ class _HomePageState extends State<HomePage> {
                                 builder: (context) => AddPhoto()));
                       }),
                   SpeedDialChild(
-                      child: Icon(Icons.playlist_add_check),
+                      child: Icon(Icons.playlist_add_check, color: Colors.white),
                       label: 'Add Daily Log',
-                      backgroundColor: Colors.pink[100],
                       onTap: () {
                         Navigator.push(
                             context,

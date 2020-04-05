@@ -17,21 +17,23 @@ class IconItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var flatButton = FlatButton(
+      padding: EdgeInsets.all(10),
         child: ImageIcon(
           icon,
           size: iconSize,
           color: iconColor
         ),
-        color: Colors.white,
-        shape: CircleBorder(side: BorderSide.none),
+        splashColor: Colors.grey,
+        // color: Colors.white,
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         onPressed: onPressed
       );
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         flatButton,
         SizedBox(height: 3),
-        Text(text, style: TextStyle(fontSize: 11)),
+        Text(text, style: TextStyle(fontSize: 15, color: iconColor)),
       ],
     );
   }

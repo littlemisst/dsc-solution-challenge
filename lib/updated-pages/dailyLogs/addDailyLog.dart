@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:me_daily/common-widgets/iconItem.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/updated-pages/dailyLogs/basicQuestions.dart';
@@ -52,17 +53,17 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 0,
+        elevation: 1,
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width/10, MediaQuery.of(context).size.height/5, MediaQuery.of(context).size.width/10, 0),
         child: Column(
-           crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text('How are you doing?', style: TextStyle(fontSize: 20)),
-            SizedBox(height: 30),
-            _buildChooseEmotions(),
-          ],
+            Text('How are you feeling?', style: TextStyle(fontSize: 20)),
+        SizedBox(height: 30),
+        _buildChooseEmotions()
+        ],
         ),
       )
     );

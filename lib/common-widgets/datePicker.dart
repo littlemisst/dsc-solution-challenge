@@ -24,9 +24,10 @@ class DatePicker extends StatelessWidget {
       onShowPicker: (context, currentValue) {
         return showDatePicker(
           context: context,
-          firstDate: DateTime(1900),
+          firstDate:  DateTime(DateTime.now().year - 50),
+          lastDate: DateTime(DateTime.now().year + 50),
           initialDate: currentValue ?? DateTime.now(),
-          lastDate: DateTime(2100));
+         );
       },
       onChanged: onChanged,
     ),
