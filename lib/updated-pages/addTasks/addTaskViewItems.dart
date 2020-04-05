@@ -31,66 +31,6 @@ class _TaskViewItemsState extends State<TaskViewItems> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    switch (widget.task.taskType) {
-      case "eat":
-        {
-          _items = Strings.food;
-        }
-        break;
-      case "drink":
-        {
-          _items = Strings.drink;
-        }
-        break;
-      case "exercise":
-        {
-          _items = Strings.exercise;
-        }
-        break;
-      case "take medicine":
-        {
-          _items = Strings.medicine;
-        }
-        break;
-      case "book an appointment":
-        {
-          _items = Strings.appointment;
-        }
-        break;
-      default:
-        {
-          print("should not be!");
-        }
-    }
-
-    return Scaffold(
-      backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text('ADD TASK - ${widget.task.taskType}'),
-        backgroundColor: Colors.white,
-        elevation: 1,
-      ),
-      body: SingleChildScrollView(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            children: <Widget>[
-              _buildListView(),
-              SizedBox(height: 15),
-              _buildSelectDates(),
-              SizedBox(height: 15),
-              _buildTimePicker()
-            ]
-          )
-        ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.pink[100],
-          onPressed: () => Navigator.pop(context),
-          child: Icon(Icons.check, color: Colors.white)));
-  }
-
   Widget _buildListView() {
     return Container(
       child: Material(
@@ -101,6 +41,22 @@ class _TaskViewItemsState extends State<TaskViewItems> {
             _items, _specificTask, (value) => _setSpecificTask(value))
       )
     );
+  }
+
+  Future _displayDatePicker(BuildContext context) async {
+    final List<DateTime> picked = await DateRangePicker.showDatePicker(
+      context: context, 
+      initialFirstDate: DateTime.now(), 
+      initialLastDate: DateTime.now(), 
+      firstDate: DateTime(DateTime.now().year - 50), 
+      lastDate: DateTime(DateTime.now().year + 50),
+    );
+    if (picked != null && picked.length == 2) {
+      setState(() {
+        widget.task.taskStarted = picked[0];
+        widget.task.taskEnded = picked[1];
+      });
+    }
   }
 
   Widget _buildSelectDates() {
@@ -154,21 +110,19 @@ class _TaskViewItemsState extends State<TaskViewItems> {
       )
     );
   }
-  Future _displayDatePicker(BuildContext context) async {
-    final List<DateTime> picked = await DateRangePicker.showDatePicker(
-      context: context, 
-      initialFirstDate: DateTime.now(), 
-      initialLastDate: DateTime.now(), 
-      firstDate: DateTime(DateTime.now().year - 50), 
-      lastDate: DateTime(DateTime.now().year + 50),
+
+  Future _displayTimePicker(BuildContext context) async {
+   TimeOfDay time = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now()
     );
-    if (picked != null && picked.length == 2) {
+    if(time != null) {
       setState(() {
-        widget.task.taskStarted = picked[0];
-        widget.task.taskEnded = picked[1];
+        widget.task.taskTime = '${time.hour}:${time.minute}';
       });
     }
   }
+
   Widget _buildTimePicker() {
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -211,15 +165,100 @@ class _TaskViewItemsState extends State<TaskViewItems> {
     );
   }
 
-  Future _displayTimePicker(BuildContext context) async {
-   TimeOfDay time = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now()
+  Widget _buildMoreDialog() {
+    String moreTask = '';
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: Material(
+        color: Colors.white,
+        elevation: 1,
+        borderRadius: BorderRadius.circular(10),
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(15),
+              child: TextFormField(
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              },
+              decoration: InputDecoration(
+                  labelText: 'Add Task',
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey))),
+              onChanged: (value) => moreTask = value,
+              )
+            ),          FlatButton(
+            child: Align( alignment: Alignment.bottomRight,
+              child: Text('ADD', style: TextStyle(fontSize: 15))), 
+            onPressed: () => _setSpecificTask(moreTask)
+          )
+        ])
+      )
     );
-    if(time != null) {
-      setState(() {
-        widget.task.taskTime = '${time.hour} : ${time.minute}';
-      });
-    }
   }
+
+  @override
+  Widget build(BuildContext context) {
+    switch (widget.task.taskType) {
+      case "eat":
+        {
+          _items = Strings.food;
+        }
+        break;
+      case "drink":
+        {
+          _items = Strings.drink;
+        }
+        break;
+      case "exercise":
+        {
+          _items = Strings.exercise;
+        }
+        break;
+      case "take medicine":
+        {
+          _items = Strings.medicine;
+        }
+        break;
+      case "book an appointment":
+        {
+          _items = Strings.appointment;
+        }
+        break;
+      default:
+        {
+          print("no list");
+        }
+    }
+
+    return Scaffold(
+      backgroundColor: Colors.grey[50],
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text('ADD TASK - ${widget.task.taskType}'),
+        backgroundColor: Colors.white,
+        elevation: 1,
+      ),
+      body: SingleChildScrollView(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: <Widget>[
+              widget.task.taskType == 'more' ? _buildMoreDialog() :
+              _buildListView(),
+              SizedBox(height: 15),
+              _buildSelectDates(),
+              SizedBox(height: 15),
+              _buildTimePicker()
+            ]
+          )
+        ),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.pink[100],
+          onPressed: () => Navigator.pop(context),
+          child: Icon(Icons.check, color: Colors.white)));
+  }
+
 }

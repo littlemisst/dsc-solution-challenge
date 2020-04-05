@@ -33,7 +33,7 @@ class IconItem extends StatelessWidget {
       children: <Widget>[
         flatButton,
         SizedBox(height: 3),
-        Text(text, style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold)),
+        Text(text, style: TextStyle(fontSize: 15, color: iconColor)),
       ],
     );
   }

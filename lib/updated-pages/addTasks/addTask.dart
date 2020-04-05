@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/buildGrid.dart';
-import 'package:me_daily/common-widgets/datePicker.dart';
 import 'package:me_daily/common-widgets/floatingAction.dart';
 import 'package:me_daily/common-widgets/iconItem.dart';
-import 'package:me_daily/common-widgets/timePicker.dart';
 import 'package:me_daily/updated-pages/addTasks/addTaskViewItems.dart';
 import 'package:me_daily/updated-pages/addTasks/gridItemWidget.dart';
 import 'package:provider/provider.dart';
@@ -31,12 +29,7 @@ class _AddTaskState extends State<AddTask> {
       _taskType = taskType;
       task.taskType = taskType;
     });
-    if (_taskType == 'more') {
-      _buildMoreDialog(context);
-    } else {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => TaskViewItems(task: task)));
-    }
+    Navigator.push(context, MaterialPageRoute(builder: (context) => TaskViewItems(task: task)));
   }
 
   @override
@@ -71,7 +64,7 @@ class _AddTaskState extends State<AddTask> {
         height: MediaQuery.of(context).size.height,
         child: BuildGridItems([
           GridItem(
-              IconItem(AssetImage("images/eat.png"), 'eat', 60, Colors.white,
+              IconItem(AssetImage("images/eat.png"), 'eat', 60, Colors.white, 
                   () => _chooseTask('eat')),
               Colors.pink[300]),
           GridItem(
@@ -101,33 +94,5 @@ class _AddTaskState extends State<AddTask> {
         ], 2, 1));
   }
 
-  Future<void> _buildMoreDialog(BuildContext context) {
-    String moreTask = '';
-    return showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              content: TextFormField(
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                    labelText: 'Add Task',
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey))),
-                onChanged: (value) => moreTask = value,
-              ),
-              actions: <Widget>[
-                MaterialButton(
-                  onPressed: () {
-                    task.specificTask = moreTask;
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('ADD TASK'),
-                )
-              ],
-            ));
-  }
+  
 }

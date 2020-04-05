@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scale/flutter_scale.dart';
 import 'package:me_daily/common-widgets/buildGrid.dart';
-import 'package:me_daily/common-widgets/datePicker.dart';
-import 'package:me_daily/common-widgets/timePicker.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/updated-pages/dailyLogs/basicQuestions.dart';
 import 'package:me_daily/updated-pages/dailyLogs/checkBoxWidget.dart';
@@ -87,20 +86,19 @@ class _SickQuestionPageState extends State<SickQuestionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 0,
+        elevation: 1,
+        title:  Text('What do you feel?'),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(15),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('HOW DO YOU FEEL?', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 24),
             _buildSymptoms(),
-            _buildSymptomsStarted()
+             SizedBox(height: 15),
           ],
         )
       ),
@@ -123,7 +121,8 @@ class _SickQuestionPageState extends State<SickQuestionPage> {
           elevation: 1,
           borderRadius: BorderRadius.circular(10),
           child: Column(children: <Widget>[
-            Text('Check the symptoms you have experienced', style: TextStyle(fontSize: 15)),
+            SizedBox(height: 15),
+            Text('Check the symptoms you have been experiencing', style: TextStyle(fontSize: 15)),
             SizedBox(height: 15),
             _buildSymptomsGrid(),
             SizedBox(height: 15)
@@ -132,23 +131,9 @@ class _SickQuestionPageState extends State<SickQuestionPage> {
       )
     );
   }
-  Widget _buildSymptomsStarted() {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Text('When did the symptoms started?', style: TextStyle(fontSize: 15), textAlign: TextAlign.left),
-          SizedBox(height: 15),
-          DatePicker('Enter date', (DateTime value) => widget.entry.symptomsStarted = value),
-          SizedBox(height: 15),
-          TimePicker((DateTime value) => widget.entry.timeOfOccurance = value)
-          ]
-        )
-    );   
-  }
   
   Widget _buildSymptomsGrid() {
     return Container(
-      height: MediaQuery.of(context).size.height / 2.8,
       padding: EdgeInsets.all(5),
       child: BuildGridItems([
         SymptomsCheckBox('cold', cold, (value) => _setCold(value)),
@@ -159,7 +144,21 @@ class _SickQuestionPageState extends State<SickQuestionPage> {
         SymptomsCheckBox('headache', headache, (value) => _setHeadache(value)),
         SymptomsCheckBox('muscle pain', musclePain, (value) => _setMusclePain(value)),
         SymptomsCheckBox('vomiting', vomiting, (value) => _setVomiting(value)),
-      ], 2, 1)
+      ], 2, 6)
     );
   }
+
+  Widget buildWeightScale(context, controller, scaleChanged) {
+  return HorizontalScale(
+    maxValue: 200,
+    scaleController: controller,
+    onChanged: scaleChanged,
+    textStyle: TextStyle(
+        fontSize: 22, color: Colors.pink[100], fontWeight: FontWeight.bold),
+    scaleColor: Colors.white10,
+    lineColor: Colors.pink[100],
+  );
+}
+
+
 }

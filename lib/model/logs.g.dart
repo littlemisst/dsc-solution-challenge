@@ -21,6 +21,7 @@ DailyLog _$DailyLogFromJson(Map<String, dynamic> json) {
     ..symptoms = (json['symptoms'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(k, e as bool),
     )
+    ..temperature = (json['temperature'] as num)?.toDouble()
     ..symptomsStarted = json['symptomsStarted'] == null
         ? null
         : DateTime.parse(json['symptomsStarted'] as String)
@@ -38,6 +39,7 @@ Map<String, dynamic> _$DailyLogToJson(DailyLog instance) => <String, dynamic>{
       'hoursSlept': instance.hoursSlept,
       'waterDrank': instance.waterDrank,
       'symptoms': instance.symptoms,
+      'temperature': instance.temperature,
       'symptomsStarted': instance.symptomsStarted?.toIso8601String(),
       'timeOfOccurance': instance.timeOfOccurance?.toIso8601String(),
     };
