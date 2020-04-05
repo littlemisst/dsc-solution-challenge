@@ -125,7 +125,6 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
 
   Widget _buildBloodType(context, initialValue) {
     return Container(
-        height: 70,
         width: 150.0,
         child: DropdownButtonFormField<String>(
           decoration: InputDecoration(

@@ -75,7 +75,8 @@ class _SignUpState extends State<SignUp> {
     return isLoading
         ? Loader()
         : Scaffold(
-            body: Padding(
+            body: SingleChildScrollView(
+              child: Padding(
                 padding: EdgeInsets.fromLTRB(50, 120, 50, 0),
                 child: Form(
                   key: _formKey,
@@ -123,7 +124,9 @@ class _SignUpState extends State<SignUp> {
                       )
                     ],
                   ),
-                )),
+                ),
+              ),
+            ),
           );
   }
 }

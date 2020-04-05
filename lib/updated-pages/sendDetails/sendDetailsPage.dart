@@ -28,7 +28,8 @@ class _SendDetailsPageState extends State<SendDetailsPage> {
               DailyLogsPage(),
               AttachementPage()
             ],
-            onFormSubmitted: null),
+            onFormSubmitted: null,
+            ),
       ),
     );
   }

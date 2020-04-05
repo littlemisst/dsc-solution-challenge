@@ -64,60 +64,62 @@ class _SignInState extends State<SignIn> {
     return isLoading
         ? Loader()
         : Scaffold(
-            body: Padding(
-                padding: EdgeInsets.fromLTRB(50, 120, 50, 0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'Sign In',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 30),
-                      ),
-                      _buildEmailField(),
-                      _buildPasswordField(),
-                      RaisedButton(
-                          textColor: Colors.white,
-                          color: Colors.pink[100],
-                          child: Text('Sign In'),
-                          onPressed: () async {
-                            if (_formKey.currentState.validate()) {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              User _user = await _firebaseAuth
-                                  .signInWithEmailAndPassword(email, password);
+            body: SingleChildScrollView(
+                child: Padding(
+              padding: EdgeInsets.fromLTRB(50, 120, 50, 0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'Sign In',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 30),
+                    ),
+                    _buildEmailField(),
+                    _buildPasswordField(),
+                    RaisedButton(
+                        textColor: Colors.white,
+                        color: Colors.pink[100],
+                        child: Text('Sign In'),
+                        onPressed: () async {
+                          if (_formKey.currentState.validate()) {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            User _user = await _firebaseAuth
+                                .signInWithEmailAndPassword(email, password);
 
-                              if (_user == null) {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              }
+                            if (_user == null) {
+                              setState(() {
+                                isLoading = false;
+                              });
                             }
-                          }),
-                      InkWell(
-                        child: Text('Create an Account'),
-                        onTap: () {
-                          widget.toggleBetweenForms();
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      InkWell(
-                        child: Text('Forget Password'),
-                        onTap: () async {
-                          await _firebaseAuth.resetPassword(email);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ResetPasswordPage()));
-                        },
-                      )
-                    ],
-                  ),
-                )),
+                          }
+                        }),
+                    InkWell(
+                      child: Text('Create an Account'),
+                      onTap: () {
+                        widget.toggleBetweenForms();
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    InkWell(
+                      child: Text('Forget Password'),
+                      onTap: () async {
+                        await _firebaseAuth.resetPassword(email);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ResetPasswordPage()));
+                      },
+                    )
+                  ],
+                ),
+              ),
+            )),
           );
   }
 }

@@ -17,6 +17,6 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return showSignIn ? SignIn(toggleBetweenForms: toggleBetweenForms,) : SignUp(toggleBetweenForms: toggleBetweenForms,);
+    return  showSignIn ? SignIn(toggleBetweenForms: toggleBetweenForms,) : SignUp(toggleBetweenForms: toggleBetweenForms,);
   }
 }
