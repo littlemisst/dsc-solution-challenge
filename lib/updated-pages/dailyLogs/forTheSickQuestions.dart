@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scale/flutter_scale.dart';
 import 'package:me_daily/common-widgets/buildGrid.dart';
+import 'package:me_daily/common-widgets/timePicker.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/updated-pages/dailyLogs/basicQuestions.dart';
 import 'package:me_daily/updated-pages/dailyLogs/checkBoxWidget.dart';
@@ -22,8 +23,8 @@ class _SickQuestionPageState extends State<SickQuestionPage> {
   bool musclePain = false;
   bool vomiting = false;
 
-  DateTime symptomsStarted = DateTime.now();
   DateTime symptomsStartedTime = DateTime.now();
+  // double _temperature;
 
   Map<String, bool> symptoms = {};
 
@@ -83,6 +84,52 @@ class _SickQuestionPageState extends State<SickQuestionPage> {
     });
   }
 
+  ScrollController _temperatureController;
+  final celciusController = TextEditingController();
+  
+  @override
+  void initState() {
+    super.initState();
+    _temperatureController = ScrollController(initialScrollOffset: 7400);
+    celciusController.addListener(() {
+      widget.entry.temperature = double.parse(celciusController.text);
+    });
+  }
+
+  void _handleTemperatureScaleChanged(int scalePoints) {
+    int offSet = scalePoints ~/ 20;
+    double celcius = (offSet * 10)/100;
+    celciusController.text = celcius.toString();
+  }
+
+
+  Widget _buildTemperatureScale(context, controller, scaleChanged) {
+  return HorizontalScale(
+    maxValue: 60,
+    scaleController: controller,
+    onChanged: scaleChanged,
+    textStyle: TextStyle(
+        fontSize: 15, fontWeight: FontWeight.bold),
+    scaleColor: Colors.white10,
+    lineColor: Colors.pink[100],
+  );
+}
+
+Widget _buildTemperatureField(contex, controller) {
+  return Container(
+    width: 70,
+    height: 50.0,
+    child: TextField(
+      controller: controller,
+      style: TextStyle(fontSize: 15),
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+          hintText: '37.0 °C', suffixText: '°C'),
+    ),
+  );
+}
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,6 +146,9 @@ class _SickQuestionPageState extends State<SickQuestionPage> {
           children: <Widget>[
             _buildSymptoms(),
              SizedBox(height: 15),
+            _buildTemperature(),
+            SizedBox(height: 15),
+            TimePicker(widget.entry.timeOfOccurance, () => _displayTimePicker(context))
           ],
         )
       ),
@@ -122,7 +172,7 @@ class _SickQuestionPageState extends State<SickQuestionPage> {
           borderRadius: BorderRadius.circular(10),
           child: Column(children: <Widget>[
             SizedBox(height: 15),
-            Text('Check the symptoms you have been experiencing', style: TextStyle(fontSize: 15)),
+            Text('Check the symptoms you have been experiencing', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             SizedBox(height: 15),
             _buildSymptomsGrid(),
             SizedBox(height: 15)
@@ -148,17 +198,44 @@ class _SickQuestionPageState extends State<SickQuestionPage> {
     );
   }
 
-  Widget buildWeightScale(context, controller, scaleChanged) {
-  return HorizontalScale(
-    maxValue: 200,
-    scaleController: controller,
-    onChanged: scaleChanged,
-    textStyle: TextStyle(
-        fontSize: 22, color: Colors.pink[100], fontWeight: FontWeight.bold),
-    scaleColor: Colors.white10,
-    lineColor: Colors.pink[100],
-  );
-}
+  Widget _buildTemperature() {
+    return Container(
+      child: Align(
+        child: Material(
+          color: Colors.white,
+          elevation: 1,
+          borderRadius: BorderRadius.circular(10),
+          child: Column(children: <Widget>[
+            Container(
+              padding: EdgeInsets.fromLTRB(20, 5, 10, 15),
+              child: Row(children: <Widget>[
+              Text('Enter your current body temperature ', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+              SizedBox(width: 10),
+               _buildTemperatureField(context, celciusController)
+              ]),
+            ),
+            
+            Container(
+              padding: EdgeInsets.fromLTRB(60, 5, 60, 15),
+              child: _buildTemperatureScale(context, _temperatureController, _handleTemperatureScaleChanged)),
+          ])
+        )
+      )
+    );
+  }
+
+  Future _displayTimePicker(BuildContext context) async {
+    final now = DateTime.now();
+   TimeOfDay time = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now()
+    );
+    if(time != null) {
+      setState(() {
+        widget.entry.timeOfOccurance = DateTime(now.year, now.month, now.day, time.hour, time.minute);
+      });
+    }
+  }
 
 
 }

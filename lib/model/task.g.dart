@@ -10,9 +10,9 @@ Task _$TaskFromJson(Map<String, dynamic> json) {
   return Task(
     taskType: json['taskType'] as String,
     specificTask: json['specificTask'] as String,
-    taskStarted: DateTime.parse(json['taskStarted'] as String),
-    taskEnded: DateTime.parse(json['taskEnded'] as String),
-    taskTime: json['taskTime'] as String,
+    taskStarted: json['taskStarted'],
+    taskEnded: json['taskEnded'],
+    taskTime: json['taskEnded'],
   )
     ..taskCreated = DateTime.parse(json['taskCreated'] as String)
     ..completed = json['completed'] as bool;

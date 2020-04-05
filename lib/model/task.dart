@@ -8,7 +8,7 @@ class Task {
   String specificTask;
   DateTime taskStarted;
   DateTime taskEnded;
-  String taskTime;
+  DateTime taskTime;
   bool completed = false;
 
   Task({this.taskType, this.specificTask, this.taskStarted, this.taskEnded, this.taskTime});

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
 import 'package:intl/intl.dart';
 import 'package:me_daily/common-widgets/radioListViewBuilderWidget.dart';
+import 'package:me_daily/common-widgets/timePicker.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/task.dart';
 
@@ -111,58 +112,17 @@ class _TaskViewItemsState extends State<TaskViewItems> {
     );
   }
 
-  Future _displayTimePicker(BuildContext context) async {
+Future _displayTimePicker(BuildContext context) async {
+    final now = DateTime.now();
    TimeOfDay time = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now()
     );
     if(time != null) {
       setState(() {
-        widget.task.taskTime = '${time.hour}:${time.minute}';
+        widget.task.taskTime = DateTime(now.year, now.month, now.day, time.hour, time.minute);
       });
     }
-  }
-
-  Widget _buildTimePicker() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      child: Material(
-        color: Colors.white,
-        elevation: 1,
-        borderRadius: BorderRadius.circular(10),
-        child: Column(
-          children: <Widget>[
-            FlatButton(
-              onPressed: ()=> _displayTimePicker(context), 
-              child: Row(children: <Widget>[
-                Icon(Icons.alarm),
-                SizedBox(width: 15),
-                widget.task.taskTime != null ?
-                Text('Change Time') : Text('Select Time'),
-              ])),
-            widget.task.taskTime != null ? 
-            Container(
-              padding: EdgeInsets.all(15),
-              child: Column(children: <Widget>[
-                Row(children: <Widget>[
-                  Text('Task Time: ', style: TextStyle(fontSize: 15)),
-                  SizedBox(width: 10),
-                  Align(alignment: Alignment.topLeft,
-                  child: Text(widget.task.taskTime, 
-                    style: TextStyle(fontSize: 15)))
-                ])
-              ])
-            ) : 
-            Container(
-              padding: EdgeInsets.all(15),
-              child: Align(alignment: Alignment.topLeft,
-                child: Text('Time not selected')
-              )
-            ),
-          ]
-        )
-      )
-    );
   }
 
   Widget _buildMoreDialog() {
@@ -190,10 +150,11 @@ class _TaskViewItemsState extends State<TaskViewItems> {
                       borderSide: BorderSide(color: Colors.grey))),
               onChanged: (value) => moreTask = value,
               )
-            ),          FlatButton(
-            child: Align( alignment: Alignment.bottomRight,
-              child: Text('ADD', style: TextStyle(fontSize: 15))), 
-            onPressed: () => _setSpecificTask(moreTask)
+            ),
+            FlatButton(
+              child: Align( alignment: Alignment.bottomRight,
+                child: Text('ADD', style: TextStyle(fontSize: 15))), 
+              onPressed: () => _setSpecificTask(moreTask)
           )
         ])
       )
@@ -251,7 +212,7 @@ class _TaskViewItemsState extends State<TaskViewItems> {
               SizedBox(height: 15),
               _buildSelectDates(),
               SizedBox(height: 15),
-              _buildTimePicker()
+              TimePicker(widget.task.taskTime, () => _displayTimePicker(context))
             ]
           )
         ),
