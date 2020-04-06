@@ -71,23 +71,23 @@ class _AttachementPageState extends State<AttachementPage> {
           ),
           SizedBox(height: 50.0),
           _image == null
-              ? Container()
-              : RaisedButton.icon(
-                  icon: Icon(Icons.save_alt, color: Colors.white),
-                  label: Text('Save', style: TextStyle(color: Colors.white)),
-                  color: Colors.pink[100],
-                  onPressed: () async {
-                    StorageReference _reference = FirebaseStorage.instance
-                        .ref()
-                        .child('users/${user.uid}/$fileName');
+          ? Container()
+          : RaisedButton.icon(
+              icon: Icon(Icons.save_alt, color: Colors.white),
+              label: Text('Save', style: TextStyle(color: Colors.white)),
+              color: Colors.pink[100],
+              onPressed: () async {
+                StorageReference _reference = FirebaseStorage.instance
+                    .ref()
+                    .child('users/${user.uid}/$fileName');
 
-                    StorageUploadTask uploadTask = _reference.putFile(_image);
-                    StorageTaskSnapshot taskSnapshot =
-                        await uploadTask.onComplete;
-                    downloadURL = await _reference.getDownloadURL();
-                    await _firestoreService.uploadPhoto(downloadURL, fileName, description);
-                  },
-                ),
+                StorageUploadTask uploadTask = _reference.putFile(_image);
+                StorageTaskSnapshot taskSnapshot =
+                    await uploadTask.onComplete;
+                downloadURL = await _reference.getDownloadURL();
+                await _firestoreService.uploadPhoto(downloadURL, fileName, description);
+              },
+            ),
         ]),
       )),
     );
