@@ -23,9 +23,9 @@ class _HomePageState extends State<HomePage> {
 
   final bodies = [
     SummaryPage(),
-    MapPage(),
     GalleryPage(),
     CalendarPage(),
+    MapPage(),
     MainProfile(),
   ];
 
@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: bodies[_currentIndex],
-      floatingActionButton: _currentIndex != 4
+      floatingActionButton: _currentIndex != 3 && _currentIndex != 4  
           ? SpeedDial(
               child: Icon(Icons.add, color: Colors.white),
               overlayColor: Colors.black,
@@ -101,11 +101,6 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.pink[100],
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.map),
-              title: Text('Map'),
-              backgroundColor: Colors.pink[100],
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.insert_drive_file),
               title: Text('Files'),
               backgroundColor: Colors.pink[100],
@@ -113,6 +108,11 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today),
               title: Text('Calendar'),
+              backgroundColor: Colors.pink[100],
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.map),
+              title: Text('Map'),
               backgroundColor: Colors.pink[100],
             ),
             BottomNavigationBarItem(
