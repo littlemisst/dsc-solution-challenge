@@ -91,53 +91,53 @@ class _AddPhotoState extends State<AddPhoto> {
           SizedBox(height: 30.0),
          
           _image == null
-              ? Container()
-              : Column(
-                children: <Widget>[
-                   Padding(
-                     padding: EdgeInsets.only(left: 50.0, right: 50.0),
-                     child: DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                        enabledBorder:
-                            OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-                      ),
-                      items: [
-                        DropdownMenuItem<String>(child: Text('Prescription'), value: 'Prescription'),
-                        DropdownMenuItem<String>(child: Text('Receipt'), value: 'Receipt'),
-                        DropdownMenuItem<String>(child: Text('Maintenance'), value: 'Maintenance'),
-                        DropdownMenuItem<String>(child: Text('Laboratory Result'), value: 'Laboratory Result'),
-                        DropdownMenuItem<String>(child: Text('Medical Certificate'), value: 'Medical Certificate'),
-                        DropdownMenuItem<String>(child: Text('Others'), value: 'Others'),
-                      ],
-                      onChanged: (String value) => {
-                        setState(() {
-                          _typeValue = value;
-                          description = value;
-                        }) 
-                      },
-                      hint: Text('Add Description'),
-                      value: _typeValue,
+          ? Container()
+          : Column(
+            children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(left: 50.0, right: 50.0),
+                  child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    enabledBorder:
+                        OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+                  ),
+                  items: [
+                    DropdownMenuItem<String>(child: Text('Prescription'), value: 'Prescription'),
+                    DropdownMenuItem<String>(child: Text('Receipt'), value: 'Receipt'),
+                    DropdownMenuItem<String>(child: Text('Maintenance'), value: 'Maintenance'),
+                    DropdownMenuItem<String>(child: Text('Laboratory Result'), value: 'Laboratory Result'),
+                    DropdownMenuItem<String>(child: Text('Medical Certificate'), value: 'Medical Certificate'),
+                    DropdownMenuItem<String>(child: Text('Others'), value: 'Others'),
+                  ],
+                  onChanged: (String value) => {
+                    setState(() {
+                      _typeValue = value;
+                      description = value;
+                    }) 
+                  },
+                  hint: Text('Add Description'),
+                  value: _typeValue,
+            ),
                 ),
-                   ),
-                   SizedBox(height: 20),
-                  RaisedButton.icon(
-                      icon: Icon(Icons.save_alt, color: Colors.white),
-                      label: Text('Save', style: TextStyle(color: Colors.white)),
-                      color: Colors.pink[100],
-                      onPressed: () async {
-                        StorageReference _reference = FirebaseStorage.instance
-                            .ref()
-                            .child('users/${user.uid}/$fileName');
+                SizedBox(height: 20),
+              RaisedButton.icon(
+                  icon: Icon(Icons.save_alt, color: Colors.white),
+                  label: Text('Save', style: TextStyle(color: Colors.white)),
+                  color: Colors.pink[100],
+                  onPressed: () async {
+                    StorageReference _reference = FirebaseStorage.instance
+                        .ref()
+                        .child('users/${user.uid}/$fileName');
 
-                        StorageUploadTask uploadTask = _reference.putFile(_image);
-                        StorageTaskSnapshot taskSnapshot =
-                            await uploadTask.onComplete;
-                        downloadURL = await _reference.getDownloadURL();
-                        await _firestoreService.uploadPhoto(downloadURL, fileName, description);
-                      },
-                    ),
-                ],
-              ),
+                    StorageUploadTask uploadTask = _reference.putFile(_image);
+                    StorageTaskSnapshot taskSnapshot =
+                        await uploadTask.onComplete;
+                    downloadURL = await _reference.getDownloadURL();
+                    await _firestoreService.uploadPhoto(downloadURL, fileName, description);
+                  },
+                ),
+            ],
+          ),
         ]),
       )),
     );

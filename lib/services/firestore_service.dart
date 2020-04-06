@@ -6,6 +6,7 @@ import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/photo.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/task.dart';
+import 'package:me_daily/model/locationLog.dart';
 
 class FirestoreService {
   final String uid;
@@ -91,6 +92,8 @@ class FirestoreService {
     return await userData.document(uid).setData(profile.toJson());
   }
 
+
+ 
 //add and retrieve for task
   Future addTask(Task task) async {
     return await userData.document(uid).collection('tasks').add(task.toJson());
@@ -130,5 +133,10 @@ class FirestoreService {
         .collection('dailyLogs')
         .snapshots()
         .map(_logsFromFirebase);
+  }
+  
+  //add location
+  Future saveLocation(LocationLog location) async {
+    return await userData.document(uid).collection('locationLog').add(location.toJson());
   }
 }
