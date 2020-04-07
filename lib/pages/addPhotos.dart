@@ -22,6 +22,7 @@ class _AddPhotosState extends State<AddPhotos> {
   File _image;
   List<Asset> images = List<Asset>();
   String _error = 'No Error Dectected';
+  bool selectMultiple = false;
 
   @override
   void initState() {
@@ -53,7 +54,7 @@ class _AddPhotosState extends State<AddPhotos> {
       }),
     );
   }
-  
+
   Future<void> loadAssets() async {
     List<Asset> resultList = List<Asset>();
     String error = 'No Error Dectected';
@@ -86,7 +87,6 @@ class _AddPhotosState extends State<AddPhotos> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final _firestoreService = FirestoreService(uid: user.uid);
-    
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -94,63 +94,103 @@ class _AddPhotosState extends State<AddPhotos> {
           style: TextStyle(color: Colors.pink[100]),
         ),
         backgroundColor: Colors.white,
-        ),
-        body: Column(
-          children: <Widget>[
-            RaisedButton.icon(
-              icon: Icon(Icons.camera_alt, color: Colors.white),
-              label: Text('Camera', style: TextStyle(color: Colors.white)),
-              color: Colors.pink[100],
-              onPressed: () {
-                setState(() {
-                  fileName =
-                    DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
-                });
-              getImage(true);
-            },
-            ),
-            RaisedButton.icon(
-              icon: Icon(Icons.image, color: Colors.white),
-              label: Text('Gallery', style: TextStyle(color: Colors.white)),
-              color: Colors.pink[100],
-              onPressed: loadAssets,
-            ),
-            Expanded(
-              child: buildGridView(),
-            ),
-            _image == null ? Container() : Column(
-              children: <Widget> [
-                Image.file(_image,height: 300, width: 300),
-                Padding(
-                padding: EdgeInsets.only(left: 50.0, right: 50.0),
-                child: buildDescription(context, _typeValue, description, 
-                (String value) => {
-                  setState(() {
-                    _typeValue = value;
-                    description = value;
-                  })
-                },)
-              ),
-              SizedBox(height: 20),
-              RaisedButton.icon(
-                  icon: Icon(Icons.save_alt, color: Colors.white),
-                  label: Text('Save', style: TextStyle(color: Colors.white)),
+      ),
+      body: Column(
+        children: <Widget>[
+          SizedBox(height: 50),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Switch(
+                  value: selectMultiple,
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      selectMultiple = newValue;
+                    });
+                  }),
+              Text('Select Multiple')
+            ],
+          ),
+          selectMultiple == false
+          ? Column(
+              children: <Widget>[
+                RaisedButton.icon(
+                  icon: Icon(Icons.camera_alt, color: Colors.white),
+                  label:
+                      Text('Camera', style: TextStyle(color: Colors.white)),
                   color: Colors.pink[100],
-                  onPressed: () async {
-                    StorageReference _reference = FirebaseStorage.instance
-                        .ref()
-                        .child('users/${user.uid}/$fileName');
-
-                    StorageUploadTask uploadTask = _reference.putFile(_image);
-                    StorageTaskSnapshot taskSnapshot =
-                        await uploadTask.onComplete;
-                    downloadURL = await _reference.getDownloadURL();
-                    await _firestoreService.uploadPhoto(downloadURL, fileName, description);
-                  },
-                ),
-            ])
-          ],
-        ),
-      );
+                  onPressed: () {
+                    setState(() {
+                      fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+                    });
+                    getImage(true);
+                  }),
+                RaisedButton.icon(
+                  icon: Icon(Icons.photo_album, color: Colors.white),
+                  label: Text('Gallery',
+                      style: TextStyle(color: Colors.white)),
+                  color: Colors.pink[100],
+                  onPressed: () {
+                    setState(() {
+                      fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+                    });
+                    getImage(false);
+                  })])
+          : Column(
+              children: <Widget>[
+                RaisedButton.icon(
+                  icon: Icon(Icons.image, color: Colors.white),
+                  label: Text('Gallery',
+                      style: TextStyle(color: Colors.white)),
+                  color: Colors.pink[100],
+                  onPressed: loadAssets,
+                ), 
+                SizedBox(height: 20)
+                ]),
+          selectMultiple == true
+          ? Expanded(
+              child: buildGridView(),
+            )
+            : Column(
+              children: <Widget>[
+                _image == null
+                ? Container()
+                : Column(children: <Widget>[
+                  SizedBox(height: 20),
+                    Image.file(_image, height: 200, width: 300),
+                    SizedBox(height: 20),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(left: 50.0, right: 50.0),
+                      child: buildDescription( context, _typeValue, description,
+                        (String value) => {
+                          setState(() {
+                            _typeValue = value;
+                            description = value;
+                          })
+                        },
+                    )),
+                    
+                    RaisedButton.icon(
+                      icon: Icon(Icons.save_alt, color: Colors.white),
+                      label: Text('Save', style: TextStyle(color: Colors.white)),
+                      color: Colors.pink[100],
+                      onPressed: () async {
+                        StorageReference _reference = FirebaseStorage
+                            .instance
+                            .ref()
+                            .child('users/${user.uid}/$fileName');
+                        StorageUploadTask uploadTask =  _reference.putFile(_image);
+                        StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+                        downloadURL = await _reference.getDownloadURL();
+                        await _firestoreService.uploadPhoto(downloadURL, fileName, description);
+                      },
+                    ),
+                  ])
+                  ],
+                )
+        ],
+      ),
+    );
   }
 }

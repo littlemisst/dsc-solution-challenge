@@ -93,6 +93,7 @@ class _MapPageState extends State<MapPage> {
                   onPressed: () {
                     setState(() {
                       _locationLog.locationName = _currentLocation;
+                      _locationLog.dateAndTime = DateTime.now();
                       _firestoreService.saveLocation(_locationLog);
                     });
                   },
