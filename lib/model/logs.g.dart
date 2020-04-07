@@ -13,14 +13,12 @@ DailyLog _$DailyLogFromJson(Map<String, dynamic> json) {
     ..logCreated = json['logCreated'] == null
         ? null
         : DateTime.parse(json['logCreated'] as String)
-    ..food = json['food'] as String
-    ..drink = json['drink'] as String
-    ..exercise = json['exercise'] as String
+    ..food = (json['food'] as List)?.map((e) => e as String)?.toList()
+    ..drink = (json['drink'] as List)?.map((e) => e as String)?.toList()
+    ..exercise = (json['exercise'] as List)?.map((e) => e as String)?.toList()
     ..hoursSlept = json['hoursSlept'] as int
     ..waterDrank = json['waterDrank'] as int
-    ..symptoms = (json['symptoms'] as Map<String, dynamic>)?.map(
-      (k, e) => MapEntry(k, e as bool),
-    )
+    ..symptoms = (json['symptoms'] as List)?.map((e) => e as String)?.toList()
     ..temperature = (json['temperature'] as num)?.toDouble()
     ..symptomsStarted = json['symptomsStarted'] == null
         ? null

@@ -5,12 +5,12 @@ part 'logs.g.dart';
 class DailyLog {
   DateTime logCreated = DateTime.now();
   String feeling;
-  String food;
-  String drink;
-  String exercise;
+  List<String> food;
+  List<String> drink;
+  List<String> exercise;
   int hoursSlept;
   int waterDrank;
-  Map<String, bool> symptoms;
+  List<String> symptoms;
   double temperature;
   DateTime symptomsStarted = DateTime.now();
   DateTime timeOfOccurance;
