@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/buildGrid.dart';
-import 'package:me_daily/common-widgets/floatingAction.dart';
 import 'package:me_daily/common-widgets/iconItem.dart';
 import 'package:me_daily/updated-pages/addTasks/addTaskViewItems.dart';
 import 'package:me_daily/updated-pages/addTasks/gridItemWidget.dart';
-import 'package:provider/provider.dart';
 import 'package:me_daily/model/task.dart';
-import 'package:me_daily/model/user.dart';
-import 'package:me_daily/services/firestore_service.dart';
 
 class AddTask extends StatefulWidget {
   @override
@@ -21,22 +17,25 @@ class _AddTaskState extends State<AddTask> {
   @override
   void initState() {
     super.initState();
-    task = Task(taskType: _taskType);
+    task = Task(
+      taskType: _taskType
+    );
+    _taskType = '';
   }
 
-  void _chooseTask(String taskType) {
+  void _chooseTask(String type) {
     setState(() {
-      _taskType = taskType;
-      task.taskType = taskType;
+      _taskType = type;
+      task.taskType = _taskType;
     });
-    Navigator.push(context, MaterialPageRoute(builder: (context) => TaskViewItems(task: task)));
+    print(task.taskType);
+    if (task.taskType != null) {
+       Navigator.push(context, MaterialPageRoute(builder: (context) => TaskViewItems(task: task)));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    final _firestoreService = FirestoreService(uid: user.uid);
-
     return Scaffold(
         backgroundColor: Colors.grey[50],
         appBar: AppBar(
@@ -52,11 +51,8 @@ class _AddTaskState extends State<AddTask> {
               _buildTasksGrid(context),
             ],
           ),
-        ),
-        floatingActionButton: FloatingActionToSave(() async {
-          await _firestoreService.addTask(task);
-          Navigator.of(context).popUntil((route) => route.isFirst);
-        }, Icons.alarm));
+        )
+    );
   }
 
   Widget _buildTasksGrid(BuildContext context) {

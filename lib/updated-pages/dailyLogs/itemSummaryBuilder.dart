@@ -17,7 +17,7 @@ class ItemSummaryBuilder extends StatelessWidget {
                 title: Row(children: <Widget>[
                   Icon(Icons.check, color: Colors.green[300]),
                   SizedBox(width: 5),
-                  Text('$item', style: TextStyle(fontSize: 13))
+                  Text('$item hours', style: TextStyle(fontSize: 13))
                 ],),
               );
             }),

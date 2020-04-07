@@ -76,19 +76,29 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
   List<Step> get _steps => [
     Step(
       title: Text('Eating'),
-      content: CheckBoxGrid(_food, _foodValues, widget.entry.food)),
+      content: CheckBoxGrid(_food, _foodValues, widget.entry.food),
+      state: _currentStep > 0 ? StepState.complete : StepState.editing
+      ),
     Step(
       title: Text('Drinking'),
-      content: CheckBoxGrid(_drink, _drinkValues, widget.entry.drink)),
+      content: CheckBoxGrid(_drink, _drinkValues, widget.entry.drink),
+      state: _currentStep > 1 ? StepState.complete : StepState.editing
+      ),
     Step(
       title: Text('Exercising'),
-      content: CheckBoxGrid(_exercise, _exerciseValues, widget.entry.exercise)),
+      content: CheckBoxGrid(_exercise, _exerciseValues, widget.entry.exercise),
+      state: _currentStep > 2 ? StepState.complete : StepState.editing
+      ),
     Step(
       title: Text('Hours of Sleep'),
-      content: IncrementCard('Hours', _hoursOfSleep, _incrementSleepHours, _decrementSleepHours, _setSleepHours)),
+      content: IncrementCard('Hours', _hoursOfSleep, _incrementSleepHours, _decrementSleepHours, _setSleepHours),
+      state: _currentStep > 3 ? StepState.complete : StepState.editing
+      ),
     Step(
       title: Text('Today\'s Log Summary'),
-      content: _buildSummary())//insert sang summary
+      content: _buildSummary(),
+      state: _currentStep > 4 ? StepState.complete : StepState.editing
+      )
   ];
 
   void _onStepContinue() {

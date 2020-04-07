@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/iconItem.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/updated-pages/dailyLogs/basicQuestionsLog.dart';
+import 'package:me_daily/updated-pages/dailyLogs/sickQuestionsLog.dart';
 
 class AddDailyLogs extends StatefulWidget {
   @override
@@ -12,6 +13,15 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
   String _emotion;
   DailyLog entry;
 
+  @override
+  void initState() {
+    super.initState();
+    entry = DailyLog(
+      feeling: _emotion
+    );
+    _emotion = '';
+  }
+
   void _chooseEmotion(String emotion) {
     setState(() {
       _emotion = emotion;
@@ -21,8 +31,7 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
     if (_emotion == 'good' || _emotion == 'neutral') {
       Navigator.push(context, MaterialPageRoute(builder: (context) => BasicQuestionsLogPage(entry: entry)));
     } else {
-      return;
-      // Navigator.push(context, MaterialPageRoute(builder: (context) => SickQuestionPage(entry: entry)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => SickQuestionsLogPage(entry : entry)));
     }
   }
 
@@ -35,15 +44,6 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
         Expanded(child:IconItem(AssetImage("images/sick.png"), 'sick', 60, Colors.grey, () => _chooseEmotion('sick'))),
       ],
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    entry = DailyLog(
-      feeling: _emotion
-    );
-    _emotion = '';
   }
 
   @override
