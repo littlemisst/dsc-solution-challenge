@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ExpandableIncrementCard extends StatelessWidget {
-  const ExpandableIncrementCard(this.timesText, this.intText, this.onPressedIncrement, this.onPressedDecrement, this.onPressedSet);
+class IncrementCard extends StatelessWidget {
+  const IncrementCard(this.timesText, this.intText, this.onPressedIncrement, this.onPressedDecrement, this.onPressedSet);
   final String timesText;
   final int intText;
   final VoidCallback onPressedIncrement;
@@ -27,15 +27,15 @@ class ExpandableIncrementCard extends StatelessWidget {
                         SizedBox(height: 5),
                         Text('$intText', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)) 
                         ]),
-                    SizedBox(width: 50),
+                    SizedBox(width: 10),
                     Expanded(child: FlatButton(
-                      child: ImageIcon(AssetImage("images/add.png"), color: Colors.pink[100]), 
+                      child: ImageIcon(AssetImage("images/add.png"), color: Colors.pink[100], size: 40), 
                       color: Colors.white,
                       shape: CircleBorder(side: BorderSide.none),
                       onPressed: onPressedIncrement)),
                     Expanded(child: FlatButton(
-                      child: ImageIcon(AssetImage("images/minus.png"), color: Colors.pink[100]),
-                      color: Colors.white, 
+                      child: ImageIcon(AssetImage("images/minus.png"), color: Colors.pink[100], size: 40),
+                      color: Colors.white,
                       shape: CircleBorder(side: BorderSide.none),
                       onPressed: onPressedDecrement)),
                     SizedBox(width: 40),

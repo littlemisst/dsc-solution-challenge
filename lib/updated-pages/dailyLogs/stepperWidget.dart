@@ -18,16 +18,25 @@ class _StepperWidgetState extends State<StepperWidget> {
       onStepContinue: widget.onStepContinue,
       onStepCancel: widget.onStepCancel,
       controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
-        return Row(children: <Widget>[
-          FlatButton(
-            child: Icon(Icons.navigate_before),
-            onPressed: onStepCancel
-          ),
-          FlatButton(
-            child: Icon(Icons.navigate_next),
-            onPressed: onStepContinue
-          )
-        ]);
+        return Container(
+          child: 
+          Row(children: <Widget>[
+            FlatButton(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(side: BorderSide(color: Colors.grey[300]), borderRadius: BorderRadius.circular(10)),
+              child: Text('back'),
+              onPressed: widget.currentStep == 0 ? null : onStepCancel
+            ),
+            SizedBox(width: 10),
+            FlatButton(
+              color: Colors.pink[100],
+              shape: RoundedRectangleBorder(side: BorderSide(color: Colors.pink[100]), borderRadius: BorderRadius.circular(10)),
+              child: widget.currentStep == widget.stepsList.length - 1 ? Text('next') : Text('next', style: TextStyle(color: Colors.white)),
+              onPressed: widget.currentStep == widget.stepsList.length - 1 ? null : onStepContinue
+            )
+          ])
+        );
+        
       },
       steps: widget.stepsList,
       

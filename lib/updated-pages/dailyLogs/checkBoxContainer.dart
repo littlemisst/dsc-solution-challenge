@@ -6,7 +6,6 @@ class CheckBoxGrid extends StatefulWidget {
   final List<String> items;
   final List<bool> itemValues;
   final List<String> taskAdded;
-  // final List<String> model;
 
   @override
   _CheckBoxGridState createState() => _CheckBoxGridState();
@@ -22,12 +21,10 @@ class _CheckBoxGridState extends State<CheckBoxGrid> {
       } else {
         widget.taskAdded.remove(items[index]);
       }
-      //  model = widget.taskAdded;
     });
   }
   @override
   Widget build(BuildContext context) {
-    print(widget.taskAdded);
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Material(
@@ -50,3 +47,4 @@ class _CheckBoxGridState extends State<CheckBoxGrid> {
     );
   }
 }
+

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:me_daily/common-widgets/iconItem.dart';
 import 'package:me_daily/model/logs.dart';
-import 'package:me_daily/updated-pages/dailyLogs/basicQuestions.dart';
 import 'package:me_daily/updated-pages/dailyLogs/basicQuestionsLog.dart';
-import 'package:me_daily/updated-pages/dailyLogs/forTheSickQuestions.dart';
 
 class AddDailyLogs extends StatefulWidget {
   @override
