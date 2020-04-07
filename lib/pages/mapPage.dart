@@ -28,7 +28,6 @@ class _MapPageState extends State<MapPage> {
     }
     return "";
   }
-
   void _getLocation() async {
     var currentLocation = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
@@ -51,7 +50,6 @@ class _MapPageState extends State<MapPage> {
           : MapType.normal;
     });
   }
-
 
   Widget button(Function function, IconData icon) {
     return FloatingActionButton(

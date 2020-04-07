@@ -5,6 +5,8 @@ import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:async';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 class AddPhoto extends StatefulWidget {
   @override
@@ -16,9 +18,15 @@ class _AddPhotoState extends State<AddPhoto> {
   String downloadURL;
   String description;
   String _typeValue;
-
+  bool selectMultiple = false;
   File _image;
+  List<Asset> images = List<Asset>();
+  String _error = 'No Error Dectected';
 
+  @override
+  void initState() {
+    super.initState();
+  }
   Future getImage(bool isCamera) async {
     File image;
     if (isCamera) {
@@ -28,6 +36,48 @@ class _AddPhotoState extends State<AddPhoto> {
     }
     setState(() {
       _image = image;
+    });
+  }
+  
+  Widget buildGridView() {
+    return GridView.count(
+      crossAxisCount: 3,
+      children: List.generate(images.length, (index) {
+        Asset asset = images[index];
+        return AssetThumb(
+          asset: asset,
+          width: 100,
+          height: 100,
+        );
+      }),
+    );
+  }
+
+  Future<void> loadAssets() async {
+    List<Asset> resultList = List<Asset>();
+    String error = 'No Error Dectected';
+
+    try {
+      resultList = await MultiImagePicker.pickImages(
+        maxImages: 100,
+        enableCamera: true,
+        selectedAssets: images,
+        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+        materialOptions: MaterialOptions(
+          actionBarColor: '#fcb6dd',
+          actionBarTitle: "Gallery",
+          allViewTitle: "All Photos",
+          useDetailsView: false,
+          selectCircleStrokeColor: "#fcb6dd",
+        ),
+      );
+    } on Exception catch (err) {
+      error = err.toString();
+    }
+    if (!mounted) return;
+    setState(() {
+      images = resultList;
+      _error = error;
     });
   }
 
@@ -81,13 +131,12 @@ class _AddPhotoState extends State<AddPhoto> {
                       fileName =
                           DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
                     });
-                    getImage(false);
+                    loadAssets();
                   },
                 ),
               ],
             ),
-            
-          ) : Image.file(_image, height: 300.0),
+          ) : Image.file(_image, height: 300.0) ,
           SizedBox(height: 30.0),
          
           _image == null
