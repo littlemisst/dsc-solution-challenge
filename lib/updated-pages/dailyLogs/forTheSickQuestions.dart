@@ -26,26 +26,25 @@ class _SickQuestionPageState extends State<SickQuestionPage> {
   DateTime symptomsStartedTime = DateTime.now();
   // double _temperature;
 
-  Map<String, bool> symptoms = {};
-
+  List<String> symptoms = [];
   void _setCold(newValue) {
     setState(() {
       cold = newValue;
-      symptoms['cold'] = cold;
+      symptoms.add('cold');
     });
   }
 
   void _setCough(newValue) {
     setState(() {
      cough = newValue;
-     symptoms['cough'] = cough;
+     symptoms.add('cough');
     });
   }
 
   void _setDiarrhea(newValue) {
     setState(() {
       diarrhea = newValue;
-      symptoms['diarrhea'] = diarrhea;
+      symptoms.add('diarrhea');
     });
   }
 
