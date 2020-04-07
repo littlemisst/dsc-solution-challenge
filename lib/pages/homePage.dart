@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:me_daily/pages/addPhoto.dart';
+import 'package:me_daily/pages/addPhotos.dart';
 import 'package:me_daily/pages/mapPage.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
 import 'package:me_daily/updated-pages/addTasks/addTask.dart';
@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AddPhoto()));
+                                builder: (context) => AddPhotos()));
                       }),
                   SpeedDialChild(
                       child: Icon(Icons.playlist_add_check, color: Colors.white),

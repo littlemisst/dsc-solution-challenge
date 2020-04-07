@@ -28,7 +28,6 @@ class _MapPageState extends State<MapPage> {
     }
     return "";
   }
-
   void _getLocation() async {
     var currentLocation = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
@@ -51,7 +50,6 @@ class _MapPageState extends State<MapPage> {
           : MapType.normal;
     });
   }
-
 
   Widget button(Function function, IconData icon) {
     return FloatingActionButton(
@@ -95,6 +93,7 @@ class _MapPageState extends State<MapPage> {
                   onPressed: () {
                     setState(() {
                       _locationLog.locationName = _currentLocation;
+                      _locationLog.dateAndTime = DateTime.now();
                       _firestoreService.saveLocation(_locationLog);
                     });
                   },

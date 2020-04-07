@@ -19,22 +19,25 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
   void initState() {
     super.initState();
     _buildCheckListGrid();
-    );
   }
-
-   Widget _buildCheckListGrid() {
-    return 
+  
+  //  Widget _buildCheckListGrid() {
+  //   return Container(
+  //     padding: EdgeInsets.all(5),
+  //     child: BuildGridItems([
+  //      CheckboxGroup(
+  //        onSelected: (List selected) => setState((){
+  //          _foodChecked = selected;
+  //        }),
+  //        labels: Strings.food,
+  //        checked: _foodChecked,)
+  //     ], 2, 6)
+  //   );
   }
-
   List<Step> _steps = [
     Step(
-      title: Text('Eating'),
-      content: Container(
-      padding: EdgeInsets.all(5),
-      child: BuildGridItems([
-       LogCheckBox('title', false, () => _setTaskState())
-      ], 2, 6)
-    );
+      title: Text('Eating')
+      content: _buildCheckListGrid();
     )
 
   ];

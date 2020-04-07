@@ -26,7 +26,7 @@ class FirebaseAuthentication {
     try {
       AuthResult authResult = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-
+  
       if (authResult.user.isEmailVerified) {
         print(authResult.user.toString());
         return _userFromFirebase(authResult.user);
@@ -48,5 +48,10 @@ class FirebaseAuthentication {
 
   Future<void> resetPassword(String email) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
+  Future<bool> isEmailVerified() async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    return user.isEmailVerified;
   }
 }

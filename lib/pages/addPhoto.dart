@@ -5,6 +5,7 @@ import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:async';
 
 class AddPhoto extends StatefulWidget {
   @override
@@ -16,9 +17,13 @@ class _AddPhotoState extends State<AddPhoto> {
   String downloadURL;
   String description;
   String _typeValue;
-
+  bool selectMultiple = false;
   File _image;
 
+  @override
+  void initState() {
+    super.initState();
+  }
   Future getImage(bool isCamera) async {
     File image;
     if (isCamera) {
@@ -30,7 +35,7 @@ class _AddPhotoState extends State<AddPhoto> {
       _image = image;
     });
   }
-
+  
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
@@ -86,40 +91,41 @@ class _AddPhotoState extends State<AddPhoto> {
                 ),
               ],
             ),
-            
           ) : Image.file(_image, height: 300.0),
+
+          
           SizedBox(height: 30.0),
          
           _image == null
           ? Container()
           : Column(
             children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(left: 50.0, right: 50.0),
-                  child: DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                    enabledBorder:
-                        OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-                  ),
-                  items: [
-                    DropdownMenuItem<String>(child: Text('Prescription'), value: 'Prescription'),
-                    DropdownMenuItem<String>(child: Text('Receipt'), value: 'Receipt'),
-                    DropdownMenuItem<String>(child: Text('Maintenance'), value: 'Maintenance'),
-                    DropdownMenuItem<String>(child: Text('Laboratory Result'), value: 'Laboratory Result'),
-                    DropdownMenuItem<String>(child: Text('Medical Certificate'), value: 'Medical Certificate'),
-                    DropdownMenuItem<String>(child: Text('Others'), value: 'Others'),
-                  ],
-                  onChanged: (String value) => {
-                    setState(() {
-                      _typeValue = value;
-                      description = value;
-                    }) 
-                  },
-                  hint: Text('Add Description'),
-                  value: _typeValue,
-            ),
+              Padding(
+                padding: EdgeInsets.only(left: 50.0, right: 50.0),
+                child: DropdownButtonFormField<String>(
+                decoration: InputDecoration(
+                  enabledBorder:
+                      OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
                 ),
-                SizedBox(height: 20),
+                items: [
+                  DropdownMenuItem<String>(child: Text('Prescription'), value: 'Prescription'),
+                  DropdownMenuItem<String>(child: Text('Receipt'), value: 'Receipt'),
+                  DropdownMenuItem<String>(child: Text('Maintenance'), value: 'Maintenance'),
+                  DropdownMenuItem<String>(child: Text('Laboratory Result'), value: 'Laboratory Result'),
+                  DropdownMenuItem<String>(child: Text('Medical Certificate'), value: 'Medical Certificate'),
+                  DropdownMenuItem<String>(child: Text('Others'), value: 'Others'),
+                ],
+                onChanged: (String value) => {
+                  setState(() {
+                    _typeValue = value;
+                    description = value;
+                  }) 
+                },
+                hint: Text('Add Description'),
+                value: _typeValue,
+               ),
+              ),
+              SizedBox(height: 20),
               RaisedButton.icon(
                   icon: Icon(Icons.save_alt, color: Colors.white),
                   label: Text('Save', style: TextStyle(color: Colors.white)),
