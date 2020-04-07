@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
 import 'package:me_daily/common-widgets/floatingAction.dart';
 import 'package:me_daily/common-widgets/radioListViewBuilderWidget.dart';
 import 'package:me_daily/common-widgets/timePicker.dart';
@@ -136,16 +135,20 @@ class _TaskViewItemsState extends State<TaskViewItems> {
               widget.task.taskType == 'more' ? _buildMoreDialog() :
               _buildListView(),
               SizedBox(height: 15),
-              widget.task.taskType == 'book an appointment' ? DatePickerWidget(taskStarted: widget.task.taskStarted,
+              widget.task.taskType == 'book an appointment' ? DatePickerWidget(
+                elevation: 1,
+                taskStarted: widget.task.taskStarted,
                 setTaskStarted: (date) => setState(() => widget.task.taskStarted = date), 
                 setTaskEnded: (date) => setState(() => widget.task.taskEnded = date))
               : DateRangePickerWidget(
+                elevation: 1,
                 taskStarted: widget.task.taskStarted,
                 taskEnded: widget.task.taskEnded,
                 setTaskStarted: (date) => setState(() => widget.task.taskStarted = date), 
                 setTaskEnded: (date) => setState(() => widget.task.taskEnded = date)),
               SizedBox(height: 15),
               TimePicker(
+                elevation: 1,
                 taskTime: widget.task.taskTime,
                 setTime: (dateTime) => setState(() => widget.task.taskTime = dateTime),
               )

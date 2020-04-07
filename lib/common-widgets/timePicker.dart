@@ -3,7 +3,8 @@ import 'package:intl/intl.dart';
 
 
 class TimePicker extends StatefulWidget {
-  const TimePicker({Key key, this.taskTime, this.setTime}) : super(key : key);
+  const TimePicker({Key key, this.elevation, this.taskTime, this.setTime}) : super(key : key);
+   final double elevation;
    final DateTime taskTime;
    final ValueChanged<DateTime> setTime;
 
@@ -31,7 +32,7 @@ class _TimePickerState extends State<TimePicker> {
       width: MediaQuery.of(context).size.width,
       child: Material(
         color: Colors.white,
-        elevation: 1,
+        elevation: widget.elevation,
         borderRadius: BorderRadius.circular(10),
         child: Column(
           children: <Widget>[
@@ -48,11 +49,11 @@ class _TimePickerState extends State<TimePicker> {
               padding: EdgeInsets.all(15),
               child: Column(children: <Widget>[
                 Row(children: <Widget>[
-                  Text('Time: ', style: TextStyle(fontSize: 15)),
+                  Text('Time: ', style: TextStyle(fontSize: 13)),
                   SizedBox(width: 10),
                   Align(alignment: Alignment.topLeft,
                   child: Text('${DateFormat.jm().format(widget.taskTime)}', 
-                    style: TextStyle(fontSize: 15)))
+                    style: TextStyle(fontSize: 13)))
                 ])
               ])
             ) : 

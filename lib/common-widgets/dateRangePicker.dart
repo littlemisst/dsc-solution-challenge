@@ -3,7 +3,8 @@ import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
 import 'package:intl/intl.dart';
 
 class DateRangePickerWidget extends StatefulWidget {
-  const DateRangePickerWidget({Key key, this.taskStarted, this.taskEnded, this.setTaskStarted, this.setTaskEnded}) : super(key: key);
+  const DateRangePickerWidget({Key key, this.elevation, this.taskStarted, this.taskEnded, this.setTaskStarted, this.setTaskEnded}) : super(key: key);
+   final double elevation;
    final DateTime taskStarted;
    final DateTime taskEnded;
    final ValueChanged<DateTime> setTaskStarted;
@@ -35,7 +36,7 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
       width: MediaQuery.of(context).size.width,
       child: Material(
         color: Colors.white,
-        elevation: 1,
+        elevation: widget.elevation,
         borderRadius: BorderRadius.circular(10),
         child: Column(
           children: <Widget>[
@@ -52,21 +53,21 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
               padding: EdgeInsets.all(15),
               child: Column(children: <Widget>[
                 Row(children: <Widget>[
-                  Text('Start of Task: ', style: TextStyle(fontSize: 15)),
+                  Text('Start of Task: ', style: TextStyle(fontSize: 13)),
                   SizedBox(width: 10),
                   Align(alignment: Alignment.topLeft,
                   child: Text(
                     DateFormat.yMMMd().format(widget.taskStarted), 
-                    style: TextStyle(fontSize: 15)))
+                    style: TextStyle(fontSize: 13)))
                 ]), 
                 SizedBox(height: 10),
                  Row(children: <Widget>[
-                  Text('End of Task: ', style: TextStyle(fontSize: 15)),
+                  Text('End of Task: ', style: TextStyle(fontSize: 13)),
                   SizedBox(width: 10),
                   Align(alignment: Alignment.topLeft,
                   child: Text(
                     DateFormat.yMMMd().format(widget.taskEnded), 
-                    style: TextStyle(fontSize: 15)))
+                    style: TextStyle(fontSize: 13)))
                 ]),
               ])
             ) : 

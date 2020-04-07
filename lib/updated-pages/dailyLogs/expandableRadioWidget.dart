@@ -16,6 +16,7 @@ class _ExpandableRadioCardState extends State<ExpandableRadioCard> {
   Widget build(BuildContext context) {
     return Container(
         child: Material(
+          elevation: 0,
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
           child: ExpansionTile(

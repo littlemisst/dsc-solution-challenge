@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DatePickerWidget extends StatefulWidget {
-  const DatePickerWidget({Key key, this.taskStarted, this.setTaskStarted, this.setTaskEnded}) : super(key:key);
-   final DateTime taskStarted;
+  const DatePickerWidget({Key key, this.elevation, this.taskStarted, this.setTaskStarted, this.setTaskEnded}) : super(key:key);
+  final double elevation;
+  final DateTime taskStarted;
   final ValueChanged<DateTime> setTaskStarted;
   final ValueChanged<DateTime> setTaskEnded;
 
@@ -32,7 +33,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
       width: MediaQuery.of(context).size.width,
       child: Material(
         color: Colors.white,
-        elevation: 1,
+        elevation: widget.elevation,
         borderRadius: BorderRadius.circular(10),
         child: Column(
           children: <Widget>[
@@ -49,12 +50,12 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
               padding: EdgeInsets.all(15),
               child: Column(children: <Widget>[
                 Row(children: <Widget>[
-                  Text('Task Date: ', style: TextStyle(fontSize: 15)),
+                  Text('Task Date: ', style: TextStyle(fontSize: 13)),
                   SizedBox(width: 10),
                   Align(alignment: Alignment.topLeft,
                   child: Text(
                     DateFormat.yMMMd().format(widget.taskStarted), 
-                    style: TextStyle(fontSize: 15)))
+                    style: TextStyle(fontSize: 13)))
                 ]), 
               ])
             ) : 
