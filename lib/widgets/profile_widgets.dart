@@ -8,8 +8,10 @@ Widget buildNameField(context, name, onChanged) {
         }
         return null;
       },
+
       decoration: const InputDecoration(
         labelText: 'Name',
+        labelStyle: TextStyle(fontSize: 15),
         enabledBorder:
             OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
       ),

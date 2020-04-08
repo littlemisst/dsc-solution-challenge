@@ -4,10 +4,7 @@ import 'package:flutter_scale/flutter_scale.dart';
 
 
 Widget buildBloodType(context, model, initialValue, onChanged) {
-  return Container(
-    width: 120.0,
-    height: 60.0,
-    child: DropdownButtonFormField<String>(
+  return  DropdownButtonFormField<String>(
       validator: (value) {
         if (value.isEmpty) {
           return 'Please enter your bloodtype';
@@ -31,10 +28,8 @@ Widget buildBloodType(context, model, initialValue, onChanged) {
       onChanged: onChanged,
       hint: Text('Blood Type', style: TextStyle(fontSize: 15.0)),
       value: initialValue,
-    ),
-  );
+    );
 }
-
 Widget buildWeightField(contex, controller) {
   return Container(
     width: 100,
