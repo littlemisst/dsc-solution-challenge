@@ -1,30 +1,23 @@
 import 'package:flutter/material.dart';
 
 Widget buildNameField(context, name, onChanged) {
-  return TextFormField(
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'Please enter your name';
-        }
-        return null;
-      },
+  return Container(
+    width: 240,
+    child: TextFormField(
       decoration: const InputDecoration(
         labelText: 'Name',
+        labelStyle: TextStyle(fontSize: 15),
         enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+          OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
       ),
-      onChanged: onChanged);
+      onChanged: onChanged),
+  );
 }
 
 Widget buildGender(context, model, initialValue, state) {
-  return Center(
-      child: DropdownButtonFormField<String>(
-    validator: (value) {
-      if (value.isEmpty) {
-        return 'Please enter your gender';
-      }
-      return null;
-    },
+  return Container(
+    width: 240,
+    child: DropdownButtonFormField<String>(
     decoration: InputDecoration(
       enabledBorder:
           OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
@@ -40,31 +33,23 @@ Widget buildGender(context, model, initialValue, state) {
 }
 
 Widget buildAddressField(context, address, onChanged) {
-  return TextFormField(
-    validator: (value) {
-      if (value.isEmpty) {
-        return 'Please enter your address';
-      }
-      return null;
-    },
+  return Container(
+    width: 240,
+    child: TextFormField(
     decoration: const InputDecoration(
       labelText: 'Address',
       enabledBorder:
           OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
     ),
     onChanged: onChanged,
+  ),
   );
 }
 
 Widget buildCivilStatus(context, model, initialValue, state) {
   return Container(
-      child: DropdownButtonFormField<String>(
-    validator: (value) {
-      if (value.isEmpty) {
-        return 'Please enter your civil status';
-      }
-      return null;
-    },
+    width: 240,
+    child: DropdownButtonFormField<String>(
     decoration: InputDecoration(
       enabledBorder:
           OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),

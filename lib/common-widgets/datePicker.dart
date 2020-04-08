@@ -13,24 +13,27 @@ class DatePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final format = DateFormat("yMMMMd");
-  return Column(children: <Widget>[
-    DateTimeField(
-      decoration: InputDecoration(
-        labelText: text,
-        enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+  return Container(
+    width: 240,
+    child: Column(children: <Widget>[
+      DateTimeField(
+        decoration: InputDecoration(
+          labelText: text,
+          enabledBorder:
+              OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+        ),
+        format: format,
+        onShowPicker: (context, currentValue) {
+          return showDatePicker(
+            context: context,
+            firstDate:  DateTime(DateTime.now().year - 50),
+            lastDate: DateTime(DateTime.now().year + 50),
+            initialDate: currentValue ?? DateTime.now(),
+           );
+        },
+        onChanged: onChanged,
       ),
-      format: format,
-      onShowPicker: (context, currentValue) {
-        return showDatePicker(
-          context: context,
-          firstDate:  DateTime(DateTime.now().year - 50),
-          lastDate: DateTime(DateTime.now().year + 50),
-          initialDate: currentValue ?? DateTime.now(),
-         );
-      },
-      onChanged: onChanged,
-    ),
-  ]);
+    ]),
+  );
   }
 }

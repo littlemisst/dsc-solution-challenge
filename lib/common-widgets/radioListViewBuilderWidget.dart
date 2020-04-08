@@ -17,7 +17,8 @@ class _BuildRadioListViewState extends State<BuildRadioListView> {
       itemBuilder: (context, index) {
         final item = widget.itemsList[index];
         return ListTile(
-            title: Text(item),
+          contentPadding: EdgeInsets.all(0),
+            title: Text(item, style: TextStyle(fontSize: 13)),
             leading: Radio(
               activeColor: Colors.pink[100],
               value: item,

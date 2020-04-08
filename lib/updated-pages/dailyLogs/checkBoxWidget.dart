@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class SymptomsCheckBox extends StatefulWidget {
-  const SymptomsCheckBox(this.title, this.boolValue, this.onChanged);
+class LogCheckBox extends StatefulWidget {
+  const LogCheckBox(this.title, this.boolValue, this.onChanged);
   final String title;
   final bool boolValue;
   final ValueChanged<bool> onChanged;
   @override
-  _SymptomsCheckBoxState createState() => _SymptomsCheckBoxState();
+  _LogCheckBoxState createState() => _LogCheckBoxState();
 }
 
-class _SymptomsCheckBoxState extends State<SymptomsCheckBox> {
+class _LogCheckBoxState extends State<LogCheckBox> {
   @override
   Widget build(BuildContext context) {
     return Row(

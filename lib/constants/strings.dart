@@ -4,6 +4,10 @@ class Strings {
     'fruits',
     'grains',
     'dairy',
+    'meat',
+    'poultry',
+    'fish',
+    'eggs',
     'no meat',
     'no sweets',
   ];
@@ -36,7 +40,7 @@ class Strings {
     "dental"
   ];
 
-  static List symptoms = [
+  static var symptoms =[
     'headache',
     'dizziness',
     'fever',

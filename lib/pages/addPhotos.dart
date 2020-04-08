@@ -8,6 +8,7 @@ import 'package:me_daily/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:async';
+import 'package:flutter/services.dart';
 
 class AddPhotos extends StatefulWidget {
   @override
@@ -41,40 +42,40 @@ class _AddPhotosState extends State<AddPhotos> {
     });
   }
 
-  Widget buildGridView() {
+  Widget displayMultipleImages() {
     return GridView.count(
       crossAxisCount: 3,
       children: List.generate(images.length, (index) {
         Asset asset = images[index];
         return AssetThumb(
           asset: asset,
-          width: 300,
           height: 300,
+          width: 300,
         );
       }),
     );
   }
 
-  Future<void> loadAssets() async {
+  Future<void> selectMultipleImages() async {
     List<Asset> resultList = List<Asset>();
     String error = 'No Error Dectected';
-
+    selectMultiple = true;
     try {
       resultList = await MultiImagePicker.pickImages(
-        maxImages: 300,
         enableCamera: true,
         selectedAssets: images,
+        maxImages: 300,
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
+          useDetailsView: true,
+          selectCircleStrokeColor: "#ffb8d2",
           actionBarColor: "#ffb8d2",
           actionBarTitle: "Gallery",
           allViewTitle: "All Photos",
-          useDetailsView: true,
-          selectCircleStrokeColor: "#ffb8d2",
         ),
       );
-    } on Exception catch (e) {
-      error = e.toString();
+    } on Exception catch (err) {
+      error = err.toString();
     }
     if (!mounted) return;
     setState(() {
@@ -98,64 +99,40 @@ class _AddPhotosState extends State<AddPhotos> {
       body: Column(
         children: <Widget>[
           SizedBox(height: 50),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Column(
             children: <Widget>[
-              Switch(
-                  value: selectMultiple,
-                  onChanged: (bool newValue) {
-                    setState(() {
-                      selectMultiple = newValue;
-                    });
-                  }),
-              Text('Select Multiple')
-            ],
-          ),
-          selectMultiple == false
-          ? Column(
-              children: <Widget>[
-                RaisedButton.icon(
-                  icon: Icon(Icons.camera_alt, color: Colors.white),
-                  label:
-                      Text('Camera', style: TextStyle(color: Colors.white)),
-                  color: Colors.pink[100],
-                  onPressed: () {
-                    setState(() {
-                      fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
-                    });
-                    getImage(true);
-                  }),
-                RaisedButton.icon(
-                  icon: Icon(Icons.photo_album, color: Colors.white),
-                  label: Text('Gallery',
-                      style: TextStyle(color: Colors.white)),
-                  color: Colors.pink[100],
-                  onPressed: () {
-                    setState(() {
-                      fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
-                    });
-                    getImage(false);
-                  })])
-          : Column(
-              children: <Widget>[
-                RaisedButton.icon(
-                  icon: Icon(Icons.image, color: Colors.white),
-                  label: Text('Gallery',
-                      style: TextStyle(color: Colors.white)),
-                  color: Colors.pink[100],
-                  onPressed: loadAssets,
-                ), 
-                SizedBox(height: 20)
-                ]),
-          selectMultiple == true
-          ? Expanded(
-              child: buildGridView(),
+              images.length == 0 ? Container()
+              : Text(images.length.toString()),
+              RaisedButton.icon(
+                icon: Icon(Icons.camera_alt, color: Colors.white),
+                label:Text('Camera', style: TextStyle(color: Colors.white)),
+                color: Colors.pink[100],
+                onPressed: () {
+                  setState(() {
+                    fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+                  });
+                  getImage(true);
+                  selectMultiple = false;
+                }),        
+              RaisedButton.icon(
+                icon: Icon(Icons.image, color: Colors.white),
+                label: Text('Gallery',
+                    style: TextStyle(color: Colors.white)),
+                color: Colors.pink[100],
+                onPressed: selectMultipleImages,
+              ), 
+            SizedBox(height: 20),
+            ]),
+            
+            selectMultiple == true ? Expanded(
+              child: displayMultipleImages(),
             )
             : Column(
-              children: <Widget>[
-                _image == null
-                ? Container()
-                : Column(children: <Widget>[
+            children: <Widget>[
+              _image == null
+              ? Container()
+              : SingleChildScrollView(
+                child: Column(children: <Widget>[
                   SizedBox(height: 20),
                     Image.file(_image, height: 200, width: 300),
                     SizedBox(height: 20),
@@ -170,7 +147,6 @@ class _AddPhotosState extends State<AddPhotos> {
                           })
                         },
                     )),
-                    
                     RaisedButton.icon(
                       icon: Icon(Icons.save_alt, color: Colors.white),
                       label: Text('Save', style: TextStyle(color: Colors.white)),
@@ -186,9 +162,11 @@ class _AddPhotosState extends State<AddPhotos> {
                         await _firestoreService.uploadPhoto(downloadURL, fileName, description);
                       },
                     ),
-                  ])
-                  ],
-                )
+                  ]),
+                ),
+              ],
+            )
+            
         ],
       ),
     );

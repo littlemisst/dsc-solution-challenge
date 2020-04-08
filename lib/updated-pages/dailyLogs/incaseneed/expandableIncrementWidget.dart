@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ExpandableIncrementCard extends StatelessWidget {
-  const ExpandableIncrementCard(this.leadingIcon, this.iconColor, this.titleText, this.timesText, this.intText, this.onPressedIncrement, this.onPressedDecrement, this.onPressedSet);
-  final ImageProvider leadingIcon;
-  final Color iconColor;
-  final String titleText;
+  const ExpandableIncrementCard(this.timesText, this.intText, this.onPressedIncrement, this.onPressedDecrement, this.onPressedSet);
   final String timesText;
   final int intText;
   final VoidCallback onPressedIncrement;
@@ -18,9 +15,7 @@ class ExpandableIncrementCard extends StatelessWidget {
           color: Colors.white,
           elevation: 1,
           borderRadius: BorderRadius.circular(10),
-          child: ExpansionTile(leading: ImageIcon(leadingIcon, color: iconColor),
-          title: Text(titleText),
-          children: <Widget>[
+          child: 
             Container(
               padding: EdgeInsets.fromLTRB(30, 0, 30, 10),
               child: Align(
@@ -50,9 +45,8 @@ class ExpandableIncrementCard extends StatelessWidget {
                   ])
                 )
             )
-          ],
         )
       )
-    ));
+    );
   }
 }
