@@ -4,31 +4,34 @@ import 'package:flutter_scale/flutter_scale.dart';
 
 
 Widget buildBloodType(context, model, initialValue, onChanged) {
-  return  DropdownButtonFormField<String>(
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'Please enter your bloodtype';
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        enabledBorder:
-            OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+  return  Container(
+    width: 240,
+    child: DropdownButtonFormField<String>(
+        validator: (value) {
+          if (value.isEmpty) {
+            return 'Please enter your bloodtype';
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+          enabledBorder:
+              OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+        ),
+        items: [
+          DropdownMenuItem<String>(child: Text('A+'), value: 'A+'),
+          DropdownMenuItem<String>(child: Text('A-'), value: 'A-'),
+          DropdownMenuItem<String>(child: Text('B+'), value: 'B+'),
+          DropdownMenuItem<String>(child: Text('B-'), value: 'B-'),
+          DropdownMenuItem<String>(child: Text('O+'), value: 'O+'),
+          DropdownMenuItem<String>(child: Text('O-'), value: 'O-'),
+          DropdownMenuItem<String>(child: Text('AB+'), value: 'AB+'),
+          DropdownMenuItem<String>(child: Text('AB-'), value: 'AB-'),
+        ],
+        onChanged: onChanged,
+        hint: Text('Blood Type', style: TextStyle(fontSize: 15.0)),
+        value: initialValue,
       ),
-      items: [
-        DropdownMenuItem<String>(child: Text('A+'), value: 'A+'),
-        DropdownMenuItem<String>(child: Text('A-'), value: 'A-'),
-        DropdownMenuItem<String>(child: Text('B+'), value: 'B+'),
-        DropdownMenuItem<String>(child: Text('B-'), value: 'B-'),
-        DropdownMenuItem<String>(child: Text('O+'), value: 'O+'),
-        DropdownMenuItem<String>(child: Text('O-'), value: 'O-'),
-        DropdownMenuItem<String>(child: Text('AB+'), value: 'AB+'),
-        DropdownMenuItem<String>(child: Text('AB-'), value: 'AB-'),
-      ],
-      onChanged: onChanged,
-      hint: Text('Blood Type', style: TextStyle(fontSize: 15.0)),
-      value: initialValue,
-    );
+  );
 }
 Widget buildWeightField(contex, controller) {
   return Container(

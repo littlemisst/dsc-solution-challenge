@@ -24,39 +24,48 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
 
   @override
   Widget _personalInformationForm1() {
-    return SingleChildScrollView(
-      child: Column(children: <Widget>[
-        buildNameField(context, _profile.name, (String value) {
-          _profile.name = value;
-        }),
-        SizedBox(height: 10.0),
-        buildGender(context, _profile.gender, _ageValue, (String value) => {
-            setState(() {
-              _ageValue = value;
-              _profile.gender = value;
-        })}),
-        SizedBox(height: 10.0),
-        buildBloodType(context, _profile.bloodType,_bloodTypeValue, (String value) => {
-                setState(() {
-                  _bloodTypeValue = value;
-                  _profile.bloodType = value;
-        })}),
-        SizedBox(height: 10.0),
-        buildAddressField(context, _profile.address, (String value) {
-          _profile.address = value;
-        }),
-        SizedBox(height: 10.0),
-        DatePicker('Birthdate', (DateTime value) {
-          _profile.birthDate = value;
-        }),
-        SizedBox(height: 10.0),
-        buildCivilStatus(context, _profile.civilStatus, _civilStatusValue, (String value) => {
-            setState(() {
-              _civilStatusValue = value;
-              _profile.civilStatus = value;
-        })}),
-        SizedBox(height: 11.0),
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: Align(
+        child: Material(
+        color: Colors.white,
+        elevation: 1,
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          padding: EdgeInsets.all(15),
+          child: Column(children: <Widget>[
+          buildNameField(context, _profile.name, (String value) {
+            _profile.name = value;
+          }),
+          SizedBox(height: 10.0),
+          buildGender(context, _profile.gender, _ageValue, (String value) => {
+              setState(() {
+                _ageValue = value;
+                _profile.gender = value;
+          })}),
+          SizedBox(height: 10.0),
+          buildBloodType(context, _profile.bloodType,_bloodTypeValue, (String value) => {
+                  setState(() {
+                    _bloodTypeValue = value;
+                    _profile.bloodType = value;
+          })}),
+          SizedBox(height: 10.0),
+          buildAddressField(context, _profile.address, (String value) {
+            _profile.address = value;
+          }),
+          SizedBox(height: 10.0),
+          DatePicker('Birthdate', (DateTime value) {
+            _profile.birthDate = value;
+          }),
+          SizedBox(height: 10.0),
+          buildCivilStatus(context, _profile.civilStatus, _civilStatusValue, (String value) => {
+              setState(() {
+                _civilStatusValue = value;
+                _profile.civilStatus = value;
+          })}),
+          SizedBox(height: 11.0),
       ]),
+        ))),
     );
   }
  //----------------------------------------------- 
@@ -97,26 +106,32 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
   }
 
   Widget _personalInformationForm2() {
-    return  SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          SizedBox(height: 20),
-          buildHeightScale(context, _heightController, _handleHeightScaleChanged),
-          SizedBox(height: 12),
-          buildHeightField(context, metersController),
-          SizedBox(height: 18),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: Align(
+        child: Material (
+          color: Colors.white,
+          elevation: 1,
+          borderRadius: BorderRadius.circular(10),
+          child:Column(
             children: <Widget>[
-              buildWeightScale(context, _weightController, _handleWeightScaleChanged),
-              SizedBox(height:12),
-              buildWeightField(context, kilogramController),
-              SizedBox(height: 10.0),
+              SizedBox(height: 20),
+              buildHeightScale(context, _heightController, _handleHeightScaleChanged),
+              SizedBox(height: 12),
+              buildHeightField(context, metersController),
+              SizedBox(height: 18),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  buildWeightScale(context, _weightController, _handleWeightScaleChanged),
+                  SizedBox(height:12),
+                  buildWeightField(context, kilogramController),
+                  SizedBox(height: 10.0),
+                ],
+              ),
             ],
           ),
-        ],
-      ),
-    );
+      )));
   }
  //----------------------------------------------- 
   File _image;
@@ -149,48 +164,75 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
   Widget _buildAddProfilePhoto() {
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-      child: SingleChildScrollView(
-        child: Column(children: <Widget>[
-          _image == null
-              ? CircleAvatar(backgroundColor: Colors.grey, radius: 50.0)
-              : CircleAvatar(
-                  backgroundImage: new FileImage(_image), radius: 50.0),
-          SizedBox(height: 20.0),
-          RaisedButton.icon(
-            icon: Icon(Icons.camera_alt, color: Colors.white),
-            label: Text('Camera', style: TextStyle(color: Colors.white)),
-            color: Colors.pink[100],
-            onPressed: () {getImage(true);},
-          ),
-          SizedBox(width: 20.0),
-          RaisedButton.icon(
-            icon: Icon(Icons.photo_album, color: Colors.white),
-            label: Text('Gallery', style: TextStyle(color: Colors.white)),
-            color: Colors.pink[100],
-            onPressed: () {getImage(false);},
-          ),
-          SizedBox(height: 30.0),
-        ]),
-      ),
+      child: Container(
+        child: Align(
+          child: Material(
+            color: Colors.white,
+            elevation: 1,
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              padding: EdgeInsets.fromLTRB(50,25,50,20),
+              child: Column(children: <Widget>[
+                _image == null
+                    ? CircleAvatar(backgroundColor: Colors.grey, radius: 50.0)
+                    : CircleAvatar(
+                        backgroundImage: new FileImage(_image), radius: 50.0),
+                SizedBox(height: 20.0),
+                RaisedButton.icon(
+                  icon: Icon(Icons.camera_alt, color: Colors.white),
+                  label: Text('Camera', style: TextStyle(color: Colors.white)),
+                  color: Colors.pink[100],
+                  onPressed: () {getImage(true);},
+                ),
+                SizedBox(width: 20.0),
+                RaisedButton.icon(
+                  icon: Icon(Icons.photo_album, color: Colors.white),
+                  label: Text('Gallery', style: TextStyle(color: Colors.white)),
+                  color: Colors.pink[100],
+                  onPressed: () {getImage(false);},
+                ),
+                SizedBox(height: 30.0),
+              ]),
+            ),
+      ))),
     );
   }
  //----------------------------------------------- 
   int currentStep = 0;
   bool complete = false;
 
+
   List<Step> get _steps => [
     Step( title: Text('Personal Information 1'), 
-    content: _personalInformationForm1()),
+    content: _personalInformationForm1(),
+    state: currentStep > 0 ? StepState.complete : StepState.editing),
     Step( title: Text('Personal Information 2'), 
-    content: _personalInformationForm2()),
+    content: _personalInformationForm2(),
+    state: currentStep > 1 ? StepState.complete : StepState.editing),
     Step(title: Text('Add Profile Photo'), 
-    content: _buildAddProfilePhoto()),
+    content: _buildAddProfilePhoto(),
+    state: currentStep > 2 ? StepState.complete : StepState.editing),
   ];
 
   next() {
-    currentStep == _steps.length - 1
-        ? setState(() => complete = true)
-        : goTo(currentStep + 1);
+    if (currentStep == 0 && _profile.name != null
+    && _profile.address != null && _profile.bloodType != null && _profile.birthDate != null
+    && _profile.gender != null && _profile.civilStatus != null) {
+      setState(() {
+        goTo(currentStep + 1);
+      });
+    }
+  if (currentStep == 1 && _profile.weight != null && _profile.height != null){
+    setState(() {
+      goTo(currentStep + 1);
+    });
+  if(currentStep == 2 && _profile.downloadUrl != null && _profile.profilePhotoFileName != null) {
+    setState(() {
+      goTo(currentStep + 1);
+    });
+    }
+  }
+
   }
   cancel() {
     if (currentStep > 0) {
@@ -218,22 +260,25 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
                     child:  currentStep != _steps.length - 1 ? Row (children: <Widget>[
                       FlatButton(
                         color: Colors.white,
-                        shape: RoundedRectangleBorder(side: BorderSide(color: Colors.grey[300])),
-                        child: Text('back'),
+                        shape: RoundedRectangleBorder(side: BorderSide(color: Colors.grey[300]), borderRadius: BorderRadius.circular(10)),
+                        child: Text('Back'),
                         onPressed: currentStep == 0 ? null : onStepCancel
                       ), SizedBox(width: 10),
                       FlatButton(
                         color: Colors.pink[100],
-                        shape: RoundedRectangleBorder(side: BorderSide(color: Colors.pink[100])),
-                        child: currentStep == _steps.length - 1 ? Text('next') : Text('next', style: TextStyle(color: Colors.white)),
+                        shape: RoundedRectangleBorder(side: BorderSide(color: Colors.pink[100]), borderRadius: BorderRadius.circular(10)),
+                        child: currentStep == _steps.length - 1 ? Text('Next') : Text('Next', style: TextStyle(color: Colors.white)),
                         onPressed: currentStep == _steps.length - 1 ? null : onStepContinue
                       )
-                    ]) : FlatButton(child: Text('Submit Profile', style: TextStyle(color: Colors.white)), color: Colors.pink[100],
-                    onPressed:() {_firestoreService.submitProfile(_profile);})
+                    ]) : Row(
+                      children: <Widget>[
+                        _image == null ? Container() : FlatButton(child: Text('Submit Profile', style: TextStyle(color: Colors.white)), color: Colors.pink[100],
+                        onPressed:() {_firestoreService.submitProfile(_profile);}),
+                      ],
+                    ), 
                   );
                 },
               ),
-             
           ],
         )
     );
