@@ -21,17 +21,13 @@ class _PersonalInformation1State extends State<PersonalInformation1> {
           _profile.name = value;
         }),
         SizedBox(height: 30.0),
-        buildGender(
-          context,
-          _profile.gender,
-          _ageValue,
-          (String value) => {
+        buildGender(context, _profile.gender, _ageValue, (String value) => {
             setState(() {
               _ageValue = value;
               _profile.gender = value;
             })
           },
-        ),
+        ), 
         SizedBox(height: 30.0),
         buildAddressField(context, _profile.address, (String value) {
           _profile.address = value;
@@ -41,11 +37,7 @@ class _PersonalInformation1State extends State<PersonalInformation1> {
           _profile.birthDate = value;
         }),
         SizedBox(height: 30.0),
-        buildCivilStatus(
-          context,
-          _profile.civilStatus,
-          _civilStatusValue,
-          (String value) => {
+        buildCivilStatus(context, _profile.civilStatus, _civilStatusValue, (String value) => {
             setState(() {
               _civilStatusValue = value;
               _profile.civilStatus = value;
@@ -55,7 +47,6 @@ class _PersonalInformation1State extends State<PersonalInformation1> {
       ]),
     );
   }
-
   Widget build(BuildContext context) {
     return Container(
       child: _personalInformationForm1(),

@@ -169,5 +169,4 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
       }, Icons.check) : null,
     );
   }
-
 }

@@ -65,7 +65,7 @@ Widget buildHeightField(context, controller) {
 
 Widget buildWeightScale(context, controller, scaleChanged) {
   return HorizontalScale(
-    maxValue: 200,
+    maxValue: 500,
     scaleController: controller,
     onChanged: scaleChanged,
     textStyle: TextStyle(

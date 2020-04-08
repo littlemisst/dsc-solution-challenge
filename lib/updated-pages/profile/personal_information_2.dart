@@ -17,6 +17,7 @@ class _PersonalInformation2State extends State<PersonalInformation2> {
   final kilogramController = TextEditingController();
 
   @override
+
   void initState() {
     super.initState();
     _weightController = ScrollController(initialScrollOffset: 0);
@@ -28,6 +29,7 @@ class _PersonalInformation2State extends State<PersonalInformation2> {
       _profile.height = double.parse(metersController.text);
     });
   }
+  
   @override
   void dispose() {
     metersController.dispose();
@@ -47,28 +49,23 @@ class _PersonalInformation2State extends State<PersonalInformation2> {
     double kg = ((gram * 100) / 1000);
     kilogramController.text = kg.toString();
   }
-  
+
   Widget _personalInformationForm2() {
     return  SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            buildHeightScale(
-                context, _heightController, _handleHeightScaleChanged),
+            buildHeightScale(context, _heightController, _handleHeightScaleChanged),
             SizedBox(height: 12),
             buildHeightField(context, metersController),
             SizedBox(height: 18),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                buildWeightScale(
-                    context, _weightController, _handleWeightScaleChanged),
+                buildWeightScale(context, _weightController, _handleWeightScaleChanged),
                 SizedBox(height:12),
                 buildWeightField(context, kilogramController),
                 SizedBox(height: 12),
-                buildBloodType(
-                  context,
-                  _profile.bloodType,
-                  _bloodTypeValue,
+                buildBloodType(context, _profile.bloodType,_bloodTypeValue,
                   (String value) => {
                     setState(() {
                       _bloodTypeValue = value;

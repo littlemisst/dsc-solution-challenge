@@ -50,9 +50,9 @@ class _PersonalInformationAddPhotoState extends State<PersonalInformationAddPhot
       child: SingleChildScrollView(
         child: Column(children: <Widget>[
           _image == null
-              ? CircleAvatar(backgroundColor: Colors.grey, radius: 70.0)
+              ? CircleAvatar(backgroundColor: Colors.grey, radius: 50.0)
               : CircleAvatar(
-                  backgroundImage: new FileImage(_image), radius: 80.0),
+                  backgroundImage: new FileImage(_image), radius: 50.0),
           SizedBox(height: 20.0),
           RaisedButton.icon(
             icon: Icon(Icons.camera_alt, color: Colors.white),

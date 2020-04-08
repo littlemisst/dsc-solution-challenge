@@ -9,6 +9,7 @@ class UserProfileWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final profile = Provider.of<Profile>(context);
 
-    return profile == null ? UserProfileSummary() : UpdateProfileStepper();
+    return profile == null ? UpdateProfileStepper() : UserProfileSummary();
+    
   }
 }
