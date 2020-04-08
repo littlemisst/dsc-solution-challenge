@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/loader.dart';
+import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
 import 'package:me_daily/updated-pages/authentication/reset_password_page.dart';
-import 'package:me_daily/updated-pages/authentication/verification_page.dart';
 
 class SignIn extends StatefulWidget {
   final toggleBetweenForms;
@@ -36,7 +36,7 @@ class _SignInState extends State<SignIn> {
         },
         onChanged: (String value) {
           setState(() {
-            email = value;
+            email = value.trim();
           });
         });
   }
@@ -54,7 +54,7 @@ class _SignInState extends State<SignIn> {
         },
         onChanged: (String value) {
           setState(() {
-            password = value;
+            password = value.trim();
           });
         });
   }
@@ -110,10 +110,8 @@ class _SignInState extends State<SignIn> {
                       child: Text('Forget Password'),
                       onTap: () async {
                         await _firebaseAuth.resetPassword(email);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ResetPasswordPage()));
+                        Navigator.pushNamed(
+                            context, Strings.resetPasswordRoute);
                       },
                     )
                   ],

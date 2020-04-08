@@ -26,7 +26,6 @@ class FirebaseAuthentication {
     try {
       AuthResult authResult = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-  
       if (authResult.user.isEmailVerified) {
         print(authResult.user.toString());
         return _userFromFirebase(authResult.user);

@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: bodies[_currentIndex],
-      floatingActionButton: _currentIndex != 3 && _currentIndex != 4  
+      floatingActionButton: _currentIndex != 3 && _currentIndex != 4
           ? SpeedDial(
               child: Icon(Icons.add, color: Colors.white),
               overlayColor: Colors.black,
@@ -72,7 +72,8 @@ class _HomePageState extends State<HomePage> {
                             MaterialPageRoute(builder: (context) => AddTask()));
                       }),
                   SpeedDialChild(
-                      child: Icon(Icons.add_photo_alternate, color: Colors.white),
+                      child:
+                          Icon(Icons.add_photo_alternate, color: Colors.white),
                       label: 'Add Image',
                       onTap: () {
                         Navigator.push(
@@ -81,7 +82,8 @@ class _HomePageState extends State<HomePage> {
                                 builder: (context) => AddPhotos()));
                       }),
                   SpeedDialChild(
-                      child: Icon(Icons.playlist_add_check, color: Colors.white),
+                      child:
+                          Icon(Icons.playlist_add_check, color: Colors.white),
                       label: 'Add Daily Log',
                       onTap: () {
                         Navigator.push(

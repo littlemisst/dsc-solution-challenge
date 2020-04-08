@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/loader.dart';
+import 'package:me_daily/constants/strings.dart';
+import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
 import 'package:me_daily/updated-pages/authentication/verification_page.dart';
 
@@ -99,21 +101,15 @@ class _SignUpState extends State<SignUp> {
                               setState(() {
                                 isLoading = true;
                               });
-                              //   User user = await _firebaseAuth
-                              //       .signUpWithEmailAndPassword(email, password);
-                              //   if (user == null) {
-                              //     setState(() {
-                              //       isLoading = false;
-                              //     });
-                              //   }
-                              // }
-                              await _firebaseAuth.signUpWithEmailAndPassword(
-                                  email, password);
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          VerificationPage()));
+                              User user = await _firebaseAuth
+                                  .signUpWithEmailAndPassword(email, password);
+                              if (user == null) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              }
+                              Navigator.pushReplacementNamed(
+                                  context, Strings.verificationRoute);
                             }
                           }),
                       InkWell(

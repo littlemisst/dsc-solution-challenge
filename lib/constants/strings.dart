@@ -36,14 +36,20 @@ class Strings {
     "dental"
   ];
 
-  static List symptoms =[
+  static List symptoms = [
     'headache',
-    'dizziness', 
-    'fever', 
-    'runny nose', 
-    'cough',  
-    'diarrhea', 
-    'vomiting', 
-    'muscle pain', 
+    'dizziness',
+    'fever',
+    'runny nose',
+    'cough',
+    'diarrhea',
+    'vomiting',
+    'muscle pain',
   ];
+
+  static const String initialRoute = '/';
+  static const String authenticationRoute = '/authentication';
+  static const String signInRoute = '/sign-in';
+  static const String verificationRoute = '/verification';
+  static const String resetPasswordRoute = '/reset-password';
 }

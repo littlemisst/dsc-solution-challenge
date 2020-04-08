@@ -1,5 +1,6 @@
 import 'package:fancy_on_boarding/fancy_on_boarding.dart';
 import 'package:flutter/material.dart';
+import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/routes/authentication_wrapper.dart';
 import 'package:me_daily/services/shared_preferences_service.dart';
 
@@ -34,13 +35,11 @@ class OnBoardingScreen extends StatelessWidget {
       body: FancyOnBoarding(
         onDoneButtonPressed: () {
           SharedPreferencesService.setIsNewlyInstalled(false);
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => AuthenticationWrapper()));
+          Navigator.pushReplacementNamed(context, Strings.authenticationRoute);
         },
         onSkipButtonPressed: () {
           SharedPreferencesService.setIsNewlyInstalled(false);
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => AuthenticationWrapper()));
+          Navigator.pushReplacementNamed(context, Strings.authenticationRoute);
         },
         pageList: pageList,
       ),

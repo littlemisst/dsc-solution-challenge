@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/main.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/routes/authentication_wrapper.dart';
@@ -27,10 +28,7 @@ class VerificationPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SignIn()));
+                  Navigator.pushNamed(context, Strings.signInRoute);
                 },
               )
             ],
