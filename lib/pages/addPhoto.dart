@@ -1,3 +1,5 @@
+import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:me_daily/widgets/description_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -6,24 +8,28 @@ import 'package:me_daily/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:async';
+import 'package:flutter/services.dart';
 
-class AddPhoto extends StatefulWidget {
+class AddPhotos extends StatefulWidget {
   @override
-  _AddPhotoState createState() => _AddPhotoState();
+  _AddPhotosState createState() => new _AddPhotosState();
 }
 
-class _AddPhotoState extends State<AddPhoto> {
+class _AddPhotosState extends State<AddPhotos> {
   String fileName;
   String downloadURL;
   String description;
   String _typeValue;
-  bool selectMultiple = false;
   File _image;
+  List<Asset> images = List<Asset>();
+  String _error = 'No Error Dectected';
+  bool selectMultiple = false;
 
   @override
   void initState() {
     super.initState();
   }
+
   Future getImage(bool isCamera) async {
     File image;
     if (isCamera) {
@@ -35,12 +41,53 @@ class _AddPhotoState extends State<AddPhoto> {
       _image = image;
     });
   }
-  
+
+  Widget displayMultipleImages() {
+    return GridView.count(
+      crossAxisCount: 3,
+      children: List.generate(images.length, (index) {
+        Asset asset = images[index];
+        return AssetThumb(
+          asset: asset,
+          height: 300,
+          width: 300,
+        );
+      }),
+    );
+  }
+
+  Future<void> selectMultipleImages() async {
+    List<Asset> resultList = List<Asset>();
+    String error = 'No Error Dectected';
+    selectMultiple = true;
+    try {
+      resultList = await MultiImagePicker.pickImages(
+        enableCamera: true,
+        selectedAssets: images,
+        maxImages: 300,
+        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+        materialOptions: MaterialOptions(
+          useDetailsView: true,
+          selectCircleStrokeColor: "#ffb8d2",
+          actionBarColor: "#ffb8d2",
+          actionBarTitle: "Gallery",
+          allViewTitle: "All Photos",
+        ),
+      );
+    } on Exception catch (err) {
+      error = err.toString();
+    }
+    if (!mounted) return;
+    setState(() {
+      images = resultList;
+      _error = error;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final _firestoreService = FirestoreService(uid: user.uid);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -49,103 +96,79 @@ class _AddPhotoState extends State<AddPhoto> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(0, 80,0, 0),
-          child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-          _image == null ? Container(
-            child: Column(
-              children: <Widget>[
-                CircleAvatar(
-                  backgroundColor: Colors.grey[200],
-                  maxRadius: 60,
-                  child: Icon(Icons.add_a_photo, size: 60, color: Colors.white),
-                ),
-              SizedBox(height: 50.0),
-                 RaisedButton.icon(
-                  icon: Icon(Icons.camera_alt, color: Colors.white),
-                  label: Text('Camera', style: TextStyle(color: Colors.white)),
-                  color: Colors.pink[100],
-                  onPressed: () {
-                    setState(() {
-                      fileName =
-                          DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
-                    });
-                    getImage(true);
-                  },
-                ),
-                SizedBox(width: 20.0),
-                RaisedButton.icon(
-                  icon: Icon(Icons.photo_album, color: Colors.white),
-                  label: Text('Gallery', style: TextStyle(color: Colors.white)),
-                  color: Colors.pink[100],
-                  onPressed: () {
-                    setState(() {
-                      fileName =
-                          DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
-                    });
-                    getImage(false);
-                  },
+      body: Column(
+        children: <Widget>[
+          SizedBox(height: 50),
+          Column(
+            children: <Widget>[
+              images.length == 0 ? Container()
+              : Text(images.length.toString()),
+              RaisedButton.icon(
+                icon: Icon(Icons.camera_alt, color: Colors.white),
+                label:Text('Camera', style: TextStyle(color: Colors.white)),
+                color: Colors.pink[100],
+                onPressed: () {
+                  setState(() {
+                    fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+                  });
+                  getImage(true);
+                  selectMultiple = false;
+                }),        
+              RaisedButton.icon(
+                icon: Icon(Icons.image, color: Colors.white),
+                label: Text('Gallery',
+                    style: TextStyle(color: Colors.white)),
+                color: Colors.pink[100],
+                onPressed: selectMultipleImages,
+              ), 
+            SizedBox(height: 20),
+            ]),
+            
+            selectMultiple == true ? Expanded(
+              child: displayMultipleImages(),
+            )
+            : Column(
+            children: <Widget>[
+              _image == null
+              ? Container()
+              : SingleChildScrollView(
+                child: Column(children: <Widget>[
+                  SizedBox(height: 20),
+                    Image.file(_image, height: 200, width: 300),
+                    SizedBox(height: 20),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(left: 50.0, right: 50.0),
+                      child: buildDescription( context, _typeValue, description,
+                        (String value) => {
+                          setState(() {
+                            _typeValue = value;
+                            description = value;
+                          })
+                        },
+                    )),
+                    RaisedButton.icon(
+                      icon: Icon(Icons.save_alt, color: Colors.white),
+                      label: Text('Save', style: TextStyle(color: Colors.white)),
+                      color: Colors.pink[100],
+                      onPressed: () async {
+                        StorageReference _reference = FirebaseStorage
+                            .instance
+                            .ref()
+                            .child('users/${user.uid}/$fileName');
+                        StorageUploadTask uploadTask =  _reference.putFile(_image);
+                        StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+                        downloadURL = await _reference.getDownloadURL();
+                        await _firestoreService.uploadPhoto(downloadURL, fileName, description);
+                      },
+                    ),
+                  ]),
                 ),
               ],
-            ),
-          ) : Image.file(_image, height: 300.0),
-
-          
-          SizedBox(height: 30.0),
-         
-          _image == null
-          ? Container()
-          : Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 50.0, right: 50.0),
-                child: DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                  enabledBorder:
-                      OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-                ),
-                items: [
-                  DropdownMenuItem<String>(child: Text('Prescription'), value: 'Prescription'),
-                  DropdownMenuItem<String>(child: Text('Receipt'), value: 'Receipt'),
-                  DropdownMenuItem<String>(child: Text('Maintenance'), value: 'Maintenance'),
-                  DropdownMenuItem<String>(child: Text('Laboratory Result'), value: 'Laboratory Result'),
-                  DropdownMenuItem<String>(child: Text('Medical Certificate'), value: 'Medical Certificate'),
-                  DropdownMenuItem<String>(child: Text('Others'), value: 'Others'),
-                ],
-                onChanged: (String value) => {
-                  setState(() {
-                    _typeValue = value;
-                    description = value;
-                  }) 
-                },
-                hint: Text('Add Description'),
-                value: _typeValue,
-               ),
-              ),
-              SizedBox(height: 20),
-              RaisedButton.icon(
-                  icon: Icon(Icons.save_alt, color: Colors.white),
-                  label: Text('Save', style: TextStyle(color: Colors.white)),
-                  color: Colors.pink[100],
-                  onPressed: () async {
-                    StorageReference _reference = FirebaseStorage.instance
-                        .ref()
-                        .child('users/${user.uid}/$fileName');
-
-                    StorageUploadTask uploadTask = _reference.putFile(_image);
-                    StorageTaskSnapshot taskSnapshot =
-                        await uploadTask.onComplete;
-                    downloadURL = await _reference.getDownloadURL();
-                    await _firestoreService.uploadPhoto(downloadURL, fileName, description);
-                  },
-                ),
-            ],
-          ),
-        ]),
-      )),
+            )
+            
+        ],
+      ),
     );
   }
 }
