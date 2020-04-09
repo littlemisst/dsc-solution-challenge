@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/user.dart';
-import 'package:me_daily/routes/first_installation_wrapper.dart';
 import 'package:me_daily/routes/routes.dart';
 import 'package:me_daily/service_locator.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
