@@ -98,6 +98,10 @@ class FirestoreService {
   Future addTask(Task task) async {
     return await userData.document(uid).collection('tasks').add(task.toJson());
   }
+  
+  Future addRepeatingTasks(Task task) async {
+    return await userData.document(uid).collection('duplicateTasks').add(task.toJson());
+  }
 
   List<Task> _taskFromFirebase(QuerySnapshot querySnapshot) {
     return querySnapshot.documents
