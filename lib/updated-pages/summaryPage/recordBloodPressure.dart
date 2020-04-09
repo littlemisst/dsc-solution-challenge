@@ -13,18 +13,16 @@ class _RecordBloodPressureState extends State<RecordBloodPressure> {
       child: Column(
         children: <Widget>[
           Expanded(
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                child: Text(
-                  'Blood Pressure',
-                ),
+              child: Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              child: Text(
+                'Blood Pressure',
               ),
             ),
-          ),
+          )),
           Expanded(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Expanded(
                   child: TextField(
