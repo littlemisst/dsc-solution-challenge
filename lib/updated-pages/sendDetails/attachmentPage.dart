@@ -35,13 +35,9 @@ class _AttachementPageState extends State<AttachementPage> {
     final user = Provider.of<User>(context);
     final _firestoreService = FirestoreService(uid: user.uid);
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(0, 80,0, 0),
-          child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
           SizedBox(height: 20.0),
           _image == null ? Container() : Image.file(_image, height: 300.0),
           RaisedButton.icon(
@@ -71,27 +67,24 @@ class _AttachementPageState extends State<AttachementPage> {
           ),
           SizedBox(height: 50.0),
           _image == null
-          ? Container()
-          : RaisedButton.icon(
-              icon: Icon(Icons.save_alt, color: Colors.white),
-              label: Text('Save', style: TextStyle(color: Colors.white)),
-              color: Colors.pink[100],
-              onPressed: () async {
-                StorageReference _reference = FirebaseStorage.instance
-                    .ref()
-                    .child('users/${user.uid}/$fileName');
+              ? Container()
+              : RaisedButton.icon(
+                  icon: Icon(Icons.save_alt, color: Colors.white),
+                  label: Text('Save', style: TextStyle(color: Colors.white)),
+                  color: Colors.pink[100],
+                  onPressed: () async {
+                    StorageReference _reference = FirebaseStorage.instance
+                        .ref()
+                        .child('users/${user.uid}/$fileName');
 
-                StorageUploadTask uploadTask = _reference.putFile(_image);
-                StorageTaskSnapshot taskSnapshot =
-                    await uploadTask.onComplete;
-                downloadURL = await _reference.getDownloadURL();
-                await _firestoreService.uploadPhoto(downloadURL, fileName, description);
-              },
-            ),
-        ]),
-      )),
-    );
+                    StorageUploadTask uploadTask = _reference.putFile(_image);
+                    StorageTaskSnapshot taskSnapshot =
+                        await uploadTask.onComplete;
+                    downloadURL = await _reference.getDownloadURL();
+                    await _firestoreService.uploadPhoto(
+                        downloadURL, fileName, description);
+                  },
+                ),
+        ]);
   }
 }
-
-
