@@ -34,7 +34,7 @@ class _DailyLogsPageState extends State<DailyLogsPage> {
                   );
                 });
           }
-          return Container();
+          return Container(child: Text('NONE'),);
         },
       ),
     );
