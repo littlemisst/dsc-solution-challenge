@@ -10,7 +10,7 @@ class DailyTaskCalendarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     return StreamProvider<List<Task>>.value(
-      value: FirestoreService(uid: user.uid).tasks,
+      value: FirestoreService(uid: user.uid).allTasksStream,
       child: Container(
         child: CalendarPage(),
       ),

@@ -13,7 +13,6 @@ class DailyTaskDetails {
         map[taskDayStart].add(specificTask);
       }
     }
-    print(map);
     return map;
   }
 }
