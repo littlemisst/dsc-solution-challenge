@@ -70,7 +70,7 @@ class _AddPhotosState extends State<AddPhotos> {
   }
 
   Future<dynamic> postImage(Asset imageFile, firestoreService, user) async {
-    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
     StorageReference _reference = FirebaseStorage.instance.ref().child('users/${user}/$fileName');
     StorageUploadTask uploadTask = _reference.putData((await imageFile.getByteData()).buffer.asUint8List());
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
@@ -89,44 +89,66 @@ class _AddPhotosState extends State<AddPhotos> {
       ),
       body: Column(
         children: <Widget>[
-          SizedBox(height: 50),
-          Column(children: <Widget>[
-            RaisedButton.icon(
-                icon: Icon(Icons.camera_alt, color: Colors.white),
-                label: Text('Camera', style: TextStyle(color: Colors.white)),
-                color: Colors.pink[100],
-                onPressed: () {
-                  setState(() {
-                    fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
-                  });
-                  getImage(true);
-                  selectMultiple = false;
-                }),
-            RaisedButton.icon(
-              icon: Icon(Icons.image, color: Colors.white),
-              label: Text('Gallery', style: TextStyle(color: Colors.white)),
-              color: Colors.pink[100],
-              onPressed: selectMultipleImages,
+          Container(  
+            padding: EdgeInsets.fromLTRB(30, 40, 30, 0), 
+            child: Align(
+              child: Material(
+                color: Colors.white,
+                elevation: 1,
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                    SizedBox(height: 50),
+                    RaisedButton.icon(
+                        icon: Icon(Icons.camera_alt, color: Colors.white),
+                        label: Text('Camera', style: TextStyle(color: Colors.white)),
+                        color: Colors.pink[100],
+                        onPressed: () {
+                          setState(() {
+                            fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+                          });
+                          getImage(true);
+                          selectMultiple = false;
+                        }),
+                    SizedBox(width: 20),
+                    RaisedButton.icon(
+                      icon: Icon(Icons.image, color: Colors.white),
+                      label: Text('Gallery', style: TextStyle(color: Colors.white)),
+                      color: Colors.pink[100],
+                      onPressed: selectMultipleImages,
+                    ),
+                    SizedBox(height: 20),
+                  ]),
+                ),
+              ),
             ),
-            SizedBox(height: 20),
-          ]),
+          ),
+          SizedBox(height: 20),
           images.isNotEmpty 
             ? Expanded(
                 child: displayMultipleImages(images),
               )
-            : Container(child: _image == null ? Container() : Image.file(_image, height: 200, width: 300)), 
+            : Container(child: _image == null ? Container() : Image.file(_image, height: 300, width: 300)), 
           images.isNotEmpty || _image != null 
-            ? Padding(
-                padding: EdgeInsets.only(left: 50.0, right: 50.0),
-                child: buildDescription(context, _typeValue, description,
-                  (String value) => {
-                    setState(() {
-                      _typeValue = value;
-                      description = value;
-                    })},
-                ))
+            ? Column(
+              children: <Widget>[
+                SizedBox(height: 20),
+                Padding(
+                    padding: EdgeInsets.only(left: 50.0, right: 50.0),
+                    child: buildDescription(context, _typeValue, description,
+                      (String value) => {
+                        setState(() {
+                          _typeValue = value;
+                          description = value;
+                        })},
+                    )),
+              ],
+            )
             : Container(),
-          images.isNotEmpty
+          images.isNotEmpty && description != null
             ? RaisedButton.icon(
                 icon: Icon(Icons.save_alt, color: Colors.white),
                 label: Text('Save', style: TextStyle(color: Colors.white)),
@@ -143,10 +165,10 @@ class _AddPhotosState extends State<AddPhotos> {
                       }
                     });
                   }
-                },
+                } 
               )
             : Container(),
-          _image != null 
+          _image != null && description != null 
             ? RaisedButton.icon(
               icon: Icon(Icons.save_alt, color: Colors.white),
               label: Text('Save', style: TextStyle(color: Colors.white)),
@@ -160,7 +182,8 @@ class _AddPhotosState extends State<AddPhotos> {
                 downloadURL = await _reference.getDownloadURL();
                 await _firestoreService.uploadPhoto(downloadURL, fileName, description);
               }) 
-          : Container()
+          : Container(),
+          SizedBox(height: 50)
         ],
       ),
     );
