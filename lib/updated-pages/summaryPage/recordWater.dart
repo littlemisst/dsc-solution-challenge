@@ -5,13 +5,75 @@ class RecordWater extends StatefulWidget {
   _RecordWaterState createState() => _RecordWaterState();
 }
 
+int water = 0;
+
 class _RecordWaterState extends State<RecordWater> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(children: <Widget>[
-        Text('Water')
-      ],),
+      padding: EdgeInsets.all(5),
+      child: Column(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              child: Text(
+                'Water',
+              ),
+            ),
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Expanded(
+                  child: RawMaterialButton(
+                    child: Icon(
+                      Icons.remove,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        if (water != 0) {
+                          water--;
+                        }
+                      });
+                    },
+                    shape: CircleBorder(),
+                    fillColor: Colors.pink[100],
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      "$water",
+                      style: TextStyle(
+                        fontSize: 40,
+                        color: Colors.pink[100],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: RawMaterialButton(
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        water++;
+                      });
+                    },
+                    shape: CircleBorder(),
+                    fillColor: Colors.pink[100],
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

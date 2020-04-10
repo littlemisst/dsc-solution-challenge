@@ -23,7 +23,7 @@ class _TasksDetailsState extends State<TasksDetails> {
             children: <Widget>[
               Center(
                 child: Text(
-                  'Total Number of Tasks',
+                  'Tasks',
                   style: TextStyle(),
                 ),
               ),
