@@ -80,6 +80,7 @@ class FirestoreService {
       height: documentSnapshot.data['height'],
       weight: documentSnapshot.data['weight'],
       downloadUrl: documentSnapshot.data['downloadUrl'],
+      profilePhotoFileName: documentSnapshot.data['profilePhotoFileName'],
     );
   }
 

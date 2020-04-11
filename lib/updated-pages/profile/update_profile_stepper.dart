@@ -150,16 +150,18 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
     String fileUploadName =
         DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
     _profile.profilePhotoFileName = fileUploadName;
-    StorageReference _reference = FirebaseStorage.instance
+        StorageReference _reference = FirebaseStorage.instance
         .ref()
         .child('users/$uid/profilePhoto/${_profile.profilePhotoFileName}');
     StorageUploadTask uploadTask = _reference.putFile(_image);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    _profile.downloadUrl = await _reference.getDownloadURL();
+    String downloadURL = await _reference.getDownloadURL();
     setState(() {
       _uploaded = true;
+      _profile.downloadUrl = downloadURL;
     });
   }
+  
 
   Widget _buildAddProfilePhoto() {
     return Padding(
@@ -182,14 +184,25 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
                   icon: Icon(Icons.camera_alt, color: Colors.white),
                   label: Text('Camera', style: TextStyle(color: Colors.white)),
                   color: Colors.pink[100],
-                  onPressed: () {getImage(true);},
+                  onPressed: () {
+                    setState(() {
+                      String fileUploadName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+                      _profile.profilePhotoFileName = fileUploadName;
+                    });
+                    getImage(true);
+                  },
                 ),
                 SizedBox(width: 20.0),
                 RaisedButton.icon(
                   icon: Icon(Icons.photo_album, color: Colors.white),
                   label: Text('Gallery', style: TextStyle(color: Colors.white)),
                   color: Colors.pink[100],
-                  onPressed: () {getImage(false);},
+                  onPressed: () {
+                  setState(() {
+                    String fileUploadName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+                    _profile.profilePhotoFileName = fileUploadName;
+                  });  
+                  getImage(false);},
                 ),
                 SizedBox(height: 30.0),
               ]),
@@ -273,7 +286,10 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
                     ]) : Row(
                       children: <Widget>[
                         _image == null ? Container() : FlatButton(child: Text('Submit Profile', style: TextStyle(color: Colors.white)), color: Colors.pink[100],
-                        onPressed:() {_firestoreService.submitProfile(_profile);}),
+                        onPressed:() {
+                        _firestoreService.submitProfile(_profile);
+                        uploadImage();
+                        }),
                       ],
                     ), 
                   );

@@ -64,7 +64,6 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final _firestoreService = FirestoreService(uid: user.uid);
-
     return Scaffold(
       body: GoogleMap(
         initialCameraPosition: CameraPosition(

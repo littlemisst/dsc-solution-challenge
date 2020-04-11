@@ -21,6 +21,7 @@ class Profile {
       this.height,
       this.weight,
       this.downloadUrl,
+      this.profilePhotoFileName,
 });
 
   Map<String, dynamic> toJson() => {
