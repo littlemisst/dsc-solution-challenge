@@ -11,6 +11,8 @@ import 'dart:async';
 import 'package:me_daily/widgets/display_images_widget.dart';
 
 class AddPhotos extends StatefulWidget {
+  final GlobalKey<ScaffoldState> globalKey;
+  const AddPhotos({Key key, this.globalKey}) : super(key: key);
   @override
   _AddPhotosState createState() => new _AddPhotosState();
 }
@@ -25,6 +27,7 @@ class _AddPhotosState extends State<AddPhotos> {
   String _error = 'No Error Dectected';
   bool selectMultiple = false;
   List<String> imageUrls = <String>[];
+  bool isUploaded = false;
 
   @override
   void initState() {
@@ -75,7 +78,11 @@ class _AddPhotosState extends State<AddPhotos> {
     StorageUploadTask uploadTask = _reference.putData((await imageFile.getByteData()).buffer.asUint8List());
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     downloadURL = await _reference.getDownloadURL();
+    if (downloadURL != null) {
+      setState(() { isUploaded = true; });
+    }
     await firestoreService.uploadPhoto(downloadURL, fileName, description);
+    
   }
 
   @override
@@ -106,19 +113,19 @@ class _AddPhotosState extends State<AddPhotos> {
                         icon: Icon(Icons.camera_alt, color: Colors.white),
                         label: Text('Camera', style: TextStyle(color: Colors.white)),
                         color: Colors.pink[100],
-                        onPressed: () {
+                        onPressed: images.isEmpty ? () {
                           setState(() {
                             fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
                           });
                           getImage(true);
                           selectMultiple = false;
-                        }),
+                        } : null),
                     SizedBox(width: 20),
                     RaisedButton.icon(
                       icon: Icon(Icons.image, color: Colors.white),
                       label: Text('Gallery', style: TextStyle(color: Colors.white)),
                       color: Colors.pink[100],
-                      onPressed: selectMultipleImages,
+                      onPressed: _image == null ? selectMultipleImages : null,
                     ),
                     SizedBox(height: 20),
                   ]),
@@ -127,11 +134,16 @@ class _AddPhotosState extends State<AddPhotos> {
             ),
           ),
           SizedBox(height: 20),
+          isUploaded ? AlertDialog(title: Text('Add Image'), content: Text('Successfully Upload')) :Container(),
+          _image == null && images.isEmpty ? Text('No image selected', style: TextStyle(color: Colors.grey[400])) :
+          Text(_image == null ? images.length.toString() + ' images selected': '1 image selected',
+          style: TextStyle(color: Colors.grey[400])),
+          SizedBox(height: 20),
           images.isNotEmpty 
             ? Expanded(
                 child: displayMultipleImages(images),
               )
-            : Container(child: _image == null ? Container() : Image.file(_image, height: 300, width: 300)), 
+            : Container(child: _image == null ? Container() : Image.file(_image, height: 200, width: 200)), 
           images.isNotEmpty || _image != null 
             ? Column(
               children: <Widget>[
@@ -147,6 +159,7 @@ class _AddPhotosState extends State<AddPhotos> {
                     )),
               ],
             )
+            
             : Container(),
           images.isNotEmpty && description != null
             ? RaisedButton.icon(
@@ -180,7 +193,11 @@ class _AddPhotosState extends State<AddPhotos> {
                 StorageUploadTask uploadTask = _reference.putFile(_image);
                 StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
                 downloadURL = await _reference.getDownloadURL();
+                if (downloadURL != null) {
+                  setState(() { isUploaded = true; });
+                }
                 await _firestoreService.uploadPhoto(downloadURL, fileName, description);
+                Navigator.of(context).pop();
               }) 
           : Container(),
           SizedBox(height: 50)

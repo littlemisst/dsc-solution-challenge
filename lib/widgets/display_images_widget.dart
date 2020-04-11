@@ -12,6 +12,7 @@ import 'package:multi_image_picker/multi_image_picker.dart';
             asset: asset,
             height: 300,
             width: 300,
+            spinner: Center(child: SizedBox(width: 50, height: 50, child: CircularProgressIndicator()))
           );
         }),
       ),

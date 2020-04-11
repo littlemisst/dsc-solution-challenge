@@ -72,6 +72,7 @@ class _MapPageState extends State<MapPage> {
         ),
         mapType: _currentMapType,
         markers: _markers.values.toSet(),
+        
       ),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(left: 275.0, top: 40.0),
