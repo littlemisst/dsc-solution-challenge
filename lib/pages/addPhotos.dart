@@ -28,6 +28,7 @@ class _AddPhotosState extends State<AddPhotos> {
   bool selectMultiple = false;
   List<String> imageUrls = <String>[];
   bool isUploaded = false;
+  bool startUpload = false;
 
   @override
   void initState() {
@@ -66,9 +67,7 @@ class _AddPhotosState extends State<AddPhotos> {
       error = err.toString();
     }
     if (!mounted) return;
-    setState(() {
-      images = resultList;
-      _error = error;
+    setState(() { images = resultList; _error = error;
     });
   }
 
@@ -79,10 +78,9 @@ class _AddPhotosState extends State<AddPhotos> {
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     downloadURL = await _reference.getDownloadURL();
     if (downloadURL != null) {
-      setState(() { isUploaded = true; });
+      setState(() { isUploaded = true; startUpload = false; });
     }
     await firestoreService.uploadPhoto(downloadURL, fileName, description);
-    
   }
 
   @override
@@ -134,7 +132,6 @@ class _AddPhotosState extends State<AddPhotos> {
             ),
           ),
           SizedBox(height: 20),
-          isUploaded ? AlertDialog(title: Text('Add Image'), content: Text('Successfully Upload')) :Container(),
           _image == null && images.isEmpty ? Text('No image selected', style: TextStyle(color: Colors.grey[400])) :
           Text(_image == null ? images.length.toString() + ' images selected': '1 image selected',
           style: TextStyle(color: Colors.grey[400])),
@@ -157,9 +154,8 @@ class _AddPhotosState extends State<AddPhotos> {
                           description = value;
                         })},
                     )),
-              ],
-            )
-            
+                  ],
+                )
             : Container(),
           images.isNotEmpty && description != null
             ? RaisedButton.icon(
@@ -167,6 +163,7 @@ class _AddPhotosState extends State<AddPhotos> {
                 label: Text('Save', style: TextStyle(color: Colors.white)),
                 color: Colors.pink[100],
                 onPressed: () async {
+                  setState((){ startUpload = true; });
                   for (var imageFile in images) {
                     postImage(imageFile, _firestoreService, user.uid)
                       .then((downloadUrl) {
@@ -187,6 +184,7 @@ class _AddPhotosState extends State<AddPhotos> {
               label: Text('Save', style: TextStyle(color: Colors.white)),
               color: Colors.pink[100],
               onPressed: () async {
+                setState((){ startUpload = true; });
                 StorageReference _reference = FirebaseStorage.instance
                     .ref()
                     .child('users/${user.uid}/$fileName');
@@ -194,13 +192,20 @@ class _AddPhotosState extends State<AddPhotos> {
                 StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
                 downloadURL = await _reference.getDownloadURL();
                 if (downloadURL != null) {
-                  setState(() { isUploaded = true; });
+                  setState(() { isUploaded = true; startUpload = false; });
                 }
-                await _firestoreService.uploadPhoto(downloadURL, fileName, description);
-                Navigator.of(context).pop();
+                await _firestoreService.uploadPhoto(downloadURL, fileName, description);   
               }) 
           : Container(),
-          SizedBox(height: 50)
+          SizedBox(height: 10),
+          startUpload ?  Column(
+            children: <Widget>[
+              Container(padding: EdgeInsets.only(left:50, right:50),
+              child: LinearProgressIndicator(backgroundColor: Colors.grey[200])),
+              SizedBox(height:5), Text('Uploading. Please wait...')]) : Container(),
+          isUploaded ? Row(mainAxisAlignment: MainAxisAlignment.center,children: <Widget> [Icon(Icons.check_circle, color: Colors.pink[100]),
+          SizedBox(width:5),Text('Upload Successful!')]) : Container(),
+          SizedBox(height: 40)
         ],
       ),
     );
