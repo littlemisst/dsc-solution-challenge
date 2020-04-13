@@ -24,9 +24,11 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
       firstDate: DateTime(DateTime.now().year - 50), 
       lastDate: DateTime(DateTime.now().year + 50),
     );
+    DateTime startDate = DateTime(picked[0].year, picked[0].month, picked[0].day);
+    DateTime endDate = DateTime(picked[1].year, picked[1].month, picked[1].day);
     if (picked != null && picked.length == 2) {
-      widget.setTaskStarted(picked[0]);
-      widget.setTaskEnded(picked[1]);
+      widget.setTaskStarted(startDate);
+      widget.setTaskEnded(endDate);
     }
   }
 

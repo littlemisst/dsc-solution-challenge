@@ -9,6 +9,7 @@ import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
+import 'package:me_daily/updated-pages/addTasks/taskDifference.dart';
 import 'package:provider/provider.dart';
 
 class TaskViewItems extends StatefulWidget {
@@ -34,7 +35,7 @@ class _TaskViewItemsState extends State<TaskViewItems> {
       _specificTask = value;
       widget.task.specificTask = _specificTask;
     });
-  }
+  } 
 
   Widget _buildListView() {
     return Container(
@@ -138,7 +139,9 @@ class _TaskViewItemsState extends State<TaskViewItems> {
               widget.task.taskType == 'book an appointment' ? DatePickerWidget(
                 elevation: 1,
                 taskStarted: widget.task.taskStarted,
-                setTaskStarted: (date) => setState(() => widget.task.taskStarted = date), 
+                setTaskStarted: (date) => setState(() {
+                  widget.task.taskStarted = date;
+                }), 
                 setTaskEnded: (date) => setState(() => widget.task.taskEnded = date))
               : DateRangePickerWidget(
                 elevation: 1,
@@ -158,7 +161,13 @@ class _TaskViewItemsState extends State<TaskViewItems> {
       floatingActionButton: 
       (widget.task.specificTask != null && widget.task.taskTime != null && widget.task.taskStarted != null) 
       ? FloatingActionToSave(() async {
-          await _firestoreService.addTask(widget.task);
+         int days = TaskDifference(widget.task.taskStarted, widget.task.taskEnded).days;
+        await _firestoreService.addTask(widget.task);
+          for (int i=0; i < days; i++) {
+            widget.task.taskStarted = widget.task.taskStarted.add(Duration(days: 1));
+            await _firestoreService.addRepeatingTasks(widget.task);
+          }
+          
           Navigator.of(context).popUntil((route) => route.isFirst);
         }, Icons.alarm)
       : null

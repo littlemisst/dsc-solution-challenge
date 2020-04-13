@@ -19,7 +19,7 @@ Widget buildDescription(context, initialValue, description, onChanged) {
       DropdownMenuItem<String>(child: Text('Others'), value: 'Others'),
     ],
     onChanged: onChanged,
-    hint: Text('Add Description'),
+    hint: Text('Description'),
     value: initialValue,
   );
 }

@@ -1,5 +1,4 @@
-import 'dart:collection';
-
+import 'package:rxdart/rxdart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:me_daily/model/feeling.dart';
 import 'package:me_daily/model/logs.dart';
@@ -81,6 +80,7 @@ class FirestoreService {
       height: documentSnapshot.data['height'],
       weight: documentSnapshot.data['weight'],
       downloadUrl: documentSnapshot.data['downloadUrl'],
+      profilePhotoFileName: documentSnapshot.data['profilePhotoFileName'],
     );
   }
 
@@ -98,6 +98,10 @@ class FirestoreService {
   Future addTask(Task task) async {
     return await userData.document(uid).collection('tasks').add(task.toJson());
   }
+  
+  Future addRepeatingTasks(Task task) async {
+    return await userData.document(uid).collection('duplicateTasks').add(task.toJson());
+  }
 
   List<Task> _taskFromFirebase(QuerySnapshot querySnapshot) {
     return querySnapshot.documents
@@ -112,6 +116,17 @@ class FirestoreService {
         .snapshots()
         .map(_taskFromFirebase);
   }
+
+  Stream<List<Task>> get repetitiveTasks {
+    return userData
+        .document(uid)
+        .collection('duplicateTasks')
+        .snapshots()
+        .map(_taskFromFirebase);
+  }
+
+  Stream<List<Task>> get allTasksStream => CombineLatestStream
+  .combine2(tasks, repetitiveTasks, (a, b) => a+b);
 
   //add and retrieve for daily logs
   Future addDailyLog(DailyLog entry) async {

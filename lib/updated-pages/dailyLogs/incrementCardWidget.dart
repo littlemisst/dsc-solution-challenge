@@ -29,15 +29,15 @@ class IncrementCard extends StatelessWidget {
                         ]),
                     SizedBox(width: 10),
                     Expanded(child: FlatButton(
-                      child: ImageIcon(AssetImage("images/add.png"), color: Colors.pink[100], size: 40), 
-                      color: Colors.white,
-                      shape: CircleBorder(side: BorderSide.none),
-                      onPressed: onPressedIncrement)),
-                    Expanded(child: FlatButton(
                       child: ImageIcon(AssetImage("images/minus.png"), color: Colors.pink[100], size: 40),
                       color: Colors.white,
                       shape: CircleBorder(side: BorderSide.none),
                       onPressed: onPressedDecrement)),
+                    Expanded(child: FlatButton(
+                      child: ImageIcon(AssetImage("images/add.png"), color: Colors.pink[100], size: 40), 
+                      color: Colors.white,
+                      shape: CircleBorder(side: BorderSide.none),
+                      onPressed: onPressedIncrement)),
                     SizedBox(width: 40),
                     Expanded(child: FlatButton(
                       child: Text('set'),

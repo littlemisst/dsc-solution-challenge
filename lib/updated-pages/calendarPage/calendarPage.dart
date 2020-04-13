@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:me_daily/updated-pages/calendarPage/dailyTasks.dart';
+import 'package:me_daily/model/task.dart';
+import 'package:me_daily/updated-pages/calendarPage/dailyTasksDetails.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -9,8 +11,9 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   CalendarController _calendarController;
-  Map<DateTime,List<dynamic>> _tasks;
+  Map<DateTime, List<dynamic>> _tasks;
   List<dynamic> _selectedTasks;
+  
 
   @override
   void initState() {
@@ -21,20 +24,23 @@ class _CalendarPageState extends State<CalendarPage> {
     _selectedTasks = _tasks[_selectedDay] ?? [];
   }
 
-  Future<Map<DateTime, List>> tasksMap(context) async {
-    _tasks = await getTasksListOnSpecificDate(context);
-    return _tasks;
-  }
 
   @override
   Widget build(BuildContext context) {
-    tasksMap(context);
+    List<Task> tasks = Provider.of<List<Task>>(context);
+    if (tasks == null) {
+      tasks = [];
+    }
+    _tasks = DailyTaskDetails.tasksByDate(tasks);
+
     return Scaffold(
         body: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
+            SizedBox(height: 10),
             _buildCalendar(),
-            Expanded(child: _buildEventList(_selectedTasks)),
+            SizedBox(height: 10),
+            Expanded(child: _buildEventList(_selectedTasks, context)),
           ],
         ),
     );
@@ -62,59 +68,92 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
   Widget _buildCalendar() {
-    return TableCalendar(
-      calendarController: _calendarController,
-      events: _tasks,
-      calendarStyle: CalendarStyle(
-          todayColor: Colors.pink[100],
-          selectedColor: Colors.grey,
-          outsideDaysVisible: false,
-          weekendStyle: TextStyle().copyWith(color: Colors.pink),
-          holidayStyle: TextStyle().copyWith(color: Colors.pink)),
-      initialCalendarFormat: CalendarFormat.month,
-      formatAnimation: FormatAnimation.slide,
-      startingDayOfWeek: StartingDayOfWeek.sunday,
-      availableGestures: AvailableGestures.all,
-      headerStyle: HeaderStyle(
-          centerHeaderTitle: true, formatButtonVisible: false),
-      builders: CalendarBuilders(
-        markersBuilder: (context, date, events, holidays) {
-          final children = <Widget>[];
-          if (events.isNotEmpty) {
-            children.add(
-              Positioned(
-                right: 1,
-                bottom: 1,
-                child: _buildEventsMarker(date, events),
-              ),
-            );
-          }
-          return children; 
-        }, 
-      ),
-      onDaySelected: (date, tasks) {
-        setState(() {
-          _selectedTasks = tasks;
-        });
-      },
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Material(
+        color: Colors.white,
+        elevation: 1,
+        borderRadius: BorderRadius.circular(10),
+        child:
+          TableCalendar(
+            calendarController: _calendarController,
+            events: _tasks,
+            calendarStyle: CalendarStyle(
+                todayColor: Colors.grey,
+                selectedColor: Colors.pink[100],
+                outsideDaysVisible: false,
+                weekendStyle: TextStyle().copyWith(color: Colors.pink[300])),
+            initialCalendarFormat: CalendarFormat.month,
+            formatAnimation: FormatAnimation.slide,
+            startingDayOfWeek: StartingDayOfWeek.sunday,
+            availableGestures: AvailableGestures.all,
+            headerStyle: HeaderStyle(
+              leftChevronIcon: Icon(Icons.navigate_before, color: Colors.pink[100]),
+              rightChevronIcon: Icon(Icons.navigate_next, color: Colors.pink[100]),
+              titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.pink[100]),
+                centerHeaderTitle: true, formatButtonVisible: false),
+            builders: CalendarBuilders(
+              markersBuilder: (context, date, events, holidays) {
+                final children = <Widget>[];
+                if (events.isNotEmpty) {
+                  children.add(
+                    Positioned(
+                      right: 1,
+                      bottom: 1,
+                      child: _buildEventsMarker(date, events),
+                    ),
+                  );
+                }
+                return children; 
+              }, 
+            ),
+            onDaySelected: (date, tasks) {
+              setState(() {
+                _selectedTasks = tasks;
+              });
+            },
+          )
+      )
     );
   }
-  Widget _buildEventList(events) {
-    return ListView.builder(
-      itemCount: events.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          decoration: BoxDecoration(
-            border: Border.all(width: 0.8),
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          margin:
-              const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: ListTile(
-            title: Text(events[index].toString()),
-          ),
+  
+  Widget _buildEventList(events, context) {
+    return
+    events.length == 0 ?
+    Container(
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+      child: Material(
+        color: Colors.white,
+        elevation: 1,
+        borderRadius: BorderRadius.circular(10),
+        child: Align(
+          alignment: Alignment.center,
+          child:Text('No tasks available'))
+      )
+    )
+    :
+    ListView.builder(
+        itemCount: events.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+            child: Material(
+              color: Colors.white,
+              elevation: 1,
+              borderRadius: BorderRadius.circular(10),
+              child: ListTile(
+              title: Row(children: <Widget>[
+                Icon(Icons.check_box_outline_blank, color: Colors.pink[100]),
+                SizedBox(width: 5),
+                Text(events[index].toString(), style: TextStyle(fontSize: 15))
+              ])
+            )
+          )
         );
       }
     );
+
   }
 }
+

@@ -27,8 +27,6 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
   List<String> _symptoms = Strings.symptoms;
   List<bool> _symptomsValues = List<bool>();
 
-  ScrollController _temperatureController;
-  final celciusController = TextEditingController();
   String _taskType;
   String _specificTask;
   Task task;
@@ -37,11 +35,6 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
   void initState() {
     super.initState();
     widget.entry.symptoms = List<String>();
-
-    _temperatureController = ScrollController(initialScrollOffset: 7400);
-    celciusController.addListener(() {
-      widget.entry.temperature = double.parse(celciusController.text);
-    });
 
     task = Task(taskType: _taskType
     );
@@ -54,12 +47,6 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
         _symptomsValues.add(false);
       }
     });
-  }
-
-  void _handleTemperatureScaleChanged(int scalePoints) {
-    int offSet = scalePoints ~/ 20;
-    double celcius = (offSet * 10)/100;
-    celciusController.text = celcius.toString();
   }
 
   void _setSpecificTask(value) {
@@ -77,12 +64,6 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
       state: _currentStep > 0 ? StepState.complete : StepState.editing
       ),
     Step(
-      title: Text('Temperature'),
-      subtitle: Text('Enter your current body temperature'),
-      content: _buildTemperature(),
-      state: _currentStep > 1 ? StepState.complete : StepState.editing
-      ),
-    Step(
       title: Text('Symptoms Started'),
       subtitle: Text('Enter the time the symptoms started'),
       content: TimePicker(
@@ -90,17 +71,17 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
                 taskTime: widget.entry.timeOfOccurance,
                 setTime: (dateTime) => setState(() => widget.entry.timeOfOccurance = dateTime),
               ),
-      state: _currentStep > 2 ? StepState.complete : StepState.editing
+      state: _currentStep > 1 ? StepState.complete : StepState.editing
       ),
     Step(
       title: Text('Add Medicine'),
       content: _buildAddMedicine(),
-      state: _currentStep > 3 ? StepState.complete : StepState.editing
+      state: _currentStep > 2 ? StepState.complete : StepState.editing
       ),
     Step(
       title: Text('Add an Appointment'),
       content: _buildAddAppointment(),
-      state: _currentStep > 4 ? StepState.complete : StepState.editing
+      state: _currentStep > 3 ? StepState.complete : StepState.editing
       )
   ];
 
@@ -110,12 +91,7 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
           _currentStep ++;
       });
     }
-    if (_currentStep == 1 && widget.entry.temperature != null) {
-       setState(() {
-          _currentStep ++;
-      });
-    }
-    if (_currentStep == 2 && widget.entry.timeOfOccurance != null) {
+    if (_currentStep == 1 && widget.entry.timeOfOccurance != null) {
        setState(() {
           _currentStep ++;
           _taskType = 'take medicine';
@@ -136,58 +112,6 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
       setState(() {
         _currentStep -= 1;
       });
-  }
-
-  Widget _buildTemperatureScale(context, controller, scaleChanged) {
-    return HorizontalScale(
-      maxValue: 60,
-      scaleController: controller,
-      onChanged: scaleChanged,
-      textStyle: TextStyle(
-          fontSize: 15, fontWeight: FontWeight.bold),
-      scaleColor: Colors.white10,
-      lineColor: Colors.pink[100],
-    );
-  }
-
-  Widget _buildTemperatureField(contex, controller) {
-    return Container(
-      width: MediaQuery.of(context).size.width / 3,
-      height: 50.0,
-      child: TextField(
-        textAlign: TextAlign.center,
-        controller: controller,
-        style: TextStyle(fontSize: 15),
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(contentPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-            hintText: '37.0 °C', suffixText: '°C',
-            focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.pink[100])),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey))),
-      ),
-    );
-  }
-
-   Widget _buildTemperature() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      child: Align(
-        child: Material(
-          color: Colors.white,
-          elevation: 1,
-          borderRadius: BorderRadius.circular(10),
-          child: Container(
-            padding: EdgeInsets.all(25),
-            child:  Column(children: <Widget>[
-              _buildTemperatureField(context, celciusController),
-              SizedBox(height: 10),
-              _buildTemperatureScale(context, _temperatureController, _handleTemperatureScaleChanged)
-            ]),
-          )
-        )
-      )
-    );
   }
 
   Widget _buildAddMedicine() {
