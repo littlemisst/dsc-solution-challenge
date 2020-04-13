@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/widgetContainer.dart';
 import 'package:me_daily/updated-pages/dailyLogs/checkBoxWidget.dart';
 
 class CheckBoxGrid extends StatefulWidget {
@@ -25,25 +26,20 @@ class _CheckBoxGridState extends State<CheckBoxGrid> {
   }
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ContentContainer(
       width: MediaQuery.of(context).size.width,
-      child: Material(
-          color: Colors.white,
-          elevation: 1,
-          borderRadius: BorderRadius.circular(10),
-          child: Container(
-            padding: EdgeInsets.all(10),
-            child: GridView.builder(
-            shrinkWrap: true,
-            itemCount: widget.items.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 6) ,
-            itemBuilder: (BuildContext context, int index) {
-              return LogCheckBox(widget.items[index], widget.itemValues[index], (value) {
-                _itemChange(widget.items, widget.itemValues, value, index);
-              });
-            },
-          ))
-      )
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: GridView.builder(
+        shrinkWrap: true,
+        itemCount: widget.items.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 6) ,
+        itemBuilder: (BuildContext context, int index) {
+          return LogCheckBox(widget.items[index], widget.itemValues[index], (value) {
+            _itemChange(widget.items, widget.itemValues, value, index);
+          });
+        },
+      ))
     );
   }
 }

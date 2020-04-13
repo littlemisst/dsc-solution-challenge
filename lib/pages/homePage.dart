@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: TextFormat('ME DAILY'),
+        title: TextFormat('ME DAILY', Colors.black),
         actions: <Widget>[
           PopupMenuButton<String>(
             icon: Icon(Icons.more_vert, color: Theme.of(context).accentColor),

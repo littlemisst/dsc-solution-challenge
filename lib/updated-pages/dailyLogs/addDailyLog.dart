@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/appBarTextFormat.dart';
 import 'package:me_daily/common-widgets/iconItem.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/updated-pages/dailyLogs/basicQuestionsLog.dart';
@@ -27,7 +28,6 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
       _emotion = emotion;
       entry.feeling = _emotion;
     });
-    print(entry.feeling);
     if (_emotion == 'good' || _emotion == 'neutral') {
       Navigator.push(context, MaterialPageRoute(builder: (context) => BasicQuestionsLogPage(entry: entry)));
     } else {
@@ -38,9 +38,9 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
   Widget _buildChooseEmotions() {
     return Row(
       children: <Widget>[
-        Expanded(child: IconItem(AssetImage("images/well.png"), 'good', 60, Colors.lightGreen[200], () => _chooseEmotion('good'))),
-        Expanded(child:IconItem(AssetImage("images/neutral.png"), 'neutral', 60, Colors.orange[200], () => _chooseEmotion('neutral'))),
-        Expanded(child:IconItem(AssetImage("images/unwell.png"), 'unwell', 60, Colors.blue[200], () => _chooseEmotion('unwell'))),
+        Expanded(child: IconItem(AssetImage("images/well.png"), 'good', 60, Theme.of(context).accentColor, () => _chooseEmotion('good'))),
+        Expanded(child:IconItem(AssetImage("images/neutral.png"), 'okay', 60, Colors.cyan[300], () => _chooseEmotion('neutral'))),
+        Expanded(child:IconItem(AssetImage("images/unwell.png"), 'unwell', 60, Colors.cyan[100], () => _chooseEmotion('unwell'))),
         Expanded(child:IconItem(AssetImage("images/sick.png"), 'sick', 60, Colors.grey, () => _chooseEmotion('sick'))),
       ],
     );
@@ -49,17 +49,17 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 1,
+        centerTitle: true,
+        title: TextFormat('DAILY LOGS', Theme.of(context).primaryColor),
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width/10, MediaQuery.of(context).size.height/5, MediaQuery.of(context).size.width/10, 0),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text('How are you feeling?', style: TextStyle(fontSize: 20)),
+            Text('How are you feeling?', style: TextStyle(fontSize: 15, fontFamily: 'Montserrat')),
         SizedBox(height: 30),
         _buildChooseEmotions()
         ],

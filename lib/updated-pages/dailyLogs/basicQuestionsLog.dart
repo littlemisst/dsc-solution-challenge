@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/appBarTextFormat.dart';
 import 'package:me_daily/common-widgets/floatingAction.dart';
+import 'package:me_daily/common-widgets/widgetContainer.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/user.dart';
@@ -75,26 +77,31 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
 
   List<Step> get _steps => [
     Step(
-      title: Text('Eating'),
+      isActive: _currentStep >= 0,
+      title: Text('Eating',),
       content: CheckBoxGrid(_food, _foodValues, widget.entry.food),
       state: _currentStep > 0 ? StepState.complete : StepState.editing
       ),
     Step(
+      isActive: _currentStep >= 1,
       title: Text('Drinking'),
       content: CheckBoxGrid(_drink, _drinkValues, widget.entry.drink),
       state: _currentStep > 1 ? StepState.complete : StepState.editing
       ),
     Step(
+      isActive: _currentStep >= 2,
       title: Text('Exercising'),
       content: CheckBoxGrid(_exercise, _exerciseValues, widget.entry.exercise),
       state: _currentStep > 2 ? StepState.complete : StepState.editing
       ),
     Step(
+      isActive: _currentStep >= 3,
       title: Text('Hours of Sleep'),
       content: IncrementCard('Hours', _hoursOfSleep, _incrementSleepHours, _decrementSleepHours, _setSleepHours),
       state: _currentStep > 3 ? StepState.complete : StepState.editing
       ),
     Step(
+      isActive: _currentStep >= 4,
       title: Text('Today\'s Log Summary'),
       content: _buildSummary(),
       state: _currentStep > 4 ? StepState.complete : StepState.editing
@@ -132,22 +139,17 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
   }
 
   Widget _buildSummary() {
-     return Container(
-      width: MediaQuery.of(context).size.width,
-      child: Material(
-          color: Colors.white,
-          elevation: 1,
-          borderRadius: BorderRadius.circular(10),
-          child: Container(
-            padding: EdgeInsets.all(25),
-            child: Column(children: <Widget>[
-            ListSummaryBuilder('Eaten', widget.entry.food), 
-            ListSummaryBuilder('Drank', widget.entry.drink),
-            ListSummaryBuilder('Exercised', widget.entry.exercise),
-            ItemSummaryBuilder('Hours Slept', widget.entry.hoursSlept),
-          ]),
-        )
-      )
+     return ContentContainer(
+       width: MediaQuery.of(context).size.width,
+       child: Container(
+          padding: EdgeInsets.all(25),
+          child: Column(children: <Widget>[
+          ListSummaryBuilder('Eaten', widget.entry.food), 
+          ListSummaryBuilder('Drank', widget.entry.drink),
+          ListSummaryBuilder('Exercised', widget.entry.exercise),
+          ItemSummaryBuilder('Hours Slept', widget.entry.hoursSlept),
+        ]),
+      ),
      );
   }
 
@@ -156,11 +158,9 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
     final user = Provider.of<User>(context);
     final _firestoreService = FirestoreService(uid: user.uid);
     return Scaffold(
-      backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text('What have you been up to?'),
-        backgroundColor: Colors.white,
-        elevation: 1,
+        centerTitle: true,
+        title: TextFormat('What have you been up to?', Theme.of(context).accentColor),
       ),
       body: StepperWidget(_currentStep, () => _onStepContinue(), ()=>_onStepCancel(), _steps),
       floatingActionButton: _currentStep == _steps.length -1 ? FloatingActionToSave(() async {

@@ -17,7 +17,7 @@ class _LogCheckBoxState extends State<LogCheckBox> {
       children: <Widget>[
         Expanded(child: Checkbox(
           value: widget.boolValue,
-          activeColor: Colors.pink[100],
+          activeColor: Theme.of(context).accentColor,
           onChanged: widget.onChanged
         )),
         Expanded(child: Text(widget.title, style: TextStyle(fontSize: 13)))

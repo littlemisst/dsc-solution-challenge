@@ -29,8 +29,8 @@ class _StepperWidgetState extends State<StepperWidget> {
             ),
             SizedBox(width: 10),
             FlatButton(
-              color: Colors.pink[100],
-              shape: RoundedRectangleBorder(side: BorderSide(color: Colors.pink[100]), borderRadius: BorderRadius.circular(10)),
+              color: Theme.of(context).accentColor,
+              shape: RoundedRectangleBorder(side: BorderSide(color: Theme.of(context).accentColor), borderRadius: BorderRadius.circular(10)),
               child: widget.currentStep == widget.stepsList.length - 1 ? Text('next') : Text('next', style: TextStyle(color: Colors.white)),
               onPressed: widget.currentStep == widget.stepsList.length - 1 ? null : onStepContinue
             )

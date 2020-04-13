@@ -17,14 +17,16 @@ class IconItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var flatButton = FlatButton(
-      padding: EdgeInsets.all(10),
+      focusColor: Theme.of(context).accentColor,
+      padding: EdgeInsets.all(0),
         child: ImageIcon(
           icon,
           size: iconSize,
           color: iconColor
         ),
-        splashColor: Colors.grey,
-        // color: Colors.white,
+        splashColor: Theme.of(context).accentColor,
+        shape: CircleBorder(side: BorderSide.none),
+        color: Colors.white,
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         onPressed: onPressed
       );
