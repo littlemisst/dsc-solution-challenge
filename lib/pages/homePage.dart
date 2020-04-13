@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
               title: Text('Calendar'),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.map),
+              icon: Icon(Icons.location_on),
               title: Text('Map'),
             ),
             BottomNavigationBarItem(
