@@ -18,23 +18,27 @@ class _DailyLogsPageState extends State<DailyLogsPage> {
         stream: FirestoreService(uid: user.uid).logs,
         builder: (context, snapshots) {
           if (snapshots.hasData) {
-            return ListView.builder(
-                itemCount: snapshots.data.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    margin: EdgeInsets.fromLTRB(15, 5, 15, 5),
-                    child: ListTile(
-                      leading: Icon(Icons.delete),
-                      title: TextFormField(
-                        initialValue: snapshots.data[index].feeling.toString(),
-                      ),
-                      subtitle:
-                          Text(snapshots.data[index].logCreated.toString()),
-                    ),
-                  );
-                });
+            return Container(
+                child: ListView.builder(
+                    itemCount: snapshots.data.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        margin: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                        child: ListTile(
+                            leading: Icon(Icons.delete),
+                            title: TextFormField(
+                              // initialValue: snapshots.data[index].feeling.toString(),
+                              initialValue: "hello",
+                            ),
+                            subtitle:
+                                //Text(snapshots.data[index].logCreated.toString()),
+                                Text('helllloo')),
+                      );
+                    }));
           }
-          return Container(child: Text('NONE'),);
+          return Container(
+            child: Text('NONE'),
+          );
         },
       ),
     );
