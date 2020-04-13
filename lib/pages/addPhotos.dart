@@ -1,3 +1,5 @@
+import 'package:me_daily/common-widgets/appBarTextFormat.dart';
+import 'package:me_daily/common-widgets/widgetContainer.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:me_daily/widgets/description_widget.dart';
 import 'package:me_daily/widgets/raisedButton_widget.dart';
@@ -57,8 +59,8 @@ class _AddPhotosState extends State<AddPhotos> {
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
           useDetailsView: true,
-          selectCircleStrokeColor: "#ffb8d2",
-          actionBarColor: "#ffb8d2",
+          selectCircleStrokeColor: "#1ecde8",
+          actionBarColor: "#1ecde8",
           actionBarTitle: "Gallery",
           allViewTitle: "All Photos",
         ),
@@ -89,34 +91,31 @@ class _AddPhotosState extends State<AddPhotos> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Image', style: TextStyle(color: Colors.pink[100])),
-        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: TextFormat('Add Photo', Theme.of(context).primaryColor)
       ),
       body: Column(
         children: <Widget>[
-          Container(  
-            padding: EdgeInsets.fromLTRB(30, 40, 30, 0), 
-            child: Align(
-              child: Material(
-                color: Colors.white,
-                elevation: 1,
-                borderRadius: BorderRadius.circular(10),
-                child: Container( 
-                  padding: EdgeInsets.all(15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                    SizedBox(height: 50),
-                    raisedButtonIcon(images.isEmpty ? () {
-                      setState(() {fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';});
-                      getImage(true);
-                      selectMultiple = false;} : null, 'Camera', Icons.camera_alt),
-                    SizedBox(width: 20),
-                    raisedButtonIcon( _image == null ? selectMultipleImages : null, 'Gallery', Icons.image),
-                    SizedBox(height: 20),
-                  ]),
+          ContentContainer(
+            padding: EdgeInsets.fromLTRB(30, 40, 30, 0),
+            child: Container( 
+              padding: EdgeInsets.all(15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                SizedBox(height: 50),
+                RaisedButtonIcon(
+                  Icons.camera_alt,
+                  'Camera',
+                  images.isEmpty ? () {
+                  setState(() {fileName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';});
+                  getImage(true);
+                  selectMultiple = false;} : null
                 ),
-              ),
+                SizedBox(width: 20),
+                RaisedButtonIcon(Icons.image, 'Gallery', _image == null ? selectMultipleImages : null),
+                SizedBox(height: 20),
+              ]),
             ),
           ),
           SizedBox(height: 20),
@@ -144,7 +143,7 @@ class _AddPhotosState extends State<AddPhotos> {
               )
             : Container(),
           images.isNotEmpty && description != null
-            ? raisedButtonIcon(() async {
+            ? RaisedButtonIcon(Icons.save_alt, 'Save', () async {
                 setState((){ startUpload = true; });
                 for (var imageFile in images) {
                   postImage(imageFile, _firestoreService, user.uid)
@@ -157,10 +156,10 @@ class _AddPhotosState extends State<AddPhotos> {
                     }
                   });
                 }
-              } , 'Save', Icons.save_alt)
+              })
             : Container(),
           _image != null && description != null 
-            ? raisedButtonIcon(() async {
+            ? RaisedButtonIcon(Icons.save_alt, 'Save', () async {
                 setState((){ startUpload = true; });
                 StorageReference _reference = FirebaseStorage.instance
                     .ref()
@@ -171,8 +170,7 @@ class _AddPhotosState extends State<AddPhotos> {
                 if (downloadURL != null) {
                   setState(() { isUploaded = true; startUpload = false; });
                 }
-                await _firestoreService.uploadPhoto(downloadURL, fileName, description);},
-              'Save', Icons.save_alt) 
+                await _firestoreService.uploadPhoto(downloadURL, fileName, description);}) 
           : Container(),
           SizedBox(height: 10),
           startUpload ?  Column(
@@ -180,7 +178,7 @@ class _AddPhotosState extends State<AddPhotos> {
               Container(padding: EdgeInsets.only(left:50, right:50),
               child: LinearProgressIndicator(backgroundColor: Colors.grey[200])),
               SizedBox(height:5), Text('Uploading. Please wait...')]) : Container(),
-          isUploaded ? Row(mainAxisAlignment: MainAxisAlignment.center,children: <Widget> [Icon(Icons.check_circle, color: Colors.pink[100]),
+          isUploaded ? Row(mainAxisAlignment: MainAxisAlignment.center,children: <Widget> [Icon(Icons.check_circle, color: Theme.of(context).primaryColor),
           SizedBox(width:5),Text('Upload Successful!')]) : Container(),
           SizedBox(height: 40)
         ],
