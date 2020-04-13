@@ -16,11 +16,6 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
 
   Profile _profile = Profile();
 
-  String _ageValue;
-  String _civilStatusValue;
-  String _bloodTypeValue;
-  String _gender;
-
   Widget _buildNameField(context, initialValue) {
     return TextFormField(
         validator: (value) {
@@ -51,12 +46,12 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
       ],
       onChanged: (String value) => {
         setState(() {
-          _gender = value;
+          //_gender = value;
           _profile.gender = value;
         })
       },
       hint: Text('Gender'),
-      value: initialValue,
+      value: _profile.gender ?? initialValue,
     ));
   }
 
@@ -114,12 +109,11 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
       ],
       onChanged: (String value) => {
         setState(() {
-          _civilStatusValue = value;
           _profile.civilStatus = value;
         })
       },
       hint: Text('Civil Status'),
-      value: _civilStatusValue ?? inititalValue,
+      value: _profile.civilStatus ?? inititalValue,
     ));
   }
 
@@ -143,12 +137,11 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
           ],
           onChanged: (String value) => {
             setState(() {
-              _bloodTypeValue = value;
               _profile.bloodType = value;
             })
           },
           hint: Text('Blood Type'),
-          value: _bloodTypeValue ?? initialValue,
+          value: _profile.bloodType ?? initialValue,
         ));
   }
 
