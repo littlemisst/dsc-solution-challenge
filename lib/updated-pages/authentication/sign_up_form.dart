@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/loader.dart';
+import 'package:me_daily/common-widgets/submitButton.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
@@ -23,6 +24,24 @@ class _SignUpState extends State<SignUp> {
 
   String email;
   String password;
+
+  void _submit() async {
+    if (_formKey.currentState.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      User user = await _firebaseAuth
+        .signUpWithEmailAndPassword(email, password);
+      if (user == null) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+      Navigator.pushReplacementNamed(
+        context, Strings.verificationRoute);
+    }
+  }
+  
 
   Widget _buildEmailField() {
     return TextFormField(
@@ -103,28 +122,8 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(height: 15),
                       _buildConfirmPasswordField(),
                       SizedBox(height: 15),
-                      FlatButton(
-                          color: Theme.of(context).buttonColor,
-                          textColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                          child: Text('Sign Up'),
-                          onPressed: () async {
-                            if (_formKey.currentState.validate()) {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              User user = await _firebaseAuth
-                                  .signUpWithEmailAndPassword(email, password);
-                              if (user == null) {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              }
-                              Navigator.pushReplacementNamed(
-                                  context, Strings.verificationRoute);
-                            }
-                          }),
+                      SubmitButton('Sign Up', () => _submit()),
+                      SizedBox(height: 15),
                       InkWell(
                         child: Text('Already have an account? Sign In'),
                         onTap: () {

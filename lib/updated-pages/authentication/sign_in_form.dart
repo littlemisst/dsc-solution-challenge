@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/loader.dart';
+import 'package:me_daily/common-widgets/submitButton.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
@@ -23,6 +24,22 @@ class _SignInState extends State<SignIn> {
 
   String email;
   String password;
+
+  void _submit() async {
+    if (_formKey.currentState.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      User _user = await _firebaseAuth
+          .signInWithEmailAndPassword(email, password);
+
+      if (_user == null) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
+  }
 
   Widget _buildEmailField() {
     return TextFormField(
@@ -88,27 +105,7 @@ class _SignInState extends State<SignIn> {
                     SizedBox(height: 15),
                     _buildPasswordField(),
                     SizedBox(height: 15),
-                    FlatButton(
-                      color: Theme.of(context).buttonColor,
-                      textColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                        child: Text('Sign In'),
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            setState(() {
-                              isLoading = true;
-                            });
-                            User _user = await _firebaseAuth
-                                .signInWithEmailAndPassword(email, password);
-
-                            if (_user == null) {
-                              setState(() {
-                                isLoading = false;
-                              });
-                            }
-                          }
-                        }),
+                    SubmitButton('Sign in', () => _submit()),
                     SizedBox(height: 15),
                     InkWell(
                       child: Text('Create an Account'),

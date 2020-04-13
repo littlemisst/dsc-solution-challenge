@@ -25,6 +25,9 @@ class MyApp extends StatelessWidget {
           buttonColor: Colors.cyan,
           backgroundColor: Colors.white,
           fontFamily: 'Roboto',
+          appBarTheme: AppBarTheme(
+            color: Colors.white, 
+            elevation: 1)
         ),
         onGenerateRoute: Router.generateRoute,
         initialRoute: Strings.initialRoute,

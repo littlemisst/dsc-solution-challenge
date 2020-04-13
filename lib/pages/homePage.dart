@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:me_daily/common-widgets/appBarTextFormat.dart';
 import 'package:me_daily/pages/addPhotos.dart';
 import 'package:me_daily/pages/mapPage.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
@@ -44,16 +45,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 1,
         centerTitle: true,
-        title: Text('ME DAILY', 
-          style: TextStyle(
-            fontWeight: FontWeight.bold, 
-            fontFamily: 'Montserrat', 
-            color: Colors.black, 
-            fontSize: 20)
-          ),
-        backgroundColor: Theme.of(context).backgroundColor,
+        title: TextFormat('ME DAILY'),
         actions: <Widget>[
           PopupMenuButton<String>(
             icon: Icon(Icons.more_vert, color: Theme.of(context).accentColor),
