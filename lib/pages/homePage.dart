@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.pink[100],
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.map),
+              icon: Icon(Icons.location_on),
               title: Text('Map'),
               backgroundColor: Colors.pink[100],
             ),
