@@ -11,7 +11,7 @@ class _RecordWaterState extends State<RecordWater> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.all(15),
       child: Column(
         children: <Widget>[
           Align(
@@ -40,7 +40,7 @@ class _RecordWaterState extends State<RecordWater> {
                       });
                     },
                     shape: CircleBorder(),
-                    fillColor: Colors.pink[100],
+                    fillColor: Theme.of(context).buttonColor,
                   ),
                 ),
                 Expanded(
@@ -49,7 +49,7 @@ class _RecordWaterState extends State<RecordWater> {
                       "$water",
                       style: TextStyle(
                         fontSize: 40,
-                        color: Colors.pink[100],
+                        color: Colors.grey,
                       ),
                     ),
                   ),
@@ -66,7 +66,7 @@ class _RecordWaterState extends State<RecordWater> {
                       });
                     },
                     shape: CircleBorder(),
-                    fillColor: Colors.pink[100],
+                    fillColor: Theme.of(context).buttonColor,
                   ),
                 ),
               ],

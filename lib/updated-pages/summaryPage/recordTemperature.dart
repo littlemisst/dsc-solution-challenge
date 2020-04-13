@@ -10,7 +10,7 @@ class _RecordTemperatureState extends State<RecordTemperature> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.all(12),
       child: Column(
         children: <Widget>[
           Expanded(
@@ -32,7 +32,7 @@ class _RecordTemperatureState extends State<RecordTemperature> {
                   min: 30,
                   max: 45,
                   label: "$temperature",
-                  activeColor: Colors.pink[100],
+                  activeColor: Theme.of(context).accentColor,
                   divisions: 150,
                   onChanged: (double value) {
                     setState(() {
@@ -49,7 +49,7 @@ class _RecordTemperatureState extends State<RecordTemperature> {
                 flex: 4,
                 child: FlatButton(
                   onPressed: () {},
-                  color: Colors.pink[100],
+                  color: Theme.of(context).buttonColor,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),
                   child: Text(

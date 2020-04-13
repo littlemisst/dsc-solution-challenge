@@ -9,7 +9,7 @@ class _RecordBloodPressureState extends State<RecordBloodPressure> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.all(15),
       child: Column(
         children: <Widget>[
           Expanded(
@@ -38,7 +38,7 @@ class _RecordBloodPressureState extends State<RecordBloodPressure> {
                 ),
                 FlatButton(
                   onPressed: () {},
-                  color: Colors.pink[100],
+                  color: Theme.of(context).buttonColor,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),
                   child: Text(

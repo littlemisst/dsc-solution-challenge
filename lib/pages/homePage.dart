@@ -4,7 +4,6 @@ import 'package:me_daily/pages/addPhotos.dart';
 import 'package:me_daily/pages/mapPage.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
 import 'package:me_daily/updated-pages/addTasks/addTask.dart';
-import 'package:me_daily/updated-pages/calendarPage/calendarPage.dart';
 import 'package:me_daily/updated-pages/calendarPage/dailyTasksPage.dart';
 import 'package:me_daily/updated-pages/dailyLogs/addDailyLog.dart';
 import 'package:me_daily/updated-pages/photos/gallery_page.dart';
@@ -22,6 +21,17 @@ class _HomePageState extends State<HomePage> {
 
   int _currentIndex = 0;
 
+  void handleClick(String value) {
+    switch (value) {
+      case 'Sign Out':
+        _firebaseAuth.signOut();
+        break;
+      case 'Send Details':
+        Navigator.push(context, MaterialPageRoute(builder: (context) => SendDetailsPage()));
+        break;
+    }
+}
+
   final bodies = [
     SummaryPage(),
     GalleryPage(),
@@ -34,39 +44,40 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Me Daily', style: TextStyle(color: Colors.pink[100])),
-        backgroundColor: Colors.white,
+        elevation: 1,
+        centerTitle: true,
+        title: Text('ME DAILY', 
+          style: TextStyle(
+            fontWeight: FontWeight.bold, 
+            fontFamily: 'Montserrat', 
+            color: Colors.black, 
+            fontSize: 20)
+          ),
+        backgroundColor: Theme.of(context).backgroundColor,
         actions: <Widget>[
-          FlatButton(
-            child: Text(
-              'Sign Out',
-              style: TextStyle(color: Colors.pink[100]),
-            ),
-            onPressed: () async {
-              _firebaseAuth.signOut();
+          PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert, color: Theme.of(context).accentColor),
+            onSelected: handleClick,
+            itemBuilder: (BuildContext context) {
+              return {'Sign Out', 'Send Details'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
             },
           ),
-          FlatButton(
-            child: Icon(
-              Icons.share,
-              color: Colors.pink[100],
-            ),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SendDetailsPage()),
-            ),
-          )
         ],
       ),
       body: bodies[_currentIndex],
       floatingActionButton: _currentIndex != 3 && _currentIndex != 4
           ? SpeedDial(
               child: Icon(Icons.add, color: Colors.white),
-              overlayColor: Colors.black,
+              overlayColor: Colors.white,
               overlayOpacity: 0.6,
               children: [
                   SpeedDialChild(
-                      child: Icon(Icons.add_box, color: Colors.white),
+                      child: Icon(Icons.add_box,  color: Colors.white),
                       label: 'Add Task',
                       onTap: () {
                         Navigator.push(context,
@@ -74,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                       }),
                   SpeedDialChild(
                       child:
-                          Icon(Icons.add_photo_alternate, color: Colors.white),
+                          Icon(Icons.add_photo_alternate,  color: Colors.white),
                       label: 'Add Image',
                       onTap: () {
                         Navigator.push(
@@ -84,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                       }),
                   SpeedDialChild(
                       child:
-                          Icon(Icons.playlist_add_check, color: Colors.white),
+                          Icon(Icons.playlist_add_check,  color: Colors.white),
                       label: 'Add Daily Log',
                       onTap: () {
                         Navigator.push(
@@ -95,33 +106,31 @@ class _HomePageState extends State<HomePage> {
                 ])
           : null,
       bottomNavigationBar: BottomNavigationBar(
+          unselectedItemColor: Colors.grey,
+          selectedItemColor: Theme.of(context).accentColor,
           currentIndex: _currentIndex,
           selectedFontSize: 10.0,
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               title: Text('Home'),
-              backgroundColor: Colors.pink[100],
+              backgroundColor: Theme.of(context).backgroundColor
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.insert_drive_file),
               title: Text('Files'),
-              backgroundColor: Colors.pink[100],
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today),
               title: Text('Calendar'),
-              backgroundColor: Colors.pink[100],
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.map),
               title: Text('Map'),
-              backgroundColor: Colors.pink[100],
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.perm_identity),
               title: Text('Profile'),
-              backgroundColor: Colors.pink[100],
             )
           ],
           onTap: (index) {
