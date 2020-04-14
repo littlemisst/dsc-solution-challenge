@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/pages/addPhotos.dart';
 import 'package:me_daily/pages/mapPage.dart';
 import 'package:me_daily/pages/popUpMenu.dart';
@@ -49,91 +50,91 @@ class _HomePageState extends State<HomePage> {
                 MaterialPageRoute(builder: (context) => MainProfile())),
           ),
           PopUpMenu()
-          // PopupMenuButton(itemBuilder: (context) {
-          //   return [
-          //     PopupMenuItem(
-          //       value: () => Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) => SendDetailsPage())),
-          //       child: Text('Share'),
-          //     ),
-          //     PopupMenuItem(
-          //       value: () => Navigator.pop(context),
-          //       child: Text('Settings'),
-          //     ),
-          //     PopupMenuItem(
-          //       value: () => _firebaseAuth.signOut(),
-          //       child: Text('Sign Out'),
-          //     ),
-          //   ];
-          // })
         ],
       ),
       body: bodies[_currentIndex],
-      floatingActionButton: _currentIndex != 3 && _currentIndex != 4
-          ? SpeedDial(
-              child: Icon(Icons.add, color: Colors.white),
-              overlayColor: Colors.black,
-              overlayOpacity: 0.6,
-              children: [
-                  SpeedDialChild(
-                      child: Icon(Icons.add_box, color: Colors.white),
-                      label: 'Add Task',
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => AddTask()));
-                      }),
-                  SpeedDialChild(
-                      child:
-                          Icon(Icons.add_photo_alternate, color: Colors.white),
-                      label: 'Add Image',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AddPhotos()));
-                      }),
-                  SpeedDialChild(
-                      child:
-                          Icon(Icons.playlist_add_check, color: Colors.white),
-                      label: 'Add Daily Log',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AddDailyLogs()));
-                      }),
-                ])
-          : null,
-      bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          selectedFontSize: 10.0,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Home'),
-              backgroundColor: Colors.pink[100],
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.insert_drive_file),
-              title: Text('Files'),
-              backgroundColor: Colors.pink[100],
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today),
-              title: Text('Calendar'),
-              backgroundColor: Colors.pink[100],
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.location_on),
-              title: Text('Map'),
-              backgroundColor: Colors.pink[100],
-            ),
-          ],
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: SpeedDial(
+      //   curve: Curves.easeIn,
+      //     child: Icon(Icons.add, color: Colors.white),
+      //     overlayColor: Colors.black,
+      //     overlayOpacity: 0.6,
+      //     children: [
+      //       SpeedDialChild(
+      //           child: Icon(Icons.add_box, color: Colors.white),
+      //           label: 'Add Task',
+      //           onTap: () {
+      //             Navigator.push(context,
+      //                 MaterialPageRoute(builder: (context) => AddTask()));
+      //           }),
+      //       SpeedDialChild(
+      //           child: Icon(Icons.add_photo_alternate, color: Colors.white),
+      //           label: 'Add Image',
+      //           onTap: () {
+      //             Navigator.push(context,
+      //                 MaterialPageRoute(builder: (context) => AddPhotos()));
+      //           }),
+      //       SpeedDialChild(
+      //           child: Icon(Icons.playlist_add_check, color: Colors.white),
+      //           label: 'Add Daily Log',
+      //           onTap: () {
+      //             Navigator.push(context,
+      //                 MaterialPageRoute(builder: (context) => AddDailyLogs()));
+      //           }),
+      //     ]),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =>
+            Navigator.popAndPushNamed(context, Strings.sendDetailsRoute),
+        backgroundColor: Colors.pink[100],
+        elevation: 10,
+        //mini: true,
+        shape: CircleBorder(side: BorderSide(color: Colors.white, width: 5)),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        elevation: 5,
+        color: Colors.white,
+        child: Container(
+          height: 50,
+          child: Row(
+            children: <Widget>[Icon(Icons.home)],
+          ),
+        ),
+      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //     currentIndex: _currentIndex,
+      //     selectedFontSize: 10.0,
+      //     items: [
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.home),
+      //         title: Text('Home'),
+      //         backgroundColor: Colors.pink[100],
+      //       ),
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.insert_drive_file),
+      //         title: Text('Files'),
+      //         backgroundColor: Colors.pink[100],
+      //       ),
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.calendar_today),
+      //         title: Text('Calendar'),
+      //         backgroundColor: Colors.pink[100],
+      //       ),
+      //       BottomNavigationBarItem(
+      //         icon: Icon(Icons.location_on),
+      //         title: Text('Map'),
+      //         backgroundColor: Colors.pink[100],
+      //       ),
+      //     ],
+      //     onTap: (index) {
+      //       setState(() {
+      //         _currentIndex = index;
+      //       });
+      //     }),
     );
   }
 }
