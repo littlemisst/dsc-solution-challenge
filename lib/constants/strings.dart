@@ -57,4 +57,7 @@ class Strings {
   static const String verificationRoute = '/verification';
   static const String resetPasswordRoute = '/reset-password';
   static const String sendDetailsRoute = '/send-details';
+  static const String addTaskRoute = '/add-task';
+  static const String addPhotoRoute = '/add-photo';
+  static const String addDailyLogRoute = '/add-daily-log';
 }
