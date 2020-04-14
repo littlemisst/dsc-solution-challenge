@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scale/flutter_scale.dart';
 
-
-
 Widget buildBloodType(context, model, initialValue, onChanged) {
   return  Container(
     width: 240,
@@ -67,9 +65,9 @@ Widget buildWeightScale(context, controller, scaleChanged) {
     scaleController: controller,
     onChanged: scaleChanged,
     textStyle: TextStyle(
-        fontSize: 15, color: Colors.pink[100], fontWeight: FontWeight.bold),
+        fontSize: 15, color: Colors.cyan, fontWeight: FontWeight.bold),
     scaleColor: Colors.white10,
-    lineColor: Colors.pink[100],
+    lineColor:Colors.cyan,
   );
 }
 
@@ -78,11 +76,11 @@ Widget buildHeightScale(context, controller, scaleChanged) {
     maxValue: 5,
     scaleController: controller,
     scaleColor: Colors.white10,
-    lineColor: Colors.pink[100],
+    lineColor:Colors.cyan,
     linesBetweenTwoPoints: 11,
     middleLineAt: 6,
     textStyle: TextStyle(
-        fontSize: 15, color: Colors.pink[100], fontWeight: FontWeight.bold),
+        fontSize: 15, color: Colors.cyan, fontWeight: FontWeight.bold),
     onChanged: scaleChanged,
   );
 }

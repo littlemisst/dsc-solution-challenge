@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class RaisedButtonIcon extends StatelessWidget {
   const RaisedButtonIcon(this.icon, this.label, this.onPressed);
   final IconData icon;

@@ -35,26 +35,24 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
         Container(
             width: 1000,
             height: 175,
-            color: Colors.pink[100],
+            color: Theme.of(context).primaryColor,
             child: Column(
               children: <Widget>[
                 SizedBox(height: 20.0),
                 _currentProfile.downloadUrl == null
                     ? CircleAvatar(
                         radius: 45.0, backgroundColor: Colors.grey[350])
-                    : 
-                    CircleAvatar(
+                    : CircleAvatar(
                         radius: 45.0,
                         backgroundImage: NetworkImage(_currentProfile.downloadUrl, scale: 50.0),
-                        ),
-                        
+                    ),      
                 SizedBox(height: 12.0),
                 Text(_currentProfile.name,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25.0,
-                        fontWeight: FontWeight.bold)),
-              ],
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25.0,
+                    fontWeight: FontWeight.bold)),
+               ],
             )),
         SizedBox(height: 20.0),
         Text('Address:', style: TextStyle(color: Colors.grey[400])),
@@ -107,7 +105,6 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
           Text('Category:', style: TextStyle(color: Colors.grey[400])),
           SizedBox(width: 5.0),
           Text(bmiCategory, style: TextStyle(fontSize: 18.0)),
-        
       ]),
     );
   }
