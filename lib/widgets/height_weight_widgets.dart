@@ -1,36 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scale/flutter_scale.dart';
 
-Widget buildBloodType(context, model, initialValue, onChanged) {
-  return  Container(
-    width: 240,
-    child: DropdownButtonFormField<String>(
-        validator: (value) {
-          if (value.isEmpty) {
-            return 'Please enter your bloodtype';
-          }
-          return null;
-        },
-        decoration: InputDecoration(
-          enabledBorder:
-              OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-        ),
-        items: [
-          DropdownMenuItem<String>(child: Text('A+'), value: 'A+'),
-          DropdownMenuItem<String>(child: Text('A-'), value: 'A-'),
-          DropdownMenuItem<String>(child: Text('B+'), value: 'B+'),
-          DropdownMenuItem<String>(child: Text('B-'), value: 'B-'),
-          DropdownMenuItem<String>(child: Text('O+'), value: 'O+'),
-          DropdownMenuItem<String>(child: Text('O-'), value: 'O-'),
-          DropdownMenuItem<String>(child: Text('AB+'), value: 'AB+'),
-          DropdownMenuItem<String>(child: Text('AB-'), value: 'AB-'),
-        ],
-        onChanged: onChanged,
-        hint: Text('Blood Type', style: TextStyle(fontSize: 15.0)),
-        value: initialValue,
-      ),
-  );
-}
+
 Widget buildWeightField(contex, controller) {
   return Container(
     width: 100,
@@ -40,7 +11,10 @@ Widget buildWeightField(contex, controller) {
       style: TextStyle(fontSize: 15),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-          hintText: 'Weight', suffixText: 'kg', border: OutlineInputBorder()),
+          hintText: 'Weight', suffixText: 'kg',
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+      ),
     ),
   );
 }
@@ -54,7 +28,10 @@ Widget buildHeightField(context, controller) {
       style: TextStyle(fontSize: 15),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-          hintText: 'Height', suffixText: 'm', border: OutlineInputBorder()),
+          hintText: 'Height', suffixText: 'm',
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+      ),
     ),
   );
 }

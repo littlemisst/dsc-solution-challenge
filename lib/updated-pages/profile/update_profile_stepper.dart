@@ -4,9 +4,10 @@ import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/widgets/flatButton_widget.dart';
+import 'package:me_daily/widgets/textFormField_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:me_daily/widgets/height_weight_bloodType_widgets.dart';
-import 'package:me_daily/widgets/profile_widgets.dart';
+import 'package:me_daily/widgets/height_weight_widgets.dart';
+import 'package:me_daily/widgets/dropDown_widgets.dart';
 import 'package:me_daily/common-widgets/datePicker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,7 +22,7 @@ class UpdateProfileStepper extends StatefulWidget {
 class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
   Profile _profile = Profile();
    //----------------------------------------------- 
-  String _ageValue;
+  String _genderValue;
   String _civilStatusValue;
 
   @override
@@ -31,30 +32,31 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
         child: Container(
           padding: EdgeInsets.all(15),
           child: Column(children: <Widget>[
-          buildNameField(context, _profile.name, (String value) {
+          SizedBox(height: 10.0),
+          TextFormFieldWidget(label: 'Name', value: _profile.name, onChanged: (String value) {
             _profile.name = value;
-          }), SizedBox(height: 10.0),
-          buildGender(context, _profile.gender, _ageValue, (String value) => {
+          }), SizedBox(height: 15.0),
+          buildGender(context, _profile.gender, _genderValue, (String value) => {
               setState(() {
-                _ageValue = value;
+                _genderValue = value;
                 _profile.gender = value;
-          })}), SizedBox(height: 10.0),
+          })}), SizedBox(height: 15.0),
           buildBloodType(context, _profile.bloodType,_bloodTypeValue, (String value) => {
                   setState(() {
                     _bloodTypeValue = value;
                     _profile.bloodType = value;
-          })}),SizedBox(height: 10.0),
-          buildAddressField(context, _profile.address, (String value) {
+          })}),SizedBox(height: 15.0),
+          TextFormFieldWidget(label: 'Address', value: _profile.address, onChanged: (String value) {
             _profile.address = value;
-          }), SizedBox(height: 10.0),
+          }), SizedBox(height: 15.0),
           DatePicker('Birthdate', (DateTime value) {
             _profile.birthDate = value;
-          }), SizedBox(height: 10.0),
+          }), SizedBox(height: 15.0),
           buildCivilStatus(context, _profile.civilStatus, _civilStatusValue, (String value) => {
               setState(() {
                 _civilStatusValue = value;
                 _profile.civilStatus = value;
-          })}), SizedBox(height: 11.0),
+          })}), SizedBox(height: 10.0),
           ]),
         ),
     );
