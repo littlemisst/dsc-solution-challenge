@@ -54,40 +54,96 @@ class _HomePageState extends State<HomePage>
         child: Container(
           height: 50,
           child: Row(
-            children: <Widget>[Icon(Icons.home)],
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Expanded(
+                flex: 2,
+                child: FlatButton(
+                  onPressed: () => setState(() {
+                    _currentIndex = 0;
+                  }),
+                  child: Column(
+                    children: <Widget>[
+                      Icon(
+                        Icons.home,
+                        color: Colors.grey,
+                      ),
+                      Text(
+                        'Home',
+                        style: TextStyle(color: Colors.grey),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: FlatButton(
+                  onPressed: () => setState(() {
+                    _currentIndex = 1;
+                  }),
+                  child: Column(
+                    children: <Widget>[
+                      Icon(
+                        Icons.insert_drive_file,
+                        color: Colors.grey,
+                      ),
+                      Text(
+                        'Files',
+                        style: TextStyle(color: Colors.grey),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: SizedBox(),
+              ),
+              Expanded(
+                flex: 2,
+                child: FlatButton(
+                  onPressed: () => setState(() {
+                    _currentIndex = 2;
+                  }),
+                  child: Column(
+                    children: <Widget>[
+                      Icon(
+                        Icons.calendar_today,
+                        color: Colors.grey,
+                      ),
+                      Text(
+                        'Today',
+                        style: TextStyle(color: Colors.grey),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: FlatButton(
+                  onPressed: () => setState(() {
+                    _currentIndex = 3;
+                  }),
+                  child: Column(
+                    children: <Widget>[
+                      Icon(
+                        Icons.location_on,
+                        color: Colors.grey,
+                      ),
+                      Text(
+                        'Maps',
+                        style: TextStyle(color: Colors.grey),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //     currentIndex: _currentIndex,
-      //     selectedFontSize: 10.0,
-      //     items: [
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.home),
-      //         title: Text('Home'),
-      //         backgroundColor: Colors.pink[100],
-      //       ),
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.insert_drive_file),
-      //         title: Text('Files'),
-      //         backgroundColor: Colors.pink[100],
-      //       ),
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.calendar_today),
-      //         title: Text('Calendar'),
-      //         backgroundColor: Colors.pink[100],
-      //       ),
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.location_on),
-      //         title: Text('Map'),
-      //         backgroundColor: Colors.pink[100],
-      //       ),
-      //     ],
-      //     onTap: (index) {
-      //       setState(() {
-      //         _currentIndex = index;
-      //       });
-      //     }),
     );
   }
 }

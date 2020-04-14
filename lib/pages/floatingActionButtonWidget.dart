@@ -26,6 +26,7 @@ class _FloatingActionButtonWidgetState extends State<FloatingActionButtonWidget>
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: Alignment.bottomCenter,
       children: <Widget>[
         Transform.translate(
           offset: Offset.fromDirection(0, animation.value * 70),
