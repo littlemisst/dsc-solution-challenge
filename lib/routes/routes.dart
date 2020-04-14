@@ -6,6 +6,7 @@ import 'package:me_daily/routes/first_installation_wrapper.dart';
 import 'package:me_daily/updated-pages/authentication/reset_password_page.dart';
 import 'package:me_daily/updated-pages/authentication/sign_in_form.dart';
 import 'package:me_daily/updated-pages/authentication/verification_page.dart';
+import 'package:me_daily/updated-pages/sendDetails/sendDetailsPage.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -20,6 +21,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => VerificationPage());
       case Strings.resetPasswordRoute:
         return MaterialPageRoute(builder: (_) => ResetPasswordPage());
+      case Strings.sendDetailsRoute:
+        return MaterialPageRoute(builder: (_) => SendDetailsPage());
       default:
         return MaterialPageRoute(builder: (_) => Container());
     }

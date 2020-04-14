@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:me_daily/pages/addPhotos.dart';
 import 'package:me_daily/pages/mapPage.dart';
+import 'package:me_daily/pages/popUpMenu.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
 import 'package:me_daily/updated-pages/addTasks/addTask.dart';
 import 'package:me_daily/updated-pages/calendarPage/calendarPage.dart';
@@ -37,32 +38,34 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         actions: <Widget>[
           FlatButton(
-            child: Text(
-              'Sign Out',
-              style: TextStyle(color: Colors.pink[100]),
-            ),
-            onPressed: () async {
-              _firebaseAuth.signOut();
-            },
-          ),
-          FlatButton(
-            child: Icon(
-              Icons.person,
-              color: Colors.pink[100],
+            child: CircleAvatar(
+              backgroundColor: Colors.pink[100],
+              child: Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
             ),
             onPressed: () => Navigator.push(context,
                 MaterialPageRoute(builder: (context) => MainProfile())),
           ),
-          FlatButton(
-            child: Icon(
-              Icons.share,
-              color: Colors.pink[100],
-            ),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SendDetailsPage()),
-            ),
-          )
+          PopUpMenu()
+          // PopupMenuButton(itemBuilder: (context) {
+          //   return [
+          //     PopupMenuItem(
+          //       value: () => Navigator.push(context,
+          //           MaterialPageRoute(builder: (context) => SendDetailsPage())),
+          //       child: Text('Share'),
+          //     ),
+          //     PopupMenuItem(
+          //       value: () => Navigator.pop(context),
+          //       child: Text('Settings'),
+          //     ),
+          //     PopupMenuItem(
+          //       value: () => _firebaseAuth.signOut(),
+          //       child: Text('Sign Out'),
+          //     ),
+          //   ];
+          // })
         ],
       ),
       body: bodies[_currentIndex],

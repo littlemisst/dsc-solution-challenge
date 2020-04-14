@@ -40,7 +40,7 @@ class Strings {
     "dental"
   ];
 
-  static var symptoms =[
+  static var symptoms = [
     'headache',
     'dizziness',
     'fever',
@@ -56,4 +56,5 @@ class Strings {
   static const String signInRoute = '/sign-in';
   static const String verificationRoute = '/verification';
   static const String resetPasswordRoute = '/reset-password';
+  static const String sendDetailsRoute = '/send-details';
 }
