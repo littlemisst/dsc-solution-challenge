@@ -92,28 +92,29 @@ class _MapPageState extends State<MapPage> {
             ? Text('Click Flag to Enter Current Location')
             : Column(
             children: <Widget>[
+              Text('Your current location: ', style:TextStyle(fontSize: 10, fontWeight: FontWeight.normal, color: Colors.grey[400]) ),
               Text(_currentLocation, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey[800])),
               SizedBox(height: 15.0),
-              button(() {
+              Button(icon: Icons.save_alt, toolTip: 'Save Location', function: () {
                   setState(() {
                     _locationLog.locationName = _currentLocation;
                     _locationLog.dateAndTime = DateTime.now();
                     _firestoreService.saveLocation(_locationLog);
                   });
-                }, Icons.save_alt, 'Save Location'),
+                }),
             ],
           ),
             SizedBox(height: 15.0),
-            button(_getLocation, Icons.flag, 'Get Location'),
+            Button(function: _getLocation, icon: Icons.flag, toolTip: 'Get Location'),
             SizedBox(height: 15.0,),
-            button(_onMapTypeButtonPressed, Icons.map, 'Change Map Type'),
+            Button(function: _onMapTypeButtonPressed, icon: Icons.map, toolTip: 'Change Map Type'),
             SizedBox(height: 15.0,),
           ],
         ),
       ),
       bottomSheet: Container(
         padding: EdgeInsets.all(5),
-        color: Colors.pink[100],
+        color:  Theme.of(context).primaryColor,
         child: _currentLocation == '' ? Text('Click Flag Button to View Current Location and Save', style: TextStyle(fontSize: 9, color: Colors.white))
         : Text('You can click the marker and may choose options at the lower right.', style: TextStyle(fontSize: 9, color: Colors.white))
       ),

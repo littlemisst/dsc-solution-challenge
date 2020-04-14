@@ -33,7 +33,7 @@ class _FloatingActionButtonWidgetState extends State<FloatingActionButtonWidget>
           child: FloatingActionButton(
             onPressed: () =>
                 Navigator.popAndPushNamed(context, Strings.addTaskRoute),
-            backgroundColor: Colors.pink[100],
+            backgroundColor: Theme.of(context).buttonColor,
             elevation: 10,
             mini: true,
             child: Icon(
@@ -47,7 +47,7 @@ class _FloatingActionButtonWidgetState extends State<FloatingActionButtonWidget>
           child: FloatingActionButton(
             onPressed: () =>
                 Navigator.pushNamed(context, Strings.addPhotoRoute),
-            backgroundColor: Colors.pink[100],
+            backgroundColor: Theme.of(context).buttonColor,
             elevation: 10,
             mini: true,
             child: Icon(
@@ -61,7 +61,7 @@ class _FloatingActionButtonWidgetState extends State<FloatingActionButtonWidget>
           child: FloatingActionButton(
             onPressed: () =>
                 Navigator.popAndPushNamed(context, Strings.addDailyLogRoute),
-            backgroundColor: Colors.pink[100],
+            backgroundColor: Theme.of(context).buttonColor,
             elevation: 10,
             mini: true,
             child: Icon(
@@ -78,7 +78,7 @@ class _FloatingActionButtonWidgetState extends State<FloatingActionButtonWidget>
               animationController.forward();
             }
           },
-          backgroundColor: Colors.pink[100],
+          backgroundColor: Theme.of(context).buttonColor,
           elevation: 10,
           shape: CircleBorder(side: BorderSide(color: Colors.white, width: 5)),
           child: Icon(

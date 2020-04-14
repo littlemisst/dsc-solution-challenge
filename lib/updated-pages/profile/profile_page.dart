@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/routes/user_profile_wrapper.dart';
@@ -11,6 +12,11 @@ class MainProfile extends StatelessWidget {
     final user = Provider.of<User>(context);
     return Scaffold(
       appBar: AppBar(
+        leading: FlatButton(
+          child: Icon(Icons.arrow_back),
+          onPressed: () =>
+              Navigator.popAndPushNamed(context, Strings.initialRoute),
+        ),
         title: Text('Profile'),
         backgroundColor: Colors.white,
       ),

@@ -12,7 +12,7 @@ class _PopUpMenuState extends State<PopUpMenu> {
   _onSelect(action) {
     switch (action) {
       case Strings.sendDetailsRoute:
-        Navigator.pushNamed(context, Strings.sendDetailsRoute);
+        Navigator.popAndPushNamed(context, Strings.sendDetailsRoute);
         break;
       case 'Sign Out':
         FirebaseAuth.instance.signOut();

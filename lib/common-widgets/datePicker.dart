@@ -18,9 +18,10 @@ class DatePicker extends StatelessWidget {
     child: Column(children: <Widget>[
       DateTimeField(
         decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
           labelText: text,
-          enabledBorder:
-              OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+          // enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
         ),
         format: format,
         onShowPicker: (context, currentValue) {

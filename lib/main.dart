@@ -19,8 +19,15 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          primaryColor: Colors.pink[100],
-          accentColor: Colors.pink[100],
+          primaryColor: Colors.cyan,
+          accentColor: Colors.cyan,
+          scaffoldBackgroundColor: Colors.blueGrey[50],
+          buttonColor: Colors.cyan,
+          backgroundColor: Colors.white,
+          fontFamily: 'Roboto',
+          appBarTheme: AppBarTheme(
+            color: Colors.white, 
+            elevation: 1)
         ),
         onGenerateRoute: Router.generateRoute,
         initialRoute: Strings.initialRoute,

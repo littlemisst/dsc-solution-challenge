@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/widgetContainer.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/model/user.dart';
+import 'package:me_daily/widgets/flatButton_widget.dart';
+import 'package:me_daily/widgets/textFormField_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:me_daily/widgets/height_weight_bloodType_widgets.dart';
-import 'package:me_daily/widgets/profile_widgets.dart';
+import 'package:me_daily/widgets/height_weight_widgets.dart';
+import 'package:me_daily/widgets/dropDown_widgets.dart';
 import 'package:me_daily/common-widgets/datePicker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,53 +22,43 @@ class UpdateProfileStepper extends StatefulWidget {
 class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
   Profile _profile = Profile();
    //----------------------------------------------- 
-  String _ageValue;
+  String _genderValue;
   String _civilStatusValue;
 
   @override
   Widget _personalInformationForm1() {
-    return Container(
+    return ContentContainer(
       width: MediaQuery.of(context).size.width,
-      child: Align(
-        child: Material(
-        color: Colors.white,
-        elevation: 1,
-        borderRadius: BorderRadius.circular(10),
         child: Container(
           padding: EdgeInsets.all(15),
           child: Column(children: <Widget>[
-          buildNameField(context, _profile.name, (String value) {
+          SizedBox(height: 10.0),
+          TextFormFieldWidget(label: 'Name', value: _profile.name, onChanged: (String value) {
             _profile.name = value;
-          }),
-          SizedBox(height: 10.0),
-          buildGender(context, _profile.gender, _ageValue, (String value) => {
+          }), SizedBox(height: 15.0),
+          buildGender(context, _profile.gender, _genderValue, (String value) => {
               setState(() {
-                _ageValue = value;
+                _genderValue = value;
                 _profile.gender = value;
-          })}),
-          SizedBox(height: 10.0),
+          })}), SizedBox(height: 15.0),
           buildBloodType(context, _profile.bloodType,_bloodTypeValue, (String value) => {
                   setState(() {
                     _bloodTypeValue = value;
                     _profile.bloodType = value;
-          })}),
-          SizedBox(height: 10.0),
-          buildAddressField(context, _profile.address, (String value) {
+          })}),SizedBox(height: 15.0),
+          TextFormFieldWidget(label: 'Address', value: _profile.address, onChanged: (String value) {
             _profile.address = value;
-          }),
-          SizedBox(height: 10.0),
+          }), SizedBox(height: 15.0),
           DatePicker('Birthdate', (DateTime value) {
             _profile.birthDate = value;
-          }),
-          SizedBox(height: 10.0),
+          }), SizedBox(height: 15.0),
           buildCivilStatus(context, _profile.civilStatus, _civilStatusValue, (String value) => {
               setState(() {
                 _civilStatusValue = value;
                 _profile.civilStatus = value;
-          })}),
-          SizedBox(height: 11.0),
-      ]),
-        ))),
+          })}), SizedBox(height: 10.0),
+          ]),
+        ),
     );
   }
  //----------------------------------------------- 
@@ -106,32 +99,27 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
   }
 
   Widget _personalInformationForm2() {
-    return Container(
+    return ContentContainer(
       width: MediaQuery.of(context).size.width,
-      child: Align(
-        child: Material (
-          color: Colors.white,
-          elevation: 1,
-          borderRadius: BorderRadius.circular(10),
-          child:Column(
-            children: <Widget>[
-              SizedBox(height: 20),
-              buildHeightScale(context, _heightController, _handleHeightScaleChanged),
-              SizedBox(height: 12),
-              buildHeightField(context, metersController),
-              SizedBox(height: 18),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  buildWeightScale(context, _weightController, _handleWeightScaleChanged),
-                  SizedBox(height:12),
-                  buildWeightField(context, kilogramController),
-                  SizedBox(height: 10.0),
-                ],
-              ),
-            ],
-          ),
-      )));
+      child: Column(
+          children: <Widget>[
+            SizedBox(height: 20),
+            buildHeightScale(context, _heightController, _handleHeightScaleChanged),
+            SizedBox(height: 12),
+            buildHeightField(context, metersController),
+            SizedBox(height: 18),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                buildWeightScale(context, _weightController, _handleWeightScaleChanged),
+                SizedBox(height:12),
+                buildWeightField(context, kilogramController),
+                SizedBox(height: 10.0),
+              ],
+            ),
+          ],
+        ),
+    );
   }
  //----------------------------------------------- 
   File _image;
@@ -162,58 +150,51 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
     });
   }
   
-
   Widget _buildAddProfilePhoto() {
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-      child: Container(
-        child: Align(
-          child: Material(
-            color: Colors.white,
-            elevation: 1,
-            borderRadius: BorderRadius.circular(10),
-            child: Container(
-              padding: EdgeInsets.fromLTRB(50,25,50,20),
-              child: Column(children: <Widget>[
-                _image == null
-                    ? CircleAvatar(backgroundColor: Colors.grey, radius: 50.0)
-                    : CircleAvatar(
-                        backgroundImage: new FileImage(_image), radius: 50.0),
-                SizedBox(height: 20.0),
-                RaisedButton.icon(
-                  icon: Icon(Icons.camera_alt, color: Colors.white),
-                  label: Text('Camera', style: TextStyle(color: Colors.white)),
-                  color: Colors.pink[100],
-                  onPressed: () {
-                    setState(() {
-                      String fileUploadName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
-                      _profile.profilePhotoFileName = fileUploadName;
-                    });
-                    getImage(true);
-                  },
-                ),
-                SizedBox(width: 20.0),
-                RaisedButton.icon(
-                  icon: Icon(Icons.photo_album, color: Colors.white),
-                  label: Text('Gallery', style: TextStyle(color: Colors.white)),
-                  color: Colors.pink[100],
-                  onPressed: () {
-                  setState(() {
-                    String fileUploadName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
-                    _profile.profilePhotoFileName = fileUploadName;
-                  });  
-                  getImage(false);},
-                ),
-                SizedBox(height: 30.0),
-              ]),
+      child: ContentContainer(
+        child: Container(
+          padding: EdgeInsets.fromLTRB(50,25,50,20),
+          child: Column(children: <Widget>[
+            _image == null
+                ? CircleAvatar(backgroundColor: Colors.grey, radius: 50.0)
+                : CircleAvatar(
+                    backgroundImage: new FileImage(_image), radius: 50.0),
+            SizedBox(height: 20.0),
+            RaisedButton.icon(
+              icon: Icon(Icons.camera_alt, color: Colors.white),
+              label: Text('Camera', style: TextStyle(color: Colors.white)),
+              color: Theme.of(context).primaryColor,
+              onPressed: () {
+                setState(() {
+                  String fileUploadName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+                  _profile.profilePhotoFileName = fileUploadName;
+                });
+                getImage(true);
+              },
             ),
-      ))),
+            SizedBox(width: 20.0),
+            RaisedButton.icon(
+              icon: Icon(Icons.photo_album, color: Colors.white),
+              label: Text('Gallery', style: TextStyle(color: Colors.white)),
+              color: Theme.of(context).primaryColor,
+              onPressed: () {
+              setState(() {
+                String fileUploadName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+                _profile.profilePhotoFileName = fileUploadName;
+              });  
+              getImage(false);},
+            ),
+            SizedBox(height: 30.0),
+          ]),
+        ),
+      ),
     );
   }
  //----------------------------------------------- 
   int currentStep = 0;
   bool complete = false;
-
 
   List<Step> get _steps => [
     Step( title: Text('Personal Information 1'), 
@@ -235,26 +216,26 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
         goTo(currentStep + 1);
       });
     }
-  if (currentStep == 1 && _profile.weight != null && _profile.height != null){
-    setState(() {
-      goTo(currentStep + 1);
+    if (currentStep == 1 && _profile.weight != null && _profile.height != null){
+      setState(() {
+        goTo(currentStep + 1);
     });
-  if(currentStep == 2 && _profile.downloadUrl != null && _profile.profilePhotoFileName != null) {
-    setState(() {
-      goTo(currentStep + 1);
+    if(currentStep == 2 && _profile.downloadUrl != null && _profile.profilePhotoFileName != null) {
+      setState(() {
+        goTo(currentStep + 1);
     });
     }
   }
-
-  }
+}
   cancel() {
-    if (currentStep > 0) {
+    if (currentStep > 0) { 
       goTo(currentStep - 1);
     }
   }
-  goTo(int step) {
+  goTo(int step) { 
     setState(() => currentStep = step);
   }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
@@ -263,38 +244,39 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
         child: Column(
           children: <Widget>[
             Stepper(
-                steps: _steps,
-                currentStep: currentStep,
-                onStepContinue: next,
-                onStepTapped: (step) => goTo(step),
-                onStepCancel: cancel,
-                controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}){
-                  return Container(
-                    child:  currentStep != _steps.length - 1 ? Row (children: <Widget>[
-                      FlatButton(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(side: BorderSide(color: Colors.grey[300]), borderRadius: BorderRadius.circular(10)),
-                        child: Text('Back'),
-                        onPressed: currentStep == 0 ? null : onStepCancel
-                      ), SizedBox(width: 10),
-                      FlatButton(
-                        color: Colors.pink[100],
-                        shape: RoundedRectangleBorder(side: BorderSide(color: Colors.pink[100]), borderRadius: BorderRadius.circular(10)),
-                        child: currentStep == _steps.length - 1 ? Text('Next') : Text('Next', style: TextStyle(color: Colors.white)),
-                        onPressed: currentStep == _steps.length - 1 ? null : onStepContinue
-                      )
-                    ]) : Row(
-                      children: <Widget>[
-                        _image == null ? Container() : FlatButton(child: Text('Submit Profile', style: TextStyle(color: Colors.white)), color: Colors.pink[100],
-                        onPressed:() {
-                        _firestoreService.submitProfile(_profile);
-                        uploadImage();
-                        }),
-                      ],
-                    ), 
-                  );
-                },
-              ),
+              steps: _steps,
+              currentStep: currentStep,
+              onStepContinue: next,
+              onStepTapped: (step) => goTo(step),
+              onStepCancel: cancel,
+              controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}){
+                return Container(
+                  child:  currentStep != _steps.length - 1 
+                  ? Row (children: <Widget>[
+                    FlatButtonWidget(
+                      color: Colors.white,
+                      child: Text('Back'),
+                      onPressed: currentStep == 0 ? null : onStepCancel
+                    ), SizedBox(width: 10),
+                    FlatButtonWidget(
+                      color: Theme.of(context).primaryColor,
+                      child: currentStep == _steps.length - 1 ? Text('Next') : Text('Next', style: TextStyle(color: Colors.white)),
+                      onPressed: currentStep == _steps.length - 1 ? null : onStepContinue
+                    )
+                  ]) 
+                  : Row(
+                    children: <Widget>[
+                      _image == null ? Container() 
+                      : FlatButton(child: Text('Submit Profile', style: TextStyle(color: Colors.white)), color: Theme.of(context).primaryColor,
+                      onPressed:() {
+                      _firestoreService.submitProfile(_profile);
+                      uploadImage();
+                      }),
+                    ],
+                  ), 
+                );
+              },
+            ),
           ],
         )
     );

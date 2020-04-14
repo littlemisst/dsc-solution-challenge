@@ -19,7 +19,7 @@ class SummaryPage extends StatefulWidget {
 class _SummaryPageState extends State<SummaryPage> {
   Widget _buildTiles(context, child) {
     return Material(
-      elevation: 5,
+      elevation: 1,
       color: Colors.white,
       borderRadius: BorderRadius.circular(20),
       child: Center(
@@ -34,7 +34,7 @@ class _SummaryPageState extends State<SummaryPage> {
     return StreamProvider<List<Health>>.value(
       value: FirestoreService(uid: user.uid).feelings,
       child: Container(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
         child: StaggeredGridView.count(
           crossAxisCount: 4,
           crossAxisSpacing: 10,

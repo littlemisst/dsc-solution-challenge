@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/appBarTextFormat.dart';
+import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/pages/floatingActionButtonWidget.dart';
 import 'package:me_daily/pages/mapPage.dart';
 import 'package:me_daily/pages/popUpMenu.dart';
 import 'package:me_daily/updated-pages/calendarPage/dailyTasksPage.dart';
 import 'package:me_daily/updated-pages/photos/gallery_page.dart';
 import 'package:me_daily/updated-pages/profile/profile_page.dart';
+import 'package:me_daily/updated-pages/sendDetails/sendDetailsPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/summaryPage.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,19 +30,19 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Me Daily', style: TextStyle(color: Colors.pink[100])),
-        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: TextFormat('ME DAILY', Colors.black),
         actions: <Widget>[
           FlatButton(
             child: CircleAvatar(
-              backgroundColor: Colors.pink[100],
+              backgroundColor: Theme.of(context).buttonColor,
               child: Icon(
                 Icons.person,
                 color: Colors.white,
               ),
             ),
-            onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => MainProfile())),
+            onPressed: () =>
+                Navigator.popAndPushNamed(context, Strings.profilePageRoute),
           ),
           PopUpMenu()
         ],

@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/appBarTextFormat.dart';
 import 'package:me_daily/common-widgets/floatingAction.dart';
 import 'package:me_daily/common-widgets/radioListViewBuilderWidget.dart';
 import 'package:me_daily/common-widgets/timePicker.dart';
 import 'package:me_daily/common-widgets/dateRangePicker.dart';
 import 'package:me_daily/common-widgets/datePickerWidget.dart';
+import 'package:me_daily/common-widgets/widgetContainer.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/model/user.dart';
@@ -51,13 +53,9 @@ class _TaskViewItemsState extends State<TaskViewItems> {
 
   Widget _buildMoreDialog() {
     String moreTask = '';
-    return Container(
+    return ContentContainer(
       width: MediaQuery.of(context).size.width,
-      child: Material(
-        color: Colors.white,
-        elevation: 1,
-        borderRadius: BorderRadius.circular(10),
-        child: Column(
+       child: Column(
           children: <Widget>[
             Container(
               padding: EdgeInsets.all(15),
@@ -81,7 +79,6 @@ class _TaskViewItemsState extends State<TaskViewItems> {
               onPressed: () => _setSpecificTask(moreTask)
           )
         ])
-      )
     );
   }
 
@@ -91,44 +88,30 @@ class _TaskViewItemsState extends State<TaskViewItems> {
     final _firestoreService = FirestoreService(uid: user.uid);
     switch (widget.task.taskType) {
       case "eat":
-        {
           _items = Strings.food;
-        }
         break;
       case "drink":
-        {
           _items = Strings.drink;
-        }
         break;
       case "exercise":
-        {
           _items = Strings.exercise;
-        }
         break;
       case "take medicine":
-        {
           _items = Strings.medicine;
-        }
         break;
       case "book an appointment":
-        {
           _items = Strings.appointment;
-        }
         break;
       default:
-        {
           print("no list");
-        }
     }
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
+        centerTitle: true,
         automaticallyImplyLeading: false,
-        title: Text('ADD TASK - ${widget.task.taskType}'),
-        backgroundColor: Colors.white,
-        elevation: 1,
-      ),
+        title: TextFormat('${widget.task.taskType.toUpperCase()}', Theme.of(context).primaryColor)),
       body: SingleChildScrollView(
           padding: EdgeInsets.all(10),
           child: Column(

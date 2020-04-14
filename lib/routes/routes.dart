@@ -9,7 +9,9 @@ import 'package:me_daily/updated-pages/authentication/reset_password_page.dart';
 import 'package:me_daily/updated-pages/authentication/sign_in_form.dart';
 import 'package:me_daily/updated-pages/authentication/verification_page.dart';
 import 'package:me_daily/updated-pages/dailyLogs/addDailyLog.dart';
+import 'package:me_daily/updated-pages/profile/profile_page.dart';
 import 'package:me_daily/updated-pages/sendDetails/sendDetailsPage.dart';
+import 'package:me_daily/updated-pages/summaryPage/summaryPage.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -32,6 +34,10 @@ class Router {
         return MaterialPageRoute(builder: (_) => AddPhotos());
       case Strings.addDailyLogRoute:
         return MaterialPageRoute(builder: (_) => AddDailyLogs());
+      case Strings.profilePageRoute:
+        return MaterialPageRoute(builder: (_) => MainProfile());
+      case Strings.summaryPageRoute:
+        return MaterialPageRoute(builder: (_) => SummaryPage());
       default:
         return MaterialPageRoute(builder: (_) => Container());
     }

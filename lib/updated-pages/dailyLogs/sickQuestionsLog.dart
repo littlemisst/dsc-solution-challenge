@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_scale/flutter_scale.dart';
+import 'package:me_daily/common-widgets/appBarTextFormat.dart';
 import 'package:me_daily/common-widgets/timePicker.dart';
 import 'package:me_daily/common-widgets/dateRangePicker.dart';
 import 'package:me_daily/common-widgets/datePickerWidget.dart';
+import 'package:me_daily/common-widgets/widgetContainer.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/task.dart';
@@ -29,6 +31,7 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
 
   String _taskType;
   String _specificTask;
+  String _choice;
   Task task;
   
   @override
@@ -40,7 +43,7 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
     );
     _taskType = '';
     _specificTask = '';
-
+    _choice = '';
 
     setState(() {
       for(int i=0; i < _symptoms.length; i++){
@@ -56,14 +59,22 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
     });
   }
 
+   void _setChoice(value) {
+    setState(() {
+      _choice = value;
+    });
+  }
+
   List<Step> get _steps => [
     Step(
+      isActive: _currentStep >= 0,
       title: Text('Symptoms'),
       subtitle: Text('Check the symptoms you are experiencing'),
       content: CheckBoxGrid(_symptoms, _symptomsValues, widget.entry.symptoms),
       state: _currentStep > 0 ? StepState.complete : StepState.editing
       ),
     Step(
+      isActive: _currentStep >= 1,
       title: Text('Symptoms Started'),
       subtitle: Text('Enter the time the symptoms started'),
       content: TimePicker(
@@ -74,15 +85,11 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
       state: _currentStep > 1 ? StepState.complete : StepState.editing
       ),
     Step(
-      title: Text('Add Medicine'),
-      content: _buildAddMedicine(),
+      isActive: _currentStep >= 2,
+      title: Text('What do you want to do?'),
+      content: _buildTasks(),
       state: _currentStep > 2 ? StepState.complete : StepState.editing
       ),
-    Step(
-      title: Text('Add an Appointment'),
-      content: _buildAddAppointment(),
-      state: _currentStep > 3 ? StepState.complete : StepState.editing
-      )
   ];
 
   void _onStepContinue() {
@@ -94,15 +101,6 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
     if (_currentStep == 1 && widget.entry.timeOfOccurance != null) {
        setState(() {
           _currentStep ++;
-          _taskType = 'take medicine';
-          task.taskType = _taskType;
-      });
-    }
-    if (_currentStep == 3) {
-       setState(() {
-          _currentStep ++;
-          _taskType = 'book an appointment';
-          task.taskType = _taskType;
       });
     }
   }
@@ -114,16 +112,34 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
       });
   }
 
+  Widget _buildTasks() {
+    return _choice == '' ? 
+      Container(
+        child: Row(children: <Widget>[
+          FlatButton(child: 
+            Text('Add Medicine'),
+            color: Theme.of(context).accentColor,
+            onPressed: () => _setChoice('medicine'),
+          ),
+          SizedBox(width: 10),
+          FlatButton(child:
+            Text('Add Appointment'),
+            color: Theme.of(context).backgroundColor,
+            onPressed: () => _setChoice('appointment'),
+          ),
+        ])
+      ) :
+    _choice == 'medicine' ? _buildAddMedicine() : _buildAddAppointment();
+  }
+
   Widget _buildAddMedicine() {
       final user = Provider.of<User>(context);
       final _firestoreService = FirestoreService(uid: user.uid);
-      return Container(
-      width: MediaQuery.of(context).size.width,
-      child: Align(
-        child: Material(
-          color: Colors.white,
-          elevation: 1,
-          borderRadius: BorderRadius.circular(10),
+       _taskType = 'take medicine';
+      task.taskType = _taskType;
+      print(task.taskType);
+      return ContentContainer(
+        width: MediaQuery.of(context).size.width,
           child: Container(
             padding: EdgeInsets.all(10),
             child: Column(children: <Widget>[
@@ -147,22 +163,17 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
               }, child: Text('ADD TASK'))
             ])
           )
-        )
-      )
     );
   }
 
    Widget _buildAddAppointment() {
      final user = Provider.of<User>(context);
       final _firestoreService = FirestoreService(uid: user.uid);
-      return Container(
-      width: MediaQuery.of(context).size.width,
-      child: Align(
-        child: Material(
-          color: Colors.white,
-          elevation: 1,
-          borderRadius: BorderRadius.circular(10),
-          child: Container(
+       _taskType = 'book an appointment';
+      task.taskType = _taskType;
+      return ContentContainer(
+        width: MediaQuery.of(context).size.width,
+        child: Container(
             padding: EdgeInsets.all(10),
             child: Column(children: <Widget>[
               ExpandableRadioCard('Choose an appointment', Strings.appointment, _specificTask, (value) => _setSpecificTask(value)),
@@ -184,9 +195,7 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
               }, child: Text('ADD TASK'))
             ])
           )
-        )
-      )
-    );
+      );
   }
 
 
@@ -194,14 +203,13 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text('What do you feel?'),
+        title: TextFormat('What do you feel?', Theme.of(context).accentColor),
         backgroundColor: Colors.white,
         elevation: 1,
       ),
       body: StepperWidget(_currentStep, () => _onStepContinue(), ()=>_onStepCancel(), _steps),
-      floatingActionButton: _currentStep == _steps.length -1 ? FloatingActionButton(child: Icon(Icons.keyboard_arrow_right) , onPressed: () =>
+      floatingActionButton: _currentStep == _steps.length -1 ? FloatingActionButton(child: Icon(Icons.keyboard_arrow_right, color: Colors.white) , onPressed: () =>
         Navigator.push(context, MaterialPageRoute(builder: (context) => BasicQuestionsLogPage(entry: widget.entry)))) : null
     );
   }

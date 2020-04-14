@@ -37,9 +37,10 @@ class _TimePickerState extends State<TimePicker> {
         child: Column(
           children: <Widget>[
             FlatButton(
+              textColor: Theme.of(context).primaryColor,
               onPressed: () => _displayTimePicker(context), 
               child: Row(children: <Widget>[
-                Icon(Icons.alarm),
+                Icon(Icons.alarm, color: Theme.of(context).primaryColor),
                 SizedBox(width: 15),
                 widget.taskTime != null ?
                 Text('Change Time') : Text('Select Time'),

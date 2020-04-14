@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/updated-pages/sendDetails/attachmentPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/basicInformationPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/dailyLogsList.dart';
-import 'package:me_daily/updated-pages/sendDetails/dailyLogsPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/recipientSelector.dart';
 
 class SendDetailsPage extends StatefulWidget {
@@ -39,6 +39,11 @@ class _SendDetailsPageState extends State<SendDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: FlatButton(
+          child: Icon(Icons.arrow_back),
+          onPressed: () =>
+              Navigator.popAndPushNamed(context, Strings.initialRoute),
+        ),
         title: Text(
           'Submit Details',
           style: TextStyle(color: Colors.pink[100]),

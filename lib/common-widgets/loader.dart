@@ -8,7 +8,7 @@ class Loader extends StatelessWidget {
       color: Colors.white,
       child: Center(
         child: SpinKitChasingDots(
-          color: Colors.pink[100],
+          color: Theme.of(context).primaryColor,
           size: 40,
         ),
       ),

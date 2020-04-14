@@ -29,7 +29,7 @@ class _TasksDetailsState extends State<TasksDetails> {
               ),
               Text(
                 snapshots.data.length.toString(),
-                style: TextStyle(color: Colors.pink[100], fontSize: 40),
+                style: TextStyle(color: Theme.of(context).accentColor, fontSize: 40),
               )
             ],
           );

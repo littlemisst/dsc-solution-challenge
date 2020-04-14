@@ -43,9 +43,10 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
         child: Column(
           children: <Widget>[
             FlatButton(
+              textColor: Theme.of(context).primaryColor,
               onPressed: () => _displayDatePicker(context), 
               child: Row(children: <Widget>[
-                Icon(Icons.calendar_today),
+                Icon(Icons.calendar_today, color: Theme.of(context).primaryColor),
                 SizedBox(width: 15),
                 widget.taskStarted != null ?
                 Text('Change Date') : Text('Select Date'),

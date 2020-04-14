@@ -60,4 +60,6 @@ class Strings {
   static const String addTaskRoute = '/add-task';
   static const String addPhotoRoute = '/add-photo';
   static const String addDailyLogRoute = '/add-daily-log';
+  static const String profilePageRoute = '/profile-page';
+  static const String summaryPageRoute = '/summary-page';
 }

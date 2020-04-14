@@ -20,7 +20,7 @@ class _BuildRadioListViewState extends State<BuildRadioListView> {
           contentPadding: EdgeInsets.all(0),
             title: Text(item, style: TextStyle(fontSize: 13)),
             leading: Radio(
-              activeColor: Colors.pink[100],
+              activeColor: Theme.of(context).primaryColor,
               value: item,
               groupValue: widget.groupValue,
               onChanged: widget.onChanged
