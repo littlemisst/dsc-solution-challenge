@@ -27,7 +27,6 @@ class _HomePageState extends State<HomePage> {
     GalleryPage(),
     DailyTaskCalendarPage(),
     MapPage(),
-    MainProfile(),
   ];
 
   @override
@@ -45,6 +44,14 @@ class _HomePageState extends State<HomePage> {
             onPressed: () async {
               _firebaseAuth.signOut();
             },
+          ),
+          FlatButton(
+            child: Icon(
+              Icons.person,
+              color: Colors.pink[100],
+            ),
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => MainProfile())),
           ),
           FlatButton(
             child: Icon(
@@ -118,11 +125,6 @@ class _HomePageState extends State<HomePage> {
               title: Text('Map'),
               backgroundColor: Colors.pink[100],
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.perm_identity),
-              title: Text('Profile'),
-              backgroundColor: Colors.pink[100],
-            )
           ],
           onTap: (index) {
             setState(() {

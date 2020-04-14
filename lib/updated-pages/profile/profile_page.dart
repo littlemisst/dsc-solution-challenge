@@ -9,10 +9,16 @@ class MainProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    return StreamProvider<Profile>.value(
-      value: FirestoreService(uid: user.uid).profile,
-      child: Container(
-        child: UserProfileWrapper(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Profile'),
+        backgroundColor: Colors.white,
+      ),
+      body: StreamProvider<Profile>.value(
+        value: FirestoreService(uid: user.uid).profile,
+        child: Container(
+          child: UserProfileWrapper(),
+        ),
       ),
     );
   }
