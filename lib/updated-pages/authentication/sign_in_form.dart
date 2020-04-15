@@ -123,7 +123,9 @@ class _SignInState extends State<SignIn> {
                         Navigator.pushNamed(
                             context, Strings.resetPasswordFormRoute);
                       },
-                    )
+                    ),
+                    SubmitButton('Sign in with Google',
+                        () => _firebaseAuth.signInWithGoogle()),
                   ],
                 ),
               ),
