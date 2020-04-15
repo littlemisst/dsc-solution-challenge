@@ -52,8 +52,8 @@ class _MapPageState extends State<MapPage> {
   _onMapTypeButtonPressed() {
     setState(() {
       _currentMapType = _currentMapType == MapType.normal
-        ? MapType.satellite
-        : MapType.normal;
+        ? MapType.normal
+        : MapType.hybrid;
     });
   }
 
@@ -75,7 +75,7 @@ class _MapPageState extends State<MapPage> {
     return Scaffold(
       body: GoogleMap(
         initialCameraPosition: CameraPosition(
-          target: LatLng(0, 0),
+          target: LatLng(34.0479, 100.6197),
           zoom: 3,
         ),
         mapType: _currentMapType,
