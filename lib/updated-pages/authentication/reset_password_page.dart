@@ -5,6 +5,7 @@ import 'package:me_daily/model/user.dart';
 import 'package:me_daily/routes/authentication_wrapper.dart';
 import 'package:me_daily/updated-pages/authentication/sign_in_form.dart';
 import 'package:provider/provider.dart';
+import 'package:me_daily/constants/strings.dart';
 
 class ResetPasswordPage extends StatelessWidget {
   @override
@@ -28,10 +29,7 @@ class ResetPasswordPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SignIn()));
+                  Navigator.pushNamed(context, Strings.signInRoute);
                 },
               )
             ],

@@ -4,6 +4,7 @@ import 'package:me_daily/common-widgets/iconItem.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/updated-pages/dailyLogs/basicQuestionsLog.dart';
 import 'package:me_daily/updated-pages/dailyLogs/sickQuestionsLog.dart';
+import 'package:me_daily/constants/strings.dart';
 
 class AddDailyLogs extends StatefulWidget {
   @override
@@ -29,9 +30,9 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
       entry.feeling = _emotion;
     });
     if (_emotion == 'good' || _emotion == 'neutral') {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => BasicQuestionsLogPage(entry: entry)));
+      Navigator.pushNamed(context, Strings.basicQuestionsLogRoute, arguments: entry);
     } else {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => SickQuestionsLogPage(entry : entry)));
+       Navigator.pushNamed(context, Strings.sickQuestionsLogRoute, arguments: entry);
     }
   }
 

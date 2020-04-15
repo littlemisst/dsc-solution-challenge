@@ -210,7 +210,7 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
       ),
       body: StepperWidget(_currentStep, () => _onStepContinue(), ()=>_onStepCancel(), _steps),
       floatingActionButton: _currentStep == _steps.length -1 ? FloatingActionButton(child: Icon(Icons.keyboard_arrow_right, color: Colors.white) , onPressed: () =>
-        Navigator.push(context, MaterialPageRoute(builder: (context) => BasicQuestionsLogPage(entry: widget.entry)))) : null
+        Navigator.pushNamed(context, Strings.basicQuestionsLogRoute, arguments: widget.entry)) : null
     );
   }
 }

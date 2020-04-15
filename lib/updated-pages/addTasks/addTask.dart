@@ -5,6 +5,7 @@ import 'package:me_daily/common-widgets/iconItem.dart';
 import 'package:me_daily/updated-pages/addTasks/addTaskViewItems.dart';
 import 'package:me_daily/updated-pages/addTasks/gridItemWidget.dart';
 import 'package:me_daily/model/task.dart';
+import 'package:me_daily/constants/strings.dart';
 
 class AddTask extends StatefulWidget {
   @override
@@ -29,8 +30,7 @@ class _AddTaskState extends State<AddTask> {
     });
     print(task.taskType);
     if (task.taskType != null) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => TaskViewItems(task: task)));
+      Navigator.popAndPushNamed(context, Strings.taskViewItemsRoute, arguments: task);
     }
   }
 
