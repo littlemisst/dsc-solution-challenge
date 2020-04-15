@@ -4,7 +4,6 @@ import 'package:me_daily/common-widgets/submitButton.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
-import 'package:me_daily/updated-pages/authentication/reset_password_page.dart';
 
 class SignIn extends StatefulWidget {
   final toggleBetweenForms;
@@ -30,8 +29,8 @@ class _SignInState extends State<SignIn> {
       setState(() {
         isLoading = true;
       });
-      User _user = await _firebaseAuth
-          .signInWithEmailAndPassword(email, password);
+      User _user =
+          await _firebaseAuth.signInWithEmailAndPassword(email, password);
 
       if (_user == null) {
         setState(() {
@@ -44,9 +43,10 @@ class _SignInState extends State<SignIn> {
   Widget _buildEmailField() {
     return TextFormField(
         decoration: InputDecoration(
-          labelText: 'Email', 
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+            labelText: 'Email',
+            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
         keyboardType: TextInputType.emailAddress,
         validator: (String value) {
           if (value.isEmpty) {
@@ -64,9 +64,10 @@ class _SignInState extends State<SignIn> {
   Widget _buildPasswordField() {
     return TextFormField(
         decoration: InputDecoration(
-          labelText: 'Password',
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+            labelText: 'Password',
+            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
         controller: _passwordController,
         obscureText: true,
         validator: (String value) {
@@ -118,10 +119,9 @@ class _SignInState extends State<SignIn> {
                     ),
                     InkWell(
                       child: Text('Forget Password'),
-                      onTap: () async {
-                        await _firebaseAuth.resetPassword(email);
+                      onTap: () {
                         Navigator.pushNamed(
-                            context, Strings.resetPasswordRoute);
+                            context, Strings.resetPasswordFormRoute);
                       },
                     )
                   ],
