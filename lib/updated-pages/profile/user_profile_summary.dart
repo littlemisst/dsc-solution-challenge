@@ -18,6 +18,8 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
     var formatter = new DateFormat('MM-dd-yyyy');
     String formatBirthDate = formatter.format(_currentProfile.birthDate);
     var difference = DateTime.now().difference(_currentProfile.birthDate).inDays;
+    var now = DateTime.now().toString();
+    var born = _currentProfile.birthDate.toString();
     var age = (difference/365).floor().toString();
 
     if (difference < 0) {
@@ -25,15 +27,17 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
     }
 
     String bmiCategory;
-
-    if (bmi < 18.5) {
+    
+    if (bmi <= 0) {
+      bmiCategory = 'Invalid';
+    } else if (bmi < 18.5) {
       bmiCategory = 'Underweight';
-    } else if (bmi >= 18.5 && bmi < 25 ){
+    } else if (bmi >= 18.5 && bmi <= 24.9 ){
       bmiCategory = 'Normal';
-    } else if (bmi >= 25 && bmi < 30){
-      bmiCategory = 'Obese';
-    } else {
+    } else if (bmi >= 25 && bmi <= 29.9){
       bmiCategory = 'Overweight';
+    } else if (bmi >= 30) {
+      bmiCategory = 'Obese';
     }
     
     return SingleChildScrollView(

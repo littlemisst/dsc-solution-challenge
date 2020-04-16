@@ -4,6 +4,7 @@ import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/widgets/flatButton_widget.dart';
+import 'package:me_daily/widgets/raisedButton_widget.dart';
 import 'package:me_daily/widgets/textFormField_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:me_daily/widgets/height_weight_widgets.dart';
@@ -144,6 +145,7 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
     StorageUploadTask uploadTask = _reference.putFile(_image);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     String downloadURL = await _reference.getDownloadURL();
+    _profile.downloadUrl = downloadURL;
     setState(() {
       _uploaded = true;
       _profile.downloadUrl = downloadURL;
@@ -162,30 +164,20 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
                 : CircleAvatar(
                     backgroundImage: new FileImage(_image), radius: 50.0),
             SizedBox(height: 20.0),
-            RaisedButton.icon(
-              icon: Icon(Icons.camera_alt, color: Colors.white),
-              label: Text('Camera', style: TextStyle(color: Colors.white)),
-              color: Theme.of(context).primaryColor,
-              onPressed: () {
-                setState(() {
-                  String fileUploadName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
-                  _profile.profilePhotoFileName = fileUploadName;
-                });
-                getImage(true);
-              },
-            ),
+            RaisedButtonIcon(Icons.camera_alt, 'Camera', () {
+              setState(() {
+                String fileUploadName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+                _profile.profilePhotoFileName = fileUploadName;
+              });
+              getImage(true);
+            }),
             SizedBox(width: 20.0),
-            RaisedButton.icon(
-              icon: Icon(Icons.photo_album, color: Colors.white),
-              label: Text('Gallery', style: TextStyle(color: Colors.white)),
-              color: Theme.of(context).primaryColor,
-              onPressed: () {
+            RaisedButtonIcon(Icons.photo_album, 'Gallery', () {
               setState(() {
                 String fileUploadName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
                 _profile.profilePhotoFileName = fileUploadName;
               });  
-              getImage(false);},
-            ),
+              getImage(false);}),
             SizedBox(height: 30.0),
           ]),
         ),
@@ -268,10 +260,11 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
                     children: <Widget>[
                       _image == null ? Container() 
                       : FlatButton(child: Text('Submit Profile', style: TextStyle(color: Colors.white)), color: Theme.of(context).primaryColor,
-                      onPressed:() {
+                      onPressed:() async {
                       _firestoreService.submitProfile(_profile);
                       uploadImage();
                       }),
+                      
                     ],
                   ), 
                 );

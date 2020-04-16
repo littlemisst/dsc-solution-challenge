@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/appBarTextFormat.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/user.dart';
@@ -17,7 +18,7 @@ class MainProfile extends StatelessWidget {
           onPressed: () =>
               Navigator.popAndPushNamed(context, Strings.initialRoute),
         ),
-        title: Text('Profile'),
+        title: TextFormat('Profile',Theme.of(context).primaryColor),
         backgroundColor: Colors.white,
       ),
       body: StreamProvider<Profile>.value(
