@@ -9,6 +9,7 @@ import 'package:me_daily/updated-pages/summaryPage/recordTemperature.dart';
 import 'package:me_daily/updated-pages/summaryPage/recordWater.dart';
 import 'package:me_daily/updated-pages/summaryPage/sleepChart.dart';
 import 'package:me_daily/updated-pages/summaryPage/tasksDetails.dart';
+import 'package:me_daily/updated-pages/summaryPage/tasksList.dart';
 import 'package:provider/provider.dart';
 
 class SummaryPage extends StatefulWidget {
@@ -54,7 +55,7 @@ class _SummaryPageState extends State<SummaryPage> {
             _buildTiles(context, RecordTemperature()),
             _buildTiles(context, TasksDetails()),
             _buildTiles(context, RecordWater()),
-            _buildTiles(context, Text('Logs')),
+            _buildTiles(context, TasksList()),
             _buildTiles(context, SleepChart()),
           ],
         ),
