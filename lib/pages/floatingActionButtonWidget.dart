@@ -28,6 +28,17 @@ class _FloatingActionButtonWidgetState extends State<FloatingActionButtonWidget>
     return Stack(
       alignment: Alignment.bottomCenter,
       children: <Widget>[
+        Transform.scale(
+          scale: 100 * animation.value,
+          child: Opacity(
+            opacity: 0.5,
+            child: Container(
+              width: 15,
+              height: 20,
+              color: Colors.grey,
+            ),
+          ),
+        ),
         Transform.translate(
           offset: Offset.fromDirection(0, animation.value * 70),
           child: FloatingActionButton(
@@ -46,7 +57,7 @@ class _FloatingActionButtonWidgetState extends State<FloatingActionButtonWidget>
           offset: Offset.fromDirection(4.71239, animation.value * 70),
           child: FloatingActionButton(
             onPressed: () =>
-                Navigator.pushNamed(context, Strings.addPhotoRoute),
+                Navigator.popAndPushNamed(context, Strings.addPhotoRoute),
             backgroundColor: Theme.of(context).buttonColor,
             elevation: 10,
             mini: true,
@@ -86,6 +97,10 @@ class _FloatingActionButtonWidgetState extends State<FloatingActionButtonWidget>
             color: Colors.white,
           ),
         ),
+        Container(
+          width: 200,
+          height: 310,
+        )
       ],
     );
   }

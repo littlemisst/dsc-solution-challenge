@@ -45,15 +45,17 @@ class Router {
         return MaterialPageRoute(builder: (_) => AddDailyLogs());
       case Strings.basicQuestionsLogRoute:
         var data = routeSettings.arguments as DailyLog;
-        return MaterialPageRoute(builder: (_) => BasicQuestionsLogPage(entry: data));
+        return MaterialPageRoute(
+            builder: (_) => BasicQuestionsLogPage(entry: data));
       case Strings.sickQuestionsLogRoute:
         var data = routeSettings.arguments as DailyLog;
-        return MaterialPageRoute(builder: (_) => SickQuestionsLogPage(entry: data));
+        return MaterialPageRoute(
+            builder: (_) => SickQuestionsLogPage(entry: data));
       case Strings.profilePageRoute:
         return MaterialPageRoute(builder: (_) => MainProfile());
       case Strings.summaryPageRoute:
         return MaterialPageRoute(builder: (_) => SummaryPage());
-        case Strings.resetPasswordFormRoute:
+      case Strings.resetPasswordFormRoute:
         return MaterialPageRoute(builder: (_) => ResetPasswordForm());
       default:
         return MaterialPageRoute(builder: (_) => Container());

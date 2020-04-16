@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:me_daily/constants/strings.dart';
+import 'package:me_daily/services/firebase_authentication_service.dart';
 import 'package:me_daily/updated-pages/sendDetails/sendDetailsPage.dart';
 
 class PopUpMenu extends StatefulWidget {
@@ -9,13 +10,17 @@ class PopUpMenu extends StatefulWidget {
 }
 
 class _PopUpMenuState extends State<PopUpMenu> {
-  _onSelect(action) {
+  final _firebaseAuth = FirebaseAuthentication();
+
+  _onSelect(action) async {
     switch (action) {
       case Strings.sendDetailsRoute:
         Navigator.popAndPushNamed(context, Strings.sendDetailsRoute);
         break;
       case 'Sign Out':
-        FirebaseAuth.instance.signOut();
+        await _firebaseAuth.getProviderId();
+        _firebaseAuth.signOut();
+        _firebaseAuth.googleSignOut();
     }
   }
 

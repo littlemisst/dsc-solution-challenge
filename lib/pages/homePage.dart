@@ -49,6 +49,7 @@ class _HomePageState extends State<HomePage>
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButtonWidget(),
       bottomNavigationBar: BottomAppBar(
+        clipBehavior: Clip.hardEdge,
         shape: CircularNotchedRectangle(),
         elevation: 8,
         color: Colors.white,

@@ -51,6 +51,14 @@ class FirebaseAuthentication {
     }
   }
 
+  Future googleSignOut() async {
+    try {
+      return await _googleSignIn.signOut();
+    } catch (error) {
+      return null;
+    }
+  }
+
   Future signOut() async {
     try {
       return await _firebaseAuth.signOut();
@@ -76,5 +84,10 @@ class FirebaseAuthentication {
     await _firebaseAuth.currentUser()
       ..reload();
     return _firebaseAuth.currentUser().then(_userFromFirebase);
+  }
+
+  Future getProviderId() async {
+    return await _firebaseAuth.currentUser()
+      ..providerData[0].providerId;
   }
 }

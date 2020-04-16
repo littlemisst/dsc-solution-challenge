@@ -125,7 +125,7 @@ class _SignInState extends State<SignIn> {
                       },
                     ),
                     SubmitButton('Sign in with Google',
-                        () => _firebaseAuth.signInWithGoogle()),
+                        () async => await _firebaseAuth.signInWithGoogle()),
                   ],
                 ),
               ),

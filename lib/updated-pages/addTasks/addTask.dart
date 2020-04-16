@@ -30,7 +30,8 @@ class _AddTaskState extends State<AddTask> {
     });
     print(task.taskType);
     if (task.taskType != null) {
-      Navigator.popAndPushNamed(context, Strings.taskViewItemsRoute, arguments: task);
+      Navigator.popAndPushNamed(context, Strings.taskViewItemsRoute,
+          arguments: task);
     }
   }
 
@@ -39,6 +40,11 @@ class _AddTaskState extends State<AddTask> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
+          leading: FlatButton(
+            child: Icon(Icons.arrow_back),
+            onPressed: () =>
+                Navigator.popAndPushNamed(context, Strings.initialRoute),
+          ),
           title: TextFormat('ADD TASK', Theme.of(context).primaryColor),
         ),
         body: SingleChildScrollView(
