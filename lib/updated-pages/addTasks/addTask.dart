@@ -19,16 +19,11 @@ class _AddTaskState extends State<AddTask> {
   @override
   void initState() {
     super.initState();
-    task = Task(taskType: _taskType);
-    _taskType = '';
   }
 
   void _chooseTask(String type) {
-    setState(() {
-      _taskType = type;
-      task.taskType = _taskType;
-    });
-    print(task.taskType);
+    _taskType = type;
+    task = Task(taskType: _taskType);
     if (task.taskType != null) {
       Navigator.popAndPushNamed(context, Strings.taskViewItemsRoute,
           arguments: task);
@@ -62,36 +57,36 @@ class _AddTaskState extends State<AddTask> {
         height: MediaQuery.of(context).size.height,
         child: BuildGridItems([
           GridItem(
-            IconItem(AssetImage("images/eat.png"), 'eat', 60,
-                Theme.of(context).primaryColor, () => _chooseTask('eat')),
+            IconItem(AssetImage("images/eat.png"), Strings.eat, 60,
+                Theme.of(context).primaryColor, () => _chooseTask(Strings.eat)),
           ),
           GridItem(
-            IconItem(AssetImage("images/drink.png"), 'drink', 60,
-                Theme.of(context).primaryColor, () => _chooseTask('drink')),
+            IconItem(AssetImage("images/drink.png"), Strings.drink, 60,
+                Theme.of(context).primaryColor, () => _chooseTask(Strings.drink)),
           ),
           GridItem(
-            IconItem(AssetImage("images/exercise.png"), 'exercise', 60,
-                Theme.of(context).primaryColor, () => _chooseTask('exercise')),
+            IconItem(AssetImage("images/exercise.png"), Strings.exercise, 60,
+                Theme.of(context).primaryColor, () => _chooseTask(Strings.exercise)),
           ),
           GridItem(
             IconItem(
                 AssetImage("images/medicine.png"),
-                'take medicine',
+                Strings.medicine,
                 60,
                 Theme.of(context).primaryColor,
-                () => _chooseTask('take medicine')),
+                () => _chooseTask(Strings.medicine)),
           ),
           GridItem(
             IconItem(
                 AssetImage("images/appointment.png"),
-                'book an appointment',
+                Strings.appointment,
                 60,
                 Theme.of(context).primaryColor,
-                () => _chooseTask('book an appointment')),
+                () => _chooseTask(Strings.appointment)),
           ),
           GridItem(
-            IconItem(AssetImage("images/more.png"), 'more', 60,
-                Theme.of(context).primaryColor, () => _chooseTask('more')),
+            IconItem(AssetImage("images/more.png"), Strings.more, 60,
+                Theme.of(context).primaryColor, () => _chooseTask(Strings.more)),
           ),
         ], 2, 1));
   }

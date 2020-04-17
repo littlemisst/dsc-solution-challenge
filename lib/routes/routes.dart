@@ -4,6 +4,7 @@ import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/pages/addPhotos.dart';
+import 'package:me_daily/pages/homePage.dart';
 import 'package:me_daily/routes/authentication_wrapper.dart';
 import 'package:me_daily/routes/first_installation_wrapper.dart';
 import 'package:me_daily/updated-pages/addTasks/addTask.dart';
@@ -32,6 +33,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => VerificationPage());
       case Strings.resetPasswordRoute:
         return MaterialPageRoute(builder: (_) => ResetPasswordPage());
+      case Strings.home:
+        return MaterialPageRoute(builder: (_) => HomePage());
       case Strings.sendDetailsRoute:
         return MaterialPageRoute(builder: (_) => SendDetailsPage());
       case Strings.addTaskRoute:

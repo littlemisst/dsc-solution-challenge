@@ -26,7 +26,7 @@ class SickQuestionsLogPage extends StatefulWidget {
 
 class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
   int _currentStep = 0;
-  List<String> _symptoms = Strings.symptoms;
+  List<String> _symptoms = Strings.symptomsList;
   List<bool> _symptomsValues = List<bool>();
 
   String _taskType;
@@ -143,7 +143,7 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
           child: Container(
             padding: EdgeInsets.all(10),
             child: Column(children: <Widget>[
-              ExpandableRadioCard('Choose your medicine', Strings.medicine, _specificTask, (value) => _setSpecificTask(value)),
+              ExpandableRadioCard('Choose your medicine', Strings.medicineList, _specificTask, (value) => _setSpecificTask(value)),
               SizedBox(height: 10),
               DateRangePickerWidget(
                 elevation: 0,
@@ -176,7 +176,7 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
         child: Container(
             padding: EdgeInsets.all(10),
             child: Column(children: <Widget>[
-              ExpandableRadioCard('Choose an appointment', Strings.appointment, _specificTask, (value) => _setSpecificTask(value)),
+              ExpandableRadioCard('Choose an appointment', Strings.appointmentList, _specificTask, (value) => _setSpecificTask(value)),
               SizedBox(height: 10),
               DatePickerWidget(
                 elevation: 0,

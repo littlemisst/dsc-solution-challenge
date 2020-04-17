@@ -1,5 +1,5 @@
 class Strings {
-  static var food = [
+  static const foodList = [
     'vegetables',
     'fruits',
     'grains',
@@ -11,7 +11,7 @@ class Strings {
     'no meat',
     'no sweets',
   ];
-  static var drink = [
+  static const drinkList = [
     "water",
     "coffee",
     "milk",
@@ -20,7 +20,7 @@ class Strings {
     "no soda",
     "no coffee"
   ];
-  static var medicine = [
+  static const medicineList = [
     "for fever",
     "for common cold",
     "maintenance",
@@ -29,8 +29,8 @@ class Strings {
     "for allergies",
     "vitamins"
   ];
-  static var exercise = ["walk", "jog", "weights", "cycle", "yoga"];
-  static var appointment = [
+  static const exerciseList = ["walk", "jog", "weights", "cycle", "yoga"];
+  static const appointmentList = [
     "routine check-up",
     "laboratory",
     "counseling",
@@ -40,7 +40,7 @@ class Strings {
     "dental"
   ];
 
-  static var symptoms = [
+  static const symptomsList = [
     'headache',
     'dizziness',
     'fever',
@@ -51,11 +51,19 @@ class Strings {
     'muscle pain',
   ];
 
+  static const eat = 'Eat';
+  static const drink = 'Drink';
+  static const exercise = 'Exercise';
+  static const medicine = 'Take Medicine';
+  static const appointment = 'Book an Appointment';
+  static const more = 'More';
+
   static const String initialRoute = '/';
   static const String authenticationRoute = '/authentication';
   static const String signInRoute = '/sign-in';
   static const String verificationRoute = '/verification';
   static const String resetPasswordRoute = '/reset-password';
+  static const String home = '/home';
   static const String sendDetailsRoute = '/send-details';
   static const String addTaskRoute = '/add-task';
   static const String taskViewItemsRoute = '/task-view-items';

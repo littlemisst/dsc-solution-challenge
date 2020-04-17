@@ -11,7 +11,7 @@ class Task {
   DateTime taskTime;
   bool completed = false;
 
-  Task({this.taskType});
+  Task({this.taskType, this.specificTask, this.taskStarted, this.taskEnded, this.taskTime});
 
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
   Map<String, dynamic> toJson() =>  _$TaskToJson(this);

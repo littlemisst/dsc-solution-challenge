@@ -23,13 +23,13 @@ class BasicQuestionsLogPage extends StatefulWidget {
 
 class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
   int _currentStep = 0;
-  List<String> _food = Strings.food;
+  List<String> _food = Strings.foodList;
   List<bool> _foodValues = List<bool>();
 
-  List<String> _drink = Strings.drink;
+  List<String> _drink = Strings.drinkList;
   List<bool> _drinkValues = List<bool>();
   
-  List<String> _exercise = Strings.exercise;
+  List<String> _exercise = Strings.exerciseList;
   List<bool> _exerciseValues = List<bool>();
 
   int _hoursOfSleep = 0;

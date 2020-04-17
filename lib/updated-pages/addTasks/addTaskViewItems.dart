@@ -23,6 +23,10 @@ class TaskViewItems extends StatefulWidget {
 
 class _TaskViewItemsState extends State<TaskViewItems> {
   String _specificTask;
+  DateTime _taskStarted;
+  DateTime _taskEnded;
+  DateTime _taskTime;
+
   List<dynamic> _items;
 
   @override
@@ -32,11 +36,43 @@ class _TaskViewItemsState extends State<TaskViewItems> {
     _items = [];
   }
 
+   Task _taskFromState() {
+    return Task(
+      taskType: widget.task.taskType,
+      specificTask: _specificTask,
+      taskStarted: _taskStarted,
+      taskEnded: _taskEnded,
+      taskTime: _taskTime
+    );
+  }
+
+  Future<void> _addTask(BuildContext context) async {
+    final user = Provider.of<User>(context, listen: false);
+    final _firestoreService = FirestoreService(uid: user.uid);
+    final task = _taskFromState();
+    await _firestoreService.addTask(task);
+  }
+
+   Future<void> _addRepeatingTask(BuildContext context) async {
+    final user = Provider.of<User>(context, listen: false);
+    final _firestoreService = FirestoreService(uid: user.uid);
+    final task = _taskFromState();
+    await _firestoreService.addRepeatingTasks(task);
+  }
+
   void _setSpecificTask(value) {
-    setState(() {
-      _specificTask = value;
-      widget.task.specificTask = _specificTask;
-    });
+    setState(() =>
+      _specificTask = value);
+  }
+
+  void _submit() {
+    int days = TaskDifference(_taskStarted, _taskEnded).days;
+    _addTask(context);
+    for (int i=0; i < days; i++) {
+      _taskStarted = _taskStarted.add(Duration(days: 1));
+      _addRepeatingTask(context);
+    }
+    Navigator.popAndPushNamed(context, Strings.home);
   } 
 
   Widget _buildListView() {
@@ -84,23 +120,22 @@ class _TaskViewItemsState extends State<TaskViewItems> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    final _firestoreService = FirestoreService(uid: user.uid);
+    
     switch (widget.task.taskType) {
-      case "eat":
-          _items = Strings.food;
+      case Strings.eat:
+          _items = Strings.foodList;
         break;
-      case "drink":
-          _items = Strings.drink;
+      case Strings.drink:
+          _items = Strings.drinkList;
         break;
-      case "exercise":
-          _items = Strings.exercise;
+      case Strings.exercise:
+          _items = Strings.exerciseList;
         break;
-      case "take medicine":
-          _items = Strings.medicine;
+      case Strings.medicine:
+          _items = Strings.medicineList;
         break;
-      case "book an appointment":
-          _items = Strings.appointment;
+      case Strings.appointment:
+          _items = Strings.appointmentList;
         break;
       default:
           print("no list");
@@ -111,49 +146,37 @@ class _TaskViewItemsState extends State<TaskViewItems> {
       appBar: AppBar(
         centerTitle: true,
         automaticallyImplyLeading: false,
-        title: TextFormat('${widget.task.taskType.toUpperCase()}', Theme.of(context).primaryColor)),
+        title: TextFormat('${widget.task.taskType}', Theme.of(context).primaryColor)),
       body: SingleChildScrollView(
           padding: EdgeInsets.all(10),
           child: Column(
             children: <Widget>[
-              widget.task.taskType == 'more' ? _buildMoreDialog() :
+              widget.task.taskType == Strings.more ? _buildMoreDialog() :
               _buildListView(),
               SizedBox(height: 15),
-              widget.task.taskType == 'book an appointment' ? DatePickerWidget(
+              widget.task.taskType == Strings.appointment ? DatePickerWidget(
                 elevation: 1,
-                taskStarted: widget.task.taskStarted,
-                setTaskStarted: (date) => setState(() {
-                  widget.task.taskStarted = date;
-                }), 
-                setTaskEnded: (date) => setState(() => widget.task.taskEnded = date))
+                taskStarted: _taskStarted,
+                setTaskStarted: (date) => setState(() => _taskStarted = date),
+                setTaskEnded: (date) => setState(() => _taskEnded = date))
               : DateRangePickerWidget(
                 elevation: 1,
-                taskStarted: widget.task.taskStarted,
-                taskEnded: widget.task.taskEnded,
-                setTaskStarted: (date) => setState(() => widget.task.taskStarted = date), 
-                setTaskEnded: (date) => setState(() => widget.task.taskEnded = date)),
+                taskStarted: _taskStarted,
+                taskEnded: _taskEnded,
+                setTaskStarted: (date) => setState(() => _taskStarted = date), 
+                setTaskEnded: (date) => setState(() => _taskEnded = date)),
               SizedBox(height: 15),
               TimePicker(
                 elevation: 1,
-                taskTime: widget.task.taskTime,
-                setTime: (dateTime) => setState(() => widget.task.taskTime = dateTime),
+                taskTime: _taskTime,
+                setTime: (dateTime) => setState(() => _taskTime = dateTime),
               )
             ]
           )
         ),
       floatingActionButton: 
-      (widget.task.specificTask != null && widget.task.taskTime != null && widget.task.taskStarted != null) 
-      ? FloatingActionToSave(() async {
-         int days = TaskDifference(widget.task.taskStarted, widget.task.taskEnded).days;
-        await _firestoreService.addTask(widget.task);
-          for (int i=0; i < days; i++) {
-            widget.task.taskStarted = widget.task.taskStarted.add(Duration(days: 1));
-            await _firestoreService.addRepeatingTasks(widget.task);
-          }
-          
-          Navigator.of(context).popUntil((route) => route.isFirst);
-        }, Icons.alarm)
-      : null
+      (_specificTask != null && _taskTime != null && _taskStarted != null) 
+      ? FloatingActionToSave(() => _submit(), Icons.alarm) : null
     );
   }
 

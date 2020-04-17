@@ -29,12 +29,6 @@ class _CalendarPageState extends State<CalendarPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Task> tasks = Provider.of<List<Task>>(context);
-    if (tasks == null) {
-      tasks = [];
-    }
-    _tasks = DailyTaskDetails.tasksByDate(tasks);
-
     return Scaffold(
       body: Column(
         mainAxisSize: MainAxisSize.max,
@@ -123,6 +117,11 @@ class _CalendarPageState extends State<CalendarPage> {
   }
   
   Widget _buildEventList(events, context) {
+    List<Task> tasks = Provider.of<List<Task>>(context);
+    if (tasks == null) {
+      tasks = [];
+    }
+    _tasks = DailyTaskDetails.tasksByDate(tasks);
     return
     events.length == 0 ?
     ContentContainer(
