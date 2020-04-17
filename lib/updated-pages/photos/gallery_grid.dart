@@ -18,45 +18,69 @@ class GalleryGrid extends StatelessWidget {
     );
   }
   @override
-  Widget build(BuildContext context) {
+    Widget build(BuildContext context) {
     List<Photo> photos = Provider.of<List<Photo>>(context);
      if (photos == null) {
       photos = [];
     }
+    
     return CustomScrollView(
       slivers: <Widget>[
+        makeHeader('${photos.length} Photos ', Colors.blueGrey[200]),
         makeHeader('Prescriptions', Theme.of(context).primaryColor),
         SliverGrid.count(
           crossAxisCount: 1,
-          crossAxisSpacing: 5,
           children: [
-            GridView.builder(
-              itemCount: photos.length,
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-              itemBuilder: (context, index) =>
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GridView.count(
+                crossAxisCount: 3,
+                children: List.generate(photos.length, (index) => 
                   _buildPhotoListItem(context, photos[index]),
+                )
+              ),
             )
+          ],
+        ),
+        makeHeader('Receipts', Theme.of(context).primaryColor),
+        SliverGrid.count(
+          crossAxisCount: 2,
+          children: [
+            
           ],
         ),
         makeHeader('Maintenance', Theme.of(context).primaryColor),
         SliverGrid.count(
-          crossAxisCount: 3,
+          crossAxisCount: 2,
           children: [
-            Container(color: Colors.red, height: 150.0),
-            Container(color: Colors.purple, height: 150.0),
-            Container(color: Colors.green, height: 150.0),
-            Container(color: Colors.orange, height: 150.0),
-            Container(color: Colors.yellow, height: 150.0),
-            Container(color: Colors.pink, height: 150.0),
-            Container(color: Colors.cyan, height: 150.0),
-            Container(color: Colors.indigo, height: 150.0),
-            Container(color: Colors.blue, height: 150.0),
+           
+          ],
+        ),
+        makeHeader('Laboratory Results', Theme.of(context).primaryColor),
+       SliverGrid.count(
+          crossAxisCount: 2,
+          children: [
+           
+          ],
+        ),
+        makeHeader('Medical Certificates', Theme.of(context).primaryColor),
+        SliverGrid.count(
+          crossAxisCount: 2,
+          children: [
+           
+          ],
+        ),
+       makeHeader('Others', Theme.of(context).primaryColor),
+       SliverGrid.count(
+          crossAxisCount: 2,
+          children: [
+            
           ],
         ),
       ],
     );
   }
+
   Widget _buildPhotoListItem(context, document) {
     return Container(
       child: GestureDetector(
