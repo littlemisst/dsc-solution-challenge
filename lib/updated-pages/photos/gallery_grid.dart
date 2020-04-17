@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/updated-pages/photos/full_screen.dart';
+import 'package:me_daily/updated-pages/photos/grid_view_count.dart';
 import 'package:me_daily/updated-pages/photos/sliverDelegate.dart';
 import 'package:me_daily/model/photo.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,7 @@ class GalleryGrid extends StatelessWidget {
       pinned: true,
       delegate: SliverAppBarDelegate(
         minHeight: 20.0,
-        maxHeight: 30.0,
+        maxHeight: 40.0,
         child: Container(
         color: color, child: Center(child: Text(headerText, style: TextStyle(color: Colors.white)))),
       ),
@@ -20,63 +21,95 @@ class GalleryGrid extends StatelessWidget {
   @override
     Widget build(BuildContext context) {
     List<Photo> photos = Provider.of<List<Photo>>(context);
-     if (photos == null) {
+    List<Photo> prescriptions = [];
+    List<Photo> receipts = [];
+    List<Photo> maintenance = [];
+    List<Photo> laboratoryResults = [];
+    List<Photo> medicalCertificates = [];
+    List<Photo> others = [];
+    
+    if (photos == null) {
       photos = [];
     }
     
+    for (var photo in photos) {
+      if (photo.description == 'Prescription') {
+        prescriptions.add(photo);
+      }
+      else if (photo.description == 'Receipt') {
+        receipts.add(photo);
+      }
+      else if (photo.description == 'Maintenance') {
+        maintenance.add(photo);
+      }
+      else if (photo.description == 'Laboratory Result') {
+        laboratoryResults.add(photo);
+      }
+      else if (photo.description == 'Medical Certificate') {
+        medicalCertificates.add(photo);
+      }
+      else {
+        others.add(photo);
+      }
+    }
+
     return CustomScrollView(
       slivers: <Widget>[
-        makeHeader('${photos.length} Photos ', Colors.blueGrey[200]),
+        makeHeader('Total of ${photos.length} Photos ', Colors.blueGrey[200]),
         makeHeader('Prescriptions', Theme.of(context).primaryColor),
         SliverGrid.count(
           crossAxisCount: 1,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GridView.count(
-                crossAxisCount: 3,
-                children: List.generate(photos.length, (index) => 
-                  _buildPhotoListItem(context, photos[index]),
-                )
-              ),
-            )
+            GridViewCount(children: List.generate(prescriptions.length, (index) => 
+              _buildPhotoListItem(context, prescriptions[index]),
+            ))
           ],
         ),
         makeHeader('Receipts', Theme.of(context).primaryColor),
         SliverGrid.count(
-          crossAxisCount: 2,
+          crossAxisCount: 1,
           children: [
-            
+            GridViewCount(children: List.generate(receipts.length, (index) => 
+              _buildPhotoListItem(context, receipts[index]),
+            ))
           ],
         ),
         makeHeader('Maintenance', Theme.of(context).primaryColor),
         SliverGrid.count(
-          crossAxisCount: 2,
+          crossAxisCount: 1,
           children: [
-           
+            GridViewCount(children: List.generate(maintenance.length, (index) => 
+              _buildPhotoListItem(context, maintenance[index]),
+            ))
           ],
         ),
         makeHeader('Laboratory Results', Theme.of(context).primaryColor),
-       SliverGrid.count(
-          crossAxisCount: 2,
-          children: [
-           
-          ],
-        ),
+        SliverGrid.count(
+            crossAxisCount: 1,
+            children: [
+              GridViewCount(children: List.generate(laboratoryResults.length, (index) => 
+                _buildPhotoListItem(context, laboratoryResults[index]),
+              ))
+            ],
+          ),
         makeHeader('Medical Certificates', Theme.of(context).primaryColor),
         SliverGrid.count(
-          crossAxisCount: 2,
+          crossAxisCount: 1,
           children: [
-           
+            GridViewCount(children: List.generate(medicalCertificates.length, (index) => 
+                _buildPhotoListItem(context, medicalCertificates[index]),
+            ))
           ],
         ),
-       makeHeader('Others', Theme.of(context).primaryColor),
-       SliverGrid.count(
-          crossAxisCount: 2,
-          children: [
-            
-          ],
-        ),
+        makeHeader('Others', Theme.of(context).primaryColor),
+        SliverGrid.count(
+            crossAxisCount: 1,
+            children: [
+              GridViewCount(children: List.generate(others.length, (index) => 
+                _buildPhotoListItem(context, others[index]),
+              ))
+            ],
+          ),
       ],
     );
   }
@@ -85,7 +118,8 @@ class GalleryGrid extends StatelessWidget {
     return Container(
       child: GestureDetector(
       child: GridTile(
-        footer: Text(document.fileName),
+        footer: Container(child: Text('File name: ${document.fileName}', style: TextStyle(fontSize: 8)), 
+        color: Colors.white),
         child: Hero(
           tag: document.fileName,
           child: Image.network(
@@ -102,6 +136,6 @@ class GalleryGrid extends StatelessWidget {
           );
         }));
       }),
-  );
+    );
   }
 }

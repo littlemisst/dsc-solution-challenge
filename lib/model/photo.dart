@@ -1,7 +1,7 @@
 class Photo {
-  final String fileName;
-  final String downloadURL;
-  final String description;
+  String fileName;
+  String downloadURL;
+  String description;
 
   Photo({this.fileName, this.downloadURL, this.description});
 
