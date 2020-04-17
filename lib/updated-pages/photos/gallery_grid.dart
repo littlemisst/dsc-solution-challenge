@@ -48,42 +48,55 @@ class GalleryGrid extends StatelessWidget {
         header('Total of ${photos.length} Photos ', Colors.blueGrey[200]),
         header('Prescriptions', Theme.of(context).primaryColor),
         SliverGridCount(children: [
-          GridViewCount(children: List.generate(prescriptions.length, (index) => 
+            prescriptions.isEmpty ? noAvailable()
+            : GridViewCount(children: List.generate(prescriptions.length, (index) => 
             _buildPhotoListItem(context, prescriptions[index]),
           ))]
         ),
         header('Receipts', Theme.of(context).primaryColor),
         SliverGridCount(children: [
-            GridViewCount(children: List.generate(receipts.length, (index) => 
-              _buildPhotoListItem(context, receipts[index]),
+            receipts.isEmpty ? noAvailable()
+            : GridViewCount(children: List.generate(receipts.length, (index) => 
+            _buildPhotoListItem(context, receipts[index]),
             ))],
         ),
         header('Maintenance', Theme.of(context).primaryColor),
         SliverGridCount( children: [
-            GridViewCount(children: List.generate(maintenance.length, (index) => 
-              _buildPhotoListItem(context, maintenance[index]),
+            maintenance.isEmpty ? noAvailable()
+            : GridViewCount(children: List.generate(maintenance.length, (index) => 
+            _buildPhotoListItem(context, maintenance[index]),
             ))],
         ),
         header('Laboratory Results', Theme.of(context).primaryColor),
         SliverGridCount( children: [
-              GridViewCount(children: List.generate(laboratoryResults.length, (index) => 
-                _buildPhotoListItem(context, laboratoryResults[index]),
+              laboratoryResults.isEmpty ? noAvailable()
+              : GridViewCount(children: List.generate(laboratoryResults.length, (index) => 
+              _buildPhotoListItem(context, laboratoryResults[index]),
               ))],
           ),
         header('Medical Certificates', Theme.of(context).primaryColor),
         SliverGridCount(children: [
-            GridViewCount(children: List.generate(medicalCertificates.length, (index) => 
-                _buildPhotoListItem(context, medicalCertificates[index]),
+            medicalCertificates.length == 0 ? noAvailable()
+            : GridViewCount(children: List.generate(medicalCertificates.length, (index) => 
+            _buildPhotoListItem(context, medicalCertificates[index]),
             ))],
         ),
         header('Others', Theme.of(context).primaryColor),
         SliverGridCount( children: [
-            GridViewCount(children: List.generate(others.length, (index) => 
-              _buildPhotoListItem(context, others[index])
+            others.isEmpty ? noAvailable()
+            :GridViewCount(children: List.generate(others.length, (index) => 
+            _buildPhotoListItem(context, others[index])
             ))],
         ),
       ],
     );
+  }
+
+  Widget noAvailable() {
+    return Row (mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[Icon(Icons.photo, color: Colors.blueGrey[200] ),
+    Text('No Photo Available', style: TextStyle(color: Colors.blueGrey[200]))
+    ]); 
   }
 
   SliverPersistentHeader header(String headerText, Color color) {
