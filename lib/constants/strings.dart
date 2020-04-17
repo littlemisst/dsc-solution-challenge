@@ -58,12 +58,16 @@ class Strings {
   static const appointment = 'Book an Appointment';
   static const more = 'More';
 
+  static const good = 'Good';
+  static const okay = 'Okay';
+  static const unwell = 'Unwell';
+  static const sick = 'Sick';
+
   static const String initialRoute = '/';
   static const String authenticationRoute = '/authentication';
   static const String signInRoute = '/sign-in';
   static const String verificationRoute = '/verification';
   static const String resetPasswordRoute = '/reset-password';
-  static const String home = '/home';
   static const String sendDetailsRoute = '/send-details';
   static const String addTaskRoute = '/add-task';
   static const String taskViewItemsRoute = '/task-view-items';

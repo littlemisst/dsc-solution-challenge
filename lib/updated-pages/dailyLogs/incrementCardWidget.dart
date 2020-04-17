@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
 
 class IncrementCard extends StatelessWidget {
-  const IncrementCard(this.timesText, this.intText, this.onPressedIncrement, this.onPressedDecrement, this.onPressedSet);
+  const IncrementCard(this.timesText, this.intText, this.onPressedIncrement, this.onPressedDecrement);
   final String timesText;
   final int intText;
   final VoidCallback onPressedIncrement;
   final VoidCallback onPressedDecrement;
-  final VoidCallback onPressedSet;
+  
   @override
   Widget build(BuildContext context) {
      return ContentContainer(
@@ -34,10 +34,6 @@ class IncrementCard extends StatelessWidget {
                   color: Colors.white,
                   shape: CircleBorder(side: BorderSide.none),
                   onPressed: onPressedIncrement)),
-                SizedBox(width: 40),
-                Expanded(child: FlatButton(
-                  child: Text('set'),
-                  onPressed: onPressedSet))
               ])
             )
         ),

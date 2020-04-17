@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/appBarTextFormat.dart';
 import 'package:me_daily/common-widgets/buildGrid.dart';
 import 'package:me_daily/common-widgets/iconItem.dart';
-import 'package:me_daily/updated-pages/addTasks/addTaskViewItems.dart';
 import 'package:me_daily/updated-pages/addTasks/gridItemWidget.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/constants/strings.dart';

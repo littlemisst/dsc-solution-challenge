@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 part 'logs.g.dart';
+
 @JsonSerializable(nullable: true)
 class DailyLog {
   DateTime logCreated = DateTime.now();
@@ -15,8 +16,17 @@ class DailyLog {
   DateTime symptomsStarted = DateTime.now();
   DateTime timeOfOccurance;
 
-  DailyLog({this.feeling});
+  DailyLog({
+    this.feeling,
+    this.food,
+    this.drink,
+    this.exercise,
+    this.hoursSlept,
+    this.symptoms,
+    this.timeOfOccurance
+  });
 
-  factory DailyLog.fromJson(Map<String, dynamic> json) => _$DailyLogFromJson(json);
-  Map<String, dynamic> toJson() =>  _$DailyLogToJson(this);
+  factory DailyLog.fromJson(Map<String, dynamic> json) =>
+      _$DailyLogFromJson(json);
+  Map<String, dynamic> toJson() => _$DailyLogToJson(this);
 }

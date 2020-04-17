@@ -32,7 +32,11 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
   List<String> _exercise = Strings.exerciseList;
   List<bool> _exerciseValues = List<bool>();
 
-  int _hoursOfSleep = 0;
+  List<String> _foodAdded;
+  List<String> _drinkAdded;
+  List<String> _exerciseAdded;
+
+  int _hoursOfSleep;
 
   void _incrementSleepHours() {
     setState(() {
@@ -49,18 +53,13 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
     }
   }
 
-  void _setSleepHours() {
-    setState(() {
-     widget.entry.hoursSlept = _hoursOfSleep;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    widget.entry.food = List<String>();
-    widget.entry.drink = List<String>();
-    widget.entry.exercise = List<String>();
+    _hoursOfSleep = 0;
+    _foodAdded = [];
+    _drinkAdded = [];
+    _exerciseAdded = [];
 
     setState(() {
       for(int i=0; i < _food.length; i++){
@@ -75,29 +74,53 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
     });
   }
 
+   DailyLog _logFromState() {
+    return DailyLog(
+      feeling: widget.entry.feeling,
+      food: _foodAdded,
+      drink: _drinkAdded,
+      exercise: _exerciseAdded,
+      hoursSlept: _hoursOfSleep,
+      symptoms: widget.entry.symptoms,
+      timeOfOccurance: widget.entry.timeOfOccurance
+    );
+  }
+
+  Future<void> _addLog(BuildContext context) async {
+    final user = Provider.of<User>(context, listen: false);
+    final _firestoreService = FirestoreService(uid: user.uid);
+    final log = _logFromState();
+    await _firestoreService.addDailyLog(log);
+  }
+
+  void _submit() {
+    _addLog(context);
+    Navigator.popAndPushNamed(context, Strings.initialRoute);
+  } 
+
   List<Step> get _steps => [
     Step(
       isActive: _currentStep >= 0,
       title: Text('Eating',),
-      content: CheckBoxGrid(_food, _foodValues, widget.entry.food),
+      content: CheckBoxGrid(_food, _foodValues, _foodAdded),
       state: _currentStep > 0 ? StepState.complete : StepState.editing
       ),
     Step(
       isActive: _currentStep >= 1,
       title: Text('Drinking'),
-      content: CheckBoxGrid(_drink, _drinkValues, widget.entry.drink),
+      content: CheckBoxGrid(_drink, _drinkValues, _drinkAdded),
       state: _currentStep > 1 ? StepState.complete : StepState.editing
       ),
     Step(
       isActive: _currentStep >= 2,
       title: Text('Exercising'),
-      content: CheckBoxGrid(_exercise, _exerciseValues, widget.entry.exercise),
+      content: CheckBoxGrid(_exercise, _exerciseValues, _exerciseAdded),
       state: _currentStep > 2 ? StepState.complete : StepState.editing
       ),
     Step(
       isActive: _currentStep >= 3,
       title: Text('Hours of Sleep'),
-      content: IncrementCard('Hours', _hoursOfSleep, _incrementSleepHours, _decrementSleepHours, _setSleepHours),
+      content: IncrementCard('Hours', _hoursOfSleep, _incrementSleepHours, _decrementSleepHours),
       state: _currentStep > 3 ? StepState.complete : StepState.editing
       ),
     Step(
@@ -109,25 +132,17 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
   ];
 
   void _onStepContinue() {
-    if (_currentStep == 0 && widget.entry.food.isNotEmpty) {
-       setState(() {
-          _currentStep ++;
-      });
+    if (_currentStep == 0 && _foodAdded.isNotEmpty) {
+       setState(() => _currentStep ++);
     }
-    if (_currentStep == 1 && widget.entry.drink.isNotEmpty) {
-      setState(() {
-          _currentStep ++;
-      });
+    if (_currentStep == 1 && _drinkAdded.isNotEmpty) {
+      setState(() =>  _currentStep ++);
     }
-    if (_currentStep == 2 && widget.entry.exercise.isNotEmpty) {
-      setState(() {
-          _currentStep ++;
-      });
+    if (_currentStep == 2 && _exerciseAdded.isNotEmpty) {
+      setState(() =>  _currentStep ++);
     }
-    if (_currentStep == 3 && widget.entry.hoursSlept != null) {
-      setState(() {
-          _currentStep ++;
-      });
+    if (_currentStep == 3 && _hoursOfSleep > 0) {
+      setState(() =>  _currentStep ++);
     }
   }
 
@@ -144,10 +159,10 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
        child: Container(
           padding: EdgeInsets.all(25),
           child: Column(children: <Widget>[
-          ListSummaryBuilder('Eaten', widget.entry.food), 
-          ListSummaryBuilder('Drank', widget.entry.drink),
-          ListSummaryBuilder('Exercised', widget.entry.exercise),
-          ItemSummaryBuilder('Hours Slept', widget.entry.hoursSlept),
+          ListSummaryBuilder('Eaten', _foodAdded), 
+          ListSummaryBuilder('Drank', _drinkAdded),
+          ListSummaryBuilder('Exercised', _exerciseAdded),
+          ItemSummaryBuilder('Hours Slept', _hoursOfSleep),
         ]),
       ),
      );
@@ -155,18 +170,14 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    final _firestoreService = FirestoreService(uid: user.uid);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: TextFormat('What have you been up to?', Theme.of(context).accentColor),
       ),
       body: StepperWidget(_currentStep, () => _onStepContinue(), ()=>_onStepCancel(), _steps),
-      floatingActionButton: _currentStep == _steps.length -1 ? FloatingActionToSave(() async {
-        await _firestoreService.addDailyLog(widget.entry);
-        Navigator.of(context).popUntil((route) => route.isFirst);
-      }, Icons.check) : null,
+      floatingActionButton: _currentStep == _steps.length -1 ? 
+      FloatingActionToSave(() => _submit(), Icons.check) : null,
     );
   }
 }

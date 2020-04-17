@@ -54,7 +54,7 @@ class _FloatingActionButtonWidgetState extends State<FloatingActionButtonWidget>
           ),
         ),
         Transform.translate(
-          offset: Offset.fromDirection(4.71239, animation.value * 70),
+          offset: Offset.fromDirection(3.14159, animation.value * 70),
           child: FloatingActionButton(
             onPressed: () =>
                 Navigator.popAndPushNamed(context, Strings.addPhotoRoute),
@@ -68,7 +68,7 @@ class _FloatingActionButtonWidgetState extends State<FloatingActionButtonWidget>
           ),
         ),
         Transform.translate(
-          offset: Offset.fromDirection(3.14159, animation.value * 70),
+          offset: Offset.fromDirection(4.71239, animation.value * 70),
           child: FloatingActionButton(
             onPressed: () =>
                 Navigator.popAndPushNamed(context, Strings.addDailyLogRoute),

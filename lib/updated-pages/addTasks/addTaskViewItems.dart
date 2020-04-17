@@ -72,7 +72,7 @@ class _TaskViewItemsState extends State<TaskViewItems> {
       _taskStarted = _taskStarted.add(Duration(days: 1));
       _addRepeatingTask(context);
     }
-    Navigator.popAndPushNamed(context, Strings.home);
+    Navigator.popAndPushNamed(context, Strings.initialRoute);
   } 
 
   Widget _buildListView() {

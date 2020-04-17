@@ -33,8 +33,6 @@ class Router {
         return MaterialPageRoute(builder: (_) => VerificationPage());
       case Strings.resetPasswordRoute:
         return MaterialPageRoute(builder: (_) => ResetPasswordPage());
-      case Strings.home:
-        return MaterialPageRoute(builder: (_) => HomePage());
       case Strings.sendDetailsRoute:
         return MaterialPageRoute(builder: (_) => SendDetailsPage());
       case Strings.addTaskRoute:
