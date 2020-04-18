@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/constants/strings.dart';
+import 'package:me_daily/updated-pages/profile/edit_profile/edit_height_weight.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_personal_information.dart';
+import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_photo.dart';
+import 'package:me_daily/updated-pages/profile/edit_profile/submit_edit.dart';
 import 'package:me_daily/widgets/flatButton_widget.dart';
 
 class EditProfile extends StatefulWidget {
@@ -19,7 +22,12 @@ List<Step> _steps = [
   Step(
     isActive: _currentStep >= 0,
     title: Text('Basic Information'),
-    content: EditBasicInformationPage(),
+    content: EditHeightAndWeightPage(),
+  ),
+  Step(
+    isActive: _currentStep >= 0,
+    title: Text('Basic Information'),
+    content: EditProfilePhoto(),
   ),
 ];
 
