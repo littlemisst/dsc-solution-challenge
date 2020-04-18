@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/model/user.dart';
-import 'package:me_daily/pages/homePage.dart';
 import 'package:me_daily/updated-pages/authentication/authentication_page.dart';
+import 'package:me_daily/updated-pages/homepage/homePage.dart';
 import 'package:provider/provider.dart';
 
 

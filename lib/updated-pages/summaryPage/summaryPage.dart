@@ -8,6 +8,7 @@ import 'package:me_daily/updated-pages/summaryPage/recordBloodPressure.dart';
 import 'package:me_daily/updated-pages/summaryPage/recordTemperature.dart';
 import 'package:me_daily/updated-pages/summaryPage/recordWater.dart';
 import 'package:me_daily/updated-pages/summaryPage/sleepChart.dart';
+import 'package:me_daily/updated-pages/summaryPage/sleepChartPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/tasksDetails.dart';
 import 'package:me_daily/updated-pages/summaryPage/tasksList.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +57,7 @@ class _SummaryPageState extends State<SummaryPage> {
             _buildTiles(context, TasksDetails()),
             _buildTiles(context, RecordWater()),
             _buildTiles(context, TasksList()),
-            _buildTiles(context, SleepChart()),
+            _buildTiles(context, SleepChartPage()),
           ],
         ),
       ),

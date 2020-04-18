@@ -4,7 +4,6 @@ import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/pages/addPhotos.dart';
-import 'package:me_daily/pages/homePage.dart';
 import 'package:me_daily/routes/authentication_wrapper.dart';
 import 'package:me_daily/routes/first_installation_wrapper.dart';
 import 'package:me_daily/updated-pages/addTasks/addTask.dart';

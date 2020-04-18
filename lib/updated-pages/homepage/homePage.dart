@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/appBarTextFormat.dart';
 import 'package:me_daily/constants/strings.dart';
-import 'package:me_daily/pages/floatingActionButtonWidget.dart';
 import 'package:me_daily/pages/mapPage.dart';
-import 'package:me_daily/pages/popUpMenu.dart';
 import 'package:me_daily/updated-pages/calendarPage/dailyTasksPage.dart';
+import 'package:me_daily/updated-pages/homepage/popUpMenu.dart';
 import 'package:me_daily/updated-pages/photos/gallery_page.dart';
 import 'package:me_daily/updated-pages/summaryPage/summaryPage.dart';
+
+import 'floatingActionButtonWidget.dart';
 
 class HomePage extends StatefulWidget {
   @override

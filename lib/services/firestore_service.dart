@@ -1,3 +1,4 @@
+import 'package:me_daily/model/sleep.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:me_daily/model/feeling.dart';
@@ -20,9 +21,7 @@ class FirestoreService {
       return Photo(
           fileName: document.data['fileName'],
           downloadURL: document.data['downloadURL'],
-          description: document.data['description']
-          );
-          
+          description: document.data['description']);
     }).toList();
   }
 
@@ -34,11 +33,13 @@ class FirestoreService {
         .map(_photoFromFirebase);
   }
 
-  Future uploadPhoto(String downloadURL, String fileName, String description) async {
-    return await userData
-        .document(uid)
-        .collection('photos')
-        .add({'downloadURL': downloadURL, 'fileName': fileName, 'description': description});
+  Future uploadPhoto(
+      String downloadURL, String fileName, String description) async {
+    return await userData.document(uid).collection('photos').add({
+      'downloadURL': downloadURL,
+      'fileName': fileName,
+      'description': description
+    });
   }
 
   //retrieve to health chart
@@ -68,6 +69,23 @@ class FirestoreService {
         .map(_healthFromFirebase);
   }
 
+  //retrieve to sleep chart
+  List<Sleep> _sleepFromFirebase(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents.map((document) {
+      return Sleep(
+          dateTime: DateTime.parse(document.data['logCreated']),
+          hoursSleep: document.data['hoursSlept']);
+    }).toList();
+  }
+
+  Stream<List<Sleep>> get sleep {
+    return userData
+        .document(uid)
+        .collection('dailyLogs')
+        .snapshots()
+        .map(_sleepFromFirebase);
+  }
+
 //add and retrieve for profile
   Profile _profileFromFirebase(DocumentSnapshot documentSnapshot) {
     return Profile(
@@ -92,15 +110,16 @@ class FirestoreService {
     return await userData.document(uid).setData(profile.toJson());
   }
 
-
- 
 //add and retrieve for task
   Future addTask(Task task) async {
     return await userData.document(uid).collection('tasks').add(task.toJson());
   }
-  
+
   Future addRepeatingTasks(Task task) async {
-    return await userData.document(uid).collection('duplicateTasks').add(task.toJson());
+    return await userData
+        .document(uid)
+        .collection('duplicateTasks')
+        .add(task.toJson());
   }
 
   List<Task> _taskFromFirebase(QuerySnapshot querySnapshot) {
@@ -125,8 +144,8 @@ class FirestoreService {
         .map(_taskFromFirebase);
   }
 
-  Stream<List<Task>> get allTasksStream => CombineLatestStream
-  .combine2(tasks, repetitiveTasks, (a, b) => a+b);
+  Stream<List<Task>> get allTasksStream =>
+      CombineLatestStream.combine2(tasks, repetitiveTasks, (a, b) => a + b);
 
   //add and retrieve for daily logs
   Future addDailyLog(DailyLog entry) async {
@@ -149,9 +168,12 @@ class FirestoreService {
         .snapshots()
         .map(_logsFromFirebase);
   }
-  
+
   //add location
   Future saveLocation(LocationLog location) async {
-    return await userData.document(uid).collection('locationLog').add(location.toJson());
+    return await userData
+        .document(uid)
+        .collection('locationLog')
+        .add(location.toJson());
   }
 }
