@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/model/profile.dart';
+import 'package:me_daily/widgets/raisedButton_widget.dart';
 import 'package:me_daily/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:me_daily/constants/strings.dart';
 
 class UserProfileSummary extends StatefulWidget {
   @override
@@ -18,8 +20,6 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
     var formatter = new DateFormat('MM-dd-yyyy');
     String formatBirthDate = formatter.format(_currentProfile.birthDate);
     var difference = DateTime.now().difference(_currentProfile.birthDate).inDays;
-    var now = DateTime.now().toString();
-    var born = _currentProfile.birthDate.toString();
     var age = (difference/365).floor().toString();
 
     if (difference < 0) {
@@ -124,6 +124,8 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
           TextWidget(text: 'Category: '),
           SizedBox(width: 5.0),
           Text(bmiCategory, style: TextStyle(fontSize: 18.0)),
+          SizedBox(height:50),
+          RaisedButtonIcon(Icons.edit, 'Edit Profile', () {Navigator.popAndPushNamed(context, Strings.editProfilePageRoute);})
       ]),
     );
   }
