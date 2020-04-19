@@ -1,4 +1,10 @@
 class Strings {
+  static const profile = 'Profile';
+  static const message = 'Messages';
+  static const shareDetails = 'Share Details';
+  static const help = 'Help';
+  static const signOut = 'Sign Out';
+
   static const foodList = [
     'vegetables',
     'fruits',
@@ -81,4 +87,6 @@ class Strings {
   static const String editProfilePageRoute = '/edit-profile-page';
   static const String summaryPageRoute = '/summary-page';
   static const String resetPasswordFormRoute = '/reset-password-form';
+  static const String messagesPage = '/messages-page';
+  static const String helpPage = '/help-page';
 }

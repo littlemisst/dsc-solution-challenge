@@ -4,7 +4,9 @@ import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/pages/addPhotos.dart';
+import 'package:me_daily/pages/helpPage.dart';
 import 'package:me_daily/pages/mapPage.dart';
+import 'package:me_daily/pages/messagePage.dart';
 import 'package:me_daily/routes/authentication_wrapper.dart';
 import 'package:me_daily/routes/first_installation_wrapper.dart';
 import 'package:me_daily/updated-pages/addTasks/addTask.dart';
@@ -66,6 +68,10 @@ class Router {
         return MaterialPageRoute(builder: (_) => SummaryPage());
       case Strings.resetPasswordFormRoute:
         return MaterialPageRoute(builder: (_) => ResetPasswordForm());
+        case Strings.messagesPage:
+        return MaterialPageRoute(builder: (_) => MessagesPage());
+        case Strings.helpPage:
+        return MaterialPageRoute(builder: (_) => HelpPage());
       default:
         return MaterialPageRoute(builder: (_) => Container());
     }

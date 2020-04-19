@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/appBarTextFormat.dart';
-import 'package:me_daily/constants/strings.dart';
+import 'package:me_daily/model/profile.dart';
+import 'package:me_daily/model/user.dart';
 import 'package:me_daily/pages/mapPage.dart';
+import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/updated-pages/calendarPage/dailyTasksPage.dart';
-import 'package:me_daily/updated-pages/homepage/popUpMenu.dart';
+import 'package:me_daily/updated-pages/homepage/sideDrawer.dart';
 import 'package:me_daily/updated-pages/photos/gallery_page.dart';
 import 'package:me_daily/updated-pages/summaryPage/summaryPage.dart';
+import 'package:provider/provider.dart';
 
 import 'floatingActionButtonWidget.dart';
 
@@ -25,27 +28,23 @@ class _HomePageState extends State<HomePage>
     MapPage(),
   ];
 
+  Widget _sideDrawer() {
+    final user = Provider.of<User>(context);
+    return StreamProvider<Profile>.value(
+        value: FirestoreService(uid: user.uid).profile,
+        child: SideDrawerWidget()
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: TextFormat('ME DAILY'),
-        actions: <Widget>[
-          FlatButton(
-            child: CircleAvatar(
-              backgroundColor: Theme.of(context).buttonColor,
-              child: Icon(
-                Icons.person,
-                color: Colors.white,
-              ),
-            ),
-            onPressed: () =>
-                Navigator.popAndPushNamed(context, Strings.profilePageRoute),
-          ),
-          PopUpMenu()
-        ],
       ),
+      drawer: _sideDrawer(),
       body: bodies[_currentIndex],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButtonWidget(),
