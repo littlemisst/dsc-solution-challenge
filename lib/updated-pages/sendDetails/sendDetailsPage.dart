@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/constants/strings.dart';
+import 'package:me_daily/model/logs.dart';
+import 'package:me_daily/model/profile.dart';
+import 'package:me_daily/model/summary.dart';
+import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/updated-pages/sendDetails/attachmentPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/basicInformationPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/dailyLogsList.dart';
@@ -10,31 +14,49 @@ class SendDetailsPage extends StatefulWidget {
   _SendDetailsPageState createState() => _SendDetailsPageState();
 }
 
-int _currentStep = 0;
-
-List<Step> _steps = [
-  Step(
-    isActive: _currentStep >= 0,
-    title: Text('Basic Information'),
-    content: BasicInformationPage(),
-  ),
-  Step(
-    isActive: _currentStep >= 1,
-    title: Text('Daily Logs'),
-    content: DailyLogsList(),
-  ),
-  Step(
-    isActive: _currentStep >= 2,
-    title: Text('Attach Files'),
-    content: AttachementPage(),
-  ),
-  Step(
-      isActive: _currentStep >= 3,
-      title: Text('Add Receipient'),
-      content: RecipientSelector())
-];
-
 class _SendDetailsPageState extends State<SendDetailsPage> {
+  final FirestoreService _firestoreService = FirestoreService();
+  static UserSummary userSummary = UserSummary();
+  int _currentStep = 0;
+
+  List<Step> get _steps => [
+        Step(
+          isActive: _currentStep >= 0,
+          title: Text('Basic Information'),
+          content: BasicInformationPage(
+            profile: userSummary.profile,
+            onChangeProfile: onChangeProfile,
+          ),
+        ),
+        Step(
+          isActive: _currentStep >= 1,
+          title: Text('Daily Logs'),
+          content: DailyLogsList(),
+        ),
+        Step(
+          isActive: _currentStep >= 2,
+          title: Text('Attach Files'),
+          content: AttachementPage(),
+        ),
+        Step(
+            isActive: _currentStep >= 3,
+            title: Text('Add Receipient'),
+            content: RecipientSelector(
+                recipient: userSummary.recipient,
+                onChangeRecipient: onChangeRecipient))
+      ];
+  void onChangeRecipient(value) {
+    setState(() {
+      userSummary.recipient = value;
+    });
+  }
+
+  void onChangeProfile(value) {
+    setState(() {
+      userSummary.profile = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,14 +79,19 @@ class _SendDetailsPageState extends State<SendDetailsPage> {
           return Row(
             children: <Widget>[
               FlatButton(
-                child: _currentStep != _steps.length - 1
-                    ? Text('Continue', style: TextStyle(color: Colors.white))
-                    : Text('Send', style: TextStyle(color: Colors.white)),
-                color: Colors.pink[100],
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                onPressed: onStepContinue,
-              ),
+                  child: _currentStep != _steps.length - 1
+                      ? Text('Continue', style: TextStyle(color: Colors.white))
+                      : Text('Send', style: TextStyle(color: Colors.white)),
+                  color: Colors.pink[100],
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  onPressed: _currentStep != _steps.length - 1
+                      ? onStepContinue
+                      : () async {
+                          await _firestoreService.sendSummary(userSummary);
+                          Navigator.popAndPushNamed(
+                              context, Strings.initialRoute);
+                        }),
               SizedBox(
                 width: 10,
               ),
