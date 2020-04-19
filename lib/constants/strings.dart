@@ -73,9 +73,12 @@ class Strings {
   static const String taskViewItemsRoute = '/task-view-items';
   static const String addPhotoRoute = '/add-photo';
   static const String addDailyLogRoute = '/add-daily-log';
+  static const String locationLogSummary = '/location-log-summary';
+  static const String mapPage = '/map';
   static const String basicQuestionsLogRoute = '/basic-questions-log';
   static const String sickQuestionsLogRoute = '/sick-questions-log';
   static const String profilePageRoute = '/profile-page';
+  static const String editProfilePageRoute = '/edit-profile-page';
   static const String summaryPageRoute = '/summary-page';
   static const String resetPasswordFormRoute = '/reset-password-form';
 }

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:me_daily/model/user.dart';
 import 'dart:async';
 import 'package:me_daily/widgets/button_widget.dart';
+import 'package:me_daily/constants/strings.dart';
 
 class MapPage extends StatefulWidget {
   @override
@@ -108,6 +109,8 @@ class _MapPageState extends State<MapPage> {
             Button(function: _getLocation, icon: Icons.flag, toolTip: 'Get Location'),
             SizedBox(height: 15.0,),
             Button(function: _onMapTypeButtonPressed, icon: Icons.map, toolTip: 'Change Map Type'),
+            SizedBox(height: 15.0,),
+            Button(function: () {  Navigator.popAndPushNamed(context, Strings.locationLogSummary); }, icon: Icons.view_list, toolTip: 'Locations log'),
             SizedBox(height: 15.0,),
           ],
         ),

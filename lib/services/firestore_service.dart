@@ -207,4 +207,23 @@ class FirestoreService {
         .snapshots()
         .map(_userFromFirebase);
   }
+  
+  List<LocationLog> _locationLogsFromFirebase(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents
+      .map((document) {
+      return LocationLog(
+      dateAndTime: document.data['dateAndTime'].toDate(), 
+      locationName: document.data['locationName']);
+     })
+     .toList();
+  }
+
+  Stream<List<LocationLog>> get locationLog {
+    return userData
+    .document(uid)
+    .collection('locationLog')
+    .snapshots()
+    .map(_locationLogsFromFirebase);
+  }
 }
+
