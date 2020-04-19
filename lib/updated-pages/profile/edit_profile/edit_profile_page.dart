@@ -5,6 +5,9 @@ import 'package:me_daily/updated-pages/profile/edit_profile/edit_personal_inform
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_photo.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/submit_edit.dart';
 import 'package:me_daily/widgets/flatButton_widget.dart';
+import 'package:me_daily/model/profile.dart';
+import 'package:me_daily/model/user.dart';
+import 'package:me_daily/services/firestore_service.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -32,7 +35,7 @@ List<Step> _steps = [
 ];
 
 class _EditProfileState extends State<EditProfile> {
-  
+
   next() {
     if (_currentStep >= _steps.length - 1) return;
         setState(() {
@@ -46,6 +49,7 @@ class _EditProfileState extends State<EditProfile> {
       _currentStep--;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

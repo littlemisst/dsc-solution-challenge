@@ -15,6 +15,7 @@ class EditHeightAndWeightPage extends StatefulWidget {
 
 class _EditHeightAndWeightPageState extends State<EditHeightAndWeightPage> {
   Profile _profile = Profile();
+  
   ScrollController _weightController;
   ScrollController _heightController;
   String _bloodTypeValue;
