@@ -40,7 +40,7 @@ class _LocationListState extends State<LocationList> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: Container(
+      body: locationLog.isNotEmpty ? Container(
         child: ListView.builder(
           itemCount: locationLog.length,
           itemBuilder: (BuildContext context, int index) {
@@ -48,9 +48,15 @@ class _LocationListState extends State<LocationList> {
               padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
               child: buildListOfLocations(context, locationLog[index])
             );
-        }
+          }
         )
-      ),
+      ) : Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget> [
+        SizedBox(height: 80),
+        Icon(Icons.not_listed_location, color: Colors.blueGrey[200] ),
+        Text(' No Saved Location', style: TextStyle(color: Colors.blueGrey[200]))
+      ])
     );
   }
 }

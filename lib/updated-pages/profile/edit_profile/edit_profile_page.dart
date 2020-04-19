@@ -57,7 +57,7 @@ class _EditProfileState extends State<EditProfile> {
         leading: FlatButton(
           child: Icon(Icons.arrow_back),
           onPressed: () =>
-              Navigator.popAndPushNamed(context, Strings.initialRoute),
+              Navigator.popAndPushNamed(context, Strings.profilePageRoute),
         ),
         title: Text(
           'Edit Profile',
