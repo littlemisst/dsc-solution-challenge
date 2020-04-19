@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: TextFormat('ME DAILY', Colors.black),
+        title: TextFormat('ME DAILY'),
         actions: <Widget>[
           FlatButton(
             child: CircleAvatar(

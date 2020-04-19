@@ -39,7 +39,7 @@ class _AddTaskState extends State<AddTask> {
             onPressed: () =>
                 Navigator.popAndPushNamed(context, Strings.initialRoute),
           ),
-          title: TextFormat('ADD TASK', Theme.of(context).primaryColor),
+          title: TextFormat('ADD TASK'),
         ),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(10),

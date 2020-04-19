@@ -18,7 +18,7 @@ class MainProfile extends StatelessWidget {
           onPressed: () =>
               Navigator.popAndPushNamed(context, Strings.initialRoute),
         ),
-        title: TextFormat('Profile',Theme.of(context).primaryColor),
+        title: TextFormat('Profile'),
         backgroundColor: Colors.white,
       ),
       body: StreamProvider<Profile>.value(

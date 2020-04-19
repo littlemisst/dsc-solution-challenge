@@ -173,7 +173,7 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: TextFormat('What have you been up to?', Theme.of(context).accentColor),
+        title: TextFormat('What have you been up to?'),
       ),
       body: StepperWidget(_currentStep, () => _onStepContinue(), ()=>_onStepCancel(), _steps),
       floatingActionButton: _currentStep == _steps.length -1 ? 

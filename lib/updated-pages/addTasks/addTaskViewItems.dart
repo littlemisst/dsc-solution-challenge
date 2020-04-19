@@ -146,7 +146,7 @@ class _TaskViewItemsState extends State<TaskViewItems> {
       appBar: AppBar(
         centerTitle: true,
         automaticallyImplyLeading: false,
-        title: TextFormat('${widget.task.taskType}', Theme.of(context).primaryColor)),
+        title: TextFormat(widget.task.taskType)),
       body: SingleChildScrollView(
           padding: EdgeInsets.all(10),
           child: Column(

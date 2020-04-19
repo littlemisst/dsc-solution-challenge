@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return StreamProvider<User>.value(
       value: FirebaseAuthentication().user,
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Me Daily',
         theme: ThemeData(
           primaryColor: Colors.cyan,
           accentColor: Colors.cyan,
