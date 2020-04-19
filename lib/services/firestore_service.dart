@@ -1,4 +1,6 @@
 import 'package:me_daily/model/sleep.dart';
+import 'package:me_daily/model/summary.dart';
+import 'package:me_daily/model/user.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:me_daily/model/feeling.dart';
@@ -175,5 +177,34 @@ class FirestoreService {
         .document(uid)
         .collection('locationLog')
         .add(location.toJson());
+  }
+
+  //add summary
+  Future sendSummary(UserSummary userSummary) async {
+    Firestore _firestore = Firestore.instance;
+    //function to userSummary.recipient == user.email use
+    String _email = userSummary.recipient;
+    Stream<User> user = getUserFromFirebase(_email);
+    print(user);
+
+    return await userData
+        .document("6Feg2GdkYFffYJAwbz5nAGYbchr2") //should generated once a recipient is chosen
+        .collection("messages")
+        .add(userSummary.toJson());
+  }
+
+  User _userFromFirebase(QuerySnapshot querySnapshot) {
+    return User(
+        email: querySnapshot.documents[0].data['email'],
+        uid: querySnapshot.documents[0].data['uid']);
+  }
+
+  Stream<User> getUserFromFirebase(email) {
+    Firestore _firestore = Firestore.instance;
+    return _firestore
+        .collection("mockUsers")
+        .where("email", isEqualTo: email)
+        .snapshots()
+        .map(_userFromFirebase);
   }
 }

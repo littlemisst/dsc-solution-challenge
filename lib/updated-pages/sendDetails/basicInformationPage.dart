@@ -7,6 +7,9 @@ import 'package:me_daily/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 
 class BasicInformationPage extends StatefulWidget {
+  final Profile profile;
+  final onChangeProfile;
+  BasicInformationPage({this.profile, this.onChangeProfile});
   @override
   _BasicInformationPageState createState() => _BasicInformationPageState();
 }
@@ -18,19 +21,23 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
 
   Widget _buildNameField(context, initialValue) {
     return TextFormField(
-        validator: (value) {
-          if (value.isEmpty) {
-            return 'Please enter some text';
-          }
-          return null;
-        },
-        initialValue: initialValue,
-        decoration: const InputDecoration(
-          labelText: 'Name',
-          enabledBorder:
-              OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-        ),
-        onChanged: (String value) => {_profile.name = value});
+      validator: (value) {
+        if (value.isEmpty) {
+          return 'Please enter some text';
+        }
+        return null;
+      },
+      initialValue: initialValue,
+      decoration: const InputDecoration(
+        labelText: 'Name',
+        enabledBorder:
+            OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+      ),
+      onChanged: (String value) => {
+        _profile.name = value,
+        widget.onChangeProfile(_profile),
+      },
+    );
   }
 
   Widget _buildGender(context, initialValue) {
@@ -46,9 +53,9 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
       ],
       onChanged: (String value) => {
         setState(() {
-          //_gender = value;
           _profile.gender = value;
-        })
+        }),
+        widget.onChangeProfile(_profile)
       },
       hint: Text('Gender'),
       value: _profile.gender ?? initialValue,
@@ -69,7 +76,10 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
         enabledBorder:
             OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
       ),
-      onChanged: (String value) => {_profile.address = value},
+      onChanged: (String value) => {
+        _profile.address = value,
+        widget.onChangeProfile(_profile),
+      },
     );
   }
 
@@ -91,7 +101,10 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
               initialDate: currentValue ?? DateTime.now(),
               lastDate: DateTime(2100));
         },
-        onChanged: (DateTime value) => {_profile.birthDate = value},
+        onChanged: (DateTime value) => {
+          _profile.birthDate = value,
+          widget.onChangeProfile(_profile),
+        },
       ),
     ]);
   }
@@ -110,7 +123,8 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
       onChanged: (String value) => {
         setState(() {
           _profile.civilStatus = value;
-        })
+        }),
+        widget.onChangeProfile(_profile)
       },
       hint: Text('Civil Status'),
       value: _profile.civilStatus ?? inititalValue,
@@ -138,7 +152,8 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
           onChanged: (String value) => {
             setState(() {
               _profile.bloodType = value;
-            })
+            }),
+            widget.onChangeProfile(_profile)
           },
           hint: Text('Blood Type'),
           value: _profile.bloodType ?? initialValue,
@@ -152,8 +167,7 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
       stream: FirestoreService(uid: user.uid).profile,
       builder: (context, snapshots) {
         if (snapshots.hasData) {
-          Profile _currentProfile = snapshots.data;
-
+          _profile = snapshots.data;
           return SingleChildScrollView(
             child: Form(
               key: _formKey,
@@ -162,17 +176,17 @@ class _BasicInformationPageState extends State<BasicInformationPage> {
                 child: Column(children: <Widget>[
                   Text('Basic Information'),
                   SizedBox(height: 15),
-                  _buildNameField(context, _currentProfile.name),
+                  _buildNameField(context, _profile.name),
                   SizedBox(height: 5),
-                  _buildGender(context, _currentProfile.gender),
+                  _buildGender(context, _profile.gender),
                   SizedBox(height: 5),
-                  _buildAddressField(context, _currentProfile.address),
+                  _buildAddressField(context, _profile.address),
                   SizedBox(height: 5),
-                  _buildDatePicker(context, _currentProfile.birthDate),
+                  _buildDatePicker(context, _profile.birthDate),
                   SizedBox(height: 5),
-                  _buildCivilStatus(context, _currentProfile.civilStatus),
+                  _buildCivilStatus(context, _profile.civilStatus),
                   SizedBox(height: 5),
-                  _buildBloodType(context, _currentProfile.bloodType),
+                  _buildBloodType(context, _profile.bloodType),
                 ]),
               ),
             ),
