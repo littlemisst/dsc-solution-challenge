@@ -10,9 +10,7 @@ class DailyLog {
   List<String> drink;
   List<String> exercise;
   int hoursSlept;
-  int waterDrank;
   List<String> symptoms;
-  double temperature;
   DateTime symptomsStarted = DateTime.now();
   DateTime timeOfOccurance;
 
