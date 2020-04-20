@@ -87,6 +87,7 @@ class FirestoreService {
     return userData
         .document(uid)
         .collection('dailyLogs')
+        .orderBy('logCreated')
         .snapshots()
         .map(_sleepFromFirebase);
   }
@@ -114,6 +115,7 @@ class FirestoreService {
   Future submitProfile(Profile profile) async {
     return await userData.document(uid).setData(profile.toJson());
   }
+
 //add and retrieve for task
   Future addTask(Task task) async {
     return await userData.document(uid).collection('tasks').add(task.toJson());
@@ -190,6 +192,7 @@ class FirestoreService {
     return userData
         .document(uid)
         .collection('dailyLogs')
+        .orderBy('logCreated')
         .snapshots()
         .map(_logsFromFirebase);
   }
@@ -204,49 +207,47 @@ class FirestoreService {
 
   //add summary
   Future sendSummary(UserSummary userSummary) async {
-    Firestore _firestore = Firestore.instance;
-    //function to userSummary.recipient == user.email use
-    String _email = userSummary.recipient;
-    Stream<User> user = getUserFromFirebase(_email);
-    print(user);
+    // Firestore _firestore = Firestore.instance;
+    // //function to userSummary.recipient == user.email use
+    // String _email = userSummary.recipient;
+    // Stream<User> user = getUserFromFirebase(_email);
+    // print(user);
 
     return await userData
-        .document("6Feg2GdkYFffYJAwbz5nAGYbchr2") //should generated once a recipient is chosen
+        .document(userSummary
+            .recipient.uid) //should generated once a recipient is chosen
         .collection("messages")
         .add(userSummary.toJson());
   }
 
-  User _userFromFirebase(QuerySnapshot querySnapshot) {
-    return User(
-        email: querySnapshot.documents[0].data['email'],
-        uid: querySnapshot.documents[0].data['uid']);
+  List<User> _recipientsFromFirebase(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents.map((document) {
+      return User(
+          email: document.data['email'], uid: document.data['uid']);
+    }).toList();
   }
 
-  Stream<User> getUserFromFirebase(email) {
+  Stream<List<User>> get users {
     Firestore _firestore = Firestore.instance;
     return _firestore
         .collection("mockUsers")
-        .where("email", isEqualTo: email)
         .snapshots()
-        .map(_userFromFirebase);
+        .map(_recipientsFromFirebase);
   }
-  
+
   List<LocationLog> _locationLogsFromFirebase(QuerySnapshot querySnapshot) {
-    return querySnapshot.documents
-      .map((document) {
+    return querySnapshot.documents.map((document) {
       return LocationLog(
-      dateAndTime: document.data['dateAndTime'].toDate(), 
-      locationName: document.data['locationName']);
-     })
-     .toList();
+          dateAndTime: document.data['dateAndTime'].toDate(),
+          locationName: document.data['locationName']);
+    }).toList();
   }
 
   Stream<List<LocationLog>> get locationLog {
     return userData
-    .document(uid)
-    .collection('locationLog')
-    .snapshots()
-    .map(_locationLogsFromFirebase);
+        .document(uid)
+        .collection('locationLog')
+        .snapshots()
+        .map(_locationLogsFromFirebase);
   }
 }
-
