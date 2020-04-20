@@ -18,6 +18,7 @@ import 'package:me_daily/updated-pages/dailyLogs/basicQuestionsLog.dart';
 import 'package:me_daily/updated-pages/dailyLogs/sickQuestionsLog.dart';
 import 'package:me_daily/updated-pages/locationLog/location_log_summary.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_page.dart';
+import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_photo.dart';
 import 'package:me_daily/updated-pages/profile/profile_page.dart';
 import 'package:me_daily/updated-pages/sendDetails/sendDetailsPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/summaryPage.dart';
@@ -62,6 +63,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => MainProfile());
       case Strings.editProfilePageRoute:
         return MaterialPageRoute(builder: (_) => EditProfile());
+      case Strings.editProfilePhotoPageRoute:
+        return MaterialPageRoute(builder: (_) => EditProfilePhoto());
       case Strings.summaryPageRoute:
         return MaterialPageRoute(builder: (_) => SummaryPage());
       case Strings.resetPasswordFormRoute:

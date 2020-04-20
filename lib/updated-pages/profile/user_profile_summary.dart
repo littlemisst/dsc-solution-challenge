@@ -50,13 +50,22 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
           child: Column(
             children: <Widget>[
               SizedBox(height: 20.0),
-              _currentProfile.downloadUrl == null
-                  ? CircleAvatar(
-                      radius: 45.0, backgroundColor: Colors.grey[350])
-                  : CircleAvatar(
-                      radius: 45.0,
-                      backgroundImage: NetworkImage(_currentProfile.downloadUrl, scale: 50.0),
-                  ),      
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(width: 50),
+                  _currentProfile.downloadUrl == null
+                      ? CircleAvatar(
+                          radius: 45.0, backgroundColor: Colors.grey[350])
+                      : CircleAvatar(
+                          radius: 45.0,
+                          backgroundImage: NetworkImage(_currentProfile.downloadUrl, scale: 50.0),
+                      ),
+                      IconButton(tooltip: 'Change Profile Photo' , icon: Icon(Icons.edit, color: Colors.white), iconSize: 20,
+                      onPressed: () {Navigator.popAndPushNamed(context, Strings.editProfilePhotoPageRoute);},
+                  ),   
+                ],
+              ),
               SizedBox(height: 12.0),
               Text(_currentProfile.name,
                 style: TextStyle(
