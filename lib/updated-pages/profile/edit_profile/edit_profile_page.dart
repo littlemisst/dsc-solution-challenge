@@ -1,117 +1,146 @@
 import 'package:flutter/material.dart';
-import 'package:me_daily/constants/strings.dart';
-import 'package:me_daily/updated-pages/profile/edit_profile/edit_height_weight.dart';
-import 'package:me_daily/updated-pages/profile/edit_profile/edit_personal_information.dart';
-import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_photo.dart';
-import 'package:me_daily/widgets/flatButton_widget.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
+import 'package:me_daily/widgets/raisedButton_widget.dart';
+import 'package:me_daily/constants/strings.dart';
+import 'package:provider/provider.dart';
+import 'package:me_daily/common-widgets/widgetContainer.dart';
+import 'package:me_daily/widgets/edit_profile_widgets.dart';
+import 'package:me_daily/widgets/height_weight_widgets.dart';
 
 class EditProfile extends StatefulWidget {
   @override
   _EditProfileState createState() => _EditProfileState();
 }
 
-int _currentStep = 0;
-
-List<Step> _steps = [
-  Step(
-    isActive: _currentStep >= 0,
-    title: Text('Basic Information'),
-    content: EditBasicInformationPage(),
-  ),
-  Step(
-    isActive: _currentStep >= 0,
-    title: Text('Basic Information'),
-    content: EditHeightAndWeightPage(),
-  ),
-  Step(
-    isActive: _currentStep >= 0,
-    title: Text('Basic Information'),
-    content: EditProfilePhoto(),
-  ),
-];
-
 class _EditProfileState extends State<EditProfile> {
+  Profile _profile = Profile();
 
-  //  Profile _profileFromState() {
-  //   return Profile(
-  //     name:  _name ?? '_name' ,
-  //     address:  _address ?? '_address',
-  //     gender:  _gender ?? '_gender',
-  //     civilStatus: _civilStatus ?? '_civilStatus',
-  //     bloodType:  _bloodType ?? '_bloodType',
-  //     birthDate:  _birthDate ?? DateTime.now(),
-  //     weight:  20 ?? 121,
-  //     height:  212 ?? 2121,
-  //     profilePhotoFileName:  '21212121' ?? '_birthDate',
-  //     downloadUrl:  '21212121' ?? '_birthDate',
-  //   );
-  // }
+  ScrollController _weightController;
+  ScrollController _heightController;
+  final metersController = TextEditingController();
+  final kilogramController = TextEditingController();
 
-  // Future<void> _editProfile(BuildContext context) async {
-  //   final user = Provider.of<User>(context, listen: false);
-  //   final _firestoreService = FirestoreService(uid: user.uid);
-  //   final profile = _profileFromState();
-  //   await _firestoreService.submitProfile(profile);
-  // }
-
-  // void _submit() {
-  //   _editProfile(context);
-  // } 
-
-  next() {
-    if (_currentStep >= _steps.length - 1) return;
-        setState(() {
-          _currentStep++;
+  @override
+  void initState() {
+    super.initState();
+    _weightController = ScrollController(initialScrollOffset: 0);
+    _heightController = ScrollController(initialScrollOffset: 0);
+    kilogramController.addListener(() {
+      _profile.weight = double.parse(kilogramController.text);
+    });
+    metersController.addListener(() {
+      _profile.height = double.parse(metersController.text);
     });
   }
-
-  cancel() {
-    if (_currentStep <= 0) return;
-    setState(() {
-      _currentStep--;
-    });
+  @override
+  void dispose() {
+    metersController.dispose();
+    kilogramController.dispose();
+    super.dispose();
+  }
+  void _handleHeightScaleChanged(int scalePoints) {
+    int inchOffest = scalePoints ~/ 20;
+    double meters = inchOffest / 12;
+    double roundOffMeters = double.parse((meters).toStringAsFixed(2));
+    metersController.text = roundOffMeters.toString();
+  }
+  void _handleWeightScaleChanged(int scalePoints) {
+    int gram = scalePoints ~/ 20;
+    double kg = ((gram * 100) / 1000);
+    kilogramController.text = kg.toString();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: FlatButton(
-          child: Icon(Icons.arrow_back),
-          onPressed: () =>
-              Navigator.popAndPushNamed(context, Strings.profilePageRoute),
-        ),
-        title: Text(
-          'Edit Profile',
-          style: TextStyle(color: Theme.of(context).primaryColor),
-        ),
-        backgroundColor: Colors.white,
-      ),
-      body: Stepper(
-        currentStep: _currentStep,
-         controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}){
-            return Container(
-              child: Row (children: <Widget>[
-                FlatButtonWidget(
-                  color: Colors.white,
-                  child: Text('Back'),
-                  onPressed: _currentStep == 0 ? null : onStepCancel
-                ), SizedBox(width: 10),
-                FlatButtonWidget(
-                  color: Theme.of(context).primaryColor,
-                  child: _currentStep == _steps.length - 1 ? Text('Next') : Text('Next', style: TextStyle(color: Colors.white)),
-                  onPressed: _currentStep == _steps.length - 1 ? null : onStepContinue
-                )
-              ]) 
-            );
-          },
-        onStepContinue: next,
-        onStepCancel: cancel,
-        steps: _steps,
-      ),
+    final user = Provider.of<User>(context);
+    final _firestoreService = FirestoreService(uid: user.uid);
+    return StreamBuilder<Profile>(
+      stream: FirestoreService(uid: user.uid).profile,
+      builder: (context, snapshots) {
+        if (snapshots.hasData) {
+          Profile _currentProfile = snapshots.data;
+
+          return Scaffold(
+            appBar: AppBar(
+              leading: FlatButton(
+                child: Icon(Icons.arrow_back),
+                onPressed: () =>
+                    Navigator.popAndPushNamed(context, Strings.initialRoute),
+              ),
+              title: Text('Edit Profile', style: TextStyle(color: Theme.of(context).primaryColor)),
+              backgroundColor: Colors.white,
+            ),
+            body: SingleChildScrollView(
+              child: ContentContainer(
+                padding: EdgeInsets.all(15),
+                width: MediaQuery.of(context).size.width,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  child: Column(children: <Widget>[
+                    SizedBox(height: 10.0),
+                    buildTextFormField(context, 'Name', _currentProfile.name,
+                        (String value) {
+                      _currentProfile.name = value;
+                    }),
+                    SizedBox(height: 15.0),
+                    buildGender(context, _currentProfile.gender, (String value) => {
+                      setState(() {
+                        _currentProfile.gender = value;
+                      }),
+                    }),
+                    SizedBox(height: 15.0),
+                    buildBloodType(context,  _currentProfile.bloodType, (String value) => {
+                      setState(() {
+                        _currentProfile.bloodType = value;
+                    }),
+                    }),
+                    SizedBox(height: 15.0),
+                    buildTextFormField(
+                        context, 'Address', _currentProfile.address,
+                        (String value) {
+                        _currentProfile.address = value;
+                    }),
+                    SizedBox(height: 15.0),
+                    buildDateTimePicker(context, _currentProfile.birthDate,
+                        (DateTime value) {
+                      _currentProfile.birthDate = value;
+                    }),
+                    SizedBox(height: 15.0),
+                    buildCivilStatus(context, _currentProfile.civilStatus, (String value) => {
+                        setState(() {
+                          _currentProfile.civilStatus = value;
+                      }),
+                    }), 
+                    SizedBox(height: 10.0),
+                     SizedBox(height: 20),
+                    buildHeightScale(context, _heightController, _handleHeightScaleChanged),
+                    SizedBox(height: 12),
+                    buildHeightField(context, metersController),
+                    SizedBox(height: 18),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        buildWeightScale(context, _weightController, _handleWeightScaleChanged),
+                        SizedBox(height:12),
+                        buildWeightField(context, kilogramController),
+                        SizedBox(height: 10.0),
+                      ],
+                    ),
+                    RaisedButtonIcon(Icons.edit, 'Submit Edited Profile', (){
+                      _firestoreService.submitProfile(_currentProfile);
+                        Navigator.popAndPushNamed(context, Strings.profilePageRoute);
+                        }
+                      )
+                  ]),
+                ),
+              ),
+            ),
+          );
+        }
+        return Container();
+      },
     );
   }
 }

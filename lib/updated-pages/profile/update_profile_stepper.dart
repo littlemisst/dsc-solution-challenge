@@ -37,12 +37,12 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
           TextFormFieldWidget(label: 'Name', value: _profile.name, onChanged: (String value) {
             _profile.name = value;
           }), SizedBox(height: 15.0),
-          buildGender(context, _profile.gender, _genderValue, (String value) => {
+          buildGender(context,  _profile.gender, _genderValue, (String value) => {
               setState(() {
                 _genderValue = value;
                 _profile.gender = value;
           })}), SizedBox(height: 15.0),
-          buildBloodType(context, _profile.bloodType,_bloodTypeValue, (String value) => {
+          buildBloodType(context,_profile.bloodType, _bloodTypeValue, (String value) => {
                   setState(() {
                     _bloodTypeValue = value;
                     _profile.bloodType = value;
@@ -53,7 +53,7 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
           DatePicker('Birthdate', (DateTime value) {
             _profile.birthDate = value;
           }), SizedBox(height: 15.0),
-          buildCivilStatus(context, _profile.civilStatus, _civilStatusValue, (String value) => {
+          buildCivilStatus(context, _profile.civilStatus,_civilStatusValue, (String value) => {
               setState(() {
                 _civilStatusValue = value;
                 _profile.civilStatus = value;
