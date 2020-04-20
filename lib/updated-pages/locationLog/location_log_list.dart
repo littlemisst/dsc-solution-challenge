@@ -13,10 +13,10 @@ class LocationList extends StatefulWidget {
 class _LocationListState extends State<LocationList> {
   @override
   Widget build(BuildContext context) {
-    List<LocationLog> locationLog = Provider.of<List<LocationLog>>(context);
+    List<LocationLog> locations = Provider.of<List<LocationLog>>(context);
 
-    if (locationLog == null ) {
-      locationLog = [];
+    if (locations == null ) {
+      locations = [];
     }
 
     Widget buildListOfLocations(context, document) {
@@ -40,13 +40,13 @@ class _LocationListState extends State<LocationList> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: locationLog.isNotEmpty ? Container(
+      body: locations.isNotEmpty ? Container(
         child: ListView.builder(
-          itemCount: locationLog.length,
+          itemCount: locations.length,
           itemBuilder: (BuildContext context, int index) {
             return ContentContainer(
               padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
-              child: buildListOfLocations(context, locationLog[index])
+              child: buildListOfLocations(context, locations[index])
             );
           }
         )

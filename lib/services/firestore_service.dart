@@ -109,7 +109,6 @@ class FirestoreService {
   Future submitProfile(Profile profile) async {
     return await userData.document(uid).setData(profile.toJson());
   }
-
 //add and retrieve for task
   Future addTask(Task task) async {
     return await userData.document(uid).collection('tasks').add(task.toJson());

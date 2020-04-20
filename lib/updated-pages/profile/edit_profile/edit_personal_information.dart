@@ -24,30 +24,16 @@ class _EditBasicInformationPageState extends State<EditBasicInformationPage> {
   String _civilStatus;
   String _address;
   DateTime _birthDate;
+  String _currentProfileName;
+  String _currentProfileAddress;
+  String _currentProfileCivilStatus;
+  String _currentProfileBloodType;
+  String _currentProfileGender;
+  DateTime _currentProfileBirthdate;
 
 
-  Profile _profileFromState() {
-    return Profile(
-      name: _name,
-      address: _address,
-      gender: _gender,
-      civilStatus: _civilStatus,
-      bloodType: _bloodType,
-      birthDate: _birthDate,
-    );
-  }
-
-  Future<void> _addLog(BuildContext context) async {
-    final user = Provider.of<User>(context, listen: false);
-    final _firestoreService = FirestoreService(uid: user.uid);
-    final profile = _profileFromState();
-    await _firestoreService.submitProfile(profile);
-  }
-
-  void _submit() {
-    _addLog(context);
-  } 
-
+ 
+  
 
   @override
   Widget build(BuildContext context) {
@@ -66,41 +52,41 @@ class _EditBasicInformationPageState extends State<EditBasicInformationPage> {
           SizedBox(height: 10.0),
           buildTextFormField(context, 'Name', _currentProfile.name, (String value) {
             setState(() {
-              value = _currentProfile.name;
              _name = value;
+             _currentProfileName = _currentProfile.name;
             });
           })
           , SizedBox(height: 15.0),
           buildGender(context, _profile.gender, _currentProfile.gender, (String value) => {
               setState(() {
-                value = _currentProfile.gender;
-              _gender = value;
+                _gender = _currentProfile.gender;
+                _currentProfileGender = _currentProfile.gender;
           })}), SizedBox(height: 15.0),
           buildBloodType(context, _profile.bloodType,_currentProfile.bloodType, (String value) => {
             setState(() {
-              value = _currentProfile.bloodType;
-              _bloodType = value;   
+              _bloodType = value;  
+              _currentProfileBloodType = _currentProfile.bloodType;
           })}),SizedBox(height: 15.0),
           buildTextFormField(context, 'Address', _currentProfile.address, (String value) {
             setState(() {
-              value = _currentProfile.address;
               _address = value;
+              _currentProfileAddress = _currentProfile.address;
             });
           }),
           SizedBox(height: 15.0),
           buildDateTimePicker(context, _currentProfile.birthDate, (DateTime value) {
             setState(() {
-              value = _currentProfile.birthDate;
             _birthDate = value;
+            _currentProfileBirthdate = _currentProfile.birthDate;
             });
             
           }), SizedBox(height: 15.0),
           buildCivilStatus(context, _profile.civilStatus,_currentProfile.civilStatus, (String value) => {
               setState(() {
-                value = _currentProfile.civilStatus;
                 _civilStatus = value;
+                _currentProfileCivilStatus = _currentProfile.civilStatus;
           })}), SizedBox(height: 10.0),
-          RaisedButtonIcon(Icons.subdirectory_arrow_left, 'Submit', () async {_submit();})
+          // RaisedButtonIcon(Icons.subdirectory_arrow_left, 'Submit', (){})
           ]),
          ),
         );

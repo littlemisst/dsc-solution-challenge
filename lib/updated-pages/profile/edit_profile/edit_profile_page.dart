@@ -3,7 +3,6 @@ import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_height_weight.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_personal_information.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_photo.dart';
-import 'package:me_daily/updated-pages/profile/edit_profile/submit_edit.dart';
 import 'package:me_daily/widgets/flatButton_widget.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/user.dart';
@@ -35,6 +34,32 @@ List<Step> _steps = [
 ];
 
 class _EditProfileState extends State<EditProfile> {
+
+  //  Profile _profileFromState() {
+  //   return Profile(
+  //     name:  _name ?? '_name' ,
+  //     address:  _address ?? '_address',
+  //     gender:  _gender ?? '_gender',
+  //     civilStatus: _civilStatus ?? '_civilStatus',
+  //     bloodType:  _bloodType ?? '_bloodType',
+  //     birthDate:  _birthDate ?? DateTime.now(),
+  //     weight:  20 ?? 121,
+  //     height:  212 ?? 2121,
+  //     profilePhotoFileName:  '21212121' ?? '_birthDate',
+  //     downloadUrl:  '21212121' ?? '_birthDate',
+  //   );
+  // }
+
+  // Future<void> _editProfile(BuildContext context) async {
+  //   final user = Provider.of<User>(context, listen: false);
+  //   final _firestoreService = FirestoreService(uid: user.uid);
+  //   final profile = _profileFromState();
+  //   await _firestoreService.submitProfile(profile);
+  // }
+
+  // void _submit() {
+  //   _editProfile(context);
+  // } 
 
   next() {
     if (_currentStep >= _steps.length - 1) return;
