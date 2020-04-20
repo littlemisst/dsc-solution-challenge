@@ -69,6 +69,11 @@ class Strings {
   static const unwell = 'Unwell';
   static const sick = 'Sick';
 
+  static const systolic = 'Systolic';
+  static const diastolic = 'Diastolic';
+  static const record = 'Record';
+ 
+
   static const String initialRoute = '/';
   static const String authenticationRoute = '/authentication';
   static const String signInRoute = '/sign-in';

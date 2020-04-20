@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/rawMaterialButton.dart';
 
 class RecordWater extends StatefulWidget {
   @override
@@ -26,23 +27,13 @@ class _RecordWaterState extends State<RecordWater> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Expanded(
-                  child: RawMaterialButton(
-                    child: Icon(
-                      Icons.remove,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        if (water != 0) {
-                          water--;
-                        }
-                      });
-                    },
-                    shape: CircleBorder(),
-                    fillColor: Theme.of(context).buttonColor,
-                  ),
-                ),
+                RawMaterialButtonWidget(Icons.remove, () {
+                  setState(() {
+                    if (water != 0) {
+                      water--;
+                    }
+                  });
+                }),	
                 Expanded(
                   child: Center(
                     child: Text(
@@ -54,21 +45,8 @@ class _RecordWaterState extends State<RecordWater> {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: RawMaterialButton(
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        water++;
-                      });
-                    },
-                    shape: CircleBorder(),
-                    fillColor: Theme.of(context).buttonColor,
-                  ),
-                ),
+                RawMaterialButtonWidget(Icons.add, (){ setState(() => water++);
+                })
               ],
             ),
           )

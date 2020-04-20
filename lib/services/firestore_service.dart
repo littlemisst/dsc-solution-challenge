@@ -1,5 +1,7 @@
+import 'package:me_daily/model/bloodPressure.dart';
 import 'package:me_daily/model/sleep.dart';
 import 'package:me_daily/model/summary.dart';
+import 'package:me_daily/model/temperature.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/model/water.dart';
 import 'package:rxdart/rxdart.dart';
@@ -158,6 +160,20 @@ class FirestoreService {
   }
 
   Future addWaterLog(Water entry) async {
+    return await userData
+        .document(uid)
+        .collection('basicLogs')
+        .add(entry.toJson());
+  }
+
+  Future addTemperatureLog(Temperature entry) async {
+    return await userData
+        .document(uid)
+        .collection('basicLogs')
+        .add(entry.toJson());
+  }
+
+  Future addBloodPressureLog(BloodPressure entry) async {
     return await userData
         .document(uid)
         .collection('basicLogs')
