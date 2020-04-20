@@ -42,7 +42,6 @@ class _SideDrawerWidgetState extends State<SideDrawerWidget> {
   @override
   Widget build(BuildContext context) {
     Profile _currentProfile = Provider.of<Profile>(context);
-    _currentProfile ?? print('hello');
     User _user = Provider.of<User>(context);
 
     return Drawer(

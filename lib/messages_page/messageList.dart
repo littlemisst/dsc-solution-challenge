@@ -32,7 +32,7 @@ class _MessagesListState extends State<MessagesList> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: Container(
+      body: userMessages.isNotEmpty ? Container(
         child: ListView.builder(
             itemCount: userMessages.length,
             itemBuilder: (BuildContext context, int index) {
@@ -42,7 +42,13 @@ class _MessagesListState extends State<MessagesList> {
               );
             }
           ),
-      )
+      ) : Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget> [
+        SizedBox(height: 80),
+        Icon(Icons.message, color: Colors.blueGrey[200] ),
+        Text(' No Messages Available', style: TextStyle(color: Colors.blueGrey[200]))
+      ])
     );
   }
   Widget _buildMessagesList(context, document) {

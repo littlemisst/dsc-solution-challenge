@@ -8,7 +8,7 @@ class UserSummary {
   User recipient;
   User sender;
 
-  UserSummary({this.profile, this.dailyLog, this.recipient});
+  UserSummary({this.profile, this.dailyLog, this.recipient, this.sender});
   Map<String, dynamic> toJson() => {
         "profile": profile.toJson(),
         "dailyLog": dailyLog,

@@ -235,4 +235,24 @@ class FirestoreService {
         .snapshots()
         .map(_locationLogsFromFirebase);
   }
+    List<UserSummary> _userMessagesFromFirebase(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents.map((document) {
+      return UserSummary(
+          profile: document.data['profile'].toJson(),
+          dailyLog: document.data['dailyLog'].toJson(),
+          recipient: document.data['dailyLog'],
+          sender: document.data['sender'].toJson(),
+          );
+    }).toList();
+  }
+
+  Stream<List<UserSummary>> get messages {
+    return userData
+      .document(uid)
+      .collection('messages')
+      .snapshots()
+      .map(_userMessagesFromFirebase);
+  }
+
+
 }
