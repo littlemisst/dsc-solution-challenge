@@ -161,11 +161,12 @@ class FirestoreService {
         .add(entry.toJson());
   }
 
-  Future addWaterLog(Water entry) async {
+  Future addWaterLog(Water entry, String documentID) async {
     return await userData
         .document(uid)
         .collection('basicLogs')
-        .add(entry.toJson());
+        .document(documentID)
+        .setData(entry.toJson());
   }
 
   Future addTemperatureLog(Temperature entry) async {
@@ -182,11 +183,10 @@ class FirestoreService {
         .add(entry.toJson());
   }
 
-  Future updateWater(int increment) async {
+  Future updateWater(String documentID, int increment) async {
    return await userData
         .document(uid)
-        .collection('basicLogs')
-        .document()
+        .collection('basicLogs').document(documentID)
         .updateData(<String, dynamic> {
           'waterDrank' : FieldValue.increment(increment)
         });
