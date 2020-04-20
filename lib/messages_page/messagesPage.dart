@@ -8,12 +8,13 @@ import 'package:provider/provider.dart';
 class MessagesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-      return StreamProvider<List<UserSummary>>.value(
-      value: FirestoreService(uid: user.uid).messages,
-      child: Container(
-        child: MessagesList(),
-      ),
-    );
+    // final user = Provider.of<User>(context);
+    //   return StreamProvider<List<UserSummary>>.value(
+    //   value: FirestoreService(uid: user.uid).messages,
+    //   child: Container(
+    //     child: MessagesList(),
+    //   ),
+    // );
+    return Container();
   }
 }
