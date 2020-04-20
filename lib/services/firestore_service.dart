@@ -233,7 +233,7 @@ class FirestoreService {
   Stream<List<User>> get users {
     Firestore _firestore = Firestore.instance;
     return _firestore
-        .collection("mockUsers")
+        .collection("users")
         .snapshots()
         .map(_recipientsFromFirebase);
   }
