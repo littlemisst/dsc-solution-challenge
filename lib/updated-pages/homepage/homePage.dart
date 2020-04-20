@@ -5,6 +5,7 @@ import 'package:me_daily/model/user.dart';
 import 'package:me_daily/pages/mapPage.dart';
 import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/updated-pages/calendarPage/dailyTasksPage.dart';
+import 'package:me_daily/updated-pages/homepage/expandedButton.dart';
 import 'package:me_daily/updated-pages/homepage/sideDrawer.dart';
 import 'package:me_daily/updated-pages/photos/gallery_page.dart';
 import 'package:me_daily/updated-pages/summaryPage/summaryPage.dart';
@@ -36,7 +37,6 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,93 +55,15 @@ class _HomePageState extends State<HomePage>
         color: Colors.white,
         child: Container(
           height: 50,
+          padding: EdgeInsets.all(6),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Expanded(
-                flex: 2,
-                child: FlatButton(
-                  onPressed: () => setState(() {
-                    _currentIndex = 0;
-                  }),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(
-                        Icons.home,
-                        color: Colors.grey,
-                      ),
-                      Text(
-                        'Home',
-                        style: TextStyle(color: Colors.grey),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: FlatButton(
-                  onPressed: () => setState(() {
-                    _currentIndex = 1;
-                  }),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(
-                        Icons.insert_drive_file,
-                        color: Colors.grey,
-                      ),
-                      Text(
-                        'Files',
-                        style: TextStyle(color: Colors.grey),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: SizedBox(),
-              ),
-              Expanded(
-                flex: 2,
-                child: FlatButton(
-                  onPressed: () => setState(() {
-                    _currentIndex = 2;
-                  }),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(
-                        Icons.calendar_today,
-                        color: Colors.grey,
-                      ),
-                      Text(
-                        'Today',
-                        style: TextStyle(color: Colors.grey),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: FlatButton(
-                  onPressed: () => setState(() {
-                    _currentIndex = 3;
-                  }),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(
-                        Icons.location_on,
-                        color: Colors.grey,
-                      ),
-                      Text(
-                        'Maps',
-                        style: TextStyle(color: Colors.grey),
-                      )
-                    ],
-                  ),
-                ),
-              )
+              ExpandedButton(Icons.home, 'Home', () => setState(() => _currentIndex = 0)),
+              ExpandedButton(Icons.insert_drive_file, 'Files', () => setState(() => _currentIndex = 1)),
+              Expanded(flex: 1, child: SizedBox()),
+              ExpandedButton(Icons.event, 'Events', () => setState(() => _currentIndex = 2)),
+              ExpandedButton(Icons.home, 'Maps', () => setState(() => _currentIndex = 3)),
             ],
           ),
         ),

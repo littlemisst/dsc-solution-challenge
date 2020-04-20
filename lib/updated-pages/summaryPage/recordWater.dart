@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/rawMaterialButton.dart';
+import 'package:me_daily/common-widgets/recordLogWidget.dart';
 
 class RecordWater extends StatefulWidget {
   @override
@@ -49,7 +50,7 @@ class _RecordWaterState extends State<RecordWater> {
                 })
               ],
             ),
-          )
+          ),
         ],
       ),
     );

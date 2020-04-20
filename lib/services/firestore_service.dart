@@ -182,6 +182,16 @@ class FirestoreService {
         .add(entry.toJson());
   }
 
+  Future updateWater(int increment) async {
+   return await userData
+        .document(uid)
+        .collection('basicLogs')
+        .document()
+        .updateData(<String, dynamic> {
+          'waterDrank' : FieldValue.increment(increment)
+        });
+  }
+
   List<DailyLog> _logsFromFirebase(QuerySnapshot querySnapshot) {
     return querySnapshot.documents
         .map((document) => DailyLog.fromJson(document.data))
