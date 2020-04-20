@@ -2,7 +2,8 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-Widget buildGender(context, model, initialValue, state) {
+
+Widget buildGender(context, value, state) {
   return Container(
     width: 240,
     child: DropdownButtonFormField<String>(
@@ -16,11 +17,11 @@ Widget buildGender(context, model, initialValue, state) {
     ],
     onChanged: state,
     hint: Text('Gender'),
-    value: initialValue,
+    value: value,
   ));
 }
 
-Widget buildCivilStatus(context, model, initialValue, state) {
+Widget buildCivilStatus(context,value, state) {
   return Container(
     width: 240,
     child: DropdownButtonFormField<String>(
@@ -34,11 +35,11 @@ Widget buildCivilStatus(context, model, initialValue, state) {
     ],
     onChanged: state,
     hint: Text('Civil Status'),
-    value: initialValue,
+    value: value,
   ));
 }
 
-Widget buildBloodType(context, model, initialValue, onChanged) {
+Widget buildBloodType(context, value, onChanged) {
   return  Container(
     width: 240,
     child: DropdownButtonFormField<String>(
@@ -64,7 +65,7 @@ Widget buildBloodType(context, model, initialValue, onChanged) {
         ],
         onChanged: onChanged,
         hint: Text('Blood Type', style: TextStyle(fontSize: 15.0)),
-        value: initialValue,
+        value: value,
       ),
   );
 }
@@ -94,14 +95,17 @@ Widget buildDescription(context, initialValue, description, onChanged) {
 }
 
 Widget buildTextFormField(context, String label, initialValue, onChanged) {
-    return TextFormField(
-        initialValue: initialValue,
-        decoration: InputDecoration(
-          labelText: label,
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-        ),
-        onChanged: onChanged
+    return Container(
+      width: 240,
+      child: TextFormField(
+          initialValue: initialValue,
+          decoration: InputDecoration(
+            labelText: label,
+            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+          ),
+          onChanged: onChanged
+      ),
     );
 }
 

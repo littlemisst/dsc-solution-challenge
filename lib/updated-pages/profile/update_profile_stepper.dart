@@ -37,12 +37,12 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
           TextFormFieldWidget(label: 'Name', value: _profile.name, onChanged: (String value) {
             _profile.name = value;
           }), SizedBox(height: 15.0),
-          buildGender(context, _profile.gender, _genderValue, (String value) => {
+          buildGender(context,  _profile.gender, _genderValue, (String value) => {
               setState(() {
                 _genderValue = value;
                 _profile.gender = value;
           })}), SizedBox(height: 15.0),
-          buildBloodType(context, _profile.bloodType,_bloodTypeValue, (String value) => {
+          buildBloodType(context,_profile.bloodType, _bloodTypeValue, (String value) => {
                   setState(() {
                     _bloodTypeValue = value;
                     _profile.bloodType = value;
@@ -53,7 +53,7 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
           DatePicker('Birthdate', (DateTime value) {
             _profile.birthDate = value;
           }), SizedBox(height: 15.0),
-          buildCivilStatus(context, _profile.civilStatus, _civilStatusValue, (String value) => {
+          buildCivilStatus(context, _profile.civilStatus,_civilStatusValue, (String value) => {
               setState(() {
                 _civilStatusValue = value;
                 _profile.civilStatus = value;
@@ -136,20 +136,15 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
   Future uploadImage() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     final uid = user.uid;
-    String fileUploadName =
-        DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+    String fileUploadName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
     _profile.profilePhotoFileName = fileUploadName;
-        StorageReference _reference = FirebaseStorage.instance
-        .ref()
-        .child('users/$uid/profilePhoto/${_profile.profilePhotoFileName}');
+      StorageReference _reference = FirebaseStorage.instance
+      .ref()
+      .child('users/${user.uid}/profilePhoto/${_profile.profilePhotoFileName}');
     StorageUploadTask uploadTask = _reference.putFile(_image);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     String downloadURL = await _reference.getDownloadURL();
     _profile.downloadUrl = downloadURL;
-    setState(() {
-      _uploaded = true;
-      _profile.downloadUrl = downloadURL;
-    });
   }
   
   Widget _buildAddProfilePhoto() {
@@ -261,8 +256,8 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
                       _image == null ? Container() 
                       : FlatButton(child: Text('Submit Profile', style: TextStyle(color: Colors.white)), color: Theme.of(context).primaryColor,
                       onPressed:() async {
-                      _firestoreService.submitProfile(_profile);
-                      uploadImage();
+                      await _firestoreService.submitProfile(_profile);
+                      await uploadImage();
                       }),
                       
                     ],
