@@ -47,13 +47,15 @@ class _SideDrawerWidgetState extends State<SideDrawerWidget> {
 
     return Drawer(
         child: Column(children: <Widget>[
-      _currentProfile != null
-          ? ItemContainer(
-              top: 20,
-              bottom: 20,
-              child: _userProfile(_currentProfile.downloadUrl, _user.email,
-                  (_currentProfile.name).substring(0, 1)))
-          : Container(),
+      ItemContainer(
+        top: 20,
+        bottom: 20,
+        child: _currentProfile != null
+            ? _userProfile(_currentProfile.downloadUrl, _user.email,
+                _currentProfile.name.substring(0, 1).toUpperCase())
+            : _userProfile(
+                null, _user.email, _user.email.substring(0, 1).toUpperCase()),
+      ),
       Expanded(
           child: ItemContainer(
               top: 0,
