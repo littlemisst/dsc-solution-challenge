@@ -56,7 +56,7 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
             onPressed: () =>
                 Navigator.popAndPushNamed(context, Strings.initialRoute),
           ),
-          title: TextFormat('DAILY LOGS', Theme.of(context).primaryColor),
+          title: TextFormat('DAILY LOGS'),
         ),
         body: Container(
           padding: EdgeInsets.fromLTRB(

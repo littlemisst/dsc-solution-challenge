@@ -4,7 +4,9 @@ import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/pages/addPhotos.dart';
+import 'package:me_daily/pages/helpPage.dart';
 import 'package:me_daily/pages/mapPage.dart';
+import 'package:me_daily/pages/messagePage.dart';
 import 'package:me_daily/routes/authentication_wrapper.dart';
 import 'package:me_daily/routes/first_installation_wrapper.dart';
 import 'package:me_daily/updated-pages/addTasks/addTask.dart';
@@ -18,6 +20,7 @@ import 'package:me_daily/updated-pages/dailyLogs/basicQuestionsLog.dart';
 import 'package:me_daily/updated-pages/dailyLogs/sickQuestionsLog.dart';
 import 'package:me_daily/updated-pages/locationLog/location_log_summary.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_page.dart';
+import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_photo.dart';
 import 'package:me_daily/updated-pages/profile/profile_page.dart';
 import 'package:me_daily/updated-pages/sendDetails/sendDetailsPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/summaryPage.dart';
@@ -62,10 +65,16 @@ class Router {
         return MaterialPageRoute(builder: (_) => MainProfile());
       case Strings.editProfilePageRoute:
         return MaterialPageRoute(builder: (_) => EditProfile());
+      case Strings.editProfilePhotoPageRoute:
+        return MaterialPageRoute(builder: (_) => EditProfilePhoto());
       case Strings.summaryPageRoute:
         return MaterialPageRoute(builder: (_) => SummaryPage());
       case Strings.resetPasswordFormRoute:
         return MaterialPageRoute(builder: (_) => ResetPasswordForm());
+        case Strings.messagesPage:
+        return MaterialPageRoute(builder: (_) => MessagesPage());
+        case Strings.helpPage:
+        return MaterialPageRoute(builder: (_) => HelpPage());
       default:
         return MaterialPageRoute(builder: (_) => Container());
     }

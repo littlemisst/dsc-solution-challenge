@@ -107,7 +107,7 @@ class _AddPhotosState extends State<AddPhotos> {
             onPressed: () =>
                 Navigator.popAndPushNamed(context, Strings.initialRoute),
           ),
-          title: TextFormat('Add Photo', Theme.of(context).primaryColor)),
+          title: TextFormat('Add Photo')),
       body: Column(
         children: <Widget>[
           ContentContainer(

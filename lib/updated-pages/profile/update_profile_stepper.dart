@@ -136,20 +136,15 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
   Future uploadImage() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     final uid = user.uid;
-    String fileUploadName =
-        DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
+    String fileUploadName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
     _profile.profilePhotoFileName = fileUploadName;
-        StorageReference _reference = FirebaseStorage.instance
-        .ref()
-        .child('users/$uid/profilePhoto/${_profile.profilePhotoFileName}');
+      StorageReference _reference = FirebaseStorage.instance
+      .ref()
+      .child('users/${user.uid}/profilePhoto/${_profile.profilePhotoFileName}');
     StorageUploadTask uploadTask = _reference.putFile(_image);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     String downloadURL = await _reference.getDownloadURL();
     _profile.downloadUrl = downloadURL;
-    setState(() {
-      _uploaded = true;
-      _profile.downloadUrl = downloadURL;
-    });
   }
   
   Widget _buildAddProfilePhoto() {
@@ -261,8 +256,8 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
                       _image == null ? Container() 
                       : FlatButton(child: Text('Submit Profile', style: TextStyle(color: Colors.white)), color: Theme.of(context).primaryColor,
                       onPressed:() async {
-                      _firestoreService.submitProfile(_profile);
-                      uploadImage();
+                      await _firestoreService.submitProfile(_profile);
+                      await uploadImage();
                       }),
                       
                     ],

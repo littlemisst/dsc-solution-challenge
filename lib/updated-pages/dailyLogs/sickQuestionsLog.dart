@@ -222,7 +222,7 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextFormat('What do you feel?', Theme.of(context).accentColor),
+        title: TextFormat('What do you feel?'),
         backgroundColor: Colors.white,
         elevation: 1,
       ),

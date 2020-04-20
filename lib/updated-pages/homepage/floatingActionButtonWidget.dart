@@ -42,6 +42,7 @@ class _FloatingActionButtonWidgetState extends State<FloatingActionButtonWidget>
         Transform.translate(
           offset: Offset.fromDirection(0, animation.value * 70),
           child: FloatingActionButton(
+            heroTag: 'addTaskButton',
             onPressed: () =>
                 Navigator.popAndPushNamed(context, Strings.addTaskRoute),
             backgroundColor: Theme.of(context).buttonColor,
@@ -56,6 +57,7 @@ class _FloatingActionButtonWidgetState extends State<FloatingActionButtonWidget>
         Transform.translate(
           offset: Offset.fromDirection(3.14159, animation.value * 70),
           child: FloatingActionButton(
+            heroTag: 'addPhotoButton',
             onPressed: () =>
                 Navigator.popAndPushNamed(context, Strings.addPhotoRoute),
             backgroundColor: Theme.of(context).buttonColor,
@@ -70,6 +72,7 @@ class _FloatingActionButtonWidgetState extends State<FloatingActionButtonWidget>
         Transform.translate(
           offset: Offset.fromDirection(4.71239, animation.value * 70),
           child: FloatingActionButton(
+            heroTag: 'addDailyLogButton',
             onPressed: () =>
                 Navigator.popAndPushNamed(context, Strings.addDailyLogRoute),
             backgroundColor: Theme.of(context).buttonColor,
@@ -82,6 +85,7 @@ class _FloatingActionButtonWidgetState extends State<FloatingActionButtonWidget>
           ),
         ),
         FloatingActionButton(
+          heroTag: 'mainButton',
           onPressed: () {
             if (animationController.isCompleted) {
               animationController.reverse();

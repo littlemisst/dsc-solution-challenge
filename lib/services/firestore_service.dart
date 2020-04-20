@@ -1,6 +1,7 @@
 import 'package:me_daily/model/sleep.dart';
 import 'package:me_daily/model/summary.dart';
 import 'package:me_daily/model/user.dart';
+import 'package:me_daily/model/water.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:me_daily/model/feeling.dart';
@@ -155,6 +156,13 @@ class FirestoreService {
     return await userData
         .document(uid)
         .collection('dailyLogs')
+        .add(entry.toJson());
+  }
+
+  Future addWaterLog(Water entry) async {
+    return await userData
+        .document(uid)
+        .collection('basicLogs')
         .add(entry.toJson());
   }
 

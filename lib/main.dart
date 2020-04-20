@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
             value: FirestoreService().users),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Me Daily',
         theme: ThemeData(
             primaryColor: Colors.cyan,
             accentColor: Colors.cyan,

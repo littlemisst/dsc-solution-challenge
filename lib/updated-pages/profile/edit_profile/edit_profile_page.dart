@@ -15,8 +15,6 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  Profile _profile = Profile();
-
   ScrollController _weightController;
   ScrollController _heightController;
   final metersController = TextEditingController();
@@ -27,12 +25,6 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
     _weightController = ScrollController(initialScrollOffset: 0);
     _heightController = ScrollController(initialScrollOffset: 0);
-    kilogramController.addListener(() {
-      _profile.weight = double.parse(kilogramController.text);
-    });
-    metersController.addListener(() {
-      _profile.height = double.parse(metersController.text);
-    });
   }
   @override
   void dispose() {
@@ -61,13 +53,19 @@ class _EditProfileState extends State<EditProfile> {
       builder: (context, snapshots) {
         if (snapshots.hasData) {
           Profile _currentProfile = snapshots.data;
+              kilogramController.addListener(() {
+              _currentProfile.weight = double.parse(kilogramController.text);
+            });
+              metersController.addListener(() {
+              _currentProfile.height = double.parse(metersController.text);
+            });
 
           return Scaffold(
             appBar: AppBar(
               leading: FlatButton(
                 child: Icon(Icons.arrow_back),
                 onPressed: () =>
-                    Navigator.popAndPushNamed(context, Strings.initialRoute),
+                    Navigator.popAndPushNamed(context, Strings.profilePageRoute),
               ),
               title: Text('Edit Profile', style: TextStyle(color: Theme.of(context).primaryColor)),
               backgroundColor: Colors.white,
@@ -114,25 +112,21 @@ class _EditProfileState extends State<EditProfile> {
                       }),
                     }), 
                     SizedBox(height: 10.0),
-                     SizedBox(height: 20),
+                    Text('Height', style: TextStyle(color: Colors.grey[600])),
                     buildHeightScale(context, _heightController, _handleHeightScaleChanged),
                     SizedBox(height: 12),
-                    buildHeightField(context, metersController),
+                    buildHeightWeightField(context, metersController, _currentProfile.height.toString(), 'm'),
                     SizedBox(height: 18),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        buildWeightScale(context, _weightController, _handleWeightScaleChanged),
-                        SizedBox(height:12),
-                        buildWeightField(context, kilogramController),
-                        SizedBox(height: 10.0),
-                      ],
-                    ),
+                    Text('Weight', style: TextStyle(color: Colors.grey[600])),
+                    buildWeightScale(context, _weightController, _handleWeightScaleChanged),
+                    SizedBox(height:12),
+                    buildHeightWeightField(context, kilogramController, _currentProfile.weight.toString(), 'kg'),
+                    SizedBox(height: 10.0),
                     RaisedButtonIcon(Icons.edit, 'Submit Edited Profile', (){
                       _firestoreService.submitProfile(_currentProfile);
-                        Navigator.popAndPushNamed(context, Strings.profilePageRoute);
-                        }
-                      )
+                      Navigator.popAndPushNamed(context, Strings.profilePageRoute);
+                      }
+                    )
                   ]),
                 ),
               ),

@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 class TextFormat extends StatelessWidget {
   const TextFormat(
-    this.text,
-    this.color
+    this.text
   );
   final String text;
-  final Color color;
-
+ 
   @override
   Widget build(BuildContext context) {
     return Text(text, 
       style: TextStyle(
         fontWeight: FontWeight.bold, 
         fontFamily: 'Montserrat', 
-        color: color, 
+        color: Theme.of(context).primaryColor, 
         fontSize: 20)
     );
   }
