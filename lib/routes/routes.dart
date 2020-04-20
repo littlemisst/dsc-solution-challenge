@@ -6,7 +6,7 @@ import 'package:me_daily/model/task.dart';
 import 'package:me_daily/pages/addPhotos.dart';
 import 'package:me_daily/pages/helpPage.dart';
 import 'package:me_daily/pages/mapPage.dart';
-import 'package:me_daily/pages/messagePage.dart';
+import 'package:me_daily/messages_page/messagesPage.dart';
 import 'package:me_daily/routes/authentication_wrapper.dart';
 import 'package:me_daily/routes/first_installation_wrapper.dart';
 import 'package:me_daily/updated-pages/addTasks/addTask.dart';
