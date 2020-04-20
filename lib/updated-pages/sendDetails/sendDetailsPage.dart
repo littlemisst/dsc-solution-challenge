@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/summary.dart';
+import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/updated-pages/sendDetails/attachmentPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/basicInformationPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/dailyLogsList.dart';
 import 'package:me_daily/updated-pages/sendDetails/recipientSelector.dart';
+import 'package:provider/provider.dart';
 
 class SendDetailsPage extends StatefulWidget {
   @override
@@ -57,6 +59,7 @@ class _SendDetailsPageState extends State<SendDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _user = Provider.of<User>(context);
     return Scaffold(
       appBar: AppBar(
         leading: FlatButton(
@@ -86,6 +89,9 @@ class _SendDetailsPageState extends State<SendDetailsPage> {
                   onPressed: _currentStep != _steps.length - 1
                       ? onStepContinue
                       : () async {
+                          setState(() {
+                            userSummary.sender = _user;
+                          });
                           await _firestoreService.sendSummary(userSummary);
                           Navigator.popAndPushNamed(
                               context, Strings.initialRoute);

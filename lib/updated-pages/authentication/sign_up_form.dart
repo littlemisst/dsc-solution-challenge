@@ -4,6 +4,7 @@ import 'package:me_daily/common-widgets/submitButton.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
+import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/updated-pages/authentication/verification_page.dart';
 
 class SignUp extends StatefulWidget {
@@ -18,6 +19,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   final _firebaseAuth = FirebaseAuthentication();
+  final _firestoreService = FirestoreService();
   final _passwordController = TextEditingController();
 
   bool isLoading = false;
@@ -32,6 +34,7 @@ class _SignUpState extends State<SignUp> {
       });
       User user = await _firebaseAuth
         .signUpWithEmailAndPassword(email, password);
+      await _firestoreService.addUser(user);
       if (user == null) {
         setState(() {
           isLoading = false;

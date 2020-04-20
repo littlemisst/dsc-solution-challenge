@@ -4,6 +4,7 @@ import 'package:me_daily/common-widgets/submitButton.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
+import 'package:me_daily/services/firestore_service.dart';
 
 class SignIn extends StatefulWidget {
   final toggleBetweenForms;
@@ -17,6 +18,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
   final _firebaseAuth = FirebaseAuthentication();
+  final _firestoreService = FirestoreService();
   final _passwordController = TextEditingController();
 
   bool isLoading = false;
@@ -124,8 +126,10 @@ class _SignInState extends State<SignIn> {
                             context, Strings.resetPasswordFormRoute);
                       },
                     ),
-                    SubmitButton('Sign in with Google',
-                        () async => await _firebaseAuth.signInWithGoogle()),
+                    SubmitButton('Sign in with Google', () async {
+                      User user = await _firebaseAuth.signInWithGoogle();
+                      await _firestoreService.addUser(user);
+                    }),
                   ],
                 ),
               ),
