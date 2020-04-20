@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/model/user.dart';
+import 'package:provider/provider.dart';
 
 class RecipientSelector extends StatefulWidget {
-  String recipient;
+  final User recipient;
   final onChangeRecipient;
   RecipientSelector({this.recipient, this.onChangeRecipient});
   @override
@@ -9,35 +11,17 @@ class RecipientSelector extends StatefulWidget {
 }
 
 class _RecipientSelectorState extends State<RecipientSelector> {
-  //String _recipient;
-  // List _recipients = [
-  //   'Doctor 1',
-  //   'Doctor 2',
-  //   'Doctor 3',
-  //   'Doctor 4',
-  // ];
-
   @override
   Widget build(BuildContext context) {
-    // List<DropdownMenuItem<String>> _listOfRecipients = [];
-
-    // _recipients.forEach((recipient) {
-    //   _listOfRecipients.add(
-    //     DropdownMenuItem<String>(child: Text(recipient), value: recipient),
-    //   );
-    // });
-    return Container(
-        child: Center(
-          child: TextFormField(onChanged: widget.onChangeRecipient,),
-      //       child: DropdownButtonFormField<String>(
-      // decoration: InputDecoration(
-      //   enabledBorder:
-      //       OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-      // ),
-      // items: _listOfRecipients,
-      // onChanged: widget.onChangeRecipient,
-      // hint: Text('Share to'),
-      // value: widget.recipient,
+    List<User> _listOfRecipients = Provider.of<List<User>>(context) ?? [];
+    return Container(child: Center(
+      child: TextFormField(
+        onChanged: (value) {
+          User _recipient = _listOfRecipients
+              .firstWhere((recipient) => recipient.email == value);
+          widget.onChangeRecipient(_recipient);
+        },
+      ),
     ));
   }
 }

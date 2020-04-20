@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/constants/strings.dart';
-import 'package:me_daily/model/logs.dart';
-import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/summary.dart';
 import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/updated-pages/sendDetails/attachmentPage.dart';
