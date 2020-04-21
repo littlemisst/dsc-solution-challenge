@@ -258,6 +258,7 @@ class FirestoreService {
     return userData
         .document(uid)
         .collection('locationLog')
+        .orderBy('dateAndTime').limit(1)
         .snapshots()
         .map(_locationLogsFromFirebase);
   }

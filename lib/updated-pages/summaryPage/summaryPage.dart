@@ -4,6 +4,7 @@ import 'package:me_daily/model/feeling.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/updated-pages/summaryPage/healthChart.dart';
+import 'package:me_daily/updated-pages/summaryPage/locationsLogPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/recordBloodPressure.dart';
 import 'package:me_daily/updated-pages/summaryPage/recordTemperature.dart';
 import 'package:me_daily/updated-pages/summaryPage/recordWater.dart';
@@ -48,7 +49,9 @@ class _SummaryPageState extends State<SummaryPage> {
             StaggeredTile.count(1, 1),
             StaggeredTile.count(2, 2),
             StaggeredTile.count(2, 2),
+            StaggeredTile.count(4, 1),
             StaggeredTile.count(4, 4),
+
           ],
           children: <Widget>[
             _buildTiles(context, HealthChart()),
@@ -57,6 +60,7 @@ class _SummaryPageState extends State<SummaryPage> {
             _buildTiles(context, TasksDetails()),
             _buildTiles(context, RecordWater()),
             _buildTiles(context, TasksList()),
+            _buildTiles(context, LocationLogPage()),
             _buildTiles(context, SleepChartPage()),
           ],
         ),
