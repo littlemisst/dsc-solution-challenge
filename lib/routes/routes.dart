@@ -23,7 +23,6 @@ import 'package:me_daily/updated-pages/onBoarding/on_boarding_screens.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_page.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_photo.dart';
 import 'package:me_daily/updated-pages/profile/profile_page.dart';
-import 'package:me_daily/updated-pages/sendDetails/sendDetailsPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/shareDetailsPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/summaryPage.dart';
 
