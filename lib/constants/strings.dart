@@ -95,4 +95,5 @@ class Strings {
   static const String resetPasswordFormRoute = '/reset-password-form';
   static const String messagesPage = '/messages-page';
   static const String helpPage = '/help-page';
+  static const String waterHistoryPage = '/water-history-page';
 }

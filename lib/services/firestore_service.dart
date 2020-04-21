@@ -169,6 +169,21 @@ class FirestoreService {
         .setData(entry.toJson());
   }
 
+  List<Water> _waterLogFromFirebase(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents
+        .map((document) => Water.fromJson(document.data))
+        .toList();
+  }
+
+  Stream<List<Water>> get water {
+    return userData
+        .document(uid)
+        .collection('basicLogs')
+        .orderBy('logCreated')
+        .snapshots()
+        .map(_waterLogFromFirebase);
+  }
+
   Future addTemperatureLog(Temperature entry) async {
     return await userData
         .document(uid)
@@ -183,12 +198,13 @@ class FirestoreService {
         .add(entry.toJson());
   }
 
-  Future updateWater(String documentID, int increment) async {
+  Future updateWater(String documentID, int increment, int conversion) async {
    return await userData
         .document(uid)
         .collection('basicLogs').document(documentID)
         .updateData(<String, dynamic> {
-          'waterDrank' : FieldValue.increment(increment)
+          'waterDrank' : FieldValue.increment(increment),
+          'waterInML'  : conversion
         });
   }
 

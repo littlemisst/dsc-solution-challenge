@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/rawMaterialButton.dart';
-import 'package:me_daily/common-widgets/recordLogWidget.dart';
+import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/model/water.dart';
 import 'package:me_daily/services/firestore_service.dart';
+import 'package:me_daily/updated-pages/summaryPage/waterLog/waterConversion.dart';
 import 'package:provider/provider.dart';
 
 class RecordWater extends StatefulWidget {
@@ -11,16 +12,16 @@ class RecordWater extends StatefulWidget {
   _RecordWaterState createState() => _RecordWaterState();
 }
 
-
-
 class _RecordWaterState extends State<RecordWater> {
   String documentID = DateTime.now().toIso8601String();
   Water _water;
 
   int _waterCount = 0;
+  int _waterML = 0;
 
   Water _waterCountFromState() {
-    return Water(waterDrank: _waterCount, logCreated: DateTime.now());
+    
+    return Water(waterDrank: _waterCount, waterInML: _waterML, logCreated: DateTime.now());
   }
 
   Future<void> _addWaterLog(BuildContext context) async {
@@ -31,9 +32,10 @@ class _RecordWaterState extends State<RecordWater> {
   }
 
   Future<void> _updateWaterLog(BuildContext context, int increment) async {
+    int conversion = WaterConversion(_waterCount).waterInML;
     final user = Provider.of<User>(context, listen: false);
     final _firestoreService = FirestoreService(uid: user.uid);
-    await _firestoreService.updateWater(documentID, increment);
+    await _firestoreService.updateWater(documentID, increment, conversion);
   }
 
   @override
@@ -77,14 +79,18 @@ class _RecordWaterState extends State<RecordWater> {
                    setState(() { 
                      _waterCount++;
                    });
-                   _water = Water(waterDrank: _waterCount);
+                    _water = Water(waterDrank: _waterCount);
                     _water.waterDrank > 1 ?
-                     _updateWaterLog(context, 1) : _addWaterLog(context);
-                })
-
+                    _updateWaterLog(context, 1) : _addWaterLog(context);
+                }),
               ],
             ),
           ),
+          FlatButton(
+            child: Text('View History'),
+            onPressed: () =>
+                Navigator.pushNamed(context, Strings.waterHistoryPage),
+          )
         ],
       ),
     );

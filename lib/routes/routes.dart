@@ -25,6 +25,7 @@ import 'package:me_daily/updated-pages/profile/profile_page.dart';
 import 'package:me_daily/updated-pages/sendDetails/sendDetailsPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/shareDetailsPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/summaryPage.dart';
+import 'package:me_daily/updated-pages/summaryPage/waterLog/waterPage.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -72,10 +73,12 @@ class Router {
         return MaterialPageRoute(builder: (_) => SummaryPage());
       case Strings.resetPasswordFormRoute:
         return MaterialPageRoute(builder: (_) => ResetPasswordForm());
-        case Strings.messagesPage:
+      case Strings.messagesPage:
         return MaterialPageRoute(builder: (_) => MessagesPage());
-        case Strings.helpPage:
+      case Strings.helpPage:
         return MaterialPageRoute(builder: (_) => HelpPage());
+      case Strings.waterHistoryPage:
+        return MaterialPageRoute(builder: (context) => WaterPage.create(context));
       default:
         return MaterialPageRoute(builder: (_) => Container());
     }

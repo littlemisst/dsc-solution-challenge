@@ -39,25 +39,6 @@ class _SideDrawerWidgetState extends State<SideDrawerWidget> {
         ]));
   }
 
-
-  Widget _withoutProfile(email) {
-    return Container(
-        padding: EdgeInsets.fromLTRB(10, 20, 20, 0),
-        child: Row(children: <Widget>[
-           CircleAvatar(
-            radius: 25,
-            backgroundColor: Theme.of(context).primaryColor),
-          Container(
-              margin: EdgeInsets.only(left: 20),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    TextFormat('ME DAILY'),
-                    Text(email, style: TextStyle(color: Colors.grey))
-                  ]))
-        ]));
-  }
-
   @override
   Widget build(BuildContext context) {
     Profile _currentProfile = Provider.of<Profile>(context);
