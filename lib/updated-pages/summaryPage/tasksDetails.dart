@@ -23,8 +23,8 @@ class _TasksDetailsState extends State<TasksDetails> {
             children: <Widget>[
               Center(
                 child: Text(
-                  'Tasks',
-                  style: TextStyle(),
+                  'Tasks', 
+                  style: TextStyle(fontFamily: 'Montserrat'),
                 ),
               ),
               Text(
