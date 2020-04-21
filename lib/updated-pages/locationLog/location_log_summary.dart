@@ -10,7 +10,7 @@ class LocationLogSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
       return StreamProvider<List<LocationLog>>.value(
-      value: FirestoreService(uid: user.uid).locationLog,
+      value: FirestoreService(uid: user.uid).locationLogList,
       child: Container(
         child: LocationList(),
       ),
