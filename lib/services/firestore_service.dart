@@ -262,7 +262,7 @@ class FirestoreService {
         .setData(user.toJson());
   }
 
-  List<LocationLog> _locationLogsFromFirebase(QuerySnapshot querySnapshot) {
+  List<LocationLog> _locationLogFromFirebase(QuerySnapshot querySnapshot) {
     return querySnapshot.documents.map((document) {
       return LocationLog(
           dateAndTime: document.data['dateAndTime'].toDate(),
@@ -274,14 +274,32 @@ class FirestoreService {
     return userData
         .document(uid)
         .collection('locationLog')
+        .orderBy('dateAndTime').limit(1)
         .snapshots()
-        .map(_locationLogsFromFirebase);
+        .map(_locationLogFromFirebase);
+  }
+
+  List<LocationLog> _locationLogsListFromFirebase(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents.map((document) {
+      return LocationLog(
+          dateAndTime: document.data['dateAndTime'].toDate(),
+          locationName: document.data['locationName']);
+    }).toList();
+  }
+
+  Stream<List<LocationLog>> get locationLogList {
+    return userData
+        .document(uid)
+        .collection('locationLog')
+        .orderBy('dateAndTime')
+        .snapshots()
+        .map(_locationLogsListFromFirebase);
   }
     List<UserSummary> _userMessagesFromFirebase(QuerySnapshot querySnapshot) {
     return querySnapshot.documents.map((document) {
       return UserSummary(
           profile: document.data['profile'] as Profile,
-          dailyLog: document.data['dailyLog'] as DailyLog,
+          //dailyLog: document.data['dailyLog'] as DailyLog,
           recipient: document.data['dailyLog'] as User,
           sender: document.data['sender'] as User,
           );

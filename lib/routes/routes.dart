@@ -19,10 +19,10 @@ import 'package:me_daily/updated-pages/dailyLogs/addDailyLog.dart';
 import 'package:me_daily/updated-pages/dailyLogs/basicQuestionsLog.dart';
 import 'package:me_daily/updated-pages/dailyLogs/sickQuestionsLog.dart';
 import 'package:me_daily/updated-pages/locationLog/location_log_summary.dart';
+import 'package:me_daily/updated-pages/onBoarding/on_boarding_screens.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_page.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_photo.dart';
 import 'package:me_daily/updated-pages/profile/profile_page.dart';
-import 'package:me_daily/updated-pages/sendDetails/sendDetailsPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/shareDetailsPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/summaryPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/waterLog/waterPage.dart';
@@ -32,6 +32,8 @@ class Router {
     switch (routeSettings.name) {
       case Strings.initialRoute:
         return MaterialPageRoute(builder: (_) => FirstInstallationWrapper());
+      case Strings.onBoardingRoute:
+        return MaterialPageRoute(builder: (_) => OnBoardingScreen());
       case Strings.authenticationRoute:
         return MaterialPageRoute(builder: (_) => AuthenticationWrapper());
       case Strings.signInRoute:

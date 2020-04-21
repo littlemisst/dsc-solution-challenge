@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/constants/strings.dart';
+import 'package:me_daily/model/locationLog.dart';
+import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/profile.dart';
+import 'package:me_daily/model/sleep.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/routes/routes.dart';
 import 'package:me_daily/service_locator.dart';
@@ -45,6 +48,12 @@ class BuildMaterialApp extends StatelessWidget {
             providers: [
               StreamProvider<Profile>.value(
                   value: FirestoreService(uid: _user.uid).profile),
+              StreamProvider<List<Sleep>>.value(
+                  value: FirestoreService(uid: _user.uid).sleep),
+              StreamProvider<List<DailyLog>>.value(
+                  value: FirestoreService(uid: _user.uid).logs),
+              StreamProvider<List<LocationLog>>.value(
+                  value: FirestoreService(uid: _user.uid).locationLogList)
             ],
             child: MaterialApp(
               title: 'Me Daily',

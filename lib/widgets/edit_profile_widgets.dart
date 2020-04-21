@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 
-Widget buildGender(context, value, state) {
+Widget buildGender(context, currentValue, initialValue, state) {
   return Container(
     width: 240,
     child: DropdownButtonFormField<String>(
@@ -16,8 +16,8 @@ Widget buildGender(context, value, state) {
       DropdownMenuItem<String>(child: Text('Female'), value: 'Female'),
     ],
     onChanged: state,
-    hint: Text('Gender'),
-    value: value,
+    hint: Text(currentValue, style: TextStyle(color: Colors.black)),
+    value: initialValue,
   ));
 }
 
