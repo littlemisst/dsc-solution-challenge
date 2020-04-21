@@ -23,6 +23,7 @@ import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_page.da
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_photo.dart';
 import 'package:me_daily/updated-pages/profile/profile_page.dart';
 import 'package:me_daily/updated-pages/sendDetails/sendDetailsPage.dart';
+import 'package:me_daily/updated-pages/sendDetails/shareDetailsPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/summaryPage.dart';
 
 class Router {
@@ -39,7 +40,7 @@ class Router {
       case Strings.resetPasswordRoute:
         return MaterialPageRoute(builder: (_) => ResetPasswordPage());
       case Strings.sendDetailsRoute:
-        return MaterialPageRoute(builder: (_) => SendDetailsPage());
+        return MaterialPageRoute(builder: (_) => ShareDetailsPage());
       case Strings.mapPage:
         return MaterialPageRoute(builder: (_) => MapPage());
       case Strings.locationLogSummary:

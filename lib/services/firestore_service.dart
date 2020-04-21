@@ -279,6 +279,4 @@ class FirestoreService {
       .snapshots()
       .map(_userMessagesFromFirebase);
   }
-
-
 }
