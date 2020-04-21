@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/expandedTextFieldWidget.dart';
 import 'package:me_daily/common-widgets/recordLogWidget.dart';
+import 'package:me_daily/common-widgets/viewHistory.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/bloodPressure.dart';
 import 'package:me_daily/model/user.dart';
@@ -37,14 +38,16 @@ class _RecordBloodPressureState extends State<RecordBloodPressure> {
       padding: EdgeInsets.all(15),
       child: Column(
         children: <Widget>[
-         Align(
-            alignment: Alignment.topLeft,
+        Row(children: <Widget>[
+          Expanded(
             child: Container(
               child: Text(
-                'Blood Pressure',
+                'Blood Pressure', style: TextStyle(fontFamily: 'Montserrat')
               ),
             ),
           ),
+          ViewHistory(() => Navigator.pushNamed(context, Strings.bpHistoryPage))
+        ]),
           Expanded(
             child: Row(
               children: <Widget>[
@@ -55,15 +58,6 @@ class _RecordBloodPressureState extends State<RecordBloodPressure> {
               ],
             ),
           ),
-          InkWell(
-            child: Text('View History', 
-              style: TextStyle(
-                decoration: TextDecoration.underline,
-                color: Theme.of(context).primaryColor),
-              ),
-            splashColor: Theme.of(context).primaryColor,
-            onTap: () => Navigator.pushNamed(context, Strings.bpHistoryPage),
-          )
         ],
       ),
     );

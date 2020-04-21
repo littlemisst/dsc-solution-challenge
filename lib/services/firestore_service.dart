@@ -210,12 +210,30 @@ class FirestoreService {
         .map(_waterLogFromFirebase);
   }
 
-  Future addTemperatureLog(Temperature entry) async {
+  Future addTemperatureLog(Temperature entry, String documentID) async {
     return await userData
         .document(uid)
         .collection('basicLogs')
-        .add(entry.toJson());
+        .document(documentID)
+        .setData(entry.toJson());
   }
+
+  List<Temperature> _tempLogFromFirebase(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents
+        .map((document) => Temperature.fromJson(document.data))
+        .toList();
+  }
+
+  Stream<List<Temperature>> get temperature {
+    return userData
+        .document(uid)
+        .collection('basicLogs')
+        .orderBy('logCreated')
+        .where('type', isEqualTo: 'temperature')
+        .snapshots()
+        .map(_tempLogFromFirebase);
+  }
+
 
   Future addBloodPressureLog(BloodPressure entry, String documentID) async {
     return await userData

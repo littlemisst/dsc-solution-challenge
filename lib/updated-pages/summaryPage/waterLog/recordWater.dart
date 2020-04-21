@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/rawMaterialButton.dart';
+import 'package:me_daily/common-widgets/viewHistory.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/model/water.dart';
@@ -86,15 +87,7 @@ class _RecordWaterState extends State<RecordWater> {
               ],
             ),
           ),
-          InkWell(
-            child: Text('View History', 
-              style: TextStyle(
-                decoration: TextDecoration.underline,
-                color: Theme.of(context).primaryColor),
-              ),
-            splashColor: Theme.of(context).primaryColor,
-            onTap: () => Navigator.pushNamed(context, Strings.waterHistoryPage),
-          )
+          ViewHistory(() => Navigator.pushNamed(context, Strings.waterHistoryPage))
         ],
       ),
     );

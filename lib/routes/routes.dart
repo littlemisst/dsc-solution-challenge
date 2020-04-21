@@ -26,6 +26,7 @@ import 'package:me_daily/updated-pages/profile/profile_page.dart';
 import 'package:me_daily/updated-pages/sendDetails/shareDetailsPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/bloodPressureLog/bpPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/summaryPage.dart';
+import 'package:me_daily/updated-pages/summaryPage/temperatureLog/tempPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/waterLog/waterPage.dart';
 
 class Router {
@@ -84,6 +85,8 @@ class Router {
         return MaterialPageRoute(builder: (context) => WaterPage.create(context));
       case Strings.bpHistoryPage:
         return MaterialPageRoute(builder: (context) => BloodPressurePage.create(context));
+      case Strings.temperatureHistoryPage:
+        return MaterialPageRoute(builder: (context) => TemperaturePage.create(context));
       default:
         return MaterialPageRoute(builder: (_) => Container());
     }

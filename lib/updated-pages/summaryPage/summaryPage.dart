@@ -6,11 +6,11 @@ import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/updated-pages/summaryPage/bloodPressureLog/recordBloodPressure.dart';
 import 'package:me_daily/updated-pages/summaryPage/healthChart.dart';
 import 'package:me_daily/updated-pages/summaryPage/locationsLogPage.dart';
-import 'package:me_daily/updated-pages/summaryPage/recordTemperature.dart';
 import 'package:me_daily/updated-pages/summaryPage/sleepChart.dart';
 import 'package:me_daily/updated-pages/summaryPage/sleepChartPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/tasksDetails.dart';
 import 'package:me_daily/updated-pages/summaryPage/tasksList.dart';
+import 'package:me_daily/updated-pages/summaryPage/temperatureLog/recordTemperature.dart';
 import 'package:me_daily/updated-pages/summaryPage/waterLog/recordWater.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +45,7 @@ class _SummaryPageState extends State<SummaryPage> {
           staggeredTiles: [
             StaggeredTile.count(4, 3),
             StaggeredTile.count(4, 1.3),
-            StaggeredTile.count(3, 1),
+            StaggeredTile.count(3, 1.1),
             StaggeredTile.count(1, 1),
             StaggeredTile.count(2, 2),
             StaggeredTile.count(2, 2),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/recordLogWidget.dart';
+import 'package:me_daily/common-widgets/viewHistory.dart';
+import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/temperature.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
@@ -14,14 +16,15 @@ class _RecordTemperatureState extends State<RecordTemperature> {
   double _temperature = 36.5;
 
   Temperature _temperatureFromState() {
-    return Temperature(temperature: _temperature, logCreated: DateTime.now());
+    return Temperature(type: 'temperature', temperature: _temperature, logCreated: DateTime.now());
   }
 
   Future<void> _addTemperatureLog(BuildContext context) async {
+    String documentID = DateTime.now().toIso8601String();
     final user = Provider.of<User>(context, listen: false);
     final _firestoreService = FirestoreService(uid: user.uid);
     final entry = _temperatureFromState();
-    await _firestoreService.addTemperatureLog(entry);
+    await _firestoreService.addTemperatureLog(entry, documentID);
   }
 
   @override
@@ -30,16 +33,16 @@ class _RecordTemperatureState extends State<RecordTemperature> {
       padding: EdgeInsets.all(12),
       child: Column(
         children: <Widget>[
-          Expanded(
-            child: Align(
-              alignment: Alignment.topLeft,
+          Row(children: <Widget>[
+            Expanded(
               child: Container(
                 child: Text(
                   'Temperature',
                 ),
               ),
             ),
-          ),
+            ViewHistory(() => Navigator.pushNamed(context, Strings.temperatureHistoryPage))
+          ]),
           Row(
             children: <Widget>[
               Expanded(
