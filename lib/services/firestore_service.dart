@@ -265,7 +265,7 @@ class FirestoreService {
     return querySnapshot.documents.map((document) {
       return UserSummary(
           profile: document.data['profile'] as Profile,
-          dailyLog: document.data['dailyLog'] as DailyLog,
+          //dailyLog: document.data['dailyLog'] as DailyLog,
           recipient: document.data['dailyLog'] as User,
           sender: document.data['sender'] as User,
           );

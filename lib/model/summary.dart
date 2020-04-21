@@ -1,18 +1,18 @@
-import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/user.dart';
 
 class UserSummary {
   Profile profile;
-  DailyLog dailyLog;
+  double averageHoursSlept;
   User recipient;
   User sender;
 
-  UserSummary({this.profile, this.dailyLog, this.recipient, this.sender});
+  UserSummary(
+      {this.profile, this.averageHoursSlept, this.recipient, this.sender});
   Map<String, dynamic> toJson() => {
         "profile": profile.toJson(),
-        "dailyLog": dailyLog,
+        "averageHoursSlept": averageHoursSlept,
         "recipient": recipient.toJson(),
-        "sender" : sender.toJson()
+        "sender": sender.toJson()
       };
 }

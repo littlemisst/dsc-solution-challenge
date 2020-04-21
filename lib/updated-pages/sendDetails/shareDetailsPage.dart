@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/profile.dart';
+import 'package:me_daily/model/sleep.dart';
 import 'package:me_daily/model/summary.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/updated-pages/sendDetails/displayBasicInformationPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/recipientSelector.dart';
+import 'package:me_daily/updated-pages/sendDetails/sleepAnalysisPage.dart';
 import 'package:provider/provider.dart';
 
 class ShareDetailsPage extends StatefulWidget {
@@ -17,38 +19,44 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
   FirestoreService _firestoreService = FirestoreService();
   UserSummary userSummary = UserSummary();
 
+ double getAverageSleep(List<Sleep> listOfHoursSlept) {
+    // must be refactored
+    final hours = listOfHoursSlept.map((e) => e.hoursSleep);
+    return hours.reduce((value, element) => value + element) / hours.length;
+  }
   void onChangeRecipient(value) {
     setState(() {
       userSummary.recipient = value;
     });
   }
 
-  void onSend(profile, user) async {
+  void onSend(profile, user, averageHoursSlept) async {
     setState(() {
       userSummary.profile = profile;
       userSummary.sender = user;
+      userSummary.averageHoursSlept = averageHoursSlept;
     });
     await _firestoreService.sendSummary(userSummary);
     Navigator.popAndPushNamed(context, Strings.initialRoute);
   }
 
-  void onPressed(recipient, profile, user) {
+  void onPressed(recipient, profile, user, averageHoursSlept) {
     recipient != null
         ? showDialog(
             context: context,
-            builder: (_) => _confirmSendDialog(context, profile, user))
+            builder: (_) => _confirmSendDialog(context, profile, user, averageHoursSlept))
         : showDialog(
             context: context, builder: (_) => _checkRecipientDialog(context));
   }
 
-  Widget _confirmSendDialog(context, profile, user) {
+  Widget _confirmSendDialog(context, profile, user, averageHoursSlept) {
     return AlertDialog(
       title: Text('Continue?'),
       content: Text(
           'You are about to share your information to ${userSummary.recipient.email}'),
       actions: <Widget>[
         FlatButton(
-          onPressed: () => onSend(profile, user),
+          onPressed: () => onSend(profile, user, averageHoursSlept),
           child: Text('Continue'),
         ),
         FlatButton(
@@ -69,6 +77,8 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final profile = Provider.of<Profile>(context);
+    final listOfHoursSlept = Provider.of<List<Sleep>>(context) ?? [];
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Summary'),
@@ -80,12 +90,13 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
             children: <Widget>[
               RecipientSelector(onChangeRecipient: onChangeRecipient),
               DisplayBasicInformation(),
+              SleepAnalysis(averageHoursSlept: getAverageSleep(listOfHoursSlept))
             ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => onPressed(userSummary.recipient, profile, user),
+        onPressed: () => onPressed(userSummary.recipient, profile, user, getAverageSleep(listOfHoursSlept)),
         child: Icon(Icons.share, color: Colors.white),
       ),
     );
