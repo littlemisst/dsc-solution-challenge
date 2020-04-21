@@ -52,13 +52,14 @@ class _EditProfileState extends State<EditProfile> {
       stream: FirestoreService(uid: user.uid).profile,
       builder: (context, snapshots) {
         if (snapshots.hasData) {
+          String _initialGenderValue;
           Profile _currentProfile = snapshots.data;
-              kilogramController.addListener(() {
-              _currentProfile.weight = double.parse(kilogramController.text);
-            });
-              metersController.addListener(() {
-              _currentProfile.height = double.parse(metersController.text);
-            });
+          kilogramController.addListener(() {
+            _currentProfile.weight = double.parse(kilogramController.text);
+          });
+          metersController.addListener(() {
+            _currentProfile.height = double.parse(metersController.text);
+          });
 
           return Scaffold(
             appBar: AppBar(
@@ -83,8 +84,9 @@ class _EditProfileState extends State<EditProfile> {
                       _currentProfile.name = value;
                     }),
                     SizedBox(height: 15.0),
-                    buildGender(context, _currentProfile.gender, (String value) => {
+                    buildGender(context, _currentProfile.gender, _initialGenderValue, (String value) => {
                       setState(() {
+                        _initialGenderValue = value;
                         _currentProfile.gender = value;
                       }),
                     }),
