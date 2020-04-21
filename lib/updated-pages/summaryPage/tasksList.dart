@@ -23,16 +23,20 @@ class _TasksListState extends State<TasksList> {
                 Task _task = snapshots.data[index];
                 if (!_task.completed) {
                   return ListTile(
-                    leading: Checkbox(value: _task.completed, onChanged: null),
-                    title: Text(
-                      _task.specificTask,
-                      style: TextStyle(fontSize: 13),
-                    ),
-                    subtitle: Text(
-                      _task.taskType,
-                      style: TextStyle(fontSize: 11),
-                    ),
-                  );
+                    leading:
+                        Checkbox(value: _task.completed, onChanged: null),
+                    title: Align(
+                        child: Text(
+                          _task.specificTask,
+                          style: TextStyle(fontSize: 13),
+                        ),
+                        alignment: Alignment(-2.05, 0)),
+                    subtitle: Align(
+                        child: Text(
+                          _task.taskType,
+                          style: TextStyle(fontSize: 11),
+                        ),
+                        alignment: Alignment(-1.8, 0)));
                 }
                 return null;
               });
