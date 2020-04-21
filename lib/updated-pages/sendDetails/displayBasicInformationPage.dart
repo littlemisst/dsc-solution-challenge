@@ -10,6 +10,7 @@ class DisplayBasicInformation extends StatelessWidget {
     final profile = Provider.of<Profile>(context);
     final user = Provider.of<User>(context);
     return ContentContainer(
+      padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: Container(
         padding: EdgeInsets.all(10),
         child: Column(

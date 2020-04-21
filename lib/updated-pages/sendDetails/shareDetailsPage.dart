@@ -23,13 +23,46 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
     });
   }
 
-  void onPressed(profile, user) async {
+  void onSend(profile, user) async {
     setState(() {
       userSummary.profile = profile;
       userSummary.sender = user;
     });
     await _firestoreService.sendSummary(userSummary);
     Navigator.popAndPushNamed(context, Strings.initialRoute);
+  }
+
+  void onPressed(recipient, profile, user) {
+    recipient != null
+        ? showDialog(
+            context: context,
+            builder: (_) => _confirmSendDialog(context, profile, user))
+        : showDialog(
+            context: context, builder: (_) => _checkRecipientDialog(context));
+  }
+
+  Widget _confirmSendDialog(context, profile, user) {
+    return AlertDialog(
+      title: Text('Continue?'),
+      content: Text(
+          'You are about to share your information to ${userSummary.recipient.email}'),
+      actions: <Widget>[
+        FlatButton(
+          onPressed: () => onSend(profile, user),
+          child: Text('Continue'),
+        ),
+        FlatButton(
+          onPressed: () {},
+          child: Text('Cancel'),
+        )
+      ],
+    );
+  }
+
+  Widget _checkRecipientDialog(context) {
+    return AlertDialog(
+        title: Text('Recipient no match'),
+        content: Text('Please enter a valid email'));
   }
 
   @override
@@ -40,17 +73,19 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
       appBar: AppBar(
         title: Text('Summary'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          children: <Widget>[
-            DisplayBasicInformation(),
-            RecipientSelector(onChangeRecipient: onChangeRecipient),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: <Widget>[
+              RecipientSelector(onChangeRecipient: onChangeRecipient),
+              DisplayBasicInformation(),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => onPressed(profile, user),
+        onPressed: () => onPressed(userSummary.recipient, profile, user),
         child: Icon(Icons.share, color: Colors.white),
       ),
     );
