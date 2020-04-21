@@ -15,11 +15,6 @@ class _AddTaskState extends State<AddTask> {
   String _taskType;
   Task task;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   void _chooseTask(String type) {
     _taskType = type;
     task = Task(taskType: _taskType);

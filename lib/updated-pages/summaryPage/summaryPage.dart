@@ -3,15 +3,15 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:me_daily/model/feeling.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
+import 'package:me_daily/updated-pages/summaryPage/bloodPressureLog/recordBloodPressure.dart';
 import 'package:me_daily/updated-pages/summaryPage/healthChart.dart';
 import 'package:me_daily/updated-pages/summaryPage/locationsLogPage.dart';
-import 'package:me_daily/updated-pages/summaryPage/recordBloodPressure.dart';
 import 'package:me_daily/updated-pages/summaryPage/recordTemperature.dart';
-import 'package:me_daily/updated-pages/summaryPage/recordWater.dart';
 import 'package:me_daily/updated-pages/summaryPage/sleepChart.dart';
 import 'package:me_daily/updated-pages/summaryPage/sleepChartPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/tasksDetails.dart';
 import 'package:me_daily/updated-pages/summaryPage/tasksList.dart';
+import 'package:me_daily/updated-pages/summaryPage/waterLog/recordWater.dart';
 import 'package:provider/provider.dart';
 
 class SummaryPage extends StatefulWidget {

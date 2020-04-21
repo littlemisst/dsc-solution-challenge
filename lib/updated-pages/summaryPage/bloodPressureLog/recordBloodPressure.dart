@@ -5,6 +5,7 @@ import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/bloodPressure.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
+import 'package:me_daily/updated-pages/summaryPage/bloodPressureLog/checkBp.dart';
 import 'package:provider/provider.dart';
 
 class RecordBloodPressure extends StatefulWidget {
@@ -16,15 +17,18 @@ class _RecordBloodPressureState extends State<RecordBloodPressure> {
   int _systolic;
   int _diastolic;
 
+  
   BloodPressure _bpFromState() {
-    return BloodPressure(systolic: _systolic, diastolic: _diastolic, logCreated: DateTime.now());
+    String _diagnosis = CheckBloodPressure(_systolic, _diastolic).diagnosis;
+    return BloodPressure(type: 'bloodPressure', systolic: _systolic, diastolic: _diastolic, diagnosis: _diagnosis, logCreated: DateTime.now());
   }
 
   Future<void> _addBPLog(BuildContext context) async {
+    String documentID = DateTime.now().toIso8601String();
     final user = Provider.of<User>(context, listen: false);
     final _firestoreService = FirestoreService(uid: user.uid);
     final entry = _bpFromState();
-    await _firestoreService.addBloodPressureLog(entry);
+    await _firestoreService.addBloodPressureLog(entry, documentID);
   }
 
   @override
@@ -51,6 +55,15 @@ class _RecordBloodPressureState extends State<RecordBloodPressure> {
               ],
             ),
           ),
+          InkWell(
+            child: Text('View History', 
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                color: Theme.of(context).primaryColor),
+              ),
+            splashColor: Theme.of(context).primaryColor,
+            onTap: () => Navigator.pushNamed(context, Strings.bpHistoryPage),
+          )
         ],
       ),
     );

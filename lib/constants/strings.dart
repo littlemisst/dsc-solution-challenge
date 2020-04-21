@@ -73,6 +73,12 @@ class Strings {
   static const diastolic = 'Diastolic';
   static const record = 'Record';
  
+  static const normal = 'Normal';
+  static const preHypertension = 'Prehypertension';
+  static const stage1 = 'Stage 1 Hypertension';
+  static const stage2 = 'Stage 1 Hypertension';
+  static const hyperEmergency = 'Hypertensive Emergency';
+
 
   static const String initialRoute = '/';
   static const String authenticationRoute = '/authentication';
@@ -97,4 +103,6 @@ class Strings {
   static const String onBoardingRoute = '/on_boarding-pages';
   static const String helpPage = '/help-page';
   static const String waterHistoryPage = '/water-history-page';
+  static const String bpHistoryPage = '/bp-history-page';
+  static const String temperatureHistoryPage = '/temperature-history-page';
 }

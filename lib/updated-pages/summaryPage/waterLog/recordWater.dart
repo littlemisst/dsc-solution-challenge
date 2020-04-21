@@ -13,15 +13,21 @@ class RecordWater extends StatefulWidget {
 }
 
 class _RecordWaterState extends State<RecordWater> {
-  String documentID = DateTime.now().toIso8601String();
+  DateTime _now = DateTime.now();
+  String documentID;
   Water _water;
 
   int _waterCount = 0;
   int _waterML = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    documentID = DateTime(_now.year, _now.month, _now.day).toIso8601String();
+  }
+
   Water _waterCountFromState() {
-    
-    return Water(waterDrank: _waterCount, waterInML: _waterML, logCreated: DateTime.now());
+    return Water(type: 'water', waterDrank: _waterCount, waterInML: _waterML, logCreated: DateTime.now());
   }
 
   Future<void> _addWaterLog(BuildContext context) async {
@@ -45,10 +51,10 @@ class _RecordWaterState extends State<RecordWater> {
       child: Column(
         children: <Widget>[
           Align(
-            alignment: Alignment.topLeft,
+            alignment: Alignment.topCenter,
             child: Container(
-              child: Text(
-                'Water',
+              child: Text('Daily Water Count', 
+                style: TextStyle(fontFamily: 'Montserrat'),
               ),
             ),
           ),
@@ -57,15 +63,12 @@ class _RecordWaterState extends State<RecordWater> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 RawMaterialButtonWidget(Icons.remove, () {
-                  setState(() { 
-                     _waterCount--;
-                   });
+                  setState(() => _waterCount--);
                     if (_waterCount != 0) {
                       _updateWaterLog(context, -1);
                     }
                 }),	
-                Expanded(
-                  child: Center(
+                 Center(
                     child: Text(
                       "$_waterCount",
                       style: TextStyle(
@@ -74,22 +77,23 @@ class _RecordWaterState extends State<RecordWater> {
                       ),
                     ),
                   ),
-                ),
                  RawMaterialButtonWidget(Icons.add, () {
-                   setState(() { 
-                     _waterCount++;
-                   });
-                    _water = Water(waterDrank: _waterCount);
-                    _water.waterDrank > 1 ?
-                    _updateWaterLog(context, 1) : _addWaterLog(context);
+                  setState(() => _waterCount++);
+                  _water = Water(waterDrank: _waterCount);
+                  _water.waterDrank > 1 ?
+                  _updateWaterLog(context, 1) : _addWaterLog(context);
                 }),
               ],
             ),
           ),
-          FlatButton(
-            child: Text('View History'),
-            onPressed: () =>
-                Navigator.pushNamed(context, Strings.waterHistoryPage),
+          InkWell(
+            child: Text('View History', 
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                color: Theme.of(context).primaryColor),
+              ),
+            splashColor: Theme.of(context).primaryColor,
+            onTap: () => Navigator.pushNamed(context, Strings.waterHistoryPage),
           )
         ],
       ),

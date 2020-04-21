@@ -8,6 +8,7 @@ part of 'temperature.dart';
 
 Temperature _$TemperatureFromJson(Map<String, dynamic> json) {
   return Temperature(
+    type: json['type'] as String,
     temperature: (json['temperature'] as num)?.toDouble(),
     logCreated: json['logCreated'] == null
         ? null
@@ -17,6 +18,7 @@ Temperature _$TemperatureFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$TemperatureToJson(Temperature instance) =>
     <String, dynamic>{
+      'type': instance.type,
       'temperature': instance.temperature,
       'logCreated': instance.logCreated?.toIso8601String(),
     };

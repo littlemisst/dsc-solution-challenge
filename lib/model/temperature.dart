@@ -4,10 +4,11 @@ part 'temperature.g.dart';
 
 @JsonSerializable()
 class Temperature {
+  final String type;
   final double temperature;
   final DateTime logCreated;
 
- Temperature({this.temperature, this.logCreated});
+ Temperature({this.type, this.temperature, this.logCreated});
 
    factory Temperature.fromJson(Map<String, dynamic> json) =>
       _$TemperatureFromJson(json);

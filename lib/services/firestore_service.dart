@@ -161,53 +161,6 @@ class FirestoreService {
         .add(entry.toJson());
   }
 
-  Future addWaterLog(Water entry, String documentID) async {
-    return await userData
-        .document(uid)
-        .collection('basicLogs')
-        .document(documentID)
-        .setData(entry.toJson());
-  }
-
-  List<Water> _waterLogFromFirebase(QuerySnapshot querySnapshot) {
-    return querySnapshot.documents
-        .map((document) => Water.fromJson(document.data))
-        .toList();
-  }
-
-  Stream<List<Water>> get water {
-    return userData
-        .document(uid)
-        .collection('basicLogs')
-        .orderBy('logCreated')
-        .snapshots()
-        .map(_waterLogFromFirebase);
-  }
-
-  Future addTemperatureLog(Temperature entry) async {
-    return await userData
-        .document(uid)
-        .collection('basicLogs')
-        .add(entry.toJson());
-  }
-
-  Future addBloodPressureLog(BloodPressure entry) async {
-    return await userData
-        .document(uid)
-        .collection('basicLogs')
-        .add(entry.toJson());
-  }
-
-  Future updateWater(String documentID, int increment, int conversion) async {
-   return await userData
-        .document(uid)
-        .collection('basicLogs').document(documentID)
-        .updateData(<String, dynamic> {
-          'waterDrank' : FieldValue.increment(increment),
-          'waterInML'  : conversion
-        });
-  }
-
   List<DailyLog> _logsFromFirebase(QuerySnapshot querySnapshot) {
     return querySnapshot.documents
         .map((document) => DailyLog.fromJson(document.data))
@@ -222,6 +175,73 @@ class FirestoreService {
         .snapshots()
         .map(_logsFromFirebase);
   }
+
+  Future addWaterLog(Water entry, String documentID) async {
+    return await userData
+        .document(uid)
+        .collection('basicLogs')
+        .document(documentID)
+        .setData(entry.toJson());
+  }
+
+  Future updateWater(String documentID, int increment, int conversion) async {
+   return await userData
+        .document(uid)
+        .collection('basicLogs').document(documentID)
+        .updateData(<String, dynamic> {
+          'waterDrank' : FieldValue.increment(increment),
+          'waterInML'  : conversion
+        });
+  }
+
+  List<Water> _waterLogFromFirebase(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents
+        .map((document) => Water.fromJson(document.data))
+        .toList();
+  }
+  
+  Stream<List<Water>> get water {
+    return userData
+        .document(uid)
+        .collection('basicLogs')
+        .orderBy('logCreated')
+        .where('type', isEqualTo: 'water')
+        .snapshots()
+        .map(_waterLogFromFirebase);
+  }
+
+  Future addTemperatureLog(Temperature entry) async {
+    return await userData
+        .document(uid)
+        .collection('basicLogs')
+        .add(entry.toJson());
+  }
+
+  Future addBloodPressureLog(BloodPressure entry, String documentID) async {
+    return await userData
+        .document(uid)
+        .collection('basicLogs')
+        .document(documentID)
+        .setData(entry.toJson());
+  }
+
+  List<BloodPressure> _bpLogFromFirebase(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents
+        .map((document) => BloodPressure.fromJson(document.data))
+        .toList();
+  }
+
+  Stream<List<BloodPressure>> get bloodPressure {
+    return userData
+        .document(uid)
+        .collection('basicLogs')
+        .orderBy('logCreated')
+        .where('type', isEqualTo: 'bloodPressure')
+        .snapshots()
+        .map(_bpLogFromFirebase);
+  }
+
+  
 
   //add location
   Future saveLocation(LocationLog location) async {

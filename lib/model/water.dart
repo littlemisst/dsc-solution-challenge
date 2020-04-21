@@ -4,11 +4,12 @@ part 'water.g.dart';
 
 @JsonSerializable()
 class Water {
+  final String type;
   final int waterDrank;
   final int waterInML;
   final DateTime logCreated;
 
- Water({this.waterDrank, this.waterInML, this.logCreated});
+ Water({this.type, this.waterDrank, this.waterInML, this.logCreated});
 
    factory Water.fromJson(Map<String, dynamic> json) =>
       _$WaterFromJson(json);

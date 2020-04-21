@@ -16,7 +16,7 @@ class ExpandedTextField extends StatelessWidget {
           ),
           keyboardType: TextInputType.number,
           inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-          onSaved: onChanged,
+          onChanged: onChanged,
         ),
       )
     );
