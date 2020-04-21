@@ -54,7 +54,8 @@ class _MessagesListState extends State<MessagesList> {
   Widget _buildMessagesList(context, document) {
     return  ListTile(
       leading: Icon(Icons.person, color: Theme.of(context).primaryColor),
-      title: Text(document.length.toString()), 
+      title: Text(document.profile.name.toString()), //NAME OF SENDER
+      subtitle: Text(document.sender.toString()), //EMAIL OF SENDER
     );
   }
 }

@@ -264,10 +264,10 @@ class FirestoreService {
     List<UserSummary> _userMessagesFromFirebase(QuerySnapshot querySnapshot) {
     return querySnapshot.documents.map((document) {
       return UserSummary(
-          profile: document.data['profile'].toJson(),
-          dailyLog: document.data['dailyLog'].toJson(),
-          recipient: document.data['dailyLog'],
-          sender: document.data['sender'].toJson(),
+          profile: document.data['profile'] as Profile,
+          dailyLog: document.data['dailyLog'] as DailyLog,
+          recipient: document.data['dailyLog'] as User,
+          sender: document.data['sender'] as User,
           );
     }).toList();
   }
