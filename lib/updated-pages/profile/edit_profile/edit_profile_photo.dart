@@ -53,12 +53,14 @@ class _EditProfilePhotoState extends State<EditProfilePhoto> {
                 padding: EdgeInsets.all(15),
                 width: MediaQuery.of(context).size.width,
                 child: Container(
-                  padding: EdgeInsets.all(15),
+                  padding: EdgeInsets.all(25),
                   child: Column(children: <Widget>[
+
                     _image == null
-                  ? CircleAvatar(backgroundColor: Colors.grey, radius: 50.0)
+                  ? CircleAvatar(child: Icon(Icons.add_a_photo, size: 50, color: Colors.blueGrey[100]), 
+                  backgroundColor: Colors.blueGrey[200], radius: 80.0)
                   : CircleAvatar(
-                      backgroundImage: new FileImage(_image), radius: 50.0),
+                      backgroundImage: new FileImage(_image), radius: 80.0),
                   SizedBox(height: 20.0),
                   RaisedButtonIcon(Icons.camera_alt, 'Camera', () {
                     setState(() {
