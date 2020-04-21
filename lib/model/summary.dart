@@ -8,11 +8,13 @@ class UserSummary {
   User recipient;
   User sender;
   List<LocationLog> previousLocations;
+  List<String> activities;
 
   UserSummary(
       {this.profile,
       this.averageHoursSlept,
       this.previousLocations,
+      this.activities,
       this.recipient,
       this.sender});
   Map<String, dynamic> toJson() => {
@@ -20,6 +22,7 @@ class UserSummary {
         "averageHoursSlept": averageHoursSlept,
         "previousLocations":
             previousLocations.map((location) => location.toJson()).toList(),
+        "activities": activities.toList(),
         "recipient": recipient.toJson(),
         "sender": sender.toJson()
       };
