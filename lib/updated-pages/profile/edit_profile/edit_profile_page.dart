@@ -15,6 +15,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  String _initialGenderValue = 'Male';
   ScrollController _weightController;
   ScrollController _heightController;
   final metersController = TextEditingController();
@@ -52,7 +53,6 @@ class _EditProfileState extends State<EditProfile> {
       stream: FirestoreService(uid: user.uid).profile,
       builder: (context, snapshots) {
         if (snapshots.hasData) {
-          String _initialGenderValue;
           Profile _currentProfile = snapshots.data;
           kilogramController.addListener(() {
             _currentProfile.weight = double.parse(kilogramController.text);
@@ -87,8 +87,9 @@ class _EditProfileState extends State<EditProfile> {
                     buildGender(context, _currentProfile.gender, _initialGenderValue, (String value) => {
                       setState(() {
                         _initialGenderValue = value;
-                        _currentProfile.gender = value;
+                        _currentProfile.gender = _initialGenderValue;
                       }),
+                      
                     }),
                     SizedBox(height: 15.0),
                     buildBloodType(context,  _currentProfile.bloodType, (String value) => {
