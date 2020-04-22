@@ -8,9 +8,9 @@ class Temperature {
   final double temperature;
   final DateTime logCreated;
 
- Temperature({this.type, this.temperature, this.logCreated});
+  Temperature({this.type, this.temperature, this.logCreated});
 
-   factory Temperature.fromJson(Map<String, dynamic> json) =>
+  factory Temperature.fromJson(Map<String, dynamic> json) =>
       _$TemperatureFromJson(json);
   Map<String, dynamic> toJson() => _$TemperatureToJson(this);
 }

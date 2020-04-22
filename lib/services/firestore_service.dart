@@ -94,18 +94,7 @@ class FirestoreService {
 
 //add and retrieve for profile
   Profile _profileFromFirebase(DocumentSnapshot documentSnapshot) {
-    return Profile(
-      name: documentSnapshot.data['name'],
-      address: documentSnapshot.data['address'],
-      birthDate: documentSnapshot.data['birthDate'].toDate(),
-      gender: documentSnapshot.data['gender'],
-      civilStatus: documentSnapshot.data['civilStatus'],
-      bloodType: documentSnapshot.data['bloodType'],
-      height: documentSnapshot.data['height'],
-      weight: documentSnapshot.data['weight'],
-      downloadUrl: documentSnapshot.data['downloadUrl'],
-      profilePhotoFileName: documentSnapshot.data['profilePhotoFileName'],
-    );
+    return Profile.fromJson(documentSnapshot.data);
   }
 
   Stream<Profile> get profile {
@@ -185,13 +174,14 @@ class FirestoreService {
   }
 
   Future updateWater(String documentID, int increment, int conversion) async {
-   return await userData
+    return await userData
         .document(uid)
-        .collection('basicLogs').document(documentID)
-        .updateData(<String, dynamic> {
-          'waterDrank' : FieldValue.increment(increment),
-          'waterInML'  : conversion
-        });
+        .collection('basicLogs')
+        .document(documentID)
+        .updateData(<String, dynamic>{
+      'waterDrank': FieldValue.increment(increment),
+      'waterInML': conversion
+    });
   }
 
   List<Water> _waterLogFromFirebase(QuerySnapshot querySnapshot) {
@@ -199,7 +189,7 @@ class FirestoreService {
         .map((document) => Water.fromJson(document.data))
         .toList();
   }
-  
+
   Stream<List<Water>> get water {
     return userData
         .document(uid)
@@ -234,7 +224,6 @@ class FirestoreService {
         .map(_tempLogFromFirebase);
   }
 
-
   Future addBloodPressureLog(BloodPressure entry, String documentID) async {
     return await userData
         .document(uid)
@@ -259,8 +248,6 @@ class FirestoreService {
         .map(_bpLogFromFirebase);
   }
 
-  
-
   //add location
   Future saveLocation(LocationLog location) async {
     return await userData
@@ -273,7 +260,7 @@ class FirestoreService {
   Future sendSummary(UserSummary userSummary) async {
     return await userData
         .document(userSummary
-            .recipient.uid) //should generated once a recipient is chosen
+            .recipient.uid)
         .collection("messages")
         .add(userSummary.toJson());
   }
@@ -312,7 +299,8 @@ class FirestoreService {
     return userData
         .document(uid)
         .collection('locationLog')
-        .orderBy('dateAndTime').limit(1)
+        .orderBy('dateAndTime')
+        .limit(1)
         .snapshots()
         .map(_locationLogFromFirebase);
   }
@@ -333,22 +321,23 @@ class FirestoreService {
         .snapshots()
         .map(_locationLogsListFromFirebase);
   }
-    List<UserSummary> _userMessagesFromFirebase(QuerySnapshot querySnapshot) {
+
+  List<UserSummary> _userMessagesFromFirebase(QuerySnapshot querySnapshot) {
     return querySnapshot.documents.map((document) {
       return UserSummary(
-          profile: document.data['profile'] as Profile,
-          //dailyLog: document.data['dailyLog'] as DailyLog,
-          recipient: document.data['dailyLog'] as User,
-          sender: document.data['sender'] as User,
-          );
+        profile: document.data['profile'] as Profile,
+        //dailyLog: document.data['dailyLog'] as DailyLog,
+        recipient: document.data['dailyLog'] as User,
+        sender: document.data['sender'] as User,
+      );
     }).toList();
   }
 
   Stream<List<UserSummary>> get messages {
     return userData
-      .document(uid)
-      .collection('messages')
-      .snapshots()
-      .map(_userMessagesFromFirebase);
+        .document(uid)
+        .collection('messages')
+        .snapshots()
+        .map(_userMessagesFromFirebase);
   }
 }

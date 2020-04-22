@@ -50,22 +50,9 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
     });
   }
 
-  void onSend(
-      profile, user, averageHoursSlept, previousLocations, activities) async {
-    setState(() {
-      userSummary.profile = profile;
-      userSummary.sender = user;
-      userSummary.averageHoursSlept = averageHoursSlept;
-      userSummary.previousLocations = previousLocations;
-      userSummary.activities = activities;
-    });
-    await _firestoreService.sendSummary(userSummary);
-    Navigator.popAndPushNamed(context, Strings.initialRoute);
-  }
-
-  void onPressed(recipient, profile, user, averageHoursSlept, previousLocations,
-      activities) {
-    recipient != null
+  void onPressed(
+      profile, user, averageHoursSlept, previousLocations, activities) {
+    userSummary.recipient != null
         ? showDialog(
             context: context,
             builder: (_) => _confirmSendDialog(context, profile, user,
@@ -98,6 +85,19 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
     return AlertDialog(
         title: Text('Recipient no match'),
         content: Text('Please enter a valid email'));
+  }
+
+  void onSend(
+      profile, user, averageHoursSlept, previousLocations, activities) async {
+    setState(() {
+      userSummary.profile = profile;
+      userSummary.sender = user;
+      userSummary.averageHoursSlept = averageHoursSlept;
+      userSummary.previousLocations = previousLocations;
+      userSummary.activities = activities;
+    });
+    await _firestoreService.sendSummary(userSummary);
+    Navigator.popAndPushNamed(context, Strings.initialRoute);
   }
 
   @override
@@ -133,7 +133,6 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => onPressed(
-            userSummary.recipient,
             profile,
             user,
             getAverageSleep(listOfHoursSlept),

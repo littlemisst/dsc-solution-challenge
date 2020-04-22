@@ -9,9 +9,8 @@ class Water {
   final int waterInML;
   final DateTime logCreated;
 
- Water({this.type, this.waterDrank, this.waterInML, this.logCreated});
+  Water({this.type, this.waterDrank, this.waterInML, this.logCreated});
 
-   factory Water.fromJson(Map<String, dynamic> json) =>
-      _$WaterFromJson(json);
+  factory Water.fromJson(Map<String, dynamic> json) => _$WaterFromJson(json);
   Map<String, dynamic> toJson() => _$WaterToJson(this);
 }

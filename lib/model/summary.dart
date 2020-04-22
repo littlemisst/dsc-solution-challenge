@@ -1,7 +1,11 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:me_daily/model/locationLog.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/user.dart';
 
+part 'summary.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class UserSummary {
   Profile profile;
   double averageHoursSlept;
@@ -17,13 +21,8 @@ class UserSummary {
       this.activities,
       this.recipient,
       this.sender});
-  Map<String, dynamic> toJson() => {
-        "profile": profile.toJson(),
-        "averageHoursSlept": averageHoursSlept,
-        "previousLocations":
-            previousLocations.map((location) => location.toJson()).toList(),
-        "activities": activities.toList(),
-        "recipient": recipient.toJson(),
-        "sender": sender.toJson()
-      };
+
+  factory UserSummary.fromJson(Map<String, dynamic> json) =>
+      _$UserSummaryFromJson(json);
+  Map<String, dynamic> toJson() => _$UserSummaryToJson(this);
 }
