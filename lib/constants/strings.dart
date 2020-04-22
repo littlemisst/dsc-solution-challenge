@@ -1,5 +1,6 @@
 class Strings {
   static const profile = 'Profile';
+  static const medicalHistory = 'Past Medical History';
   static const message = 'Messages';
   static const shareDetails = 'Share Details';
   static const help = 'Help';
@@ -57,6 +58,34 @@ class Strings {
     'muscle pain',
   ];
 
+  static const chronicDiseaseList = [
+    'Alzheimer disease',
+    'Arthritis',
+    'Asthma',
+    'Cancer',
+    'COPD',
+    'Crohn disease',
+    'Diabetes',
+    'Epilepsy',
+    'Heart disease',
+    'HIV/AIDS',
+    'Hypertension',
+    'Multiple sclerosis'
+  ];
+
+  static const immunizations =[
+    'Varicella vaccine',
+    'DTaP',
+    'HepA',
+    'HepB',
+    'Hib vaccine'
+    'HPV',
+    'Flu',
+    'MMR',
+    'IPV',
+    'PCV'
+  ];
+
   static const eat = 'Eat';
   static const drink = 'Drink';
   static const exercise = 'Exercise';
@@ -105,4 +134,5 @@ class Strings {
   static const String waterHistoryPage = '/water-history-page';
   static const String bpHistoryPage = '/bp-history-page';
   static const String temperatureHistoryPage = '/temperature-history-page';
+  static const String medicalHistoryPage = '/medical-history-page';
 }

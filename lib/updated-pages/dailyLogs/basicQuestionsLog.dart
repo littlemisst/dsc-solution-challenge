@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/appBarTextFormat.dart';
+import 'package:me_daily/common-widgets/checkBoxContainer.dart';
 import 'package:me_daily/common-widgets/floatingAction.dart';
+import 'package:me_daily/common-widgets/stepperWidget.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
-import 'package:me_daily/updated-pages/dailyLogs/checkBoxContainer.dart';
 import 'package:me_daily/updated-pages/dailyLogs/incrementCardWidget.dart';
 import 'package:me_daily/updated-pages/dailyLogs/itemSummaryBuilder.dart';
 import 'package:me_daily/updated-pages/dailyLogs/listSummaryBuilderWidget.dart';
-import 'package:me_daily/updated-pages/dailyLogs/stepperWidget.dart';
 import 'package:provider/provider.dart';
 
 class BasicQuestionsLogPage extends StatefulWidget {
@@ -102,19 +102,19 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
     Step(
       isActive: _currentStep >= 0,
       title: Text('Eating',),
-      content: CheckBoxGrid(_food, _foodValues, _foodAdded),
+      content: CheckBoxGrid(6, _food, _foodValues, _foodAdded),
       state: _currentStep > 0 ? StepState.complete : StepState.editing
       ),
     Step(
       isActive: _currentStep >= 1,
       title: Text('Drinking'),
-      content: CheckBoxGrid(_drink, _drinkValues, _drinkAdded),
+      content: CheckBoxGrid(6, _drink, _drinkValues, _drinkAdded),
       state: _currentStep > 1 ? StepState.complete : StepState.editing
       ),
     Step(
       isActive: _currentStep >= 2,
       title: Text('Exercising'),
-      content: CheckBoxGrid(_exercise, _exerciseValues, _exerciseAdded),
+      content: CheckBoxGrid(6, _exercise, _exerciseValues, _exerciseAdded),
       state: _currentStep > 2 ? StepState.complete : StepState.editing
       ),
     Step(

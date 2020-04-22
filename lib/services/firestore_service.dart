@@ -1,4 +1,5 @@
 import 'package:me_daily/model/bloodPressure.dart';
+import 'package:me_daily/model/medicalHistory.dart';
 import 'package:me_daily/model/sleep.dart';
 import 'package:me_daily/model/summary.dart';
 import 'package:me_daily/model/temperature.dart';
@@ -335,5 +336,14 @@ class FirestoreService {
         .snapshots()
         .map(_userMessagesFromFirebase);
   }
+
+  Future addMedicalHistory(MedicalHistory history) async {    
+    return await userData
+        .document(uid)
+        .collection('medicalHistory')
+        .add(history.toJson());
+  }
+
+  
 }
   

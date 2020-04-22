@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class ExpandedTextField extends StatelessWidget {
-  const ExpandedTextField(this.text, this.controller, this.onChanged);
+class ExpandedNumberTextField extends StatelessWidget {
+  const ExpandedNumberTextField(this.text, this.onChanged);
   final String text;
-  final TextEditingController controller;
   final ValueChanged<String> onChanged;
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,8 @@ class ExpandedTextField extends StatelessWidget {
           decoration: InputDecoration(
             labelText: text,
           ),
-          controller: controller,
+          keyboardType: TextInputType.number,
+          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
           onChanged: onChanged,
         ),
       )
