@@ -79,7 +79,7 @@ class Router {
       case Strings.resetPasswordFormRoute:
         return MaterialPageRoute(builder: (_) => ResetPasswordForm());
       case Strings.messagesPage:
-        return MaterialPageRoute(builder: (context) => MessagesPage.create(context));
+        return MaterialPageRoute(builder: (_) => MessagesPage());
       case Strings.helpPage:
         return MaterialPageRoute(builder: (_) => HelpPage());
       case Strings.waterHistoryPage:

@@ -1,7 +1,10 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
+import 'package:me_daily/constants/strings.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class BloodPressureListTileModel {
   const BloodPressureListTileModel({
@@ -24,13 +27,20 @@ class BloodPressureListTile extends StatelessWidget {
     String dateFormat = DateFormat.yMMMMEEEEd().format(model.logCreated);
     String timeFormat = DateFormat.jm().format(model.logCreated);
     const fontSize = 15.0;
+
     return ContentContainer(
       padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
       child: ListTile(
+        leading: Icon(CupertinoIcons.circle_filled,
+        color:  model.diagnosis == Strings.normal ? Colors.green : Colors.red
+        ), 
         title: Column(children: <Widget>[
-          Align(child: Text('$dateFormat at $timeFormat', style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold)), alignment: Alignment.centerLeft),
-          Align(child: Text('${model.systolic} / ${model.diastolic}', style: TextStyle(fontSize: fontSize)),alignment: Alignment.centerLeft), 
-          Align(child: Text('${model.diagnosis}', style: TextStyle(fontSize: fontSize)),alignment: Alignment.centerLeft)
+          Align(child: Text('${model.systolic} / ${model.diastolic}', style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold,
+          color:  model.diagnosis == Strings.normal ? Colors.green : Colors.red)),alignment: Alignment.centerLeft), 
+          Align(child: Text('${model.diagnosis}', style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, 
+          color:  model.diagnosis == Strings.normal ? Colors.green : Colors.red,
+          )),alignment: Alignment.centerLeft),
+          Align(child: Text('$dateFormat at $timeFormat', style: TextStyle(fontSize: fontSize)), alignment: Alignment.centerLeft),
         ])
       )
     );

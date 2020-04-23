@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
@@ -23,9 +24,13 @@ class TemperatureListTile extends StatelessWidget {
     return ContentContainer(
       padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
       child: ListTile(
+        leading: Icon(CupertinoIcons.circle_filled, color: model.temperature >= 37 ? Colors.red : Colors.green),
         title: Column(children: <Widget>[
-          Align(child: Text('$dateFormat at $timeFormat', style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold)), alignment: Alignment.centerLeft),
-          Align(child: Text('${model.temperature} degrees celcius', style: TextStyle(fontSize: fontSize)),alignment: Alignment.centerLeft), 
+          Align(child: Text('${model.temperature} degrees celcius', style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold,
+          color: model.temperature >= 37 ? Colors.red : Colors.green)),alignment: Alignment.centerLeft), 
+          Align(child: Text('$dateFormat at $timeFormat', style: TextStyle(fontSize: fontSize)), 
+          alignment: Alignment.centerLeft),
+          
         ])
       )
     );
