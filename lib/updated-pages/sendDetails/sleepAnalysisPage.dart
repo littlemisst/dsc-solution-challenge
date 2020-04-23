@@ -20,10 +20,12 @@ class SleepAnalysis extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(
-                  averageHoursSlept.toStringAsFixed(2),
-                  style: TextStyle(fontSize: 16),
-                ),
+                averageHoursSlept == null
+                    ? Text('No record of hours slept')
+                    : Text(
+                        averageHoursSlept.toStringAsFixed(2),
+                        style: TextStyle(fontSize: 16),
+                      ),
                 Text(
                   'Average Sleeping hours',
                   style: TextStyle(color: Colors.grey),

@@ -14,6 +14,7 @@ class UserSummary {
   List<String> activities;
   User recipient;
   User sender;
+  DateTime dateSent;
 
   UserSummary(
       {this.profile,
@@ -21,15 +22,16 @@ class UserSummary {
       this.previousLocations,
       this.activities,
       this.recipient,
-      this.sender});
+      this.sender,
+      this.dateSent});
 
   // factory UserSummary.fromJson(Map<String, dynamic> json) =>
   //     _$UserSummaryFromJson(json);
-  //auto generated not functioning
 
   Map<String, dynamic> toJson() => _$UserSummaryToJson(this);
 
   factory UserSummary.fromJson(Map<String, dynamic> json) => UserSummary(
+      dateSent: DateTime.parse(json['dateSent']),
       activities: List<String>.from(json['activities']),
       profile: json['profile'] == null
           ? null

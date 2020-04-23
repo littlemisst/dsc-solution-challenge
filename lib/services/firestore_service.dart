@@ -337,16 +337,15 @@ class FirestoreService {
     return userData
         .document(uid)
         .collection('messages')
+        .orderBy('dateSent', descending: true)
         .snapshots()
         .map(_userMessagesFromFirebase);
   }
 
-  Future addMedicalHistory(MedicalHistory history) async {    
+  Future addMedicalHistory(MedicalHistory history) async {
     return await userData
         .document(uid)
         .collection('medicalHistory')
         .add(history.toJson());
   }
-
-  
 }

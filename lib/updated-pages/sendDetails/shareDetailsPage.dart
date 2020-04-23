@@ -26,11 +26,18 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
 
   double getAverageSleep(List<Sleep> listOfHoursSlept) {
     // must be refactored
-    final hours = listOfHoursSlept.map((e) => e.hoursSleep);
-    return hours.reduce((value, element) => value + element) / hours.length;
+    if (listOfHoursSlept.isEmpty) {
+      return null;
+    } else {
+      final hours = listOfHoursSlept.map((e) => e.hoursSleep);
+      return hours.reduce((value, element) => value + element) / hours.length;
+    }
   }
 
   List<String> getActivities(List<DailyLog> listOfLogs) {
+    if (listOfLogs.isEmpty) {
+      return [];
+    }
     List<String> activities = [];
     List<String> listOfActivities = [];
     listOfLogs.forEach((element) {
@@ -95,6 +102,7 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
       userSummary.averageHoursSlept = averageHoursSlept;
       userSummary.previousLocations = previousLocations;
       userSummary.activities = activities;
+      userSummary.dateSent = DateTime.now();
     });
     await _firestoreService.sendSummary(userSummary);
     Navigator.popAndPushNamed(context, Strings.initialRoute);
@@ -103,7 +111,7 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    final profile = Provider.of<Profile>(context);
+    final profile = Provider.of<Profile>(context) ?? null;
     final listOfHoursSlept = Provider.of<List<Sleep>>(context) ?? [];
     final previousLocations = Provider.of<List<LocationLog>>(context) ?? [];
     final List<DailyLog> logs = Provider.of<List<DailyLog>>(context) ?? [];
@@ -118,7 +126,7 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
           child: Column(
             children: <Widget>[
               RecipientSelector(onChangeRecipient: onChangeRecipient),
-              DisplayBasicInformation(),
+              DisplayBasicInformation(profile: profile),
               SleepAnalysis(
                   averageHoursSlept: getAverageSleep(listOfHoursSlept)),
               DisplayPreviousLocations(
