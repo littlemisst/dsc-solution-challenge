@@ -10,6 +10,8 @@ class TasksList extends StatefulWidget {
 }
 
 class _TasksListState extends State<TasksList> {
+
+
   @override
   Widget build(BuildContext context) {
     final _user = Provider.of<User>(context);
@@ -24,7 +26,12 @@ class _TasksListState extends State<TasksList> {
                 if (!_task.completed) {
                   return ListTile(
                     leading:
-                        Checkbox(value: _task.completed, onChanged: null),
+                        Checkbox(value: _task.completed, tristate: false, onChanged: (bool value) {
+                          setState(() {
+                            _task.completed = true;
+                            
+                          });
+                        }),
                     title: Align(
                         child: Text(
                           _task.specificTask,
