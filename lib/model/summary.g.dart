@@ -30,9 +30,9 @@ Map<String, dynamic> _$UserSummaryToJson(UserSummary instance) =>
     <String, dynamic>{
       'profile': instance.profile?.toJson(),
       'averageHoursSlept': instance.averageHoursSlept,
-      'recipient': instance.recipient?.toJson(),
-      'sender': instance.sender?.toJson(),
       'previousLocations':
           instance.previousLocations?.map((e) => e?.toJson())?.toList(),
       'activities': instance.activities,
+      'recipient': instance.recipient?.toJson(),
+      'sender': instance.sender?.toJson(),
     };
