@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/appBarTextFormat.dart';
+import 'package:me_daily/common-widgets/checkBoxContainer.dart';
+import 'package:me_daily/common-widgets/stepperWidget.dart';
 import 'package:me_daily/common-widgets/timePicker.dart';
 import 'package:me_daily/common-widgets/dateRangePicker.dart';
 import 'package:me_daily/common-widgets/datePickerWidget.dart';
@@ -10,9 +12,7 @@ import 'package:me_daily/model/task.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/updated-pages/addTasks/taskDifference.dart';
-import 'package:me_daily/updated-pages/dailyLogs/checkBoxContainer.dart';
 import 'package:me_daily/updated-pages/dailyLogs/expandableRadioWidget.dart';
-import 'package:me_daily/updated-pages/dailyLogs/stepperWidget.dart';
 import 'package:provider/provider.dart';
 
 class SickQuestionsLogPage extends StatefulWidget {
@@ -107,7 +107,7 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
       isActive: _currentStep >= 0,
       title: Text('Symptoms'),
       subtitle: Text('Check the symptoms you are experiencing'),
-      content: CheckBoxGrid(_symptoms, _symptomsValues, _symptomsAdded),
+      content: CheckBoxGrid(6, _symptoms, _symptomsValues, _symptomsAdded),
       state: _currentStep > 0 ? StepState.complete : StepState.editing
       ),
     Step(

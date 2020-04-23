@@ -10,6 +10,7 @@ class TasksList extends StatefulWidget {
 }
 
 class _TasksListState extends State<TasksList> {
+
   @override
   Widget build(BuildContext context) {
     final _user = Provider.of<User>(context);
@@ -24,19 +25,28 @@ class _TasksListState extends State<TasksList> {
                 if (!_task.completed) {
                   return ListTile(
                     leading:
-                        Checkbox(value: _task.completed, onChanged: null),
-                    title: Align(
-                        child: Text(
-                          _task.specificTask,
-                          style: TextStyle(fontSize: 13),
-                        ),
-                        alignment: Alignment(-2.05, 0)),
-                    subtitle: Align(
+                        Checkbox(value: _task.completed, tristate: false, onChanged: (bool value) {
+                          setState(() {
+                            _task.completed = true;
+                          });
+                        }),
+                    title: Column(
+                      children: <Widget>[
+                        Align(
+                            child: Text(
+                              _task.specificTask,
+                              style: TextStyle(fontSize: 13),
+                            ),
+                            alignment: Alignment(-1.8, 0)),
+                            Align(
                         child: Text(
                           _task.taskType,
                           style: TextStyle(fontSize: 11),
                         ),
-                        alignment: Alignment(-1.8, 0)));
+                        alignment: Alignment(-1.8, 0))
+                      ],
+                    ),
+                  );
                 }
                 return null;
               });

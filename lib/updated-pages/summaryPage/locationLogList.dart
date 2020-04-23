@@ -22,11 +22,15 @@ class _LocationLogListState extends State<LocationLogList> {
     Widget buildListOfLocations(context, document) {
       return  ListTile(
         leading: Icon(Icons.location_on, color: Theme.of(context).primaryColor),
-        title: Align(
-        child: Text(document.locationName, style: TextStyle(fontSize: 12)),
-        alignment: Alignment(-1.3, 0)),
-        subtitle: Align(child: Text(document.dateAndTime.toString(), style: TextStyle(fontSize: 11)),
-        alignment: Alignment(-1.3, 0)
+        title: Column(
+          children: <Widget>[
+            Align(
+            child: Text(document.locationName, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+            alignment:Alignment.centerLeft),
+            SizedBox(height: 3),
+            Align(child: Text(document.dateAndTime.toString(), style: TextStyle(fontSize: 12)),
+            alignment: Alignment.centerLeft)
+          ],
         ),
       );
     }
