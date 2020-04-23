@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/checkBoxWidget.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
-import 'package:me_daily/updated-pages/dailyLogs/checkBoxWidget.dart';
 
 class CheckBoxGrid extends StatefulWidget {
-  CheckBoxGrid(this.items, this.itemValues, this.taskAdded);
+  CheckBoxGrid(this.childAspectRatio, this.items, this.itemValues, this.taskAdded);
+  final double childAspectRatio;
   final List<String> items;
   final List<bool> itemValues;
   final List<String> taskAdded;
@@ -33,7 +34,7 @@ class _CheckBoxGridState extends State<CheckBoxGrid> {
         child: GridView.builder(
         shrinkWrap: true,
         itemCount: widget.items.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 6) ,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: widget.childAspectRatio) ,
         itemBuilder: (BuildContext context, int index) {
           return LogCheckBox(widget.items[index], widget.itemValues[index], (value) {
             _itemChange(widget.items, widget.itemValues, value, index);

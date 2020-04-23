@@ -19,6 +19,7 @@ import 'package:me_daily/updated-pages/dailyLogs/addDailyLog.dart';
 import 'package:me_daily/updated-pages/dailyLogs/basicQuestionsLog.dart';
 import 'package:me_daily/updated-pages/dailyLogs/sickQuestionsLog.dart';
 import 'package:me_daily/updated-pages/locationLog/location_log_summary.dart';
+import 'package:me_daily/updated-pages/medicalHistoryPage/medicalHistory.dart';
 import 'package:me_daily/updated-pages/onBoarding/on_boarding_screens.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_page.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_photo.dart';
@@ -87,6 +88,8 @@ class Router {
         return MaterialPageRoute(builder: (context) => BloodPressurePage.create(context));
       case Strings.temperatureHistoryPage:
         return MaterialPageRoute(builder: (context) => TemperaturePage.create(context));
+      case Strings.medicalHistoryPage:
+        return MaterialPageRoute(builder: (context) => MedicalHistoryPage());
       default:
         return MaterialPageRoute(builder: (_) => Container());
     }

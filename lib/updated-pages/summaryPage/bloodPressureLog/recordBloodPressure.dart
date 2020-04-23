@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:me_daily/common-widgets/expandedTextFieldWidget.dart';
+import 'package:me_daily/common-widgets/expandedNumberTextFieldWidget.dart';
 import 'package:me_daily/common-widgets/recordLogWidget.dart';
 import 'package:me_daily/common-widgets/viewHistory.dart';
 import 'package:me_daily/constants/strings.dart';
@@ -51,9 +51,9 @@ class _RecordBloodPressureState extends State<RecordBloodPressure> {
           Expanded(
             child: Row(
               children: <Widget>[
-                ExpandedTextField(Strings.systolic, (value) => _systolic = int.parse(value)),
+                ExpandedNumberTextField(Strings.systolic, (value) => _systolic = int.parse(value)),
                 SizedBox(width: 5),
-                ExpandedTextField(Strings.diastolic, (value) => _diastolic = int.parse(value)),
+                ExpandedNumberTextField(Strings.diastolic, (value) => _diastolic = int.parse(value)),
                 RecordButton(() => _addBPLog(context))
               ],
             ),
