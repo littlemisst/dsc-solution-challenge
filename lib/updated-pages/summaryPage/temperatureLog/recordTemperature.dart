@@ -37,7 +37,7 @@ class _RecordTemperatureState extends State<RecordTemperature> {
             Expanded(
               child: Container(
                 child: Text(
-                  'Current Temperature', style: TextStyle(fontFamily: 'Montserrat')
+                  'Current Temperature'
                 ),
               ),
             ),

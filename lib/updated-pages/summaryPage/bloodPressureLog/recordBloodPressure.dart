@@ -42,7 +42,7 @@ class _RecordBloodPressureState extends State<RecordBloodPressure> {
           Expanded(
             child: Container(
               child: Text(
-                'Blood Pressure', style: TextStyle(fontFamily: 'Montserrat')
+                'Blood Pressure',
               ),
             ),
           ),
