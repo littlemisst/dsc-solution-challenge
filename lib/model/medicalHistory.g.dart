@@ -9,6 +9,7 @@ part of 'medicalHistory.dart';
 MedicalHistory _$MedicalHistoryFromJson(Map<String, dynamic> json) {
   return MedicalHistory(
     hospitalized: json['hospitalized'] as bool,
+    hospitalizations: json['hospitalizations'] as int,
     foodAllergy:
         (json['foodAllergy'] as List)?.map((e) => e as String)?.toList(),
     drugAllergy:
@@ -23,6 +24,7 @@ MedicalHistory _$MedicalHistoryFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$MedicalHistoryToJson(MedicalHistory instance) =>
     <String, dynamic>{
       'hospitalized': instance.hospitalized,
+      'hospitalizations': instance.hospitalizations,
       'foodAllergy': instance.foodAllergy,
       'drugAllergy': instance.drugAllergy,
       'chronicDisease': instance.chronicDisease,

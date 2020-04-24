@@ -19,6 +19,7 @@ class MainProfile extends StatelessWidget {
               Navigator.popAndPushNamed(context, Strings.initialRoute),
         ),
         title: TextFormat('Profile'),
+        centerTitle: true,
         backgroundColor: Colors.white,
       ),
       body: StreamProvider<Profile>.value(

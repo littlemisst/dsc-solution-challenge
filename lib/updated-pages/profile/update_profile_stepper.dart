@@ -58,6 +58,7 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
     final _firestoreService = FirestoreService(uid: user.uid);
     final profile = _profileFromState();
     await _firestoreService.submitProfile(profile);
+    await uploadImage();
   }
 
 
@@ -180,6 +181,7 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
     : image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {_image = image;});
   }
+
   Future uploadImage() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     String fileUploadName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';

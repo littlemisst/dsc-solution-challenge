@@ -342,10 +342,25 @@ class FirestoreService {
         .map(_userMessagesFromFirebase);
   }
 
+  
+
   Future addMedicalHistory(MedicalHistory history) async {
     return await userData
         .document(uid)
         .collection('medicalHistory')
         .add(history.toJson());
   }
+
+  List<MedicalHistory> _historyFromFirebase(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents
+        .map((document) => MedicalHistory.fromJson(document.data))
+        .toList();
+  }
+
+
+  Stream<List<MedicalHistory>> get history {
+    return userData.document(uid).collection('medicalHistory').snapshots().map(_historyFromFirebase);
+  }
+
+
 }

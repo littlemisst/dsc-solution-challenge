@@ -29,13 +29,7 @@ class _HomePageState extends State<HomePage>
     MapPage(),
   ];
 
-  Widget _sideDrawer() {
-    final user = Provider.of<User>(context);
-    return StreamProvider<Profile>.value(
-        value: FirestoreService(uid: user.uid).profile,
-        child: SideDrawerWidget()
-    );
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +38,7 @@ class _HomePageState extends State<HomePage>
         centerTitle: true,
         title: TextFormat('ME DAILY'),
       ),
-      drawer: _sideDrawer(),
+      drawer: SideDrawerWidget(),
       body: bodies[_currentIndex],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButtonWidget(),
