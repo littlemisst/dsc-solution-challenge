@@ -43,8 +43,6 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
   List<String> _immunization = Strings.immunizations;
   List<bool> _immunizationValues = List<bool>();
 
-  DateTime _lmp;
-  String _menstrualDescription;
 
   @override
   void initState() {
@@ -72,8 +70,6 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
       drugAllergy: _drugAllergy,
       chronicDisease: _chronicDiseaseAdded,
       immunizations: _immunizationAdded,
-      lmp: _lmp,
-      menstrualDescription: _menstrualDescription 
     );
   }
 
@@ -131,13 +127,6 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
       content: CheckBoxGrid(3.5, _immunization, _immunizationValues,_immunizationAdded),
       state: _currentStep > 4 ? StepState.complete : StepState.editing
     ),
-    Step(
-      isActive: _currentStep >= 5,
-      title: Text('Additional'),
-      subtitle: Text('You can skip this part if you are not a woman'),
-      content: _buildLMP(),
-      state: _currentStep > 5 ? StepState.complete : StepState.editing
-    ),
   ];
 
   Widget _buildHospitalizations() {
@@ -192,31 +181,20 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
     );
   }
 
-  Widget _buildLMP() {
-    return ContentContainer(
-      child: Column(children: <Widget>[
-        Text('Enter Date of Your Last Menstrual Period'),
-        SizedBox(height: 10),
-        DatePickerWidget(
-          elevation: 0,
-          taskStarted: _lmp,
-          setTaskStarted: (date) => setState(() => _lmp = date),
-          setTaskEnded: (date) => setState(() => _lmp = date)
-        ),
-        Text('Describe'),
-        SizedBox(height: 10),
-        ExpandedTextField('Drug', _textController, (value) => _menstrualDescription = value),
-      ]),
-    );
-    
-    
-    
-  }
-
-
 
   void _onStepContinue() {
-    setState(() => _currentStep++);
+    if (_currentStep == 0 && _hospitalized != null) {
+       setState(() => _currentStep ++);
+    }
+    if (_currentStep == 1 && _foodAllergy.isNotEmpty) {
+      setState(() =>  _currentStep ++);
+    }
+    if (_currentStep == 2 && _drugAllergy.isNotEmpty) {
+      setState(() =>  _currentStep ++);
+    }
+    if (_currentStep == 3 && _chronicDisease.isNotEmpty) {
+      setState(() =>  _currentStep ++);
+    }
   }
 
   void _onStepCancel() {
@@ -233,7 +211,7 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
         centerTitle: true,
         title: TextFormat('Medical History'),
       ),
-      body: StepperWidget(_currentStep, () => _onStepContinue(), ()=>_onStepCancel(), _steps),
+      body: StepperWidget(StepperType.vertical, _currentStep, () => _onStepContinue(), ()=>_onStepCancel(), _steps),
       floatingActionButton: _currentStep == _steps.length -1 ? 
       FloatingActionToSave(() => _addHistory(context), Icons.check) : null,
     );

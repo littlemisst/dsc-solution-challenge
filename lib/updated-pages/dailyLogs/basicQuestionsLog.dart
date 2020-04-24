@@ -175,7 +175,7 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
         centerTitle: true,
         title: TextFormat('What have you been up to?'),
       ),
-      body: StepperWidget(_currentStep, () => _onStepContinue(), ()=>_onStepCancel(), _steps),
+      body: StepperWidget(StepperType.vertical, _currentStep, () => _onStepContinue(), ()=>_onStepCancel(), _steps),
       floatingActionButton: _currentStep == _steps.length -1 ? 
       FloatingActionToSave(() => _submit(), Icons.check) : null,
     );

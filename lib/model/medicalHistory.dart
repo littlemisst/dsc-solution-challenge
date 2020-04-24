@@ -9,10 +9,7 @@ class MedicalHistory {
   List<String> drugAllergy;
   List<String> chronicDisease;
   List<String> immunizations;
-  DateTime lmp;
-  String menstrualDescription;
-
-  MedicalHistory({this.hospitalized, this.foodAllergy, this.drugAllergy, this.chronicDisease, this.immunizations, this.lmp, this.menstrualDescription});
+  MedicalHistory({this.hospitalized, this.foodAllergy, this.drugAllergy, this.chronicDisease, this.immunizations});
 
   factory MedicalHistory.fromJson(Map<String, dynamic> json) =>
       _$MedicalHistoryFromJson(json);

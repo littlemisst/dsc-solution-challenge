@@ -226,7 +226,7 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
         backgroundColor: Colors.white,
         elevation: 1,
       ),
-      body: StepperWidget(_currentStep, () => _onStepContinue(), ()=>_onStepCancel(), _steps),
+      body: StepperWidget(StepperType.vertical, _currentStep, () => _onStepContinue(), ()=>_onStepCancel(), _steps),
       floatingActionButton: _currentStep == _steps.length -1 ? 
       FloatingActionButton(child: Icon(Icons.keyboard_arrow_right, color: Colors.white),
       onPressed: () => _next()) : null

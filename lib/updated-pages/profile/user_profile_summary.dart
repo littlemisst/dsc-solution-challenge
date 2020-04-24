@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/bmiConversion.dart';
+import 'package:me_daily/widgets/indicatorText.dart';
 import 'package:me_daily/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:me_daily/constants/strings.dart';
@@ -41,16 +42,15 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
       Row(children: <Widget>[
         Expanded(child: 
           Column(children: <Widget>[
-            Text(name,
+            Align(alignment: Alignment.centerLeft, child: Text(name,
               style: TextStyle(
               fontFamily: 'Montserrat',
               fontSize: 20,
-              fontWeight: FontWeight.bold)),
-            Text(email,
-            style: TextStyle(color: Colors.grey))
+              fontWeight: FontWeight.bold))),
+            Align(alignment: Alignment.centerLeft, child: Text(email,
+              style: TextStyle(color: Colors.grey)))
             ])
           ),
-        SizedBox(width: MediaQuery.of(context).size.width / 3),
         FlatButton(
           child: Text('Edit Profile'),
           shape: RoundedRectangleBorder(side: BorderSide(color: Theme.of(context).accentColor), borderRadius: BorderRadius.circular(45)),
@@ -147,12 +147,12 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
 
   Widget _buildBodyMassIndex(height, weight) {
     return Container(
-      padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: Row(children: <Widget>[
         Expanded(child: Column(children: <Widget>[
           Align(alignment: Alignment.centerLeft, child: TextWidget(text: 'Body Mass Index')),
           SizedBox(height: 5),
-          Align(alignment: Alignment.centerLeft, child: Text('${BMIConversion(weight, height).bmi}', style: TextStyle(fontSize: 15.0))),
+          Align(alignment: Alignment.centerLeft, child: Text('${BMIConversion(weight, height).bmi.toStringAsFixed(2)}', style: TextStyle(fontSize: 15.0))),
         ])),
          Expanded(child: Column(children: <Widget>[
           Align(alignment: Alignment.centerLeft, child: TextWidget(text: 'Category')),
@@ -163,33 +163,50 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
     );
   }
 
+  Widget _buildMedicalHistory() {
+    return Container(
+      color: Theme.of(context).backgroundColor,
+      padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
+      child: Column(children: <Widget>[
+        IndicatorText('MEDICAL HISTORY'),
+        FlatButton(child: Text('add'), onPressed: () => Navigator.popAndPushNamed(
+          context, Strings.medicalHistoryPage),)
+      ]),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Profile _currentProfile = Provider.of<Profile>(context);
     User _user = Provider.of<User>(context);
     return Scaffold(
-      body: Container(
-        child: Column(children: <Widget>[
-          SizedBox(height: 5),
-          _buildNameProfile(_currentProfile.downloadUrl, _currentProfile.name, _user.email),
-          SizedBox(height: 5),
-          Expanded(child: Container(
-            padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-            color: Theme.of(context).backgroundColor,
-            child: Column(children: <Widget>[
-            _buildGender(_currentProfile.gender),
-            Divider(),
-            _buildBirthday(_currentProfile.birthDate),
-             Divider(),
-            _buildAddress(_currentProfile.address),
-             Divider(),
-             _buildCivilStatusAndBloodType(_currentProfile.civilStatus, _currentProfile.bloodType),
-             Divider(),
-             _buildPhysicalMeasurements(_currentProfile.height, _currentProfile.weight),
-            Divider(),
-            _buildBodyMassIndex(_currentProfile.height, _currentProfile.weight),
-          ]))),
-        ]),
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Column(children: <Widget>[
+            SizedBox(height: 5),
+            _buildNameProfile(_currentProfile.downloadUrl, _currentProfile.name, _user.email),
+            SizedBox(height: 5),
+            Expanded(child: Container(
+              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+              color: Theme.of(context).backgroundColor,
+              child: Column(children: <Widget>[
+              _buildGender(_currentProfile.gender),
+              Divider(),
+              _buildBirthday(_currentProfile.birthDate),
+              Divider(),
+              _buildAddress(_currentProfile.address),
+              Divider(),
+              _buildCivilStatusAndBloodType(_currentProfile.civilStatus, _currentProfile.bloodType),
+              Divider(),
+              _buildPhysicalMeasurements(_currentProfile.height, _currentProfile.weight),
+              Divider(),
+              _buildBodyMassIndex(_currentProfile.height, _currentProfile.weight),
+            ]))),
+            SizedBox(height: 5),
+            _buildMedicalHistory()
+          ]),
+        )
       ),
     );
   }

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Strings {
   static const profile = 'Profile';
   static const medicalHistory = 'Past Medical History';
@@ -70,7 +72,8 @@ class Strings {
     'Heart disease',
     'HIV/AIDS',
     'Hypertension',
-    'Multiple sclerosis'
+    'Multiple sclerosis',
+    'None'
   ];
 
   static const immunizations =[
@@ -83,7 +86,8 @@ class Strings {
     'Flu',
     'MMR',
     'IPV',
-    'PCV'
+    'PCV',
+    'None'
   ];
 
   static const eat = 'Eat';
@@ -108,6 +112,26 @@ class Strings {
   static const stage2 = 'Stage 1 Hypertension';
   static const hyperEmergency = 'Hypertensive Emergency';
 
+  static const civilStatusList = [
+    DropdownMenuItem<String>(child: Text('Single'), value: 'Single'),
+    DropdownMenuItem<String>(child: Text('Married'), value: 'Married'),
+  ];
+
+  static const genderList = [
+    DropdownMenuItem<String>(child: Text('Male'), value: 'Male'),
+    DropdownMenuItem<String>(child: Text('Female'), value: 'Female'),
+  ];
+
+  static const bloodTypeList = [
+    DropdownMenuItem<String>(child: Text('A+'), value: 'A+'),
+    DropdownMenuItem<String>(child: Text('A-'), value: 'A-'),
+    DropdownMenuItem<String>(child: Text('B+'), value: 'B+'),
+    DropdownMenuItem<String>(child: Text('B-'), value: 'B-'),
+    DropdownMenuItem<String>(child: Text('O+'), value: 'O+'),
+    DropdownMenuItem<String>(child: Text('O-'), value: 'O-'),
+    DropdownMenuItem<String>(child: Text('AB+'), value: 'AB+'),
+    DropdownMenuItem<String>(child: Text('AB-'), value: 'AB-'),
+  ];
 
   static const String initialRoute = '/';
   static const String authenticationRoute = '/authentication';

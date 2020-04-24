@@ -136,7 +136,7 @@ class _EditProfileState extends State<EditProfile> {
               buildHeightWeightField(context, kilogramController,
                   _currentProfile.weight.toString(), 'kg'),
               SizedBox(height: 10.0),
-              RaisedButtonIcon(Icons.edit, 'Submit Edited Profile', () async {
+              FlatButtonIcon(Icons.edit, 'Submit Edited Profile', () async {
                 await _firestoreService.submitProfile(_currentProfile);
                 Navigator.popAndPushNamed(context, Strings.profilePageRoute);
               })
