@@ -55,7 +55,6 @@ class _RecordWaterState extends State<RecordWater> {
             alignment: Alignment.topCenter,
             child: Container(
               child: Text('Daily Water Count', 
-                style: TextStyle(fontFamily: 'Montserrat'),
               ),
             ),
           ),

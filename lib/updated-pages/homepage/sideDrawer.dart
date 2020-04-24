@@ -67,12 +67,6 @@ class _SideDrawerWidgetState extends State<SideDrawerWidget> {
                       context, Strings.profilePageRoute),
                 ),
                 ListItem(
-                  icon: Icons.folder,
-                  text: Strings.medicalHistory,
-                  onTap: () async => Navigator.popAndPushNamed(
-                      context, Strings.medicalHistoryPage),
-                ),
-                ListItem(
                   icon: Icons.message,
                   text: Strings.message,
                   onTap: () async =>

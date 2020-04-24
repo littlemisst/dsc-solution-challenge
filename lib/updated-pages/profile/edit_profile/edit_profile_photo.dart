@@ -62,7 +62,7 @@ class _EditProfilePhotoState extends State<EditProfilePhoto> {
                   : CircleAvatar(
                       backgroundImage: new FileImage(_image), radius: 80.0),
                   SizedBox(height: 20.0),
-                  RaisedButtonIcon(Icons.camera_alt, 'Camera', () {
+                  FlatButtonIcon(Icons.camera_alt, 'Camera', () {
                     setState(() {
                       String fileUploadName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
                       _currentProfile.profilePhotoFileName = fileUploadName;
@@ -70,14 +70,14 @@ class _EditProfilePhotoState extends State<EditProfilePhoto> {
                     getImage(true);
                   }),
                   SizedBox(width: 20.0),
-                  RaisedButtonIcon(Icons.photo_album, 'Gallery', () {
+                  FlatButtonIcon(Icons.photo_album, 'Gallery', () {
                     setState(() {
                       String fileUploadName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
                       _currentProfile.profilePhotoFileName = fileUploadName;
                     });  
                     getImage(false);}),
                   SizedBox(height: 30.0),
-                  RaisedButtonIcon(Icons.edit, 'Change Profile Photo', () async {
+                  FlatButtonIcon(Icons.edit, 'Change Profile Photo', () async {
                         String fileUploadName = DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
                         _currentProfile.profilePhotoFileName = fileUploadName;
                           StorageReference _reference = FirebaseStorage.instance

@@ -118,7 +118,7 @@ class _AddPhotosState extends State<AddPhotos> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(height: 50),
-                    RaisedButtonIcon(
+                    FlatButtonIcon(
                         Icons.camera_alt,
                         'Camera',
                         images.isEmpty
@@ -134,7 +134,7 @@ class _AddPhotosState extends State<AddPhotos> {
                               }
                             : null),
                     SizedBox(width: 20),
-                    RaisedButtonIcon(Icons.image, 'Gallery',
+                    FlatButtonIcon(Icons.image, 'Gallery',
                         _image == null ? selectMultipleImages : null),
                     SizedBox(height: 20),
                   ]),
@@ -177,7 +177,7 @@ class _AddPhotosState extends State<AddPhotos> {
                 )
               : Container(),
           images.isNotEmpty && description != null
-              ? RaisedButtonIcon(Icons.save_alt, 'Save', () async {
+              ? FlatButtonIcon(Icons.save_alt, 'Save', () async {
                   setState(() {
                     startUpload = true;
                   });
@@ -198,7 +198,7 @@ class _AddPhotosState extends State<AddPhotos> {
                 })
               : Container(),
           _image != null && description != null
-              ? RaisedButtonIcon(Icons.save_alt, 'Save', () async {
+              ? FlatButtonIcon(Icons.save_alt, 'Save', () async {
                   setState(() {
                     startUpload = true;
                   });

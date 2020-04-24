@@ -24,7 +24,6 @@ class _TasksDetailsState extends State<TasksDetails> {
               Center(
                 child: Text(
                   'Tasks', 
-                  style: TextStyle(fontFamily: 'Montserrat'),
                 ),
               ),
               Text(

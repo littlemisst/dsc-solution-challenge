@@ -12,16 +12,15 @@ class DatePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final format = DateFormat("yMMMMd");
+    final format = DateFormat("yMd");
   return Container(
-    width: 240,
     child: Column(children: <Widget>[
+      Align(alignment: Alignment.centerLeft, child: Text(text)),
+      SizedBox(height: 5),
       DateTimeField(
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-          labelText: text,
-          // enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         ),
         format: format,
         onShowPicker: (context, currentValue) {

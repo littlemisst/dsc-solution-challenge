@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class StepperWidget extends StatefulWidget {
-  const StepperWidget(this.currentStep, this.onStepContinue, this.onStepCancel, this.stepsList);
+  const StepperWidget(this.type, this.currentStep, this.onStepContinue, this.onStepCancel, this.stepsList);
+  final StepperType type;
   final int currentStep;
   final VoidCallback onStepContinue;
   final VoidCallback onStepCancel;
@@ -14,6 +15,7 @@ class _StepperWidgetState extends State<StepperWidget> {
   @override
   Widget build(BuildContext context) {
     return Stepper(
+      type: widget.type,
       currentStep: widget.currentStep,
       onStepContinue: widget.onStepContinue,
       onStepCancel: widget.onStepCancel,
