@@ -20,7 +20,6 @@ class FirebaseAuthentication {
   Future<User> signUpWithEmailAndPassword(String email, String password) async {
     AuthResult authResult = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
-    await authResult.user.sendEmailVerification();
     return _userFromFirebase(authResult.user);
   }
 

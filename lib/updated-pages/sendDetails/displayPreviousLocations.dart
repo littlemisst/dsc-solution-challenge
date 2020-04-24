@@ -16,16 +16,20 @@ class DisplayPreviousLocations extends StatelessWidget {
           children: <Widget>[
             Text('Track Previous Locations'),
             Divider(),
-            Container(
-              height: 200,
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: previousLocations.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return buildListOfLocations(
-                        context, previousLocations[index]);
-                  }),
-            ),
+            previousLocations.isEmpty
+                ? Container(
+                    child: Text('No record of previous locations'),
+                  )
+                : Container(
+                    height: 200,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: previousLocations.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return buildListOfLocations(
+                              context, previousLocations[index]);
+                        }),
+                  ),
           ],
         ),
       ),

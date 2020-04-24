@@ -9,19 +9,26 @@ class MessagesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final messages = Provider.of<List<UserSummary>>(context) ?? [];
     Widget buildListOfmessages(context, document) {
-      return ListTile(
-        leading: document.profile == null
-            ? CircleAvatar(
-                radius: 25,
-              )
-            : CircleAvatar(
-                radius: 25,
-                backgroundImage:
-                    NetworkImage(document.profile.downloadUrl, scale: 30),
-              ),
-        title:
-            Text(document.profile == null ? 'No name' : document.profile.name),
-        subtitle: Text(document.sender.email),
+      return GestureDetector(
+        onTap: () => Navigator.pushNamed(context, Strings.viewMessage,
+            arguments: document),
+        child: Hero(
+          tag: document.dateSent.toString(),
+          child: ListTile(
+            leading: document.profile == null
+                ? CircleAvatar(
+                    radius: 25,
+                  )
+                : CircleAvatar(
+                    radius: 25,
+                    backgroundImage:
+                        NetworkImage(document.profile.downloadUrl, scale: 30),
+                  ),
+            title: Text(
+                document.profile == null ? 'No name' : document.profile.name),
+            subtitle: Text(document.sender.email),
+          ),
+        ),
       );
     }
 

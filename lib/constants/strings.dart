@@ -73,13 +73,13 @@ class Strings {
     'Multiple sclerosis'
   ];
 
-  static const immunizations =[
+  static const immunizations = [
     'Varicella vaccine',
     'DTaP',
     'HepA',
     'HepB',
     'Hib vaccine'
-    'HPV',
+        'HPV',
     'Flu',
     'MMR',
     'IPV',
@@ -101,13 +101,12 @@ class Strings {
   static const systolic = 'Systolic';
   static const diastolic = 'Diastolic';
   static const record = 'Record';
- 
+
   static const normal = 'Normal';
   static const preHypertension = 'Prehypertension';
   static const stage1 = 'Stage 1 Hypertension';
   static const stage2 = 'Stage 1 Hypertension';
   static const hyperEmergency = 'Hypertensive Emergency';
-
 
   static const String initialRoute = '/';
   static const String authenticationRoute = '/authentication';
@@ -135,4 +134,5 @@ class Strings {
   static const String bpHistoryPage = '/bp-history-page';
   static const String temperatureHistoryPage = '/temperature-history-page';
   static const String medicalHistoryPage = '/medical-history-page';
+  static const String viewMessage = '/view-message';
 }

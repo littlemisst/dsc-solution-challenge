@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/logs.dart';
+import 'package:me_daily/model/summary.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/pages/addPhotos.dart';
 import 'package:me_daily/pages/helpPage.dart';
@@ -20,6 +21,7 @@ import 'package:me_daily/updated-pages/dailyLogs/sickQuestionsLog.dart';
 import 'package:me_daily/updated-pages/locationLog/location_log_summary.dart';
 import 'package:me_daily/updated-pages/medicalHistoryPage/medicalHistory.dart';
 import 'package:me_daily/updated-pages/messages_page/messagesPage.dart';
+import 'package:me_daily/updated-pages/messages_page/viewMessage.dart';
 import 'package:me_daily/updated-pages/onBoarding/on_boarding_screens.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_page.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/edit_profile_photo.dart';
@@ -83,13 +85,20 @@ class Router {
       case Strings.helpPage:
         return MaterialPageRoute(builder: (_) => HelpPage());
       case Strings.waterHistoryPage:
-        return MaterialPageRoute(builder: (context) => WaterPage.create(context));
+        return MaterialPageRoute(
+            builder: (context) => WaterPage.create(context));
       case Strings.bpHistoryPage:
-        return MaterialPageRoute(builder: (context) => BloodPressurePage.create(context));
+        return MaterialPageRoute(
+            builder: (context) => BloodPressurePage.create(context));
       case Strings.temperatureHistoryPage:
-        return MaterialPageRoute(builder: (context) => TemperaturePage.create(context));
+        return MaterialPageRoute(
+            builder: (context) => TemperaturePage.create(context));
       case Strings.medicalHistoryPage:
         return MaterialPageRoute(builder: (context) => MedicalHistoryPage());
+      case Strings.viewMessage:
+        var data = routeSettings.arguments as UserSummary;
+        return MaterialPageRoute(
+            builder: (_) => ViewMessage(userSummary: data));
       default:
         return MaterialPageRoute(builder: (_) => Container());
     }

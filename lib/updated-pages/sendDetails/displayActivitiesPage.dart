@@ -16,15 +16,20 @@ class DisplayActivitiesPage extends StatelessWidget {
           children: <Widget>[
             Text('Activities'),
             Divider(),
-            Container(
-              height: 200,
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: activities.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return buildListOfActivities(context, activities[index]);
-                  }),
-            ),
+            activities.isEmpty
+                ? Container(
+                    child: Text('No record of activities'),
+                  )
+                : Container(
+                    height: 200,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: activities.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return buildListOfActivities(
+                              context, activities[index]);
+                        }),
+                  ),
           ],
         ),
       ),
