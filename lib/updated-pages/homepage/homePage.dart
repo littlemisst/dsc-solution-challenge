@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/appBarTextFormat.dart';
-import 'package:me_daily/model/profile.dart';
-import 'package:me_daily/model/user.dart';
 import 'package:me_daily/pages/mapPage.dart';
-import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/updated-pages/calendarPage/dailyTasksPage.dart';
 import 'package:me_daily/updated-pages/homepage/expandedButton.dart';
 import 'package:me_daily/updated-pages/homepage/sideDrawer.dart';
 import 'package:me_daily/updated-pages/photos/gallery_page.dart';
 import 'package:me_daily/updated-pages/summaryPage/summaryPage.dart';
-import 'package:provider/provider.dart';
+
 
 import 'floatingActionButtonWidget.dart';
 

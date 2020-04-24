@@ -76,7 +76,7 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
             TextFormFieldWidget(label: 'Full Name',  onChanged: (value) => _name = value), 
             SizedBox(height: 15.0),
             Row(children: <Widget>[
-              Expanded(child: DatePicker('Birthdate', (DateTime value) => _birthdate = value)),
+              Expanded(child: DatePicker(text: 'Birthdate', onChanged: (DateTime value) => _birthdate = value)),
               SizedBox(width: 20),
               Expanded(
                 child: DropDownWidget(label: 'Civil Status', items: Strings.civilStatusList, 
@@ -128,7 +128,7 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
   @override
   void initState() {
     super.initState();
-    _weightController = ScrollController(initialScrollOffset: 20);
+    _weightController = ScrollController(initialScrollOffset: 0);
     _heightController = ScrollController(initialScrollOffset: 0);
     _kilogramController.addListener(() {
       _weight = double.parse(_kilogramController.text);
@@ -137,12 +137,14 @@ class _UpdateProfileStepperState extends State<UpdateProfileStepper> {
       _height = double.parse(_metersController.text);
     });
   }
-  // @override
-  // void dispose() {
-  //   _metersController.dispose();
-  //   _kilogramController.dispose();
-  //   super.dispose();
-  // }
+
+  @override
+  void dispose() {
+    _metersController.dispose();
+    _kilogramController.dispose();
+    super.dispose();
+  }
+
   void _handleHeightScaleChanged(int scalePoints) {
     int inchOffest = scalePoints ~/ 20;
     double meters = inchOffest / 12;

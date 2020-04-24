@@ -19,6 +19,7 @@ import 'package:me_daily/updated-pages/dailyLogs/addDailyLog.dart';
 import 'package:me_daily/updated-pages/dailyLogs/basicQuestionsLog.dart';
 import 'package:me_daily/updated-pages/dailyLogs/sickQuestionsLog.dart';
 import 'package:me_daily/updated-pages/locationLog/location_log_summary.dart';
+import 'package:me_daily/updated-pages/medicalHistoryPage/editMedicalHistory.dart.dart';
 import 'package:me_daily/updated-pages/medicalHistoryPage/medicalHistory.dart';
 import 'package:me_daily/updated-pages/messages_page/messagesPage.dart';
 import 'package:me_daily/updated-pages/messages_page/viewMessage.dart';
@@ -95,6 +96,8 @@ class Router {
             builder: (context) => TemperaturePage.create(context));
       case Strings.medicalHistoryPage:
         return MaterialPageRoute(builder: (context) => MedicalHistoryPage());
+        case Strings.editMedicalHistoryPage:
+        return MaterialPageRoute(builder: (context) => EditMedicalHistoryPage());
       case Strings.viewMessage:
         var data = routeSettings.arguments as UserSummary;
         return MaterialPageRoute(

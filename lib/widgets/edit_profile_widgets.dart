@@ -145,7 +145,7 @@ Widget buildHeightWeightField(contex, controller, initialValue, suffix) {
         hintText: initialValue,
         suffixText: suffix,
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     ),
   );

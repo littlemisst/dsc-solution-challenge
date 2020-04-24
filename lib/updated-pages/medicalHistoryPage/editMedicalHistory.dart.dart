@@ -14,12 +14,12 @@ import 'package:me_daily/updated-pages/dailyLogs/incrementCardWidget.dart';
 import 'package:me_daily/updated-pages/medicalHistoryPage/listBuilderWidget.dart';
 import 'package:provider/provider.dart';
 
-class MedicalHistoryPage extends StatefulWidget {
+class EditMedicalHistoryPage extends StatefulWidget {
   @override
-  _MedicalHistoryPageState createState() => _MedicalHistoryPageState();
+  _EditMedicalHistoryPageState createState() => _EditMedicalHistoryPageState();
 }
 
-class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
+class _EditMedicalHistoryPageState extends State<EditMedicalHistoryPage> {
   final _textController = TextEditingController();
 
   int _currentStep = 0;
@@ -60,8 +60,9 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
 
   @override
   void initState() {
+    final _currentData = Provider.of<List<MedicalHistory>>(context, listen: false);
+    _hospitalizations = _currentData[0].hospitalizations;
     super.initState();
-    _hospitalizations = 0;
     _foodAllergy = [];
     _drugAllergy = [];
    _chronicDiseaseAdded = [];
@@ -89,11 +90,11 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
     );
   }
 
-  Future<void> _addHistory(BuildContext context) async {
+  Future<void> _setHistory(BuildContext context) async {
     final user = Provider.of<User>(context, listen: false);
     final _firestoreService = FirestoreService(uid: user.uid);
-    final history = _historyFromState();
-    await _firestoreService.addMedicalHistory(history);
+    final _history = _historyFromState();
+    await _firestoreService.updateMedicalHistory(_history);
     Navigator.popAndPushNamed(context, Strings.profilePageRoute);
   }
 
@@ -133,13 +134,13 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
     Step(
       isActive: _currentStep >= 3,
       title: Text('Chronic Diseases'),
-      content: CheckBoxGrid(3.5, _chronicDisease, _chronicDiseaseValues, _chronicDiseaseAdded),
+      content: _buildChronicDisease(),
       state: _currentStep > 3 ? StepState.complete : StepState.editing
     ),
     Step(
       isActive: _currentStep >= 4,
       title: Text('Immunizations'),
-      content: CheckBoxGrid(3.5, _immunization, _immunizationValues,_immunizationAdded),
+      content: _buildImmunizations(),
       state: _currentStep > 4 ? StepState.complete : StepState.editing
     ),
   ];
@@ -147,9 +148,9 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
   Widget _buildHospitalizations() {
     return _hospitalized != null && _hospitalized == _choices[0] ?
     IncrementCard(
-      timesText: 'Times',
+      timesText: 'Times', 
       intText: _hospitalizations, 
-      onPressedIncrement: () => _increment(), 
+      onPressedIncrement: () => _increment(),
       onPressedDecrement: ()=> _decrement())
     :
     ContentContainer(
@@ -160,6 +161,8 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
   }
 
   Widget _buildFoodAllergy() {
+    final _currentData = Provider.of<List<MedicalHistory>>(context, listen: false);
+    _foodAllergy = _currentData[0].foodAllergy;
     String allergy;
     return ContentContainer(
       child: Container(
@@ -175,7 +178,7 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
               Text('ADD')
             ])
           ]),
-          Container(child: ListBuilder(items: _foodAllergy, edit: false)
+          Container(child: ListBuilder(items: _foodAllergy, edit: true,)
           )
       ])
     ) 
@@ -183,6 +186,8 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
   }
 
   Widget _buildDrugAllergy() {
+    final _currentData = Provider.of<List<MedicalHistory>>(context, listen: false);
+    _drugAllergy = _currentData[0].drugAllergy;
     String allergy;
     return ContentContainer(
       child: Container(
@@ -198,27 +203,34 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
               Text('ADD')
             ])
           ]),
-          Container(child: ListBuilder(items: _drugAllergy, edit: false)
+          Container(child: ListBuilder(items: _drugAllergy, edit: true)
           )
       ])
     ) 
     );
   }
 
+  Widget _buildChronicDisease() {
+    final _currentData = Provider.of<List<MedicalHistory>>(context, listen: false);
+    _chronicDiseaseAdded = _currentData[0].chronicDisease;
+    _chronicDiseaseAdded.forEach((element) {
+      _chronicDiseaseValues[(_chronicDisease.indexOf(element))] = true;
+      }); 
+    return CheckBoxGrid(3.5, _chronicDisease, _chronicDiseaseValues, _chronicDiseaseAdded);
+  }
+
+  Widget _buildImmunizations() {
+    final _currentData = Provider.of<List<MedicalHistory>>(context, listen: false);
+    _immunizationAdded = _currentData[0].immunizations;
+    _immunizationAdded.forEach((element) {
+      _immunizationValues[(_immunization.indexOf(element))] = true;
+      }); 
+    return CheckBoxGrid(3.5, _immunization, _immunizationValues,_immunizationAdded);
+  }
+
 
   void _onStepContinue() {
-    if (_currentStep == 0 && _hospitalized != null) {
-       setState(() => _currentStep ++);
-    }
-    if (_currentStep == 1 && _foodAllergy.isNotEmpty) {
-      setState(() =>  _currentStep ++);
-    }
-    if (_currentStep == 2 && _drugAllergy.isNotEmpty) {
-      setState(() =>  _currentStep ++);
-    }
-    if (_currentStep == 3 && _chronicDiseaseAdded.isNotEmpty) {
-      setState(() =>  _currentStep ++);
-    }
+    setState(() =>  _currentStep ++);
   }
 
   void _onStepCancel() {
@@ -240,8 +252,9 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
         title: TextFormat('Medical History'),
       ),
       body: StepperWidget(StepperType.vertical, _currentStep, () => _onStepContinue(), ()=>_onStepCancel(), _steps),
-      floatingActionButton: _currentStep == _steps.length -1 ? 
-      FloatingActionToSave(() => _addHistory(context), Icons.check) : null,
+      floatingActionButton: _foodAllergy.isEmpty || _drugAllergy.isEmpty || _chronicDiseaseAdded.isEmpty || _immunizationAdded.isEmpty
+      ? null :
+      FloatingActionToSave(() => _setHistory(context), Icons.check),
     );
   }
 }

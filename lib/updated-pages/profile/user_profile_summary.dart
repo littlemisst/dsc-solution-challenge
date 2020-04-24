@@ -5,6 +5,7 @@ import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/bmiConversion.dart';
 import 'package:me_daily/updated-pages/profile/medicalHistorySummary.dart';
+import 'package:me_daily/widgets/editIcons.dart';
 import 'package:me_daily/widgets/indicatorText.dart';
 import 'package:me_daily/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
@@ -53,11 +54,7 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
               style: TextStyle(color: Colors.grey)))
             ])
           ),
-        FlatButton(
-          child: Text('Edit Profile'),
-          shape: RoundedRectangleBorder(side: BorderSide(color: Theme.of(context).accentColor), borderRadius: BorderRadius.circular(45)),
-          onPressed: () => Navigator.popAndPushNamed(context, Strings.editProfilePageRoute),
-          ),
+          EditIcon(text: 'Edit Profile', route: Strings.editProfilePageRoute)
         ]),
       ])
     );
@@ -154,20 +151,26 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
     List<MedicalHistory> _medicalHistory = Provider.of<List<MedicalHistory>>(context);
     return Container(
       color: Theme.of(context).backgroundColor,
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
       child: Column(children: <Widget>[
-        IndicatorText('MEDICAL HISTORY'),
-        _medicalHistory.isEmpty ? FlatButton(
-          child: Text('Add Medical History'),
-          shape: RoundedRectangleBorder(side: BorderSide(color: Theme.of(context).accentColor), borderRadius: BorderRadius.circular(45)),
-          onPressed: () => Navigator.popAndPushNamed(
-          context, Strings.medicalHistoryPage))
-          : MedicalHistorySummary(medicalHistory: _medicalHistory[0])
+        Row(children: <Widget>[
+          Expanded(child: IndicatorText('MEDICAL HISTORY')),
+          _medicalHistory.isEmpty ? Container():
+          EditIcon(text: 'Edit History', route: Strings.editMedicalHistoryPage)
+        ]),
+        _medicalHistory.isEmpty ? 
+        Column(children: <Widget>[
+          SizedBox(height: 5),
+          FlatButton(
+            child: Text('Add Medical History'),
+            shape: RoundedRectangleBorder(side: BorderSide(color: Theme.of(context).accentColor), borderRadius: BorderRadius.circular(45)),
+            onPressed: () => Navigator.popAndPushNamed(
+            context, Strings.medicalHistoryPage))
+        ])
+        : MedicalHistorySummary(medicalHistory: _medicalHistory[0])
       ]),
     );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
