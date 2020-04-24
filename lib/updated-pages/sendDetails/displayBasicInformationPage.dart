@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
-import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:provider/provider.dart';
 
 class DisplayBasicInformation extends StatelessWidget {
+  final profile;
+  DisplayBasicInformation({this.profile});
   @override
   Widget build(BuildContext context) {
-    final profile = Provider.of<Profile>(context);
     final user = Provider.of<User>(context);
     return ContentContainer(
         padding: EdgeInsets.fromLTRB(0, 5, 0, 5),

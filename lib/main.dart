@@ -53,7 +53,9 @@ class BuildMaterialApp extends StatelessWidget {
               StreamProvider<List<DailyLog>>.value(
                   value: FirestoreService(uid: _user.uid).logs),
               StreamProvider<List<LocationLog>>.value(
-                  value: FirestoreService(uid: _user.uid).locationLogList)
+                  value: FirestoreService(uid: _user.uid).locationLogList),
+              StreamProvider.value(
+                  value: FirestoreService(uid: _user.uid).messages)
             ],
             child: MaterialApp(
               title: 'Me Daily',

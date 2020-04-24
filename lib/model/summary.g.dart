@@ -23,6 +23,9 @@ UserSummary _$UserSummaryFromJson(Map<String, dynamic> json) {
     sender: json['sender'] == null
         ? null
         : User.fromJson(json['sender'] as Map<String, dynamic>),
+    dateSent: json['dateSent'] == null
+        ? null
+        : DateTime.parse(json['dateSent'] as String),
   );
 }
 
@@ -30,9 +33,10 @@ Map<String, dynamic> _$UserSummaryToJson(UserSummary instance) =>
     <String, dynamic>{
       'profile': instance.profile?.toJson(),
       'averageHoursSlept': instance.averageHoursSlept,
-      'recipient': instance.recipient?.toJson(),
-      'sender': instance.sender?.toJson(),
       'previousLocations':
           instance.previousLocations?.map((e) => e?.toJson())?.toList(),
       'activities': instance.activities,
+      'recipient': instance.recipient?.toJson(),
+      'sender': instance.sender?.toJson(),
+      'dateSent': instance.dateSent?.toIso8601String(),
     };

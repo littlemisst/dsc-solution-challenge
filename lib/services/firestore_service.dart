@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:me_daily/model/bloodPressure.dart';
 import 'package:me_daily/model/medicalHistory.dart';
 import 'package:me_daily/model/sleep.dart';
@@ -260,16 +262,15 @@ class FirestoreService {
   //add summary
   Future sendSummary(UserSummary userSummary) async {
     return await userData
-        .document(userSummary
-            .recipient.uid)
+        .document(userSummary.recipient.uid)
         .collection("messages")
         .add(userSummary.toJson());
   }
 
   List<User> _recipientsFromFirebase(QuerySnapshot querySnapshot) {
-    return querySnapshot.documents.map((document) {
-      return User(email: document.data['email'], uid: document.data['uid']);
-    }).toList();
+    return querySnapshot.documents
+        .map((document) => User.fromJson(document.data))
+        .toList();
   }
 
   Stream<List<User>> get users {
@@ -324,26 +325,27 @@ class FirestoreService {
   }
 
   List<UserSummary> _userMessagesFromFirebase(QuerySnapshot querySnapshot) {
+    querySnapshot.documents.forEach((document) {
+      print((document.data['previousLocations']));
+    });
     return querySnapshot.documents
-    .map((document) => UserSummary.fromJson(document.data))
-    .toList();
+        .map((document) => UserSummary.fromJson(document.data))
+        .toList();
   }
 
   Stream<List<UserSummary>> get messages {
     return userData
         .document(uid)
         .collection('messages')
+        .orderBy('dateSent', descending: true)
         .snapshots()
         .map(_userMessagesFromFirebase);
   }
 
-  Future addMedicalHistory(MedicalHistory history) async {    
+  Future addMedicalHistory(MedicalHistory history) async {
     return await userData
         .document(uid)
         .collection('medicalHistory')
         .add(history.toJson());
   }
-
-  
 }
-  
