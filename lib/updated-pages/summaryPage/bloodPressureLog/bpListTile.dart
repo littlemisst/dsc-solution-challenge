@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
 import 'package:me_daily/constants/strings.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 
 class BloodPressureListTileModel {
   const BloodPressureListTileModel({
