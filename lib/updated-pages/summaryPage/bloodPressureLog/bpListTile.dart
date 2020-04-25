@@ -31,13 +31,13 @@ class BloodPressureListTile extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
       child: ListTile(
         leading: Icon(CupertinoIcons.circle_filled,
-        color:  model.diagnosis == Strings.normal ? Colors.green : Colors.red
+        color:  model.diagnosis == Strings.normal ? Theme.of(context).primaryColor : Colors.red
         ), 
         title: Column(children: <Widget>[
           Align(child: Text('${model.systolic} / ${model.diastolic}', style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold,
-          color:  model.diagnosis == Strings.normal ? Colors.green : Colors.red)),alignment: Alignment.centerLeft), 
+          color:  model.diagnosis == Strings.normal ?Theme.of(context).primaryColor : Colors.red)),alignment: Alignment.centerLeft), 
           Align(child: Text('${model.diagnosis}', style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, 
-          color:  model.diagnosis == Strings.normal ? Colors.green : Colors.red,
+          color:  model.diagnosis == Strings.normal ? Theme.of(context).primaryColor : Colors.red,
           )),alignment: Alignment.centerLeft),
           Align(child: Text('$dateFormat at $timeFormat', style: TextStyle(fontSize: fontSize)), alignment: Alignment.centerLeft),
         ])

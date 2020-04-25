@@ -25,12 +25,12 @@ class WaterListTile extends StatelessWidget {
     return ContentContainer(
       padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
       child: ListTile(
-        leading: Icon(CupertinoIcons.circle_filled,  color: model.waterCount < 8 ? Colors.lightBlue : Colors.green),
+        leading: Icon(CupertinoIcons.circle_filled,  color: model.waterCount < 8 ? Colors.red : Theme.of(context).primaryColor),
         title: Column(children: <Widget>[ 
           Row(
             children: <Widget>[
               Align(child: Text( model.waterCount <= 1 ? '${model.waterCount} glass' : '${model.waterCount} glasses',
-              style: TextStyle(fontSize: fontSize, color: model.waterCount < 8 ? Colors.lightBlue : Colors.green, 
+              style: TextStyle(fontSize: fontSize, color: model.waterCount < 8 ? Colors.red : Theme.of(context).primaryColor, 
               fontWeight: FontWeight.bold)),alignment: Alignment.centerLeft),
               Align(child: Text(' | ${model.waterML} mL', style: TextStyle(color: Colors.grey)), 
               alignment: Alignment.centerLeft),

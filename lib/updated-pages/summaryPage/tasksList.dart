@@ -33,7 +33,7 @@ class _TasksListState extends State<TasksList> {
                         }),
                     title: Align(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             _task.specificTask,
@@ -44,7 +44,7 @@ class _TasksListState extends State<TasksList> {
                             style: TextStyle(fontSize: 11, color: Colors.blueGrey))
                         ],
                       ),
-                      alignment: Alignment(-2, 0),
+                      alignment: Alignment.centerLeft,
                     ),
                   );
                 }

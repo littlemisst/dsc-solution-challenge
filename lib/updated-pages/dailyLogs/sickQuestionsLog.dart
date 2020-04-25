@@ -37,11 +37,11 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
   DateTime _taskStarted;
   DateTime _taskEnded;
   DateTime _taskTime;
-
   String _choice;
   Task task;
   DailyLog _entry;
-
+  String documentID = DateTime.now().toIso8601String();
+  
   @override
   void initState() {
     super.initState();
@@ -78,14 +78,14 @@ class _SickQuestionsLogPageState extends State<SickQuestionsLogPage> {
     final user = Provider.of<User>(context, listen: false);
     final _firestoreService = FirestoreService(uid: user.uid);
     final task = _taskFromState();
-    await _firestoreService.addTask(task);
+    await _firestoreService.addTask(task, documentID);
   }
 
    Future<void> _addRepeatingTask(BuildContext context) async {
     final user = Provider.of<User>(context, listen: false);
     final _firestoreService = FirestoreService(uid: user.uid);
     final task = _taskFromState();
-    await _firestoreService.addRepeatingTasks(task);
+    await _firestoreService.addRepeatingTasks(task, documentID);
   }
 
   void _submit() {

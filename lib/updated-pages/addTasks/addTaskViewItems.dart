@@ -26,14 +26,15 @@ class _TaskViewItemsState extends State<TaskViewItems> {
   DateTime _taskStarted;
   DateTime _taskEnded;
   DateTime _taskTime;
-
   List<dynamic> _items;
+  String documentID = DateTime.now().toIso8601String();
 
   @override
   void initState() {
     super.initState();
     _specificTask = '';
     _items = [];
+  
   }
 
    Task _taskFromState() {
@@ -50,14 +51,14 @@ class _TaskViewItemsState extends State<TaskViewItems> {
     final user = Provider.of<User>(context, listen: false);
     final _firestoreService = FirestoreService(uid: user.uid);
     final task = _taskFromState();
-    await _firestoreService.addTask(task);
+    await _firestoreService.addTask(task, documentID);
   }
 
    Future<void> _addRepeatingTask(BuildContext context) async {
     final user = Provider.of<User>(context, listen: false);
     final _firestoreService = FirestoreService(uid: user.uid);
     final task = _taskFromState();
-    await _firestoreService.addRepeatingTasks(task);
+    await _firestoreService.addRepeatingTasks(task, documentID);
   }
 
   void _setSpecificTask(value) {
