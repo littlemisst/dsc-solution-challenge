@@ -45,8 +45,8 @@ class _SummaryPageState extends State<SummaryPage> {
           staggeredTiles: [
             StaggeredTile.count(4, 3),
             StaggeredTile.count(4, 1.3),
-            StaggeredTile.count(3, 1.1),
-            StaggeredTile.count(1, 1),
+            StaggeredTile.count(3, 1.2),
+            StaggeredTile.count(1, 1.2),
             StaggeredTile.count(2, 2),
             StaggeredTile.count(2, 2),
             StaggeredTile.count(4, 1),

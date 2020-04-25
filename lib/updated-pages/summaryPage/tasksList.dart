@@ -24,27 +24,27 @@ class _TasksListState extends State<TasksList> {
                 Task _task = snapshots.data[index];
                 if (!_task.completed) {
                   return ListTile(
+                    contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
                     leading:
                         Checkbox(value: _task.completed, tristate: false, onChanged: (bool value) {
                           setState(() {
                             _task.completed = true;
                           });
                         }),
-                    title: Column(
-                      children: <Widget>[
-                        Align(
-                            child: Text(
-                              _task.specificTask,
-                              style: TextStyle(fontSize: 13),
-                            ),
-                            alignment: Alignment(-1.8, 0)),
-                            Align(
-                        child: Text(
-                          _task.taskType,
-                          style: TextStyle(fontSize: 11),
-                        ),
-                        alignment: Alignment(-1.8, 0))
-                      ],
+                    title: Align(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Text(
+                            _task.specificTask,
+                            style: TextStyle(fontSize: 13),
+                          ),
+                          Text(
+                            _task.taskType,
+                            style: TextStyle(fontSize: 11, color: Colors.blueGrey))
+                        ],
+                      ),
+                      alignment: Alignment(-2, 0),
                     ),
                   );
                 }

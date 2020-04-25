@@ -57,7 +57,9 @@ class _EditProfilePhotoState extends State<EditProfilePhoto> {
                   child: Column(children: <Widget>[
 
                     _image == null
-                  ? CircleAvatar(child: Icon(Icons.add_a_photo, size: 50, color: Colors.blueGrey[100]), 
+                  ? CircleAvatar(backgroundImage: _currentProfile.downloadUrl == null 
+                  ? Icon(Icons.add_a_photo, size: 50, color: Colors.blueGrey[100])
+                  : NetworkImage(_currentProfile.downloadUrl) , 
                   backgroundColor: Colors.blueGrey[200], radius: 80.0)
                   : CircleAvatar(
                       backgroundImage: new FileImage(_image), radius: 80.0),

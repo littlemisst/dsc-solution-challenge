@@ -33,7 +33,6 @@ class _EditProfileState extends State<EditProfile> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final _user = Provider.of<User>(context);
