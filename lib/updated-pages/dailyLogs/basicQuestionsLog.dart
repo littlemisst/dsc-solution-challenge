@@ -120,7 +120,11 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
     Step(
       isActive: _currentStep >= 3,
       title: Text('Hours of Sleep'),
-      content: IncrementCard('Hours', _hoursOfSleep, _incrementSleepHours, _decrementSleepHours),
+      content: IncrementCard(
+        timesText: 'Hours', 
+        intText: _hoursOfSleep, 
+        onPressedIncrement: _incrementSleepHours, 
+        onPressedDecrement: _decrementSleepHours),
       state: _currentStep > 3 ? StepState.complete : StepState.editing
       ),
     Step(

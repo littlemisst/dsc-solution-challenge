@@ -159,5 +159,6 @@ class Strings {
   static const String bpHistoryPage = '/bp-history-page';
   static const String temperatureHistoryPage = '/temperature-history-page';
   static const String medicalHistoryPage = '/medical-history-page';
+  static const String editMedicalHistoryPage = '/edit-medical-history-page';
   static const String viewMessage = '/view-message';
 }

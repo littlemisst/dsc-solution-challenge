@@ -11,6 +11,8 @@ import 'package:me_daily/services/firebase_authentication_service.dart';
 import 'package:me_daily/services/firestore_service.dart';
 import 'package:provider/provider.dart';
 
+import 'model/medicalHistory.dart';
+
 void main() {
   setUpLocator();
   runApp(MyApp());
@@ -55,7 +57,9 @@ class BuildMaterialApp extends StatelessWidget {
               StreamProvider<List<LocationLog>>.value(
                   value: FirestoreService(uid: _user.uid).locationLogList),
               StreamProvider.value(
-                  value: FirestoreService(uid: _user.uid).messages)
+                  value: FirestoreService(uid: _user.uid).messages),
+              StreamProvider<List<MedicalHistory>>.value(
+                  value: FirestoreService(uid: _user.uid).history)
             ],
             child: MaterialApp(
               title: 'Me Daily',

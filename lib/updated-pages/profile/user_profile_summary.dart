@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:me_daily/model/medicalHistory.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/bmiConversion.dart';
+import 'package:me_daily/updated-pages/profile/medicalHistorySummary.dart';
+import 'package:me_daily/widgets/editIcons.dart';
 import 'package:me_daily/widgets/indicatorText.dart';
 import 'package:me_daily/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
@@ -51,28 +54,22 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
               style: TextStyle(color: Colors.grey)))
             ])
           ),
-        FlatButton(
-          child: Text('Edit Profile'),
-          shape: RoundedRectangleBorder(side: BorderSide(color: Theme.of(context).accentColor), borderRadius: BorderRadius.circular(45)),
-          onPressed: () => Navigator.popAndPushNamed(context, Strings.editProfilePageRoute),
-          ),
+          EditIcon(text: 'Edit Profile', route: Strings.editProfilePageRoute)
         ]),
       ])
     );
+
   }
 
 
   Widget _buildGender(gender) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
-      child: Row(children: <Widget>[
+    return Row(children: <Widget>[
         Expanded(child: Column(children: <Widget>[
           Align(alignment: Alignment.centerLeft, child: TextWidget(text: 'Gender')),
           SizedBox(height: 5),
           Align(alignment: Alignment.centerLeft, child: Text(gender, style: TextStyle(fontSize: 15.0)))
         ])),
-      ])
-    );
+      ]);
   }
 
   Widget _buildBirthday(birthday) {
@@ -83,9 +80,7 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
     if (difference < 0) {
       age = '0';
     }
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      child: Row(children: <Widget>[
+    return Row(children: <Widget>[
         Expanded(child: Column(children: <Widget>[
           Align(alignment: Alignment.centerLeft, child: TextWidget(text: 'Birthdate')),
           SizedBox(height: 5),
@@ -95,24 +90,19 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
           TextWidget(text: 'Age'),
           Text(age, style: TextStyle(fontSize: 15.0)),
         ]))
-      ])
-    );
+      ]);
   }
 
   Widget _buildAddress(address) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      child: Column(children: <Widget>[
+    return Column(children: <Widget>[
         Align(alignment: Alignment.centerLeft, child: TextWidget(text: 'Address')),
         SizedBox(height: 5),
         Align(alignment: Alignment.centerLeft, child: Text(address, style: TextStyle(fontSize: 15.0)))
-    ]));
+    ]);
   }
 
   Widget _buildCivilStatusAndBloodType(civilStatus, bloodType) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      child: Row(children: <Widget>[
+    return Row(children: <Widget>[
         Expanded(child: Column(children: <Widget>[
           Align(alignment: Alignment.centerLeft, child: TextWidget(text: 'Civil Status')),
           SizedBox(height: 5),
@@ -123,14 +113,11 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
           SizedBox(height: 5),
           Align(alignment: Alignment.centerLeft, child:  Text(bloodType, style: TextStyle(fontSize: 15.0))),
         ])),
-      ])
-    );  
+      ]);
   }
 
   Widget _buildPhysicalMeasurements(height, weight) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      child: Row(children: <Widget>[
+    return Row(children: <Widget>[
         Expanded(child: Column(children: <Widget>[
           Align(alignment: Alignment.centerLeft, child: TextWidget(text: 'Height')),
           SizedBox(height: 5),
@@ -141,14 +128,12 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
           SizedBox(height: 5),
           Align(alignment: Alignment.centerLeft, child: Text('$weight kg', style: TextStyle(fontSize: 15.0))),
         ])),
-      ])
-    );
+      ]);
   }
+  
 
   Widget _buildBodyMassIndex(height, weight) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      child: Row(children: <Widget>[
+    return Row(children: <Widget>[
         Expanded(child: Column(children: <Widget>[
           Align(alignment: Alignment.centerLeft, child: TextWidget(text: 'Body Mass Index')),
           SizedBox(height: 5),
@@ -159,18 +144,30 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
           SizedBox(height: 5),
           Align(alignment: Alignment.centerLeft, child: Text('${BMIConversion(weight, height).bmiCategory}', style: TextStyle(fontSize: 15.0))),
         ])),
-      ])
-    );
+      ]);
   }
 
-  Widget _buildMedicalHistory() {
+  Widget _buildMedicalHistoryContainer() {
+    List<MedicalHistory> _medicalHistory = Provider.of<List<MedicalHistory>>(context);
     return Container(
       color: Theme.of(context).backgroundColor,
-      padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
+      padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
       child: Column(children: <Widget>[
-        IndicatorText('MEDICAL HISTORY'),
-        FlatButton(child: Text('add'), onPressed: () => Navigator.popAndPushNamed(
-          context, Strings.medicalHistoryPage),)
+        Row(children: <Widget>[
+          Expanded(child: IndicatorText('MEDICAL HISTORY')),
+          _medicalHistory.isEmpty ? Container():
+          EditIcon(text: 'Edit History', route: Strings.editMedicalHistoryPage)
+        ]),
+        _medicalHistory.isEmpty ? 
+        Column(children: <Widget>[
+          SizedBox(height: 5),
+          FlatButton(
+            child: Text('Add Medical History'),
+            shape: RoundedRectangleBorder(side: BorderSide(color: Theme.of(context).accentColor), borderRadius: BorderRadius.circular(45)),
+            onPressed: () => Navigator.popAndPushNamed(
+            context, Strings.medicalHistoryPage))
+        ])
+        : MedicalHistorySummary(medicalHistory: _medicalHistory[0])
       ]),
     );
   }
@@ -179,35 +176,37 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
   Widget build(BuildContext context) {
     Profile _currentProfile = Provider.of<Profile>(context);
     User _user = Provider.of<User>(context);
+
     return Scaffold(
-      body: SingleChildScrollView(
+      body:  SingleChildScrollView(
+        scrollDirection: Axis.vertical,
         child: Container(
-          height: MediaQuery.of(context).size.height,
           child: Column(children: <Widget>[
-            SizedBox(height: 5),
             _buildNameProfile(_currentProfile.downloadUrl, _currentProfile.name, _user.email),
             SizedBox(height: 5),
-            Expanded(child: Container(
-              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+            Container(  
+              padding: EdgeInsets.all(15),
               color: Theme.of(context).backgroundColor,
               child: Column(children: <Widget>[
-              _buildGender(_currentProfile.gender),
-              Divider(),
-              _buildBirthday(_currentProfile.birthDate),
-              Divider(),
-              _buildAddress(_currentProfile.address),
-              Divider(),
-              _buildCivilStatusAndBloodType(_currentProfile.civilStatus, _currentProfile.bloodType),
-              Divider(),
-              _buildPhysicalMeasurements(_currentProfile.height, _currentProfile.weight),
-              Divider(),
-              _buildBodyMassIndex(_currentProfile.height, _currentProfile.weight),
-            ]))),
+                _buildGender(_currentProfile.gender),
+                Divider(),
+                _buildBirthday(_currentProfile.birthDate),
+                Divider(),
+                _buildAddress(_currentProfile.address),
+                Divider(),
+                _buildCivilStatusAndBloodType(_currentProfile.civilStatus, _currentProfile.bloodType),
+                Divider(),
+                _buildPhysicalMeasurements(_currentProfile.height, _currentProfile.weight),
+                Divider(),
+                _buildBodyMassIndex(_currentProfile.height, _currentProfile.weight),
+              ]),
+            ),
             SizedBox(height: 5),
-            _buildMedicalHistory()
-          ]),
+            _buildMedicalHistoryContainer()
+          ])
         )
-      ),
+        
+      )
     );
   }
 }

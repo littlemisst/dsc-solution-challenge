@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
 
 class IncrementCard extends StatelessWidget {
-  const IncrementCard(this.timesText, this.intText, this.onPressedIncrement, this.onPressedDecrement);
+  const IncrementCard({Key key, this.timesText, this.intText, this.onPressedIncrement, this.onPressedDecrement}) : super (key:key);
   final String timesText;
   final int intText;
   final VoidCallback onPressedIncrement;
