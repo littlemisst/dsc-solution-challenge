@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/constants/strings.dart';
+import 'package:me_daily/model/bloodPressure.dart';
 import 'package:me_daily/model/locationLog.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/sleep.dart';
 import 'package:me_daily/model/summary.dart';
+import 'package:me_daily/model/temperature.dart';
 import 'package:me_daily/model/user.dart';
+import 'package:me_daily/model/water.dart';
 import 'package:me_daily/services/firestore_service.dart';
+import 'package:me_daily/updated-pages/sendDetails/analysisPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/displayActivitiesPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/displayBasicInformationPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/recipientSelector.dart';
-import 'package:me_daily/updated-pages/sendDetails/sleepAnalysisPage.dart';
 import 'package:provider/provider.dart';
 
 import 'displayPreviousLocations.dart';
@@ -31,6 +34,18 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
     } else {
       final hours = listOfHoursSlept.map((e) => e.hoursSleep);
       return hours.reduce((value, element) => value + element) / hours.length;
+    }
+  }
+
+  double getAverageWaterDrank(List<Water> listOfWaterDrank) {
+    // must be refactored
+    if (listOfWaterDrank.isEmpty) {
+      return null;
+    } else {
+      final listOfWaterConsumption = listOfWaterDrank.map((e) => e.waterInML);
+      return listOfWaterConsumption
+              .reduce((value, element) => value + element) /
+          listOfWaterConsumption.length;
     }
   }
 
@@ -57,19 +72,35 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
     });
   }
 
-  void onPressed(
-      profile, user, averageHoursSlept, previousLocations, activities) {
+  void onPressed(profile, user, averageHoursSlept, averageWaterDrank,
+      previousLocations, activities, bloodPressureHistory, temperatureHistory) {
     userSummary.recipient != null
         ? showDialog(
             context: context,
-            builder: (_) => _confirmSendDialog(context, profile, user,
-                averageHoursSlept, previousLocations, activities))
+            builder: (_) => _confirmSendDialog(
+                context,
+                profile,
+                user,
+                averageHoursSlept,
+                averageWaterDrank,
+                previousLocations,
+                activities,
+                bloodPressureHistory,
+                temperatureHistory))
         : showDialog(
             context: context, builder: (_) => _checkRecipientDialog(context));
   }
 
-  Widget _confirmSendDialog(context, profile, user, averageHoursSlept,
-      previousLocations, activities) {
+  Widget _confirmSendDialog(
+      context,
+      profile,
+      user,
+      averageHoursSlept,
+      averageWaterDrank,
+      previousLocations,
+      activities,
+      bloodPressureHistory,
+      temperatureHistory) {
     return AlertDialog(
       title: Text('Continue?'),
       content: Text(
@@ -77,7 +108,14 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
       actions: <Widget>[
         FlatButton(
           onPressed: () => onSend(
-              profile, user, averageHoursSlept, previousLocations, activities),
+              profile,
+              user,
+              averageHoursSlept,
+              averageWaterDrank,
+              previousLocations,
+              activities,
+              bloodPressureHistory,
+              temperatureHistory),
           child: Text('Continue'),
         ),
         FlatButton(
@@ -95,13 +133,23 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
   }
 
   void onSend(
-      profile, user, averageHoursSlept, previousLocations, activities) async {
+      profile,
+      user,
+      averageHoursSlept,
+      averageWaterDrank,
+      previousLocations,
+      activities,
+      bloodPressureHistory,
+      temperatureHistory) async {
     setState(() {
       userSummary.profile = profile;
       userSummary.sender = user;
       userSummary.averageHoursSlept = averageHoursSlept;
+      userSummary.averageWaterDrank = averageWaterDrank;
       userSummary.previousLocations = previousLocations;
       userSummary.activities = activities;
+      userSummary.bloodPressureHistory = bloodPressureHistory;
+      userSummary.temperatureHistory = temperatureHistory;
       userSummary.dateSent = DateTime.now();
     });
     await _firestoreService.sendSummary(userSummary);
@@ -113,8 +161,13 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
     final user = Provider.of<User>(context);
     final profile = Provider.of<Profile>(context) ?? null;
     final listOfHoursSlept = Provider.of<List<Sleep>>(context) ?? [];
+    final listOfWaterDrank = Provider.of<List<Water>>(context) ?? [];
     final previousLocations = Provider.of<List<LocationLog>>(context) ?? [];
     final List<DailyLog> logs = Provider.of<List<DailyLog>>(context) ?? [];
+    final List<BloodPressure> bloodPressureHistory =
+        Provider.of<List<BloodPressure>>(context) ?? [];
+    final List<Temperature> temperatureHistory =
+        Provider.of<List<Temperature>>(context) ?? [];
 
     return Scaffold(
       appBar: AppBar(
@@ -127,8 +180,18 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
             children: <Widget>[
               RecipientSelector(onChangeRecipient: onChangeRecipient),
               DisplayBasicInformation(profile: profile),
-              SleepAnalysis(
-                  averageHoursSlept: getAverageSleep(listOfHoursSlept)),
+              Analysis(
+                text: getAverageSleep(listOfHoursSlept),
+                title: 'Sleep Analysis',
+                subtitle: 'Average daily hours slept',
+                nullMessage: 'No record',
+              ),
+              Analysis(
+                text: getAverageWaterDrank(listOfWaterDrank),
+                title: 'Water Consumption',
+                subtitle: 'Average daily water consumption',
+                nullMessage: 'No record',
+              ),
               DisplayPreviousLocations(
                 previousLocations: previousLocations,
               ),
@@ -144,8 +207,11 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
             profile,
             user,
             getAverageSleep(listOfHoursSlept),
+            getAverageWaterDrank(listOfWaterDrank),
             previousLocations,
-            getActivities(logs)),
+            getActivities(logs),
+            bloodPressureHistory,
+            temperatureHistory),
         child: Icon(Icons.share, color: Colors.white),
       ),
     );

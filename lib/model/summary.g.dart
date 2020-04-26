@@ -12,11 +12,21 @@ UserSummary _$UserSummaryFromJson(Map<String, dynamic> json) {
         ? null
         : Profile.fromJson(json['profile'] as Map<String, dynamic>),
     averageHoursSlept: (json['averageHoursSlept'] as num)?.toDouble(),
+    averageWaterDrank: (json['averageWaterDrank'] as num)?.toDouble(),
     previousLocations: (json['previousLocations'] as List)
         ?.map((e) =>
             e == null ? null : LocationLog.fromJson(e as Map<String, dynamic>))
         ?.toList(),
     activities: (json['activities'] as List)?.map((e) => e as String)?.toList(),
+    bloodPressureHistory: (json['bloodPressureHistory'] as List)
+        ?.map((e) => e == null
+            ? null
+            : BloodPressure.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    temperatureHistory: (json['temperatureHistory'] as List)
+        ?.map((e) =>
+            e == null ? null : Temperature.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
     recipient: json['recipient'] == null
         ? null
         : User.fromJson(json['recipient'] as Map<String, dynamic>),
@@ -33,9 +43,14 @@ Map<String, dynamic> _$UserSummaryToJson(UserSummary instance) =>
     <String, dynamic>{
       'profile': instance.profile?.toJson(),
       'averageHoursSlept': instance.averageHoursSlept,
+      'averageWaterDrank': instance.averageWaterDrank,
       'previousLocations':
           instance.previousLocations?.map((e) => e?.toJson())?.toList(),
       'activities': instance.activities,
+      'bloodPressureHistory':
+          instance.bloodPressureHistory?.map((e) => e?.toJson())?.toList(),
+      'temperatureHistory':
+          instance.temperatureHistory?.map((e) => e?.toJson())?.toList(),
       'recipient': instance.recipient?.toJson(),
       'sender': instance.sender?.toJson(),
       'dateSent': instance.dateSent?.toIso8601String(),

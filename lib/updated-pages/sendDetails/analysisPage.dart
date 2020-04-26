@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
 
-class SleepAnalysis extends StatelessWidget {
-  final averageHoursSlept;
-  SleepAnalysis({this.averageHoursSlept});
+class Analysis extends StatelessWidget {
+  final text;
+  final title;
+  final nullMessage;
+  final subtitle;
+  Analysis({this.text, this.title, this.nullMessage, this.subtitle});
   @override
   Widget build(BuildContext context) {
     return ContentContainer(
@@ -14,20 +17,20 @@ class SleepAnalysis extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           textDirection: TextDirection.ltr,
           children: <Widget>[
-            Text('Sleep Analysis'),
+            Text(title),
             Divider(),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                averageHoursSlept == null
-                    ? Text('No record of hours slept')
+                text == null
+                    ? Text(nullMessage)
                     : Text(
-                        averageHoursSlept.toStringAsFixed(2),
+                        text.toStringAsFixed(2),
                         style: TextStyle(fontSize: 16),
                       ),
                 Text(
-                  'Average Sleeping hours',
+                  subtitle,
                   style: TextStyle(color: Colors.grey),
                 )
               ],

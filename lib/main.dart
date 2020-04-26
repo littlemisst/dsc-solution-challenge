@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/constants/strings.dart';
+import 'package:me_daily/model/bloodPressure.dart';
 import 'package:me_daily/model/locationLog.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/sleep.dart';
+import 'package:me_daily/model/temperature.dart';
 import 'package:me_daily/model/user.dart';
+import 'package:me_daily/model/water.dart';
 import 'package:me_daily/routes/routes.dart';
 import 'package:me_daily/service_locator.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
@@ -59,7 +62,13 @@ class BuildMaterialApp extends StatelessWidget {
               StreamProvider.value(
                   value: FirestoreService(uid: _user.uid).messages),
               StreamProvider<List<MedicalHistory>>.value(
-                  value: FirestoreService(uid: _user.uid).history)
+                  value: FirestoreService(uid: _user.uid).history),
+              StreamProvider<List<Water>>.value(
+                  value: FirestoreService(uid: _user.uid).water),
+              StreamProvider<List<BloodPressure>>.value(
+                  value: FirestoreService(uid: _user.uid).bloodPressure),
+              StreamProvider<List<Temperature>>.value(
+                  value: FirestoreService(uid: _user.uid).temperature),
             ],
             child: MaterialApp(
               title: 'Me Daily',

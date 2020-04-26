@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/model/summary.dart';
+import 'package:me_daily/updated-pages/sendDetails/analysisPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/displayActivitiesPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/displayBasicInformationPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/displayPreviousLocations.dart';
-import 'package:me_daily/updated-pages/sendDetails/sleepAnalysisPage.dart';
 
 class ViewMessage extends StatelessWidget {
   final UserSummary userSummary;
@@ -20,7 +20,18 @@ class ViewMessage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               DisplayBasicInformation(profile: userSummary.profile),
-              SleepAnalysis(averageHoursSlept: userSummary.averageHoursSlept),
+              Analysis(
+                text: userSummary.averageWaterDrank,
+                title: 'Sleep Analysis',
+                subtitle: 'Average daily hours slept',
+                nullMessage: 'No record',
+              ),
+              Analysis(
+                text: userSummary.averageWaterDrank,
+                title: 'Water Consumption',
+                subtitle: 'Average daily water consumption',
+                nullMessage: 'No record',
+              ),
               DisplayPreviousLocations(
                 previousLocations: userSummary.previousLocations,
               ),
