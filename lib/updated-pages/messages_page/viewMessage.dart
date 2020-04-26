@@ -4,6 +4,7 @@ import 'package:me_daily/updated-pages/sendDetails/analysisPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/displayActivitiesPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/displayBasicInformationPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/displayPreviousLocations.dart';
+import 'package:me_daily/updated-pages/sendDetails/displayTemperatureHistory.dart';
 
 class ViewMessage extends StatelessWidget {
   final UserSummary userSummary;
@@ -21,7 +22,7 @@ class ViewMessage extends StatelessWidget {
             children: <Widget>[
               DisplayBasicInformation(profile: userSummary.profile),
               Analysis(
-                text: userSummary.averageWaterDrank,
+                text: userSummary.averageHoursSlept,
                 title: 'Sleep Analysis',
                 subtitle: 'Average daily hours slept',
                 nullMessage: 'No record',
@@ -31,6 +32,9 @@ class ViewMessage extends StatelessWidget {
                 title: 'Water Consumption',
                 subtitle: 'Average daily water consumption',
                 nullMessage: 'No record',
+              ),
+              DisplayTemperatureHistory(
+                temperatureHistory: userSummary.temperatureHistory,
               ),
               DisplayPreviousLocations(
                 previousLocations: userSummary.previousLocations,

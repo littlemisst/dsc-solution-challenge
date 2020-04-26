@@ -13,6 +13,7 @@ import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/updated-pages/sendDetails/analysisPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/displayActivitiesPage.dart';
 import 'package:me_daily/updated-pages/sendDetails/displayBasicInformationPage.dart';
+import 'package:me_daily/updated-pages/sendDetails/displayTemperatureHistory.dart';
 import 'package:me_daily/updated-pages/sendDetails/recipientSelector.dart';
 import 'package:provider/provider.dart';
 
@@ -191,6 +192,9 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
                 title: 'Water Consumption',
                 subtitle: 'Average daily water consumption',
                 nullMessage: 'No record',
+              ),
+              DisplayTemperatureHistory(
+                temperatureHistory: temperatureHistory,
               ),
               DisplayPreviousLocations(
                 previousLocations: previousLocations,
