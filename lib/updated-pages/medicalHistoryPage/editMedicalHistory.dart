@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/alertDialog.dart';
 import 'package:me_daily/common-widgets/appBarTextFormat.dart';
 import 'package:me_daily/common-widgets/checkBoxContainer.dart';
 import 'package:me_daily/common-widgets/expandedTextFieldWidget.dart';
@@ -42,7 +43,7 @@ class _EditMedicalHistoryPageState extends State<EditMedicalHistoryPage> {
   List<String> _chronicDisease = Strings.chronicDiseaseList;
   List<bool> _chronicDiseaseValues = List<bool>();
 
-  List<String> _immunization = Strings.immunizations;
+  List<String> _immunization = Strings.immunizationsList;
   List<bool> _immunizationValues = List<bool>();
 
 
@@ -178,7 +179,7 @@ class _EditMedicalHistoryPageState extends State<EditMedicalHistoryPage> {
               Text('ADD')
             ])
           ]),
-          Container(child: ListBuilder(items: _foodAllergy, edit: true,)
+          Container(child: ListBuilder(_foodAllergy)
           )
       ])
     ) 
@@ -203,7 +204,7 @@ class _EditMedicalHistoryPageState extends State<EditMedicalHistoryPage> {
               Text('ADD')
             ])
           ]),
-          Container(child: ListBuilder(items: _drugAllergy, edit: true)
+          Container(child: ListBuilder(_drugAllergy)
           )
       ])
     ) 
@@ -254,7 +255,11 @@ class _EditMedicalHistoryPageState extends State<EditMedicalHistoryPage> {
       body: StepperWidget(StepperType.vertical, _currentStep, () => _onStepContinue(), ()=>_onStepCancel(), _steps),
       floatingActionButton: _foodAllergy.isEmpty || _drugAllergy.isEmpty || _chronicDiseaseAdded.isEmpty || _immunizationAdded.isEmpty
       ? null :
-      FloatingActionToSave(() => _setHistory(context), Icons.check),
+      FloatingActionToSave(() async {
+          final action = await Dialogs.showDialogBox(context, Strings.confirmChanges);
+          if (action == DialogAction.yes) _setHistory(context);
+        },
+        Icons.check),
     );
   }
 }

@@ -36,14 +36,11 @@ class _AddTaskState extends State<AddTask> {
           ),
           title: TextFormat('ADD TASK'),
         ),
-        body: SingleChildScrollView(
+        body: Container(
           padding: EdgeInsets.all(10),
-          child: Column(
-            children: <Widget>[
-              _buildTasksGrid(context),
-            ],
-          ),
-        ));
+          child: _buildTasksGrid(context)
+        )
+      );
   }
 
   Widget _buildTasksGrid(BuildContext context) {

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/alertDialog.dart';
 import 'package:me_daily/common-widgets/appBarTextFormat.dart';
 import 'package:me_daily/common-widgets/floatingAction.dart';
 import 'package:me_daily/common-widgets/radioListViewBuilderWidget.dart';
@@ -177,7 +178,11 @@ class _TaskViewItemsState extends State<TaskViewItems> {
         ),
       floatingActionButton: 
       (_specificTask != null && _taskTime != null && _taskStarted != null) 
-      ? FloatingActionToSave(() => _submit(), Icons.alarm) : null
+      ? FloatingActionToSave(() async {
+          final action = await Dialogs.showDialogBox(context, Strings.confirmTask);
+          if (action == DialogAction.yes) _submit();
+        },
+        Icons.alarm) : null
     );
   }
 

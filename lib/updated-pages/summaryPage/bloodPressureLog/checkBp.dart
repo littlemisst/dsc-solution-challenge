@@ -7,7 +7,6 @@ class CheckBloodPressure {
 
   String get diagnosis {
     String _diagnosis;
-    print('naglabay diri... systolic is $systolic');
     if (systolic < 120 && diastolic < 80) {
       _diagnosis = Strings.normal;
     } else if (systolic < 140 && diastolic < 90) {

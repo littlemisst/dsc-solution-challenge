@@ -19,7 +19,7 @@ import 'package:me_daily/updated-pages/dailyLogs/addDailyLog.dart';
 import 'package:me_daily/updated-pages/dailyLogs/basicQuestionsLog.dart';
 import 'package:me_daily/updated-pages/dailyLogs/sickQuestionsLog.dart';
 import 'package:me_daily/updated-pages/locationLog/location_log_summary.dart';
-import 'package:me_daily/updated-pages/medicalHistoryPage/editMedicalHistory.dart.dart';
+import 'package:me_daily/updated-pages/medicalHistoryPage/editMedicalHistory.dart';
 import 'package:me_daily/updated-pages/medicalHistoryPage/medicalHistory.dart';
 import 'package:me_daily/updated-pages/messages_page/messagesPage.dart';
 import 'package:me_daily/updated-pages/messages_page/viewMessage.dart';

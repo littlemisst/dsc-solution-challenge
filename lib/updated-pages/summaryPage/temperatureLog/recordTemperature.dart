@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/alertDialog.dart';
 import 'package:me_daily/common-widgets/recordLogWidget.dart';
 import 'package:me_daily/common-widgets/viewHistory.dart';
 import 'package:me_daily/constants/strings.dart';
@@ -62,7 +63,10 @@ class _RecordTemperatureState extends State<RecordTemperature> {
                 flex: 2,
                 child: Text("$_temperature"),
               ),
-              RecordButton(()=>_addTemperatureLog(context))
+              RecordButton(() async {
+                final action = await Dialogs.showDialogBox(context, Strings.confirmRecord);
+                if (action == DialogAction.yes) _addTemperatureLog(context);
+              })
             ],
           )
         ],

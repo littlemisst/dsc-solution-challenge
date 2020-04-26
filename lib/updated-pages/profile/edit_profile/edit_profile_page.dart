@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/alertDialog.dart';
 import 'package:me_daily/common-widgets/appBarTextFormat.dart';
 import 'package:me_daily/common-widgets/datePicker.dart';
 import 'package:me_daily/model/profile.dart';
@@ -111,10 +112,14 @@ class _EditProfileState extends State<EditProfile> {
             ]),
             
             SizedBox(height: 10.0),
-            FlatButtonIcon(Icons.edit, 'Submit Edited Profile', () async {
-              await _firestoreService.submitProfile(_currentProfile);
-              Navigator.popAndPushNamed(context, Strings.profilePageRoute);
-            })
+            FlatButtonIcon(Icons.edit, 'Submit Edited Profile', 
+              () async {
+                final action = await Dialogs.showDialogBox(context, Strings.confirmChanges);
+                if (action == DialogAction.yes) {
+                  await _firestoreService.submitProfile(_currentProfile);
+                  Navigator.popAndPushNamed(context, Strings.profilePageRoute);
+                }
+              })
             ]),
           ),
         ),

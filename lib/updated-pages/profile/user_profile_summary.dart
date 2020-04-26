@@ -205,8 +205,9 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
               : EditIcon(
                   text: 'Edit History', route: Strings.editMedicalHistoryPage)
         ]),
-        _medicalHistory.isEmpty
-            ? Column(children: <Widget>[
+        _medicalHistory.isNotEmpty
+            ? MedicalHistorySummary(medicalHistory: _medicalHistory[0])
+            : Column(children: <Widget>[
                 SizedBox(height: 5),
                 FlatButton(
                     child: Text('Add Medical History'),
@@ -216,7 +217,6 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
                     onPressed: () => Navigator.popAndPushNamed(
                         context, Strings.medicalHistoryPage))
               ])
-            : MedicalHistorySummary(medicalHistory: _medicalHistory[0])
       ]),
     );
   }

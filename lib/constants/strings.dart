@@ -76,7 +76,7 @@ class Strings {
     'None'
   ];
 
-  static const immunizations = [
+  static const immunizationsList = [
     'Varicella vaccine',
     'DTaP',
     'HepA',
@@ -132,6 +132,19 @@ class Strings {
     DropdownMenuItem<String>(child: Text('AB+'), value: 'AB+'),
     DropdownMenuItem<String>(child: Text('AB-'), value: 'AB-'),
   ];
+
+  //hospitalization strings
+  static const hospitalizations = 'Hospitalizations';
+  static const foodAllergy = 'Food Allergies';
+  static const drugAllergy = 'Drug Allergies';
+  static const chronicDisease = 'Chronic Disease';
+  static const immunizations = 'Immunizations';
+
+  //dialog
+  static const confirmTask = 'Do you want to add this task?';
+  static const confirmLog = 'Do you want to add this log?';
+  static const confirmChanges = "Do you want to save changes?";
+  static const confirmRecord = "Do you want to record this?";
 
   static const String initialRoute = '/';
   static const String authenticationRoute = '/authentication';

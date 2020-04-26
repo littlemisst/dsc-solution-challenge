@@ -42,7 +42,7 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
   List<String> _chronicDisease = Strings.chronicDiseaseList;
   List<bool> _chronicDiseaseValues = List<bool>();
 
-  List<String> _immunization = Strings.immunizations;
+  List<String> _immunization = Strings.immunizationsList;
   List<bool> _immunizationValues = List<bool>();
 
 
@@ -175,7 +175,7 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
               Text('ADD')
             ])
           ]),
-          Container(child: ListBuilder(items: _foodAllergy, edit: false)
+          Container(child: ListBuilder(_foodAllergy)
           )
       ])
     ) 
@@ -198,7 +198,7 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage> {
               Text('ADD')
             ])
           ]),
-          Container(child: ListBuilder(items: _drugAllergy, edit: false)
+          Container(child: ListBuilder(_drugAllergy)
           )
       ])
     ) 

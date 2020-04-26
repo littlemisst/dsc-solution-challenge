@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/alertDialog.dart';
 import 'package:me_daily/common-widgets/expandedNumberTextFieldWidget.dart';
 import 'package:me_daily/common-widgets/recordLogWidget.dart';
 import 'package:me_daily/common-widgets/viewHistory.dart';
@@ -18,6 +19,9 @@ class _RecordBloodPressureState extends State<RecordBloodPressure> {
   int _systolic;
   int _diastolic;
 
+  final _textController1 = TextEditingController();
+  final _textController2 = TextEditingController();
+
   
   BloodPressure _bpFromState() {
     String _diagnosis = CheckBloodPressure(_systolic, _diastolic).diagnosis;
@@ -25,6 +29,8 @@ class _RecordBloodPressureState extends State<RecordBloodPressure> {
   }
 
   Future<void> _addBPLog(BuildContext context) async {
+    _textController1.clear();
+    _textController2.clear();
     String documentID = DateTime.now().toIso8601String();
     final user = Provider.of<User>(context, listen: false);
     final _firestoreService = FirestoreService(uid: user.uid);
@@ -51,10 +57,13 @@ class _RecordBloodPressureState extends State<RecordBloodPressure> {
           Expanded(
             child: Row(
               children: <Widget>[
-                ExpandedNumberTextField(Strings.systolic, (value) => _systolic = int.parse(value)),
+                ExpandedNumberTextField(Strings.systolic, _textController1, (value) => _systolic = int.parse(value)),
                 SizedBox(width: 5),
-                ExpandedNumberTextField(Strings.diastolic, (value) => _diastolic = int.parse(value)),
-                RecordButton(() => _addBPLog(context))
+                ExpandedNumberTextField(Strings.diastolic, _textController2, (value) => _diastolic = int.parse(value)),
+                RecordButton(() async {
+                  final action = await Dialogs.showDialogBox(context, Strings.confirmRecord);
+                  if (action == DialogAction.yes) _addBPLog(context);
+                })
               ],
             ),
           ),

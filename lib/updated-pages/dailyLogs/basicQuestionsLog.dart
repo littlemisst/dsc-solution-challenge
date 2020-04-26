@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/alertDialog.dart';
 import 'package:me_daily/common-widgets/appBarTextFormat.dart';
 import 'package:me_daily/common-widgets/checkBoxContainer.dart';
 import 'package:me_daily/common-widgets/floatingAction.dart';
@@ -181,7 +182,10 @@ class _BasicQuestionsLogPageState extends State<BasicQuestionsLogPage> {
       ),
       body: StepperWidget(StepperType.vertical, _currentStep, () => _onStepContinue(), ()=>_onStepCancel(), _steps),
       floatingActionButton: _currentStep == _steps.length -1 ? 
-      FloatingActionToSave(() => _submit(), Icons.check) : null,
+      FloatingActionToSave(() async {
+          final action = await Dialogs.showDialogBox(context, Strings.confirmLog);
+          if (action == DialogAction.yes) _submit();
+        }, Icons.check) : null,
     );
   }
 }
