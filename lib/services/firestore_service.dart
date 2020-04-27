@@ -7,6 +7,7 @@ import 'package:me_daily/model/summary.dart';
 import 'package:me_daily/model/temperature.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/model/water.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:me_daily/model/feeling.dart';

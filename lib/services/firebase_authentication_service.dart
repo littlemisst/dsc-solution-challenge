@@ -45,7 +45,6 @@ class FirebaseAuthentication {
           await _firebaseAuth.signInWithCredential(authCredential);
       return _userFromFirebase(authResult.user);
     } catch (error) {
-      print(error.message);
       return null;
     }
   }
@@ -70,23 +69,12 @@ class FirebaseAuthentication {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
-  Future<bool> isEmailVerified() async {
-    await _firebaseAuth.currentUser()
-      ..reload();
-    print(_firebaseAuth.currentUser().toString());
-    FirebaseUser user = await _firebaseAuth.currentUser();
-    print(user.isEmailVerified.toString());
-    return user.isEmailVerified;
-  }
-
   Future<User> getCurrentUser() async {
-    await _firebaseAuth.currentUser()
-      ..reload();
-    return _firebaseAuth.currentUser().then(_userFromFirebase);
+    return await _firebaseAuth.currentUser().then(_userFromFirebase);
   }
 
-  Future getProviderId() async {
-    return await _firebaseAuth.currentUser()
-      ..providerData[0].providerId;
+  Future<String> getProviderId() async {
+    FirebaseUser _user = await _firebaseAuth.currentUser();
+    return _user.providerData[1].providerId;
   }
 }

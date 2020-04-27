@@ -14,7 +14,7 @@ class SideDrawerWidget extends StatefulWidget {
 }
 
 class _SideDrawerWidgetState extends State<SideDrawerWidget> {
-  final _firebaseAuth = FirebaseAuthentication();
+  final firebaseAuth = FirebaseAuthentication();
 
   Widget _userProfile(profilePic, email, initial) {
     return Container(
@@ -94,9 +94,11 @@ class _SideDrawerWidgetState extends State<SideDrawerWidget> {
               icon: Icons.power_settings_new,
               text: Strings.signOut,
               onTap: () async {
-                await _firebaseAuth.getProviderId();
-                _firebaseAuth.signOut();
-                _firebaseAuth.googleSignOut();
+                String providerId = await firebaseAuth.getProviderId();
+                if (providerId == 'google.com') {
+                  await firebaseAuth.googleSignOut();
+                }
+                return firebaseAuth.signOut();
               })),
     ]));
   }

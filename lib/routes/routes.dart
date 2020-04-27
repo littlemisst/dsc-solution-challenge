@@ -14,7 +14,6 @@ import 'package:me_daily/updated-pages/addTasks/addTaskViewItems.dart';
 import 'package:me_daily/updated-pages/authentication/reset_password_form.dart';
 import 'package:me_daily/updated-pages/authentication/reset_password_page.dart';
 import 'package:me_daily/updated-pages/authentication/sign_in_form.dart';
-import 'package:me_daily/updated-pages/authentication/verification_page.dart';
 import 'package:me_daily/updated-pages/dailyLogs/addDailyLog.dart';
 import 'package:me_daily/updated-pages/dailyLogs/basicQuestionsLog.dart';
 import 'package:me_daily/updated-pages/dailyLogs/sickQuestionsLog.dart';
@@ -44,8 +43,6 @@ class Router {
         return MaterialPageRoute(builder: (_) => AuthenticationWrapper());
       case Strings.signInRoute:
         return MaterialPageRoute(builder: (_) => SignIn());
-      case Strings.verificationRoute:
-        return MaterialPageRoute(builder: (_) => VerificationPage());
       case Strings.resetPasswordRoute:
         return MaterialPageRoute(builder: (_) => ResetPasswordPage());
       case Strings.sendDetailsRoute:
@@ -96,8 +93,9 @@ class Router {
             builder: (context) => TemperaturePage.create(context));
       case Strings.medicalHistoryPage:
         return MaterialPageRoute(builder: (context) => MedicalHistoryPage());
-        case Strings.editMedicalHistoryPage:
-        return MaterialPageRoute(builder: (context) => EditMedicalHistoryPage());
+      case Strings.editMedicalHistoryPage:
+        return MaterialPageRoute(
+            builder: (context) => EditMedicalHistoryPage());
       case Strings.viewMessage:
         var data = routeSettings.arguments as UserSummary;
         return MaterialPageRoute(
