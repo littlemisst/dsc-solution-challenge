@@ -6,53 +6,49 @@ import 'package:provider/provider.dart';
 
 class TasksList extends StatefulWidget {
   @override
-  _TasksListState createState() => _TasksListState();
+  TasksListState createState() => TasksListState();
 }
 
-class _TasksListState extends State<TasksList> {
+class TasksListState extends State<TasksList> {
+  Widget buildListOfTasks(context, document) {
+    final _user = Provider.of<User>(context);
+    final _firestoreService = FirestoreService(uid: _user.uid);
+    return ListTile(
+      contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
+      leading: Checkbox(
+          value: document.completed,
+          tristate: false,
+          onChanged: (bool value) async {
+            await _firestoreService
+                .setCompleted(document.taskCreated.toString());
+          }),
+      title: Align(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              document.specificTask,
+              style: TextStyle(fontSize: 13),
+            ),
+            Text(document.taskType,
+                style: TextStyle(fontSize: 11, color: Colors.blueGrey))
+          ],
+        ),
+        alignment: Alignment.centerLeft,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final _user = Provider.of<User>(context);
-    return StreamBuilder<List<Task>>(
-      stream: FirestoreService(uid: _user.uid).tasks,
-      builder: (context, snapshots) {
-        if (snapshots.hasData) {
-          return ListView.builder(
-              itemCount: snapshots.data.length,
-              itemBuilder: (context, index) {
-                Task _task = snapshots.data[index];
-                if (!_task.completed) {
-                  return ListTile(
-                    contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
-                    leading:
-                        Checkbox(value: _task.completed, tristate: false, onChanged: (bool value) {
-                          setState(() {
-                            _task.completed = true;
-                          });
-                        }),
-                    title: Align(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            _task.specificTask,
-                            style: TextStyle(fontSize: 13),
-                          ),
-                          Text(
-                            _task.taskType,
-                            style: TextStyle(fontSize: 11, color: Colors.blueGrey))
-                        ],
-                      ),
-                      alignment: Alignment.centerLeft,
-                    ),
-                  );
-                }
-                return null;
-              });
-        }
-        return Container();
-      },
-    );
+    List<Task> _taskList = Provider.of<List<Task>>(context) ?? [];
+    _taskList.retainWhere((element) => !element.completed);
+    return _taskList.isEmpty
+        ? Container()
+        : ListView.builder(
+            itemCount: _taskList.length,
+            itemBuilder: (context, index) {
+              return buildListOfTasks(context, _taskList[index]);
+            });
   }
 }

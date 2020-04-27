@@ -5,7 +5,6 @@ import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firebase_authentication_service.dart';
 import 'package:me_daily/services/firestore_service.dart';
-import 'package:me_daily/updated-pages/authentication/verification_page.dart';
 
 class SignUp extends StatefulWidget {
   final toggleBetweenForms;
@@ -32,25 +31,25 @@ class _SignUpState extends State<SignUp> {
       setState(() {
         isLoading = true;
       });
-      User user = await _firebaseAuth
-        .signUpWithEmailAndPassword(email, password);
+      User user =
+          await _firebaseAuth.signUpWithEmailAndPassword(email, password);
       await _firestoreService.addUser(user);
       if (user == null) {
         setState(() {
           isLoading = false;
         });
       }
-      Navigator.pushReplacementNamed(
-        context, Strings.verificationRoute);
+      Navigator.pushReplacementNamed(context, Strings.verificationRoute);
     }
   }
-  
 
   Widget _buildEmailField() {
     return TextFormField(
-        decoration: InputDecoration(labelText: 'Email',
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+        decoration: InputDecoration(
+            labelText: 'Email',
+            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
         keyboardType: TextInputType.emailAddress,
         validator: (String value) {
           if (value.isEmpty) {
@@ -67,14 +66,17 @@ class _SignUpState extends State<SignUp> {
 
   Widget _buildPasswordField() {
     return TextFormField(
-        decoration: InputDecoration(labelText: 'Password',
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+        decoration: InputDecoration(
+            labelText: 'Password',
+            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
         controller: _passwordController,
         obscureText: true,
         validator: (String value) {
-          if (value.isEmpty) {
-            return 'is empty';
+          //should be change to regex
+          if (value.length < 8) {
+            return 'password characters should be atleast 8';
           }
           return null;
         },
@@ -87,9 +89,11 @@ class _SignUpState extends State<SignUp> {
 
   Widget _buildConfirmPasswordField() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Password',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+      decoration: InputDecoration(
+          labelText: 'Password',
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       obscureText: true,
       validator: (String value) {
         if (_passwordController.text != value) {
@@ -105,7 +109,7 @@ class _SignUpState extends State<SignUp> {
     return isLoading
         ? Loader()
         : Scaffold(
-          backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: Theme.of(context).backgroundColor,
             body: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(50, 120, 50, 0),
