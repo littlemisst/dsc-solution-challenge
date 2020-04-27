@@ -5,6 +5,7 @@ import 'package:me_daily/model/locationLog.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/sleep.dart';
+import 'package:me_daily/model/task.dart';
 import 'package:me_daily/model/temperature.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/model/water.dart';
@@ -69,6 +70,8 @@ class BuildMaterialApp extends StatelessWidget {
                   value: FirestoreService(uid: _user.uid).bloodPressure),
               StreamProvider<List<Temperature>>.value(
                   value: FirestoreService(uid: _user.uid).temperature),
+              StreamProvider<List<Task>>.value(
+                  value: FirestoreService(uid: _user.uid).tasks),
             ],
             child: MaterialApp(
               title: 'Me Daily',

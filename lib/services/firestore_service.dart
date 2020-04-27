@@ -111,17 +111,25 @@ class FirestoreService {
 //add and retrieve for task
   Future addTask(Task task, String documentID) async {
     return await userData
-    .document(uid)
-    .collection('tasks')
-    .document(documentID)
-    .setData(task.toJson());
+        .document(uid)
+        .collection('tasks')
+        .document(task.taskCreated.toString())
+        .setData(task.toJson());
+  }
+
+  Future setCompleted(String documentId) async {
+    return await userData
+        .document(uid)
+        .collection('tasks')
+        .document(documentId)
+        .updateData(<String, bool>{'completed': true});
   }
 
   Future addRepeatingTasks(Task task, String documentID) async {
     return await userData
         .document(uid)
         .collection('duplicateTasks')
-        .document(documentID)
+        .document(task.taskCreated.toString())
         .setData(task.toJson());
   }
 
@@ -347,7 +355,6 @@ class FirestoreService {
         .map(_userMessagesFromFirebase);
   }
 
-
   Future addMedicalHistory(MedicalHistory history) async {
     return await userData
         .document(uid)
@@ -370,10 +377,11 @@ class FirestoreService {
         .toList();
   }
 
-
   Stream<List<MedicalHistory>> get history {
-    return userData.document(uid).collection('medicalHistory').snapshots().map(_historyFromFirebase);
+    return userData
+        .document(uid)
+        .collection('medicalHistory')
+        .snapshots()
+        .map(_historyFromFirebase);
   }
-
-
 }
