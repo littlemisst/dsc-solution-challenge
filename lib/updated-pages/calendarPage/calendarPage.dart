@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/updated-pages/calendarPage/dailyTasksDetails.dart';
@@ -14,20 +16,83 @@ class _CalendarPageState extends State<CalendarPage> {
   CalendarController _calendarController;
   Map<DateTime, List<dynamic>> _tasks;
   List<dynamic> _selectedTasks;
+
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  AndroidInitializationSettings androidInitializationSettings;
+  IOSInitializationSettings iosInitializationSettings;
+  InitializationSettings initializationSettings;
+ 
+  void initializing() async {
+    var initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettingsIOS = IOSInitializationSettings(onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+    var initializationSettings = InitializationSettings(initializationSettingsAndroid, initializationSettingsIOS);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: onSelectNotification); 
+  }
+
   
+  void _showNotification(Task task) async {
+    await notification(task);
+  }
+
+  Future<void> notification(Task task) async {
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+      'Channel ID', 
+      'Channel title', 
+      'Channel body',
+      priority: Priority.High,
+      importance: Importance.Max,
+      ticker: 'test');
+    
+    IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
+    var scheduledDate = task.taskTime.add(Duration(seconds: 10));
+    NotificationDetails notificationDetails = NotificationDetails(androidNotificationDetails, iosNotificationDetails);
+    await flutterLocalNotificationsPlugin.schedule(0, 'You have tasks today!', 'Check you calendar.', scheduledDate, notificationDetails);
+  }
+
+  Future onSelectNotification(String payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: ' + payload);
+    }
+  }
+
+  Future onDidReceiveLocalNotification(int id, String title, String body, String payload) async {
+    return CupertinoAlertDialog(
+      title: Text(title),
+      content: Text(body),
+      actions: <Widget>[
+        CupertinoDialogAction(
+          isDefaultAction: true,
+          onPressed: () => print('naglabay ko di'),
+          child: Text('Okay'))
+      ],
+    );
+  }
+
 
   @override
   void initState() {
     super.initState();
+    initializing();
     _calendarController = CalendarController();
     final _selectedDay = DateTime.now();
     _tasks = {};
     _selectedTasks = _tasks[_selectedDay] ?? [];
   }
 
-
   @override
   Widget build(BuildContext context) {
+    List<Task> tasks = Provider.of<List<Task>>(context);
+    if (tasks == null) {
+      tasks = [];
+    }
+    _tasks = DailyTaskDetails.tasksByDate(tasks);
+
+    tasks.forEach((element) {
+      if (DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day) == element.taskStarted) {
+        _showNotification(element);
+      }});
     return Scaffold(
       body: Column(
         mainAxisSize: MainAxisSize.max,
@@ -116,19 +181,14 @@ class _CalendarPageState extends State<CalendarPage> {
   }
   
   Widget _buildEventList(events, context) {
-    List<Task> tasks = Provider.of<List<Task>>(context);
-    if (tasks == null) {
-      tasks = [];
-    }
-    _tasks = DailyTaskDetails.tasksByDate(tasks);
     return
     events.length == 0 ?
     ContentContainer(
       width: MediaQuery.of(context).size.width,
       padding:EdgeInsets.fromLTRB(10, 0, 10, 5),
       child: Align(
-          alignment: Alignment.center,
-          child:Text('No tasks available'))
+        alignment: Alignment.center, 
+        child: Text('No tasks available')),
     )
     :
     ListView.builder(
@@ -140,7 +200,7 @@ class _CalendarPageState extends State<CalendarPage> {
               title: Row(children: <Widget>[
                 Icon(Icons.indeterminate_check_box, color: Theme.of(context).primaryColor),
                 SizedBox(width: 5),
-                Text(events[index].toString(), style: TextStyle(fontSize: 15))
+                Text('${events[index].taskType} ${events[index].specificTask}', style: TextStyle(fontSize: 15))
               ])
             )
           );

@@ -26,8 +26,6 @@ class _HomePageState extends State<HomePage>
     MapPage(),
   ];
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

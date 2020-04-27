@@ -72,6 +72,7 @@ class _TaskViewItemsState extends State<TaskViewItems> {
     _addTask(context);
     for (int i=0; i < days; i++) {
       _taskStarted = _taskStarted.add(Duration(days: 1));
+      _taskTime = _taskTime.add(Duration(days: 1));
       _addRepeatingTask(context);
     }
     Navigator.popAndPushNamed(context, Strings.initialRoute);

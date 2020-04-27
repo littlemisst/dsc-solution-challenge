@@ -6,7 +6,6 @@ import 'package:me_daily/services/firestore_service.dart';
 import 'package:me_daily/updated-pages/summaryPage/bloodPressureLog/recordBloodPressure.dart';
 import 'package:me_daily/updated-pages/summaryPage/healthChart.dart';
 import 'package:me_daily/updated-pages/summaryPage/locationsLogPage.dart';
-import 'package:me_daily/updated-pages/summaryPage/sleepChart.dart';
 import 'package:me_daily/updated-pages/summaryPage/sleepChartPage.dart';
 import 'package:me_daily/updated-pages/summaryPage/tasksDetails.dart';
 import 'package:me_daily/updated-pages/summaryPage/tasksList.dart';
