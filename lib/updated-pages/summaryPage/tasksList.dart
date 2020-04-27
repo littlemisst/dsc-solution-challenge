@@ -13,41 +13,42 @@ class TasksListState extends State<TasksList> {
   Widget buildListOfTasks(context, document) {
     final _user = Provider.of<User>(context);
     final _firestoreService = FirestoreService(uid: _user.uid);
-    return !document.completed
-        ? ListTile(
-            contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
-            leading: Checkbox(
-                value: document.completed,
-                tristate: false,
-                onChanged: (bool value) async {
-                  await _firestoreService
-                      .setCompleted(document.taskCreated.toString());
-                }),
-            title: Align(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    document.specificTask,
-                    style: TextStyle(fontSize: 13),
-                  ),
-                  Text(document.taskType,
-                      style: TextStyle(fontSize: 11, color: Colors.blueGrey))
-                ],
-              ),
-              alignment: Alignment.centerLeft,
+    return ListTile(
+      contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
+      leading: Checkbox(
+          value: document.completed,
+          tristate: false,
+          onChanged: (bool value) async {
+            await _firestoreService
+                .setCompleted(document.taskCreated.toString());
+          }),
+      title: Align(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              document.specificTask,
+              style: TextStyle(fontSize: 13),
             ),
-          )
-        : Container();
+            Text(document.taskType,
+                style: TextStyle(fontSize: 11, color: Colors.blueGrey))
+          ],
+        ),
+        alignment: Alignment.centerLeft,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Task> _taskList = Provider.of<List<Task>>(context);
-    return ListView.builder(
-        itemCount: _taskList.length,
-        itemBuilder: (context, index) {
-          return buildListOfTasks(context, _taskList[index]);
-        });
+    List<Task> _taskList = Provider.of<List<Task>>(context) ?? [];
+    _taskList.retainWhere((element) => !element.completed);
+    return _taskList.isEmpty
+        ? Container()
+        : ListView.builder(
+            itemCount: _taskList.length,
+            itemBuilder: (context, index) {
+              return buildListOfTasks(context, _taskList[index]);
+            });
   }
 }
