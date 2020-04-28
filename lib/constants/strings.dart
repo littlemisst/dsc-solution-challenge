@@ -168,6 +168,7 @@ class Strings {
   static const String messagesPage = '/messages-page';
   static const String onBoardingRoute = '/on_boarding-pages';
   static const String helpPage = '/help-page';
+  static const String menstrualPeriodHistoryPage = '/menstrual-period-history-page';
   static const String waterHistoryPage = '/water-history-page';
   static const String bpHistoryPage = '/bp-history-page';
   static const String temperatureHistoryPage = '/temperature-history-page';

@@ -16,6 +16,7 @@ import 'package:me_daily/model/photo.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/model/locationLog.dart';
+import 'package:me_daily/model/menstrual.dart';
 
 class FirestoreService {
   final String uid;
@@ -384,5 +385,28 @@ class FirestoreService {
         .collection('medicalHistory')
         .snapshots()
         .map(_historyFromFirebase);
+  }
+  Future saveMenstrualPeriodLog(Menstrual menstrual) async {
+    return await userData
+    .document(uid)
+    .collection('menstrualPeriodLog')
+    .add(menstrual.toJson());
+  }
+   List<Menstrual> _menstrualLogFromFirebase(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents.map((document) {
+      return Menstrual(
+          periodStarts: document.data['periodStarts'].toDate(),
+          periodEnds: document.data['periodEnds'].toDate(),
+          flow: document.data['flow'],
+          cycle: document.data['cycle']);
+    }).toList();
+  }
+
+  Stream<List<Menstrual>> get menstrualPeriodLog {
+    return userData
+        .document(uid)
+        .collection('menstrualPeriodLog')
+        .snapshots()
+        .map(_menstrualLogFromFirebase);
   }
 }

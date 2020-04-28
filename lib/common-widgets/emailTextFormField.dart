@@ -8,6 +8,8 @@ class EmailTextFormField extends StatefulWidget {
 }
 
 class _EmailTextFormFieldState extends State<EmailTextFormField> {
+  String email; //ginbutangan ko lang danay para makuha error
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(

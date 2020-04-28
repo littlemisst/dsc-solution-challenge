@@ -20,6 +20,7 @@ import 'package:me_daily/updated-pages/dailyLogs/sickQuestionsLog.dart';
 import 'package:me_daily/updated-pages/locationLog/location_log_summary.dart';
 import 'package:me_daily/updated-pages/medicalHistoryPage/editMedicalHistory.dart';
 import 'package:me_daily/updated-pages/medicalHistoryPage/medicalHistory.dart';
+import 'package:me_daily/updated-pages/menstrual/menstrual_page.dart';
 import 'package:me_daily/updated-pages/messages_page/messagesPage.dart';
 import 'package:me_daily/updated-pages/messages_page/viewMessage.dart';
 import 'package:me_daily/updated-pages/onBoarding/on_boarding_screens.dart';
@@ -91,6 +92,9 @@ class Router {
       case Strings.temperatureHistoryPage:
         return MaterialPageRoute(
             builder: (context) => TemperaturePage.create(context));
+      case Strings.menstrualPeriodHistoryPage:
+        return MaterialPageRoute(
+            builder: (context) => MenstrualPage.create(context));
       case Strings.medicalHistoryPage:
         return MaterialPageRoute(builder: (context) => MedicalHistoryPage());
       case Strings.editMedicalHistoryPage:
