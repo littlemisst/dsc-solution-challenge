@@ -1,147 +1,82 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/input_text_form_field.dart';
 import 'package:me_daily/common-widgets/loader.dart';
 import 'package:me_daily/common-widgets/submitButton.dart';
 import 'package:me_daily/constants/strings.dart';
-import 'package:me_daily/model/user.dart';
-import 'package:me_daily/services/firebase_authentication_service.dart';
-import 'package:me_daily/services/firestore_service.dart';
+import 'package:me_daily/updated-pages/authentication/sign_up_view_model.dart';
+import 'package:stacked/stacked.dart';
 
-class SignUp extends StatefulWidget {
+class SignUp extends StatelessWidget {
   final toggleBetweenForms;
-
   SignUp({this.toggleBetweenForms});
 
-  @override
-  _SignUpState createState() => _SignUpState();
-}
-
-class _SignUpState extends State<SignUp> {
-  final _formKey = GlobalKey<FormState>();
-  final _firebaseAuth = FirebaseAuthentication();
-  final _firestoreService = FirestoreService();
-  final _passwordController = TextEditingController();
-
-  bool isLoading = false;
-
-  String email;
-  String password;
-
-  void _submit() async {
-    if (_formKey.currentState.validate()) {
-      setState(() {
-        isLoading = true;
-      });
-      User user =
-          await _firebaseAuth.signUpWithEmailAndPassword(email, password);
-      await _firestoreService.addUser(user);
-      if (user == null) {
-        setState(() {
-          isLoading = false;
-        });
-      }
-      Navigator.pushReplacementNamed(context, Strings.verificationRoute);
-    }
-  }
-
-  Widget _buildEmailField() {
-    return TextFormField(
-        decoration: InputDecoration(
-            labelText: 'Email',
-            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-        keyboardType: TextInputType.emailAddress,
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'is empty';
-          }
-          return null;
-        },
-        onChanged: (String value) {
-          setState(() {
-            email = value;
-          });
-        });
-  }
-
-  Widget _buildPasswordField() {
-    return TextFormField(
-        decoration: InputDecoration(
-            labelText: 'Password',
-            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-        controller: _passwordController,
-        obscureText: true,
-        validator: (String value) {
-          //should be change to regex
-          if (value.length < 8) {
-            return 'password characters should be atleast 8';
-          }
-          return null;
-        },
-        onChanged: (String value) {
-          setState(() {
-            password = value;
-          });
-        });
-  }
-
-  Widget _buildConfirmPasswordField() {
-    return TextFormField(
-      decoration: InputDecoration(
-          labelText: 'Password',
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-      obscureText: true,
-      validator: (String value) {
-        if (_passwordController.text != value) {
-          return 'Password did not match';
-        }
-        return null;
-      },
-    );
-  }
+  final formKey = GlobalKey<FormState>();
+  final passwordController = TextEditingController();
+  final emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? Loader()
-        : Scaffold(
-            backgroundColor: Theme.of(context).backgroundColor,
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(50, 120, 50, 0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'Sign Up',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 30),
-                      ),
-                      SizedBox(height: 25),
-                      _buildEmailField(),
-                      SizedBox(height: 15),
-                      _buildPasswordField(),
-                      SizedBox(height: 15),
-                      _buildConfirmPasswordField(),
-                      SizedBox(height: 15),
-                      SubmitButton('Sign Up', () => _submit()),
-                      SizedBox(height: 15),
-                      InkWell(
-                        child: Text('Already have an account? Sign In'),
-                        onTap: () {
-                          widget.toggleBetweenForms();
-                        },
-                      )
-                    ],
+    return ViewModelBuilder<SignUpViewModel>.reactive(
+      viewModelBuilder: () => SignUpViewModel(),
+      disposeViewModel: false,
+      builder: (context, model, _) => model.isLoading
+          ? Loader()
+          : Scaffold(
+              backgroundColor: Theme.of(context).backgroundColor,
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(50, 120, 50, 0),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          Strings.signUp,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 30),
+                        ),
+                        SizedBox(height: 25),
+                        InputTextFormField(
+                            labelText: Strings.email,
+                            textEditingController: emailController,
+                            textInputType: TextInputType.emailAddress,
+                            validator: model.validateEmail),
+                        SizedBox(height: 15),
+                        InputTextFormField(
+                            labelText: Strings.password,
+                            textEditingController: passwordController,
+                            textInputType: TextInputType.visiblePassword,
+                            isPassword: true,
+                            validator: model.validatePassword),
+                        SizedBox(height: 15),
+                        InputTextFormField(
+                          labelText: Strings.confirmPassword,
+                          textInputType: TextInputType.visiblePassword,
+                          isPassword: true,
+                          validator: (String value) =>
+                              model.validateConfirmPassword(
+                                  value, passwordController.text),
+                        ),
+                        SizedBox(height: 15),
+                        SubmitButton(Strings.signUp, () {
+                          if (formKey.currentState.validate()) {
+                            model.signUp(
+                                emailController.text, passwordController.text);
+                          }
+                        }),
+                        SizedBox(height: 15),
+                        InkWell(
+                          child: Text(Strings.alreadyHaveAnAccount),
+                          onTap: () {
+                            toggleBetweenForms();
+                          },
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          );
+    );
   }
 }

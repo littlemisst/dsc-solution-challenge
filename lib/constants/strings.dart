@@ -168,11 +168,20 @@ class Strings {
   static const String messagesPage = '/messages-page';
   static const String onBoardingRoute = '/on_boarding-pages';
   static const String helpPage = '/help-page';
-  static const String menstrualPeriodHistoryPage = '/menstrual-period-history-page';
+  static const String menstrualPeriodHistoryPage =
+      '/menstrual-period-history-page';
   static const String waterHistoryPage = '/water-history-page';
   static const String bpHistoryPage = '/bp-history-page';
   static const String temperatureHistoryPage = '/temperature-history-page';
   static const String medicalHistoryPage = '/medical-history-page';
   static const String editMedicalHistoryPage = '/edit-medical-history-page';
   static const String viewMessage = '/view-message';
+
+  //texts
+
+  static const String signUp = 'Sign Up';
+  static const String email = 'Email';
+  static const String password = 'Password';
+  static const String confirmPassword = 'Confirm Password';
+  static const String alreadyHaveAnAccount = 'Already have an account? Sign In';
 }
