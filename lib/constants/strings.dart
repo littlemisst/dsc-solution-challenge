@@ -200,4 +200,7 @@ class Strings {
   static const String createAnAccount = 'Create an Account';
   static const String forgetPassword = 'Forget Password';
   static const String signInWithGoogle = 'Sign in with Google';
+  static const String resetPassword = 'Reset password';
+  static const String checkEmail = 'Check your email for details';
+  static const String returnToSignIn = 'Return to sign in';
 }
