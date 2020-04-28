@@ -406,6 +406,17 @@ class FirestoreService {
     return userData
         .document(uid)
         .collection('menstrualPeriodLog')
+        .orderBy('periodStarts')
+        .limit(1)
+        .snapshots()
+        .map(_menstrualLogFromFirebase);
+  }
+
+  Stream<List<Menstrual>> get periodSummary {
+    return userData
+        .document(uid)
+        .collection('menstrualPeriodLog')
+        .orderBy('periodEnds')
         .snapshots()
         .map(_menstrualLogFromFirebase);
   }

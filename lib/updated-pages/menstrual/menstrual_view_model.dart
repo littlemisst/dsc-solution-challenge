@@ -8,7 +8,7 @@ class MenstrualViewModel {
   MenstrualViewModel({@required this.database});
   final FirestoreService database;
 
-  Stream<List<Menstrual>> get _allMenstrualLog => database.menstrualPeriodLog;
+  Stream<List<Menstrual>> get _allMenstrualLog => database.periodSummary;
 
   Stream<List<MenstrualListTileModel>> get menstrualTileModelStream => _allMenstrualLog.map(_createModels);
 
