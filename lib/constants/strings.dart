@@ -192,8 +192,12 @@ class Strings {
   //texts
 
   static const String signUp = 'Sign Up';
+  static const String signIn = 'Sign In';
   static const String email = 'Email';
   static const String password = 'Password';
   static const String confirmPassword = 'Confirm Password';
   static const String alreadyHaveAnAccount = 'Already have an account? Sign In';
+  static const String createAnAccount = 'Create an Account';
+  static const String forgetPassword = 'Forget Password';
+  static const String signInWithGoogle = 'Sign in with Google';
 }
