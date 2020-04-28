@@ -122,6 +122,17 @@ class Strings {
     DropdownMenuItem<String>(child: Text('Female'), value: 'Female'),
   ];
 
+  static const flowList = [
+    DropdownMenuItem<String>(child: Text('Light'), value: 'Light'),
+    DropdownMenuItem<String>(child: Text('Medium'), value: 'Medium'),
+    DropdownMenuItem<String>(child: Text('Heavy'), value: 'Heavy'),
+    DropdownMenuItem<String>(child: Text('Disaster'), value: 'Disaster'),
+  ];
+  static const cycleList = [
+    DropdownMenuItem<String>(child: Text('Regular'), value: 'Regular'),
+    DropdownMenuItem<String>(child: Text('Irregular'), value: 'Irregular'),
+  ];
+
   static const bloodTypeList = [
     DropdownMenuItem<String>(child: Text('A+'), value: 'A+'),
     DropdownMenuItem<String>(child: Text('A-'), value: 'A-'),
@@ -169,6 +180,7 @@ class Strings {
   static const String onBoardingRoute = '/on_boarding-pages';
   static const String helpPage = '/help-page';
   static const String menstrualPeriodHistoryPage = '/menstrual-period-history-page';
+  static const String menstrualPeriodFormPage = '/menstrual-period-form-page';
   static const String waterHistoryPage = '/water-history-page';
   static const String bpHistoryPage = '/bp-history-page';
   static const String temperatureHistoryPage = '/temperature-history-page';

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:me_daily/common-widgets/viewHistory.dart';
 import 'package:me_daily/model/medicalHistory.dart';
 import 'package:me_daily/model/profile.dart';
 import 'package:me_daily/model/user.dart';
+import 'package:me_daily/model/menstrual.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/bmiConversion.dart';
 import 'package:me_daily/updated-pages/profile/medicalHistorySummary.dart';
+import 'package:me_daily/updated-pages/profile/menstrualSummary.dart';
 import 'package:me_daily/widgets/editIcons.dart';
 import 'package:me_daily/widgets/indicatorText.dart';
 import 'package:me_daily/widgets/text_widget.dart';
@@ -221,6 +224,32 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
     );
   }
 
+  Widget _buildPeriodLogContainer() {
+    List<Menstrual> _period =
+        Provider.of<List<Menstrual>>(context);
+    return  Container(
+      color: Theme.of(context).backgroundColor,
+      padding: EdgeInsets.all(15),
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget> [
+              Expanded(child: IndicatorText('MONTHLY PERIOD LOG')),
+              EditIcon(
+                  text: 'Update Log', route: Strings.menstrualPeriodFormPage
+              )
+            ]
+          ),
+          Row(children: <Widget> [
+            Expanded(child: Container()),
+            ViewHistory(() => Navigator.pushNamed(context, Strings.menstrualPeriodHistoryPage))
+          ]),
+          _period.isNotEmpty ? PeriodSummary(period: _period[0]) : Container (),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Profile _currentProfile = Provider.of<Profile>(context);
@@ -254,6 +283,9 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
                       _currentProfile.height, _currentProfile.weight),
                 ]),
               ),
+              SizedBox(height: 5),
+              _currentProfile.gender == 'Female' ?
+              _buildPeriodLogContainer() : Container(),
               SizedBox(height: 5),
               _buildMedicalHistoryContainer()
             ]))));

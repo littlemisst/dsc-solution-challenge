@@ -1,6 +1,6 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
 import 'package:me_daily/constants/strings.dart';
 
@@ -22,19 +22,25 @@ class MenstrualListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String formatStart = DateFormat.yMMMMEEEEd().format(model.periodStarts);
+    String formatEnd = DateFormat.yMMMMEEEEd().format(model.periodEnds);
+    const fontSize = 15.0;
 
     return ContentContainer(
       padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
       child: ListTile(
         leading: Icon(CupertinoIcons.circle_filled,
-        color:  model.flow == Strings.normal ? Theme.of(context).primaryColor : Colors.red
+        color:  model.cycle != 'Irregular' || model.flow != 'Disaster' ? Theme.of(context).primaryColor : Colors.red
         ), 
         title: Column(children: <Widget>[
-          Align(child: Text('${model.flow} / ${model.cycle}', style: TextStyle(fontWeight: FontWeight.bold,
-          color:  model.flow == Strings.normal ?Theme.of(context).primaryColor : Colors.red)),alignment: Alignment.centerLeft), 
-          Align(child: Text('${model.flow}', style: TextStyle(fontWeight: FontWeight.bold, 
-          color:  model.flow == Strings.normal ? Theme.of(context).primaryColor : Colors.red,
+          Align(child: Text('Start : ${formatStart}', style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, 
+          color: Theme.of(context).primaryColor,
           )),alignment: Alignment.centerLeft),
+          SizedBox(height: 2),
+          Align(child: Text('End : ${formatEnd}', style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, 
+          color: Theme.of(context).primaryColor)),alignment: Alignment.centerLeft),
+          Align(child: Text(model.cycle, style: TextStyle(fontSize: fontSize)),alignment: Alignment.centerLeft),
+          Align(child: Text(model.flow, style: TextStyle(fontSize: fontSize)),alignment: Alignment.centerLeft),
         ])
       )
     );
