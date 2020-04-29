@@ -4,8 +4,10 @@ import 'package:me_daily/pages/mapPage.dart';
 import 'package:me_daily/updated-pages/calendarPage/dailyTasksPage.dart';
 import 'package:me_daily/updated-pages/homepage/expandedButton.dart';
 import 'package:me_daily/updated-pages/homepage/sideDrawer.dart';
+import 'package:me_daily/updated-pages/onBoarding/on_boarding_screens.dart';
 import 'package:me_daily/updated-pages/photos/gallery_page.dart';
 import 'package:me_daily/updated-pages/summaryPage/summaryPage.dart';
+
 
 
 import 'floatingActionButtonWidget.dart';

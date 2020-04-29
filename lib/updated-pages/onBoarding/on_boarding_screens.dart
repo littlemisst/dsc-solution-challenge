@@ -7,34 +7,30 @@ import 'package:me_daily/services/shared_preferences_service.dart';
 class OnBoardingScreen extends StatelessWidget {
   final pageList = [
     PageModel(
-        color: Colors.cyan,
+        color: Colors.white,
         heroAssetPath: 'images/onBoard1.png',
-        heroAssetColor: Colors.white,
-        title: Text('WELCOME TO ME DAILY', 
-        style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
-        body: ContentContainer(
-          padding: EdgeInsets.all(15),
-          child: Container(
-            padding: EdgeInsets.all(25),
-            child: Text('Insert caption here')),
-          ),
-        iconAssetPath: 'images/unwell.png',
+
+        title: Text('Track your Health Everyday', 
+        style: TextStyle(color: Colors.blueGrey, fontSize: 20, fontWeight: FontWeight.bold)),
+        body:Container(),
+        iconAssetPath: 'images/well.png',
         ),
         
     PageModel(
-        color: Colors.blueGrey[100],
+        color: Colors.white,
         heroAssetPath: 'images/onBoard2.png',
-        heroAssetColor: Colors.white,
-        title: Text('Hello page 2'),
-        body: Text('so you have log'),
-        iconAssetPath: 'images/unwell.png'),
+        title: Text('Create Task, Save Files & Log your Daily Health Status',
+        style: TextStyle(color: Colors.blueGrey, fontSize: 20, fontWeight: FontWeight.bold)),
+        body: Container(),
+        iconAssetPath: 'images/well.png'),
     PageModel(
-        color: Colors.purple[100],
+        color: Colors.white,
         heroAssetPath: 'images/onBoard3.png',
-        heroAssetColor: Colors.white,
-        title: Text('Hello page 3'),
-        body: Text('so you have log'),
-        iconAssetPath: 'images/unwell.png')
+        
+        title: Text('Share your Health Status',
+        style: TextStyle(color: Colors.blueGrey, fontSize: 20, fontWeight: FontWeight.bold)),
+        body: Container(),
+        iconAssetPath: 'images/well.png')
   ];
 
   @override
