@@ -34,7 +34,7 @@ class ResetPasswordForm extends StatelessWidget {
                       Text(
                         Strings.forgetPassword,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 30),
+                        style: TextStyle(fontSize: 25),
                       ),
                       SizedBox(height: 25),
                       InputTextFormField(
@@ -44,8 +44,12 @@ class ResetPasswordForm extends StatelessWidget {
                           validator: model.validateEmail),
                       SizedBox(height: 15),
                       SubmitButton(
-                        Strings.resetPassword,
-                        () {
+                        text: Strings.resetPassword,
+                        color: Theme.of(context).buttonColor,
+                        textColor: Colors.white,
+                        outlineColor: Theme.of(context).buttonColor,
+                        icon: false ,
+                        onPressed: () {
                           if (formKey.currentState.validate()) {
                             model.resetPassword(emailController.text);
                             Navigator.pushNamed(

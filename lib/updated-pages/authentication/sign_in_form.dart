@@ -49,32 +49,48 @@ class SignIn extends StatelessWidget {
                           textInputType: TextInputType.visiblePassword,
                           isPassword: true,
                           validator: model.validatePassword),
-                      SizedBox(height: 15),
+
+                       
+
+                      SizedBox(height: 25),
                       SubmitButton(
-                          Strings.signIn,
-                          () => formKey.currentState.validate()
+                          text: Strings.signIn,
+                          color: Theme.of(context).buttonColor,
+                          textColor: Colors.white,
+                          outlineColor: Theme.of(context).buttonColor,
+                          icon: false,
+                          onPressed: () => formKey.currentState.validate()
                               ? model.signInWithEmailAndPassword(
                                   emailController.text, passwordController.text)
                               : null),
-                      SizedBox(height: 15),
-                      InkWell(
+                       SizedBox(height: 5),
+                      SubmitButton(
+                          text: Strings.signInWithGoogle, 
+                          color: Colors.white,
+                          textColor: Colors.black,
+                          outlineColor: Theme.of(context).buttonColor,
+                          icon: true,
+                          onPressed: model.signInWithGoogle), 
+                      
+                      SizedBox(height: 20),
+                      Row(children: <Widget>[
+                        InkWell(
+                            child: Text(Strings.forgetPassword),
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, Strings.resetPasswordFormRoute);
+                            },
+                          ),
+                        Expanded(child: SizedBox(width: MediaQuery.of(context).size.width/5)),
+                        InkWell(
                         child: Text(Strings.createAnAccount),
                         onTap: () {
                           toggleBetweenForms();
                         },
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      InkWell(
-                        child: Text(Strings.forgetPassword),
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, Strings.resetPasswordFormRoute);
-                        },
-                      ),
-                      SubmitButton(
-                          Strings.signInWithGoogle, model.signInWithGoogle),
+                      
+                       
+                      ]),
                     ],
                   ),
                 ),

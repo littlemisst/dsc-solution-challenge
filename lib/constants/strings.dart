@@ -198,7 +198,7 @@ class Strings {
   static const String confirmPassword = 'Confirm Password';
   static const String alreadyHaveAnAccount = 'Already have an account? Sign In';
   static const String createAnAccount = 'Create an Account';
-  static const String forgetPassword = 'Forget Password';
+  static const String forgetPassword = 'Forgot Password?';
   static const String signInWithGoogle = 'Sign in with Google';
   static const String resetPassword = 'Reset password';
   static const String checkEmail = 'Check your email for details';
