@@ -48,19 +48,19 @@ class _AddTaskState extends State<AddTask> {
         height: MediaQuery.of(context).size.height,
         child: BuildGridItems([
           GridItem(
-            IconItem(AssetImage("images/eat.png"), Strings.eat, 60,
+            child: IconItem(AssetImage("images/eat.png"), Strings.eat, 60,
                 Theme.of(context).primaryColor, () => _chooseTask(Strings.eat)),
           ),
           GridItem(
-            IconItem(AssetImage("images/drink.png"), Strings.drink, 60,
+            child: IconItem(AssetImage("images/drink.png"), Strings.drink, 60,
                 Theme.of(context).primaryColor, () => _chooseTask(Strings.drink)),
           ),
           GridItem(
-            IconItem(AssetImage("images/exercise.png"), Strings.exercise, 60,
+            child: IconItem(AssetImage("images/exercise.png"), Strings.exercise, 60,
                 Theme.of(context).primaryColor, () => _chooseTask(Strings.exercise)),
           ),
           GridItem(
-            IconItem(
+            child: IconItem(
                 AssetImage("images/medicine.png"),
                 Strings.medicine,
                 60,
@@ -68,7 +68,7 @@ class _AddTaskState extends State<AddTask> {
                 () => _chooseTask(Strings.medicine)),
           ),
           GridItem(
-            IconItem(
+            child: IconItem(
                 AssetImage("images/appointment.png"),
                 Strings.appointment,
                 60,
@@ -76,7 +76,7 @@ class _AddTaskState extends State<AddTask> {
                 () => _chooseTask(Strings.appointment)),
           ),
           GridItem(
-            IconItem(AssetImage("images/more.png"), Strings.more, 60,
+            child: IconItem(AssetImage("images/more.png"), Strings.more, 60,
                 Theme.of(context).primaryColor, () => _chooseTask(Strings.more)),
           ),
         ], 2, 1));

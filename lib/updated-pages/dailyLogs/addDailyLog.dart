@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/appBarTextFormat.dart';
+import 'package:me_daily/common-widgets/buildGrid.dart';
 import 'package:me_daily/common-widgets/iconItem.dart';
 import 'package:me_daily/model/logs.dart';
 import 'package:me_daily/constants/strings.dart';
+import 'package:me_daily/updated-pages/addTasks/gridItemWidget.dart';
 
 class AddDailyLogs extends StatefulWidget {
   @override
@@ -28,21 +30,21 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
   }
 
   Widget _buildChooseEmotions() {
-    return Row(
-      children: <Widget>[
-        Expanded(
+    return Container(
+      child: BuildGridItems([
+        GridItem(
             child: IconItem(AssetImage("images/well.png"), Strings.good, 60,
                 Theme.of(context).accentColor, () => _chooseEmotion(Strings.good))),
-        Expanded(
+        GridItem(
             child: IconItem(AssetImage("images/neutral.png"), Strings.okay, 60,
                 Colors.cyan[300], () => _chooseEmotion(Strings.okay))),
-        Expanded(
+        GridItem(
             child: IconItem(AssetImage("images/unwell.png"), Strings.unwell, 60,
                 Colors.cyan[100], () => _chooseEmotion(Strings.unwell))),
-        Expanded(
+        GridItem(
             child: IconItem(AssetImage("images/sick.png"), Strings.sick, 60,
-                Colors.grey, () => _chooseEmotion(Strings.sick))),
-      ],
+                Colors.grey, () => _chooseEmotion(Strings.sick)))
+      ], 2, 1)
     );
   }
 
@@ -59,17 +61,13 @@ class _AddDailyLogsState extends State<AddDailyLogs> {
           title: TextFormat('DAILY LOGS'),
         ),
         body: Container(
-          padding: EdgeInsets.fromLTRB(
-              MediaQuery.of(context).size.width / 10,
-              MediaQuery.of(context).size.height / 5,
-              MediaQuery.of(context).size.width / 10,
-              0),
+          padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height/10, horizontal: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text('How are you feeling?',
-                  style: TextStyle(fontSize: 15, fontFamily: 'Montserrat')),
-              SizedBox(height: 30),
+              Text('HOW ARE YOU FEELING?',
+                  style: TextStyle(fontSize: 20, color: Colors.grey)),
+              SizedBox(height: 10),
               _buildChooseEmotions()
             ],
           ),
