@@ -8,10 +8,12 @@ Clone this repository to your local files;
 
 ### Prerequisites
 
-List of software to be installed
-Flutter
-Dart
-Android Studio
+List of software to be installed:
+
+* Flutter
+* Dart
+* Android Studio
+
 
 ### Installing
 
