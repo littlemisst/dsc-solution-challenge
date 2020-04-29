@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/dateFormatter.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
 
 class DisplayPreviousLocations extends StatelessWidget {
@@ -41,6 +42,6 @@ Widget buildListOfLocations(context, document) {
   return ListTile(
     leading: Icon(Icons.location_on, color: Theme.of(context).primaryColor),
     title: Text(document.locationName),
-    subtitle: Text(document.dateAndTime.toString()),
+    subtitle: Text(DateTimeFormatter(date: document.dateAndTime).dateTimeFormat),
   );
 }

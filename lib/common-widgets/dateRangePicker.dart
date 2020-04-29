@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
-import 'package:intl/intl.dart';
+import 'package:me_daily/common-widgets/dateFormatter.dart';
 
 class DateRangePickerWidget extends StatefulWidget {
   const DateRangePickerWidget({Key key, this.elevation, this.taskStarted, this.taskEnded, this.setTaskStarted, this.setTaskEnded}) : super(key: key);
@@ -59,8 +59,7 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
                   Text('Start of Task: ', style: TextStyle(fontSize: 13)),
                   SizedBox(width: 10),
                   Align(alignment: Alignment.topLeft,
-                  child: Text(
-                    DateFormat.yMMMd().format(widget.taskStarted), 
+                  child: Text(DateTimeFormatter(date: widget.taskStarted).dateFormat,
                     style: TextStyle(fontSize: 13)))
                 ]), 
                 SizedBox(height: 10),
@@ -68,8 +67,7 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
                   Text('End of Task: ', style: TextStyle(fontSize: 13)),
                   SizedBox(width: 10),
                   Align(alignment: Alignment.topLeft,
-                  child: Text(
-                    DateFormat.yMMMd().format(widget.taskEnded), 
+                  child: Text(DateTimeFormatter(date: widget.taskEnded).dateFormat,
                     style: TextStyle(fontSize: 13)))
                 ]),
               ])

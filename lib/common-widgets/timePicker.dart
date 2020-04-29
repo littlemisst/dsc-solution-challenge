@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:me_daily/common-widgets/dateFormatter.dart';
 
 
 class TimePicker extends StatefulWidget {
@@ -53,7 +53,7 @@ class _TimePickerState extends State<TimePicker> {
                   Text('Time: ', style: TextStyle(fontSize: 13)),
                   SizedBox(width: 10),
                   Align(alignment: Alignment.topLeft,
-                  child: Text('${DateFormat.jm().format(widget.taskTime)}', 
+                  child: Text('${DateTimeFormatter(date: widget.taskTime).timeFormat}', 
                     style: TextStyle(fontSize: 13)))
                 ])
               ])

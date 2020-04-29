@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/dateFormatter.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:provider/provider.dart';
@@ -60,7 +61,7 @@ class DisplayBasicInformation extends StatelessWidget {
                                 style: TextStyle(fontSize: 12),
                               ),
                               Text(
-                                profile.birthDate.toLocal().toString(),
+                                DateTimeFormatter(date: profile.birthDate).dateFormat,
                                 style: TextStyle(fontSize: 12),
                               )
                             ],

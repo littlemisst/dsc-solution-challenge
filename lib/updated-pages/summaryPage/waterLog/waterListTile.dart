@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:me_daily/common-widgets/dateFormatter.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
 
 class WaterListTileModel {
@@ -20,7 +20,7 @@ class WaterListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String format = DateFormat.yMMMMd().format(model.logCreated);
+    String format = DateTimeFormatter(date: model.logCreated).dateFormat;
     const fontSize = 15.0;
     return ContentContainer(
       padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
