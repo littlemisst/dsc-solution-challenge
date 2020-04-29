@@ -10,9 +10,11 @@ MeDaily is a mobile app that enables its user to save important details regardin
 2. You can clone the repository by copying the HTTPS or SSH link or simply download the zip file.
 3. In your terminal window, change the directory where you want to clone the repository.
 4. Paste the command you clone
-    Clone over HTTPS:
+    
+    *  Clone over HTTPS:
     ```git clone https://github.com/littlemisst/dsc-solution-challenge.git```
-    Clone over SSH:
+   
+    *   Clone over SSH:
     ```git clone git@github.com:littlemisst/dsc-solution-challenge.git```
 
 ### Prerequisites
