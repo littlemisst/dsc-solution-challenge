@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage>
               ExpandedButton(Icons.insert_drive_file, 'Files', () => setState(() => _currentIndex = 1)),
               Expanded(flex: 1, child: SizedBox()),
               ExpandedButton(Icons.event, 'Events', () => setState(() => _currentIndex = 2)),
-              ExpandedButton(Icons.home, 'Maps', () => setState(() => _currentIndex = 3)),
+              ExpandedButton(Icons.map, 'Maps', () => setState(() => _currentIndex = 3)),
             ],
           ),
         ),

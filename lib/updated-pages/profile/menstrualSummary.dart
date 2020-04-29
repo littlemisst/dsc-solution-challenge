@@ -47,25 +47,31 @@ class PeriodSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      SizedBox(height: 5),
-      _buildDaysLeft(),
-      SizedBox(height: 10),
-      Row(
-        children: <Widget>[
-          Expanded(child: _buildPeriodStarts()),
-          Expanded(child: _buildPeriodEnds()),
-        ],
-      ),
-      Divider(),
-      Row(
-        children: <Widget>[
-          Expanded(child: _buildFlow()),
-          Expanded(child: _buildCycle()),
-        ],
-      ),
-      Divider(),
-      Row(children: <Widget>[Expanded(child: _buildExpectedNextPeriod())]),
-    ]);
+    return Column(
+      children: <Widget>[
+        period.periodEnds == DateTime.now() ?
+        Column(children: <Widget>[
+          SizedBox(height: 5),
+          _buildDaysLeft(),
+          SizedBox(height: 10),
+          Row(
+            children: <Widget>[
+              Expanded(child: _buildPeriodStarts()),
+              Expanded(child: _buildPeriodEnds()),
+            ],
+          ),
+          Divider(),
+          Row(
+            children: <Widget>[
+              Expanded(child: _buildFlow()),
+              Expanded(child: _buildCycle()),
+            ],
+          ),
+          Divider(),
+         
+        ]) : Container(),
+         Row(children: <Widget>[Expanded(child: _buildExpectedNextPeriod())]),
+      ],
+    );
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/common-widgets/appBarTextFormat.dart';
-import 'package:me_daily/common-widgets/dateRangePicker.dart';
 import 'package:me_daily/common-widgets/floatingAction.dart';
 import 'package:me_daily/model/menstrual.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
+import 'package:me_daily/widgets/dateRangePickerPeriod.dart';
 import 'package:me_daily/widgets/dropDownWidget.dart';
 import 'package:provider/provider.dart';
 import 'package:me_daily/constants/strings.dart';
@@ -53,7 +53,7 @@ class _MenstrualFormState extends State<MenstrualForm> {
           child: Container(
             child : Column(
               children: <Widget>[
-                DateRangePickerWidget(
+                DateRangePickerPeriodWidget(
                 elevation: 1,
                 taskStarted: _periodStarts,
                 taskEnded: _periodEnds,

@@ -25,34 +25,7 @@ class FirestoreService {
   final CollectionReference userData =
       Firestore.instance.collection('userData');
 
-  //add and retrieve photos
-  List<Photo> _photoFromFirebase(QuerySnapshot querySnapshot) {
-    return querySnapshot.documents.map((document) {
-      return Photo(
-          fileName: document.data['fileName'],
-          downloadURL: document.data['downloadURL'],
-          description: document.data['description']);
-    }).toList();
-  }
-
-  Stream<List<Photo>> get photos {
-    return userData
-        .document(uid)
-        .collection('photos')
-        .snapshots()
-        .map(_photoFromFirebase);
-  }
-
-  Future uploadPhoto(
-      String downloadURL, String fileName, String description) async {
-    return await userData.document(uid).collection('photos').add({
-      'downloadURL': downloadURL,
-      'fileName': fileName,
-      'description': description
-    });
-  }
-
-  //retrieve to health chart
+//Retrieve Health chart
   List<Health> _healthFromFirebase(QuerySnapshot querySnapshot) {
     Map<String, int> _healthMap = Map();
     List<Health> _healthList = [];
@@ -79,7 +52,7 @@ class FirestoreService {
         .map(_healthFromFirebase);
   }
 
-  //retrieve to sleep chart
+//Retrieve Sleep Chart
   List<Sleep> _sleepFromFirebase(QuerySnapshot querySnapshot) {
     return querySnapshot.documents.map((document) {
       return Sleep(
@@ -97,7 +70,7 @@ class FirestoreService {
         .map(_sleepFromFirebase);
   }
 
-//add and retrieve for profile
+//Add and Retrieve Profile
   Profile _profileFromFirebase(DocumentSnapshot documentSnapshot) {
     return Profile.fromJson(documentSnapshot.data);
   }
@@ -110,7 +83,31 @@ class FirestoreService {
     return await userData.document(uid).setData(profile.toJson());
   }
 
-//add and retrieve for task
+//Add and Retrieve Photo
+  List<Photo> _photoFromFirebase(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents
+        .map((document) => Photo.fromJson(document.data))
+        .toList();
+  }
+
+  Stream<List<Photo>> get photos {
+    return userData
+        .document(uid)
+        .collection('photos')
+        .snapshots()
+        .map(_photoFromFirebase);
+  }
+
+  Future uploadPhoto(
+      String downloadURL, String fileName, String description) async {
+    return await userData.document(uid).collection('photos').add({
+      'downloadURL': downloadURL,
+      'fileName': fileName,
+      'description': description
+    });
+  }
+
+//Add and Retrieve Tasks
   Future addTask(Task task, String documentID) async {
     return await userData
         .document(uid)
@@ -160,7 +157,7 @@ class FirestoreService {
   Stream<List<Task>> get allTasksStream =>
       CombineLatestStream.combine2(tasks, repetitiveTasks, (a, b) => a + b);
 
-  //add and retrieve for daily logs
+//Add and Retrieve Daily Log
   Future addDailyLog(DailyLog entry) async {
     return await userData
         .document(uid)
@@ -183,6 +180,7 @@ class FirestoreService {
         .map(_logsFromFirebase);
   }
 
+//Add and Retrieve Water
   Future addWaterLog(Water entry, String documentID) async {
     return await userData
         .document(uid)
@@ -218,6 +216,7 @@ class FirestoreService {
         .map(_waterLogFromFirebase);
   }
 
+//Add and Retrieve Temperature
   Future addTemperatureLog(Temperature entry, String documentID) async {
     return await userData
         .document(uid)
@@ -242,6 +241,7 @@ class FirestoreService {
         .map(_tempLogFromFirebase);
   }
 
+//Add and Retrieve Blood Pressure
   Future addBloodPressureLog(BloodPressure entry, String documentID) async {
     return await userData
         .document(uid)
@@ -266,7 +266,7 @@ class FirestoreService {
         .map(_bpLogFromFirebase);
   }
 
-  //add summary
+//Add and Retrieve Add Summary
   Future sendSummary(UserSummary userSummary) async {
     return await userData
         .document(userSummary.recipient.uid)
@@ -296,6 +296,7 @@ class FirestoreService {
         .setData(user.toJson());
   }
 
+//Add and Retrieve Location
   List<LocationLog> _locationLogsListFromFirebase(QuerySnapshot querySnapshot) {
     return querySnapshot.documents
         .map((document) => LocationLog.fromJson(document.data))
@@ -311,7 +312,6 @@ class FirestoreService {
         .map(_locationLogsListFromFirebase);
   }
 
-  //add location
   Future saveLocation(LocationLog location) async {
     return await userData
         .document(uid)
@@ -319,6 +319,7 @@ class FirestoreService {
         .add(location.toJson());
   }
 
+//Add and Retrieve User SUmmary
   List<UserSummary> _userMessagesFromFirebase(QuerySnapshot querySnapshot) {
     querySnapshot.documents.forEach((document) {
       print((document.data['previousLocations']));
@@ -337,6 +338,40 @@ class FirestoreService {
         .map(_userMessagesFromFirebase);
   }
 
+//Add and Retrieve Menstrual
+  Future saveMenstrualPeriodLog(Menstrual menstrual) async {
+    return await userData
+        .document(uid)
+        .collection('menstrualPeriodLog')
+        .add(menstrual.toJson());
+  }
+
+  List<Menstrual> _menstrualLogFromFirebase(QuerySnapshot querySnapshot) {
+    return querySnapshot.documents
+        .map((document) => Menstrual.fromJson(document.data))
+        .toList();
+  }
+
+  Stream<List<Menstrual>> get menstrualPeriodLog {
+    return userData
+        .document(uid)
+        .collection('menstrualPeriodLog')
+        .orderBy('periodStarts')
+        .limit(1)
+        .snapshots()
+        .map(_menstrualLogFromFirebase);
+  }
+
+  Stream<List<Menstrual>> get periodSummary {
+    return userData
+        .document(uid)
+        .collection('menstrualPeriodLog')
+        .orderBy('periodEnds')
+        .snapshots()
+        .map(_menstrualLogFromFirebase);
+  }
+
+//Add and Retrieve Medical History
   Future addMedicalHistory(MedicalHistory history) async {
     return await userData
         .document(uid)
@@ -365,41 +400,5 @@ class FirestoreService {
         .collection('medicalHistory')
         .snapshots()
         .map(_historyFromFirebase);
-  }
-
-  Future saveMenstrualPeriodLog(Menstrual menstrual) async {
-    return await userData
-        .document(uid)
-        .collection('menstrualPeriodLog')
-        .add(menstrual.toJson());
-  }
-
-  List<Menstrual> _menstrualLogFromFirebase(QuerySnapshot querySnapshot) {
-    return querySnapshot.documents.map((document) {
-      return Menstrual(
-          periodStarts: document.data['periodStarts'].toDate(),
-          periodEnds: document.data['periodEnds'].toDate(),
-          flow: document.data['flow'],
-          cycle: document.data['cycle']);
-    }).toList();
-  }
-
-  Stream<List<Menstrual>> get menstrualPeriodLog {
-    return userData
-        .document(uid)
-        .collection('menstrualPeriodLog')
-        .orderBy('periodStarts')
-        .limit(1)
-        .snapshots()
-        .map(_menstrualLogFromFirebase);
-  }
-
-  Stream<List<Menstrual>> get periodSummary {
-    return userData
-        .document(uid)
-        .collection('menstrualPeriodLog')
-        .orderBy('periodEnds')
-        .snapshots()
-        .map(_menstrualLogFromFirebase);
   }
 }
