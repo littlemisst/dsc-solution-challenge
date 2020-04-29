@@ -65,7 +65,7 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
   double getAverageWaterDrank(List<Water> listOfWaterDrank) {
     // must be refactored
     if (listOfWaterDrank.isEmpty) {
-      return null;
+      return 0;
     } else {
       final listOfWaterConsumption = listOfWaterDrank.map((e) => e.waterInML);
       return listOfWaterConsumption
