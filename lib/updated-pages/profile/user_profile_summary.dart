@@ -20,6 +20,7 @@ class UserProfileSummary extends StatefulWidget {
 }
 
 class _UserProfileSummaryState extends State<UserProfileSummary> {
+  
   Widget _buildNameProfile(url, name, email) {
     return Container(
         padding: EdgeInsets.fromLTRB(15, 25, 15, 15),
@@ -79,15 +80,28 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
       ])),
     ]);
   }
+  int age;
+  
 
   Widget _buildBirthday(birthday) {
     String formatBirthDate = DateFormat.yMMMMd().format(birthday);
-    var difference = DateTime.now().difference(birthday).inDays;
-    var age = (difference / 365).floor().toString();
 
-    if (difference < 0) {
-      age = '0';
+    int getAge(DateTime birthday) {
+      DateTime dateNow = DateTime.now();
+
+      int age = dateNow.year - birthday.year;
+
+      if (birthday.month > dateNow.month) {
+        age--;
+      }
+      if (birthday.month == dateNow.month) {
+        if (birthday.day > dateNow.day) {
+          age--;
+        }
+      }
+      return age;
     }
+
     return Row(children: <Widget>[
       Expanded(
           child: Column(children: <Widget>[
@@ -102,7 +116,7 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
       Expanded(
           child: Column(children: <Widget>[
         TextWidget(text: 'Age'),
-        Text(age, style: TextStyle(fontSize: 15.0)),
+        Text(getAge(birthday).toString(), style: TextStyle(fontSize: 15.0)),
       ]))
     ]);
   }
@@ -254,6 +268,8 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
   Widget build(BuildContext context) {
     Profile _currentProfile = Provider.of<Profile>(context);
     User _user = Provider.of<User>(context);
+
+
 
     return Scaffold(
         body: SingleChildScrollView(
