@@ -29,15 +29,16 @@ class MenstrualListTile extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
       child: ListTile(
         leading: Icon(CupertinoIcons.circle_filled,
-        color:  model.cycle != 'Irregular' || model.flow != 'Disaster' ? Theme.of(context).primaryColor : Colors.red
+        color:  model.cycle != 'Irregular' || model.flow != 'Disaster' ? Colors.green : Colors.red
         ), 
         title: Column(children: <Widget>[
           Align(child: Text('Start : $formatStart', style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, 
-          color: Theme.of(context).primaryColor,
+          color:  model.cycle != 'Irregular' || model.flow != 'Disaster' ? Colors.green : Colors.red
           )),alignment: Alignment.centerLeft),
           SizedBox(height: 2),
           Align(child: Text('End : $formatEnd', style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, 
-          color: Theme.of(context).primaryColor)),alignment: Alignment.centerLeft),
+          color:  model.cycle != 'Irregular' || model.flow != 'Disaster' ? Colors.green : Colors.red))
+          ,alignment: Alignment.centerLeft),
           Align(child: Text(model.cycle, style: TextStyle(fontSize: fontSize)),alignment: Alignment.centerLeft),
           Align(child: Text(model.flow, style: TextStyle(fontSize: fontSize)),alignment: Alignment.centerLeft),
         ])
