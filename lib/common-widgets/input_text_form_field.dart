@@ -28,7 +28,7 @@ class _InputTextFormFieldState extends State<InputTextFormField> {
           labelText: widget.labelText,
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+              OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
       keyboardType: TextInputType.emailAddress,
       validator: widget.validator,
     );

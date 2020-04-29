@@ -266,14 +266,6 @@ class FirestoreService {
         .map(_bpLogFromFirebase);
   }
 
-  //add location
-  Future saveLocation(LocationLog location) async {
-    return await userData
-        .document(uid)
-        .collection('locationLog')
-        .add(location.toJson());
-  }
-
   //add summary
   Future sendSummary(UserSummary userSummary) async {
     return await userData
@@ -304,30 +296,10 @@ class FirestoreService {
         .setData(user.toJson());
   }
 
-  List<LocationLog> _locationLogFromFirebase(QuerySnapshot querySnapshot) {
-    return querySnapshot.documents.map((document) {
-      return LocationLog(
-          dateAndTime: document.data['dateAndTime'].toDate(),
-          locationName: document.data['locationName']);
-    }).toList();
-  }
-
-  Stream<List<LocationLog>> get locationLog {
-    return userData
-        .document(uid)
-        .collection('locationLog')
-        .orderBy('dateAndTime')
-        .limit(1)
-        .snapshots()
-        .map(_locationLogFromFirebase);
-  }
-
   List<LocationLog> _locationLogsListFromFirebase(QuerySnapshot querySnapshot) {
-    return querySnapshot.documents.map((document) {
-      return LocationLog(
-          dateAndTime: document.data['dateAndTime'].toDate(),
-          locationName: document.data['locationName']);
-    }).toList();
+    return querySnapshot.documents
+        .map((document) => LocationLog.fromJson(document.data))
+        .toList();
   }
 
   Stream<List<LocationLog>> get locationLogList {
@@ -337,6 +309,14 @@ class FirestoreService {
         .orderBy('dateAndTime')
         .snapshots()
         .map(_locationLogsListFromFirebase);
+  }
+
+  //add location
+  Future saveLocation(LocationLog location) async {
+    return await userData
+        .document(uid)
+        .collection('locationLog')
+        .add(location.toJson());
   }
 
   List<UserSummary> _userMessagesFromFirebase(QuerySnapshot querySnapshot) {
@@ -386,13 +366,15 @@ class FirestoreService {
         .snapshots()
         .map(_historyFromFirebase);
   }
+
   Future saveMenstrualPeriodLog(Menstrual menstrual) async {
     return await userData
-    .document(uid)
-    .collection('menstrualPeriodLog')
-    .add(menstrual.toJson());
+        .document(uid)
+        .collection('menstrualPeriodLog')
+        .add(menstrual.toJson());
   }
-   List<Menstrual> _menstrualLogFromFirebase(QuerySnapshot querySnapshot) {
+
+  List<Menstrual> _menstrualLogFromFirebase(QuerySnapshot querySnapshot) {
     return querySnapshot.documents.map((document) {
       return Menstrual(
           periodStarts: document.data['periodStarts'].toDate(),
