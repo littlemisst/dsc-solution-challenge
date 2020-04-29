@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:me_daily/common-widgets/dateFormatter.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
 
 class TemperatureListTileModel {
@@ -18,8 +18,8 @@ class TemperatureListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String dateFormat = DateFormat.yMMMMEEEEd().format(model.logCreated);
-    String timeFormat = DateFormat.jm().format(model.logCreated);
+    String dateFormat = DateTimeFormatter(date: model.logCreated).withWeekDateFormat;
+    String timeFormat = DateTimeFormatter(date: model.logCreated).timeFormat;
     const fontSize = 15.0;
     return ContentContainer(
       padding: EdgeInsets.fromLTRB(10, 0, 10, 5),

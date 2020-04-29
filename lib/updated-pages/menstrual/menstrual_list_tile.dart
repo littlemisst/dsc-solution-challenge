@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:me_daily/common-widgets/dateFormatter.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
-import 'package:me_daily/constants/strings.dart';
 
 class MenstrualListTileModel {
   const MenstrualListTileModel({
@@ -22,8 +21,8 @@ class MenstrualListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String formatStart = DateFormat.yMMMMEEEEd().format(model.periodStarts);
-    String formatEnd = DateFormat.yMMMMEEEEd().format(model.periodEnds);
+    String formatStart = DateTimeFormatter(date: model.periodStarts).withWeekDateFormat;
+    String formatEnd = DateTimeFormatter(date: model.periodEnds).withWeekDateFormat;
     const fontSize = 15.0;
 
     return ContentContainer(
@@ -33,11 +32,11 @@ class MenstrualListTile extends StatelessWidget {
         color:  model.cycle != 'Irregular' || model.flow != 'Disaster' ? Theme.of(context).primaryColor : Colors.red
         ), 
         title: Column(children: <Widget>[
-          Align(child: Text('Start : ${formatStart}', style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, 
+          Align(child: Text('Start : $formatStart', style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, 
           color: Theme.of(context).primaryColor,
           )),alignment: Alignment.centerLeft),
           SizedBox(height: 2),
-          Align(child: Text('End : ${formatEnd}', style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, 
+          Align(child: Text('End : $formatEnd', style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, 
           color: Theme.of(context).primaryColor)),alignment: Alignment.centerLeft),
           Align(child: Text(model.cycle, style: TextStyle(fontSize: fontSize)),alignment: Alignment.centerLeft),
           Align(child: Text(model.flow, style: TextStyle(fontSize: fontSize)),alignment: Alignment.centerLeft),

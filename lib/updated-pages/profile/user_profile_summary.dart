@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:me_daily/common-widgets/dateFormatter.dart';
 import 'package:me_daily/common-widgets/viewHistory.dart';
 import 'package:me_daily/model/medicalHistory.dart';
 import 'package:me_daily/model/profile.dart';
@@ -84,7 +84,7 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
   
 
   Widget _buildBirthday(birthday) {
-    String formatBirthDate = DateFormat.yMMMMd().format(birthday);
+    String formatBirthDate = DateTimeFormatter(date: birthday).dateFormat;
 
     int getAge(DateTime birthday) {
       DateTime dateNow = DateTime.now();

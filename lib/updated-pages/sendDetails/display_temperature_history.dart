@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/dateFormatter.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
 
 class DisplayTemperatureHistory extends StatelessWidget {
@@ -41,6 +42,6 @@ Widget buildTemperatureHistory(context, document) {
   return ListTile(
     leading: Icon(Icons.healing, color: Theme.of(context).primaryColor),
     title: Text(document.temperature.toString()),
-    subtitle: Text(document.logCreated.toString()),
+    subtitle: Text(DateTimeFormatter(date: document.logCreated).dateTimeFormat),
   );
 }

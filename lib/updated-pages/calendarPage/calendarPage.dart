@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:me_daily/common-widgets/dateFormatter.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/updated-pages/calendarPage/dailyTasksDetails.dart';
@@ -32,11 +33,11 @@ class _CalendarPageState extends State<CalendarPage> {
   }
 
   
-  void _showNotification(Task task) async {
-    await notification(task);
+  void _showNotification() async {
+    await notification();
   }
 
-  Future<void> notification(Task task) async {
+  Future<void> notification() async {
     AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
       'Channel ID', 
       'Channel title', 
@@ -46,7 +47,7 @@ class _CalendarPageState extends State<CalendarPage> {
       ticker: 'test');
     
     IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
-    var scheduledDate = task.taskTime.add(Duration(seconds: 10));
+    var scheduledDate = DateTime.now();
     NotificationDetails notificationDetails = NotificationDetails(androidNotificationDetails, iosNotificationDetails);
     await flutterLocalNotificationsPlugin.schedule(0, 'You have tasks today!', 'Check you calendar.', scheduledDate, notificationDetails);
   }
@@ -91,7 +92,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
     tasks.forEach((element) {
       if (DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day) == element.taskStarted) {
-        _showNotification(element);
+        _showNotification();
       }});
     return Scaffold(
       body: Column(
@@ -181,6 +182,7 @@ class _CalendarPageState extends State<CalendarPage> {
   }
   
   Widget _buildEventList(events, context) {
+
     return
     events.length == 0 ?
     ContentContainer(
@@ -197,11 +199,12 @@ class _CalendarPageState extends State<CalendarPage> {
           return ContentContainer(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
             child: ListTile(
-              title: Row(children: <Widget>[
-                Icon(Icons.indeterminate_check_box, color: Theme.of(context).primaryColor),
-                SizedBox(width: 5),
-                Text('${events[index].taskType} ${events[index].specificTask}', style: TextStyle(fontSize: 15))
-              ])
+              title:
+                Row(children: <Widget>[
+                  Icon(Icons.indeterminate_check_box, color: Theme.of(context).primaryColor),
+                  SizedBox(width: 5),
+                  Text('${events[index].taskType} ${events[index].specificTask} at ${DateTimeFormatter(date: events[index].taskTime).timeFormat}', style: TextStyle(fontSize: 15))
+                ]),
             )
           );
       }

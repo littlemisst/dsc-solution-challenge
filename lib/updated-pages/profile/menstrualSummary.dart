@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:me_daily/common-widgets/dateFormatter.dart';
 import 'package:me_daily/model/menstrual.dart';
 import 'package:me_daily/widgets/medicalHistorySummaryBuilder.dart';
 
@@ -8,14 +8,14 @@ class PeriodSummary extends StatelessWidget {
   final Menstrual period;
 
   Widget _buildPeriodStarts() {
-    String formatStart = DateFormat.yMMMMEEEEd().format(period.periodStarts);
-    return ContentBuilder(text: 'Period Start', content: '${formatStart}');
+    String formatStart = DateTimeFormatter(date: period.periodStarts).withWeekDateFormat;
+    return ContentBuilder(text: 'Period Start', content: '$formatStart');
   }
 
   Widget _buildDaysLeft() {
     var difference = period.periodEnds.difference(DateTime.now()).inDays;
     return Text(
-        difference == 1 ? '${difference} day left' : '${difference} days left',
+        difference == 1 ? '$difference day left' : '$difference days left',
         style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -23,18 +23,18 @@ class PeriodSummary extends StatelessWidget {
   }
 
   Widget _buildPeriodEnds() {
-    String formatEnd = DateFormat.yMMMMEEEEd().format(period.periodEnds);
-    return ContentBuilder(text: 'Period Ends', content: '${formatEnd}');
+    String formatEnd = DateTimeFormatter(date: period.periodStarts).withWeekDateFormat;
+    return ContentBuilder(text: 'Period Ends', content: '$formatEnd');
   }
 
   Widget _buildExpectedNextPeriod() {
     DateTime next1 = period.periodEnds.add(Duration(days: 28));
     DateTime next2 = period.periodEnds.add(Duration(days: 35));
-    String formatNext1 = DateFormat.yMMMMEEEEd().format(next1);
-    String formatNext2 = DateFormat.yMMMMEEEEd().format(next2);
+    String formatNext1 = DateTimeFormatter(date: next1).withWeekDateFormat;
+    String formatNext2 = DateTimeFormatter(date: next2).withWeekDateFormat;
     return ContentBuilder(
         text: 'Expected Next Period',
-        content: '${formatNext1} - ${formatNext2}');
+        content: '$formatNext1 - $formatNext2');
   }
 
   Widget _buildFlow() {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:me_daily/common-widgets/dateFormatter.dart';
 
 class DatePickerWidget extends StatefulWidget {
   const DatePickerWidget({Key key, this.elevation, this.taskStarted, this.setTaskStarted, this.setTaskEnded}) : super(key:key);
@@ -54,8 +54,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
                   Text('Task Date: ', style: TextStyle(fontSize: 13)),
                   SizedBox(width: 10),
                   Align(alignment: Alignment.topLeft,
-                  child: Text(
-                    DateFormat.yMMMd().format(widget.taskStarted), 
+                  child: Text(DateTimeFormatter(date: widget.taskStarted).dateFormat,
                     style: TextStyle(fontSize: 13)))
                 ]), 
               ])
