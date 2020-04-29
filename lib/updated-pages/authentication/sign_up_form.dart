@@ -57,8 +57,14 @@ class SignUp extends StatelessWidget {
                               model.validateConfirmPassword(
                                   value, passwordController.text),
                         ),
-                        SizedBox(height: 15),
-                        SubmitButton(Strings.signUp, () {
+                        SizedBox(height: 25),
+                        SubmitButton(
+                          text: Strings.signUp,
+                          color: Theme.of(context).buttonColor,
+                          textColor: Colors.white,
+                          outlineColor: Theme.of(context).buttonColor,
+                          icon: false,
+                          onPressed: () {
                           if (formKey.currentState.validate()) {
                             model.signUp(
                                 emailController.text, passwordController.text);
