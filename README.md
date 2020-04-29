@@ -17,10 +17,10 @@ Android Studio
 
 After installing the list of essential software check if all requirements are properly installed and is functioning
 
-**run flutter doctor
+run flutter doctor
 
-****Install all dependencies
-**pub get
+**Install all dependencies**
+pub get
 
-****Run the app
-**flutter run
+**Run the app**
+flutter run
