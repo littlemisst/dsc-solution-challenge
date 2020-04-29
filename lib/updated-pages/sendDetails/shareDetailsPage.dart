@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:me_daily/constants/strings.dart';
 import 'package:me_daily/model/bloodPressure.dart';
@@ -27,6 +29,29 @@ class ShareDetailsPage extends StatefulWidget {
 class _ShareDetailsPageState extends State<ShareDetailsPage> {
   FirestoreService _firestoreService = FirestoreService();
   UserSummary userSummary = UserSummary();
+  int age;
+  double bmi;
+
+  int getAge(DateTime birthdate) {
+    DateTime dateNow = DateTime.now();
+
+    int age = dateNow.year - birthdate.year;
+
+    if (birthdate.month > dateNow.month) {
+      age--;
+    }
+    if (birthdate.month == dateNow.month) {
+      if (birthdate.day > dateNow.day) {
+        age--;
+      }
+    }
+    return age;
+  }
+
+  double getBMI(weight, height) {
+    double bmi = weight / pow(height, 2);
+    return bmi;
+  }
 
   double getAverageSleep(List<Sleep> listOfHoursSlept) {
     // must be refactored
@@ -180,7 +205,11 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
           child: Column(
             children: <Widget>[
               RecipientSelector(onChangeRecipient: onChangeRecipient),
-              DisplayBasicInformation(profile: profile),
+              DisplayBasicInformation(
+                profile: profile,
+                age: getAge(profile.birthDate),
+                bmi: getBMI(profile.weight, profile.height),
+              ),
               Analysis(
                 text: getAverageSleep(listOfHoursSlept),
                 title: 'Sleep Analysis',

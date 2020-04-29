@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 
 class DisplayBasicInformation extends StatelessWidget {
   final profile;
-  DisplayBasicInformation({this.profile});
+  final bmi;
+  final age;
+  DisplayBasicInformation({this.profile, this.age, this.bmi});
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
@@ -72,10 +74,10 @@ class DisplayBasicInformation extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          _buildBasicInfo(context, '20', 'Age'), //to be fix
+                          _buildBasicInfo(context, age, 'Age'), //to be fix
                           _buildBasicInfo(context, profile.height, 'Height'),
                           _buildBasicInfo(context, profile.weight, 'Weight'),
-                          _buildBasicInfo(context, '25', 'BMI'), //to be fix
+                          _buildBasicInfo(context, bmi.toStringAsFixed(2), 'BMI'), //to be fix
                           _buildBasicInfo(
                               context, profile.bloodType, 'Blood Type'),
                         ],
