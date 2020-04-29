@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'menstrual.g.dart';
+
+@JsonSerializable()
 class Menstrual {
   final DateTime periodStarts;
   final DateTime periodEnds;
@@ -5,7 +10,7 @@ class Menstrual {
   final String cycle;
 
   Menstrual({this.periodStarts, this.periodEnds, this.flow, this.cycle});
-
-  Map<String, dynamic> toJson() =>
-      {"periodStarts": periodStarts, "periodEnds": periodEnds, "flow" : flow, "cycle" : cycle};
+  factory Menstrual.fromJson(Map<String, dynamic> json) =>
+      _$MenstrualFromJson(json);
+  Map<String, dynamic> toJson() => _$MenstrualToJson(this);
 }

@@ -240,7 +240,7 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
 
   Widget _buildPeriodLogContainer() {
     List<Menstrual> _period =
-        Provider.of<List<Menstrual>>(context);
+        Provider.of<List<Menstrual>>(context) ?? [];
     return  Container(
       color: Theme.of(context).backgroundColor,
       padding: EdgeInsets.all(15),
