@@ -12,14 +12,13 @@ import 'package:me_daily/model/temperature.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/model/water.dart';
 import 'package:me_daily/services/firestore_service.dart';
-import 'package:me_daily/updated-pages/sendDetails/analysisPage.dart';
-import 'package:me_daily/updated-pages/sendDetails/displayActivitiesPage.dart';
-import 'package:me_daily/updated-pages/sendDetails/displayBasicInformationPage.dart';
-import 'package:me_daily/updated-pages/sendDetails/displayTemperatureHistory.dart';
-import 'package:me_daily/updated-pages/sendDetails/recipientSelector.dart';
+import 'package:me_daily/updated-pages/sendDetails/analysis_page.dart';
+import 'package:me_daily/updated-pages/sendDetails/display_activities_page.dart';
+import 'package:me_daily/updated-pages/sendDetails/display_basic_information_page.dart';
+import 'package:me_daily/updated-pages/sendDetails/display_previous_locations.dart';
+import 'package:me_daily/updated-pages/sendDetails/display_temperature_history.dart';
+import 'package:me_daily/updated-pages/sendDetails/recipient_selector.dart';
 import 'package:provider/provider.dart';
-
-import 'displayPreviousLocations.dart';
 
 class ShareDetailsPage extends StatefulWidget {
   @override
@@ -207,8 +206,10 @@ class _ShareDetailsPageState extends State<ShareDetailsPage> {
               RecipientSelector(onChangeRecipient: onChangeRecipient),
               DisplayBasicInformation(
                 profile: profile,
-                age: getAge(profile.birthDate),
-                bmi: getBMI(profile.weight, profile.height),
+                age: profile == null ? null : getAge(profile.birthDate),
+                bmi: profile == null
+                    ? null
+                    : getBMI(profile.weight, profile.height),
               ),
               Analysis(
                 text: getAverageSleep(listOfHoursSlept),

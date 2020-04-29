@@ -8,14 +8,16 @@ class TasksDetails extends StatefulWidget {
 }
 
 class _TasksDetailsState extends State<TasksDetails> {
-  getRemainingTasks(List<Task> taskList) {
+  int remainingTasks;
+
+  int getRemainingTasks(List<Task> taskList) {
     taskList.retainWhere((element) => !element.completed);
     return taskList.length;
   }
 
   @override
   Widget build(BuildContext context) {
-    final _taskList = Provider.of<List<Task>>(context);
+    final _taskList = Provider.of<List<Task>>(context) ?? [];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,

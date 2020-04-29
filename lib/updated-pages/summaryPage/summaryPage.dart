@@ -48,9 +48,8 @@ class _SummaryPageState extends State<SummaryPage> {
             StaggeredTile.count(1, 1.2),
             StaggeredTile.count(2, 2),
             StaggeredTile.count(2, 2),
-            StaggeredTile.count(4, 1),
+            StaggeredTile.count(4, 1.2),
             StaggeredTile.count(4, 4),
-
           ],
           children: <Widget>[
             _buildTiles(context, HealthChart()),

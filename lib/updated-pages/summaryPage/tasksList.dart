@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/appBarTextFormat.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';
@@ -43,12 +44,35 @@ class TasksListState extends State<TasksList> {
   Widget build(BuildContext context) {
     List<Task> _taskList = Provider.of<List<Task>>(context) ?? [];
     _taskList.retainWhere((element) => !element.completed);
-    return _taskList.isEmpty
-        ? Container()
-        : ListView.builder(
-            itemCount: _taskList.length,
-            itemBuilder: (context, index) {
-              return buildListOfTasks(context, _taskList[index]);
-            });
+    return Container(
+      padding: EdgeInsets.all(15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+        Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            child: Text(
+              'List of Tasks',
+            ),
+          ),
+        ),
+        _taskList.isEmpty
+            ? Expanded(
+                child: Text(
+                  'No recorded task',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              )
+            : Expanded(
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: _taskList.length,
+                    itemBuilder: (context, index) {
+                      return buildListOfTasks(context, _taskList[index]);
+                    }),
+              ),
+      ]),
+    );
   }
 }

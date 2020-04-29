@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:me_daily/model/summary.dart';
-import 'package:me_daily/updated-pages/sendDetails/analysisPage.dart';
-import 'package:me_daily/updated-pages/sendDetails/displayActivitiesPage.dart';
-import 'package:me_daily/updated-pages/sendDetails/displayBasicInformationPage.dart';
-import 'package:me_daily/updated-pages/sendDetails/displayPreviousLocations.dart';
-import 'package:me_daily/updated-pages/sendDetails/displayTemperatureHistory.dart';
+import 'package:me_daily/updated-pages/sendDetails/analysis_page.dart';
+import 'package:me_daily/updated-pages/sendDetails/display_activities_page.dart';
+import 'package:me_daily/updated-pages/sendDetails/display_basic_information_page.dart';
+import 'package:me_daily/updated-pages/sendDetails/display_previous_locations.dart';
+import 'package:me_daily/updated-pages/sendDetails/display_temperature_history.dart';
 
 class ViewMessage extends StatelessWidget {
   final UserSummary userSummary;

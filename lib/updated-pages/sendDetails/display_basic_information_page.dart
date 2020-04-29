@@ -74,10 +74,10 @@ class DisplayBasicInformation extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          _buildBasicInfo(context, age, 'Age'), //to be fix
+                          _buildBasicInfo(context, age, 'Age'), 
                           _buildBasicInfo(context, profile.height, 'Height'),
                           _buildBasicInfo(context, profile.weight, 'Weight'),
-                          _buildBasicInfo(context, bmi.toStringAsFixed(2), 'BMI'), //to be fix
+                          _buildBasicInfo(context, bmi.toStringAsFixed(2), 'BMI'),
                           _buildBasicInfo(
                               context, profile.bloodType, 'Blood Type'),
                         ],
