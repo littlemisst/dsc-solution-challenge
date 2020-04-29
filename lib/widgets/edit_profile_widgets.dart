@@ -133,11 +133,11 @@ Widget buildDateTimePicker(context, initialValue, onChanged) {
   );
 }
 
-Widget buildHeightWeightField(contex, controller, initialValue, suffix) {
+Widget buildHeightWeightField(contex, controller, initialValue, suffix, onChanged) {
   return Container(
     width: 100,
     height: 50.0,
-    child: TextField(
+    child: TextFormField(
       controller: controller,
       style: TextStyle(fontSize: 15),
       keyboardType: TextInputType.number,
@@ -147,6 +147,7 @@ Widget buildHeightWeightField(contex, controller, initialValue, suffix) {
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
+      onChanged: onChanged,
     ),
   );
 }

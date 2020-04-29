@@ -87,7 +87,7 @@ class _EditProfileState extends State<EditProfile> {
               SizedBox(width: 20),
               Expanded(child: DropDownWidget(label: 'Blood Type', items: Strings.bloodTypeList,
                 onChanged: (value) {
-                  setState(() =>  _currentProfile..bloodType);
+                  setState(() =>  _currentProfile.bloodType);
                 },
                 initialValue:  _currentProfile.bloodType
               )),
@@ -100,13 +100,14 @@ class _EditProfileState extends State<EditProfile> {
                 Text('Height'),
                 SizedBox(height: 5),
                 buildHeightWeightField(context, metersController,
-                  _currentProfile.height.toString(), 'm'),
+                  _currentProfile.height.toString(), 'm', (value) =>  _currentProfile.height = double.parse(value))
+              ,
               ])),
               Expanded(child: Column(children: <Widget>[
                  Text('Weight'),
                 SizedBox(height: 5),
                 buildHeightWeightField(context, kilogramController,
-                  _currentProfile.weight.toString(), 'kg'),
+                  _currentProfile.weight.toString(), 'kg', (value) =>  _currentProfile.weight = double.parse(value)),
               ]))
              
             ]),
