@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:me_daily/common-widgets/appBarTextFormat.dart';
 import 'package:me_daily/model/task.dart';
 import 'package:me_daily/model/user.dart';
 import 'package:me_daily/services/firestore_service.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:me_daily/common-widgets/dateFormatter.dart';
 import 'package:me_daily/common-widgets/widgetContainer.dart';
 import 'package:me_daily/model/task.dart';
@@ -18,64 +17,9 @@ class _CalendarPageState extends State<CalendarPage> {
   Map<DateTime, List<dynamic>> _tasks;
   List<dynamic> _selectedTasks;
 
-
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-  AndroidInitializationSettings androidInitializationSettings;
-  IOSInitializationSettings iosInitializationSettings;
-  InitializationSettings initializationSettings;
- 
-  void initializing() async {
-    var initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettingsIOS = IOSInitializationSettings(onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-    var initializationSettings = InitializationSettings(initializationSettingsAndroid, initializationSettingsIOS);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: onSelectNotification); 
-  }
-
-  
-  void _showNotification() async {
-    await notification();
-  }
-
-  Future<void> notification() async {
-    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-      'Channel ID', 
-      'Channel title', 
-      'Channel body',
-      priority: Priority.High,
-      importance: Importance.Max,
-      ticker: 'test');
-    
-    IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
-    var scheduledDate = DateTime.now();
-    NotificationDetails notificationDetails = NotificationDetails(androidNotificationDetails, iosNotificationDetails);
-    await flutterLocalNotificationsPlugin.schedule(0, 'You have tasks today!', 'Check you calendar.', scheduledDate, notificationDetails);
-  }
-
-  Future onSelectNotification(String payload) async {
-    if (payload != null) {
-      debugPrint('notification payload: ' + payload);
-    }
-  }
-
-  Future onDidReceiveLocalNotification(int id, String title, String body, String payload) async {
-    return CupertinoAlertDialog(
-      title: Text(title),
-      content: Text(body),
-      actions: <Widget>[
-        CupertinoDialogAction(
-          isDefaultAction: true,
-          onPressed: () => print('naglabay ko di'),
-          child: Text('Okay'))
-      ],
-    );
-  }
-
-
   @override
   void initState() {
     super.initState();
-    initializing();
     _calendarController = CalendarController();
     final _selectedDay = DateTime.now();
     _tasks = {};
@@ -89,11 +33,6 @@ class _CalendarPageState extends State<CalendarPage> {
       tasks = [];
     }
     _tasks = DailyTaskDetails.tasksByDate(tasks);
-
-    tasks.forEach((element) {
-      if (DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day) == element.taskStarted) {
-        _showNotification();
-      }});
     return Scaffold(
       body: Column(
         mainAxisSize: MainAxisSize.max,

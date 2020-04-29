@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:me_daily/common-widgets/dateFormatter.dart';
 import 'package:me_daily/model/locationLog.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +41,7 @@ class LocationLogPage extends StatelessWidget {
                             alignment: Alignment.centerLeft),
                         SizedBox(height: 3),
                         Align(
-                            child: Text(locations[0].dateAndTime.toString(),
+                            child: Text(DateTimeFormatter(date: locations[0].dateAndTime).dateTimeFormat,
                                 style: TextStyle(fontSize: 12)),
                             alignment: Alignment.centerLeft)
                       ],
