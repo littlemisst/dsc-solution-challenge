@@ -7,7 +7,7 @@ import 'package:me_daily/model/user.dart';
 import 'package:me_daily/model/menstrual.dart';
 import 'package:me_daily/updated-pages/profile/edit_profile/bmiConversion.dart';
 import 'package:me_daily/updated-pages/profile/medicalHistorySummary.dart';
-import 'package:me_daily/updated-pages/profile/menstrualSummary.dart';
+import 'package:me_daily/updated-pages/profile/menstrual_summary.dart';
 import 'package:me_daily/widgets/editIcons.dart';
 import 'package:me_daily/widgets/indicatorText.dart';
 import 'package:me_daily/widgets/text_widget.dart';
@@ -20,7 +20,6 @@ class UserProfileSummary extends StatefulWidget {
 }
 
 class _UserProfileSummaryState extends State<UserProfileSummary> {
-  
   Widget _buildNameProfile(url, name, email) {
     return Container(
         padding: EdgeInsets.fromLTRB(15, 25, 15, 15),
@@ -80,8 +79,8 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
       ])),
     ]);
   }
+
   int age;
-  
 
   Widget _buildBirthday(birthday) {
     String formatBirthDate = DateFormat.yMMMMd().format(birthday);
@@ -210,7 +209,7 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
 
   Widget _buildMedicalHistoryContainer() {
     List<MedicalHistory> _medicalHistory =
-        Provider.of<List<MedicalHistory>>(context);
+        Provider.of<List<MedicalHistory>>(context) ?? [];
     return Container(
       color: Theme.of(context).backgroundColor,
       padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
@@ -239,26 +238,22 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
   }
 
   Widget _buildPeriodLogContainer() {
-    List<Menstrual> _period =
-        Provider.of<List<Menstrual>>(context) ?? [];
-    return  Container(
+    List<Menstrual> _period = Provider.of<List<Menstrual>>(context) ?? [];
+    return Container(
       color: Theme.of(context).backgroundColor,
       padding: EdgeInsets.all(15),
       child: Column(
         children: <Widget>[
-          Row(
-            children: <Widget> [
-              Expanded(child: IndicatorText('MONTHLY PERIOD LOG')),
-              EditIcon(
-                  text: 'Update Log', route: Strings.menstrualPeriodFormPage
-              )
-            ]
-          ),
-          Row(children: <Widget> [
-            Expanded(child: Container()),
-            ViewHistory(() => Navigator.pushNamed(context, Strings.menstrualPeriodHistoryPage))
+          Row(children: <Widget>[
+            Expanded(child: IndicatorText('MONTHLY PERIOD LOG')),
+            EditIcon(text: 'Update Log', route: Strings.menstrualPeriodFormPage)
           ]),
-          _period.isNotEmpty ? PeriodSummary(period: _period[0]) : Container (),
+          Row(children: <Widget>[
+            Expanded(child: Container()),
+            ViewHistory(() => Navigator.pushNamed(
+                context, Strings.menstrualPeriodHistoryPage))
+          ]),
+          _period.isNotEmpty ? PeriodSummary(period: _period[0]) : Container(),
         ],
       ),
     );
@@ -266,11 +261,8 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
 
   @override
   Widget build(BuildContext context) {
-    Profile _currentProfile = Provider.of<Profile>(context);
-    User _user = Provider.of<User>(context);
-
-
-
+    Profile _currentProfile = Provider.of<Profile>(context) ?? null;
+    User _user = Provider.of<User>(context) ?? null;
     return Scaffold(
         body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -300,8 +292,9 @@ class _UserProfileSummaryState extends State<UserProfileSummary> {
                 ]),
               ),
               SizedBox(height: 5),
-              _currentProfile.gender == 'Female' ?
-              _buildPeriodLogContainer() : Container(),
+              _currentProfile.gender == 'Female'
+                  ? _buildPeriodLogContainer()
+                  : Container(),
               SizedBox(height: 5),
               _buildMedicalHistoryContainer()
             ]))));

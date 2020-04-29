@@ -28,14 +28,18 @@ class _SideDrawerWidgetState extends State<SideDrawerWidget> {
               : CircleAvatar(
                   radius: 25,
                   backgroundImage: NetworkImage(profilePic, scale: 30)),
-          Container(
-              margin: EdgeInsets.only(left: 20),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    TextFormat('ME DAILY'),
-                    Text(email, style: TextStyle(color: Colors.grey))
-                  ]))
+          Flexible(
+            child: Container(
+                margin: EdgeInsets.only(left: 20),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      TextFormat('ME DAILY'),
+                      Text(email,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.grey))
+                    ])),
+          )
         ]));
   }
 

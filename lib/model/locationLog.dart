@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'locationLog.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable()
 class LocationLog {
   String locationName;
   DateTime dateAndTime;
