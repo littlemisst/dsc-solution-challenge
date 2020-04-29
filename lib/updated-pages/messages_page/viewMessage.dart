@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:me_daily/model/summary.dart';
 import 'package:me_daily/updated-pages/sendDetails/analysis_page.dart';
@@ -8,6 +10,27 @@ import 'package:me_daily/updated-pages/sendDetails/display_temperature_history.d
 
 class ViewMessage extends StatelessWidget {
   final UserSummary userSummary;
+  int getAge(DateTime birthdate) {
+    DateTime dateNow = DateTime.now();
+
+    int age = dateNow.year - birthdate.year;
+
+    if (birthdate.month > dateNow.month) {
+      age--;
+    }
+    if (birthdate.month == dateNow.month) {
+      if (birthdate.day > dateNow.day) {
+        age--;
+      }
+    }
+    return age;
+  }
+
+  double getBMI(weight, height) {
+    double bmi = weight / pow(height, 2);
+    return bmi;
+  }
+
   ViewMessage({this.userSummary});
   @override
   Widget build(BuildContext context) {
@@ -20,7 +43,12 @@ class ViewMessage extends StatelessWidget {
           padding: EdgeInsets.all(10),
           child: Column(
             children: <Widget>[
-              DisplayBasicInformation(profile: userSummary.profile),
+              DisplayBasicInformation(
+                profile: userSummary.profile,
+                age: getAge(userSummary.profile.birthDate),
+                bmi: getBMI(
+                    userSummary.profile.weight, userSummary.profile.height),
+              ),
               Analysis(
                 text: userSummary.averageHoursSlept,
                 title: 'Sleep Analysis',

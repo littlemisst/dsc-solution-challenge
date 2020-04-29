@@ -63,10 +63,11 @@ class UserSummary {
         averageWaterDrank: json['averageWaterDrank'],
         previousLocations: (json['previousLocations'] as List).isEmpty
             ? []
-            : (json['previousLocations'] as List).map((prevLocation) =>
-                LocationLog(
+            : (json['previousLocations'] as List)
+                .map((prevLocation) => LocationLog(
                     locationName: prevLocation['locationName'],
-                    dateAndTime: DateTime.parse(prevLocation['dateAndTime']))),
+                    dateAndTime: DateTime.parse(prevLocation['dateAndTime'])))
+                .toList(),
         temperatureHistory: (json['temperatureHistory'] as List).isEmpty
             ? []
             : (json['temperatureHistory'] as List)

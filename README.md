@@ -1,16 +1,32 @@
 # me_daily
 
-A new Flutter project.
+MeDaily is a mobile app that enables its user to save important details regarding his health. The user could save files, daily health logs and tasks to be done. This also keeps his basic information, medical and travel history. These information could be sent to other user like the doctors which helps reducing hospital waiting times and contact to people especially during times of health crisis like as of now. This app helps in maximizing the time in the field of health care.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Clone this repository to your local files;
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+List of software to be installed:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* Flutter
+* Dart
+* Android Studio
+
+
+### Installing
+
+After installing the list of essential software check if all requirements are properly installed and is functioning
+
+run ```flutter doctor```
+
+**Install all dependencies**
+```
+pub get
+```
+
+**Run the app**
+```
+flutter run
+```

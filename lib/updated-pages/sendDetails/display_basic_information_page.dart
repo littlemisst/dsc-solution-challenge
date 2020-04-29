@@ -48,11 +48,6 @@ class DisplayBasicInformation extends StatelessWidget {
                                     color: Theme.of(context).primaryColor),
                               ),
                               Text(
-                                user.email,
-                                style:
-                                    TextStyle(fontSize: 12, color: Colors.grey),
-                              ),
-                              Text(
                                 profile.address,
                                 style: TextStyle(fontSize: 12),
                               ),

@@ -87,14 +87,6 @@ class _SideDrawerWidgetState extends State<SideDrawerWidget> {
           top: 0,
           bottom: 0,
           child: ListItem(
-              icon: Icons.help,
-              text: Strings.help,
-              onTap: () =>
-                  Navigator.popAndPushNamed(context, Strings.helpPage))),
-      ItemContainer(
-          top: 0,
-          bottom: 0,
-          child: ListItem(
               icon: Icons.power_settings_new,
               text: Strings.signOut,
               onTap: () async {
